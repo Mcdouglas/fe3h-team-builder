@@ -1,0 +1,29 @@
+{
+  "name": "fe3h-team-builder",
+  "version": "0.0.1",
+  "description": "A tool made for organize and optimize the team in fire emblem three houses",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "fe3h",
+    "team",
+    "builder",
+    "fire",
+    "emblem",
+    "fireemblem",
+    "three",
+    "houses",
+    "feth",
+    "class",
+    "skill",
+    "perk",
+    "optimize",
+    "optimization",
+    "build",
+    "organize"
+  ],
+  "author": "mcdouglas",
+  "license": "ISC"
+}
