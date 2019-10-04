@@ -4391,7 +4391,7 @@ var author$project$HomePage$view = function (model) {
 				_List_Nil,
 				_List_fromArray(
 					[
-						elm$html$Html$text('Welcome to Dunder Mifflin!')
+						elm$html$Html$text('Welcome to Dunder Mufflin!')
 					])),
 				A2(
 				elm$html$Html$p,

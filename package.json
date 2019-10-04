@@ -4,6 +4,7 @@
   "description": "A tool made for organize and optimize the team in fire emblem three houses",
   "main": "index.html",
   "scripts": {
+    "watch": "elm-live src/HomePage.elm -o  -- --output=bundle.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -25,5 +26,5 @@
     "organize"
   ],
   "author": "mcdouglas",
-  "license": "ISC"
+  "license": "MIT"
 }
