@@ -16,7 +16,7 @@ install:
   - npm install
 
 script:
-  - elm-format --validate .
+  - elm-format --validate . && elm-test
  
 deploy:
   provider: pages

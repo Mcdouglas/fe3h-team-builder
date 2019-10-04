@@ -5,7 +5,7 @@
   "main": "index.html",
   "scripts": {
     "watch": "elm-live src/HomePage.elm -o  -- --output=bundle.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "elm-test"
   },
   "keywords": [
     "fe3h",
