@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Commoner",
+        "categoryId": 0,
+        "mastery": 0,
+        "note": "Can use some magic"
+    },
+    {
+        "name": "Noble",
+        "categoryId": 0,
+        "mastery": 0,
+        "note": "Can use some magic"
+    }
+]
