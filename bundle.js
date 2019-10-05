@@ -4964,10 +4964,10 @@ var elm$core$Platform$Cmd$batch = _Platform_batch;
 var elm$core$Platform$Cmd$none = elm$core$Platform$Cmd$batch(_List_Nil);
 var author$project$HomePage$init = function (_n0) {
 	return _Utils_Tuple2(
-		{errorMessage: elm$core$Maybe$Nothing, jsonStr: ''},
+		{errorMessage: elm$core$Maybe$Nothing, jsonStr: '', jsonStrs: _List_Nil},
 		elm$core$Platform$Cmd$none);
 };
-var author$project$HomePage$url = './resources/class-categories.json';
+var author$project$HomePage$url = './resources/flat.json';
 var author$project$JsonLoader$buildErrorMessage = function (httpError) {
 	switch (httpError.$) {
 		case 'BadUrl':
@@ -4985,9 +4985,23 @@ var author$project$JsonLoader$buildErrorMessage = function (httpError) {
 			return message;
 	}
 };
+var elm$json$Json$Decode$list = _Json_decodeList;
+var elm$json$Json$Decode$string = _Json_decodeString;
+var author$project$ClassCategoriesDecoder$classCategoriesDecoder = elm$json$Json$Decode$list(elm$json$Json$Decode$string);
 var author$project$JsonLoader$DataReceived = function (a) {
 	return {$: 'DataReceived', a: a};
 };
+var elm$core$Result$mapError = F2(
+	function (f, result) {
+		if (result.$ === 'Ok') {
+			var v = result.a;
+			return elm$core$Result$Ok(v);
+		} else {
+			var e = result.a;
+			return elm$core$Result$Err(
+				f(e));
+		}
+	});
 var elm$core$Basics$composeR = F3(
 	function (f, g, x) {
 		return g(
@@ -5558,17 +5572,6 @@ var elm$http$Http$expectStringResponse = F2(
 			elm$core$Basics$identity,
 			A2(elm$core$Basics$composeR, toResult, toMsg));
 	});
-var elm$core$Result$mapError = F2(
-	function (f, result) {
-		if (result.$ === 'Ok') {
-			var v = result.a;
-			return elm$core$Result$Ok(v);
-		} else {
-			var e = result.a;
-			return elm$core$Result$Err(
-				f(e));
-		}
-	});
 var elm$http$Http$BadBody = function (a) {
 	return {$: 'BadBody', a: a};
 };
@@ -5603,12 +5606,20 @@ var elm$http$Http$resolve = F2(
 					toResult(body));
 		}
 	});
-var elm$http$Http$expectString = function (toMsg) {
-	return A2(
-		elm$http$Http$expectStringResponse,
-		toMsg,
-		elm$http$Http$resolve(elm$core$Result$Ok));
-};
+var elm$json$Json$Decode$decodeString = _Json_runOnString;
+var elm$http$Http$expectJson = F2(
+	function (toMsg, decoder) {
+		return A2(
+			elm$http$Http$expectStringResponse,
+			toMsg,
+			elm$http$Http$resolve(
+				function (string) {
+					return A2(
+						elm$core$Result$mapError,
+						elm$json$Json$Decode$errorToString,
+						A2(elm$json$Json$Decode$decodeString, decoder, string));
+				}));
+	});
 var elm$http$Http$emptyBody = _Http_emptyBody;
 var elm$http$Http$Request = function (a) {
 	return {$: 'Request', a: a};
@@ -5864,7 +5875,7 @@ var elm$http$Http$get = function (r) {
 var author$project$JsonLoader$getJsonFile = function (url) {
 	return elm$http$Http$get(
 		{
-			expect: elm$http$Http$expectString(author$project$JsonLoader$DataReceived),
+			expect: A2(elm$http$Http$expectJson, author$project$JsonLoader$DataReceived, author$project$ClassCategoriesDecoder$classCategoriesDecoder),
 			url: url
 		});
 };
@@ -5876,12 +5887,11 @@ var author$project$JsonLoader$handleHttpResponse = F3(
 				author$project$JsonLoader$getJsonFile(url));
 		} else {
 			if (msg.a.$ === 'Ok') {
-				var jsonFile = msg.a.a;
-				var jsonStr = jsonFile;
+				var jsonStrs = msg.a.a;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{jsonStr: jsonStr}),
+						{jsonStrs: jsonStrs}),
 					elm$core$Platform$Cmd$none);
 			} else {
 				var httpError = msg.a.a;
@@ -5936,7 +5946,31 @@ var author$project$HomePage$viewError = function (errorMessage) {
 				elm$html$Html$text('Error: ' + errorMessage)
 			]));
 };
-var elm$html$Html$p = _VirtualDom_node('p');
+var elm$html$Html$li = _VirtualDom_node('li');
+var author$project$HomePage$viewElement = function (element) {
+	return A2(
+		elm$html$Html$li,
+		_List_Nil,
+		_List_fromArray(
+			[
+				elm$html$Html$text(element)
+			]));
+};
+var elm$core$List$map = F2(
+	function (f, xs) {
+		return A3(
+			elm$core$List$foldr,
+			F2(
+				function (x, acc) {
+					return A2(
+						elm$core$List$cons,
+						f(x),
+						acc);
+				}),
+			_List_Nil,
+			xs);
+	});
+var elm$html$Html$ul = _VirtualDom_node('ul');
 var author$project$HomePage$viewJsonFile = function (jsonFile) {
 	return A2(
 		elm$html$Html$div,
@@ -5951,12 +5985,9 @@ var author$project$HomePage$viewJsonFile = function (jsonFile) {
 						elm$html$Html$text('Json file')
 					])),
 				A2(
-				elm$html$Html$p,
+				elm$html$Html$ul,
 				_List_Nil,
-				_List_fromArray(
-					[
-						elm$html$Html$text(jsonFile)
-					]))
+				A2(elm$core$List$map, author$project$HomePage$viewElement, jsonFile))
 			]));
 };
 var author$project$HomePage$viewJsonFileOrError = function (model) {
@@ -5965,12 +5996,13 @@ var author$project$HomePage$viewJsonFileOrError = function (model) {
 		var message = _n0.a;
 		return author$project$HomePage$viewError(message);
 	} else {
-		return author$project$HomePage$viewJsonFile(model.jsonStr);
+		return author$project$HomePage$viewJsonFile(model.jsonStrs);
 	}
 };
 var author$project$JsonLoader$SendHttpRequest = {$: 'SendHttpRequest'};
 var elm$html$Html$button = _VirtualDom_node('button');
 var elm$html$Html$h1 = _VirtualDom_node('h1');
+var elm$html$Html$p = _VirtualDom_node('p');
 var elm$html$Html$strong = _VirtualDom_node('strong');
 var elm$json$Json$Encode$string = _Json_wrap;
 var elm$html$Html$Attributes$stringProperty = F2(
@@ -6070,20 +6102,6 @@ var elm$core$Task$Perform = function (a) {
 	return {$: 'Perform', a: a};
 };
 var elm$core$Task$init = elm$core$Task$succeed(_Utils_Tuple0);
-var elm$core$List$map = F2(
-	function (f, xs) {
-		return A3(
-			elm$core$List$foldr,
-			F2(
-				function (x, acc) {
-					return A2(
-						elm$core$List$cons,
-						f(x),
-						acc);
-				}),
-			_List_Nil,
-			xs);
-	});
 var elm$core$Task$map = F2(
 	function (func, taskA) {
 		return A2(

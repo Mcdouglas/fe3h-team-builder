@@ -10,7 +10,7 @@ import JsonLoader exposing (JsonModel, Msg(..), handleHttpResponse)
 
 url : String
 url =
-    "./resources/class-categories.json"
+    "./resources/flat.json"
 
 
 view model =
@@ -41,15 +41,20 @@ viewJsonFileOrError model =
             viewError message
 
         Nothing ->
-            viewJsonFile model.jsonStr
+            viewJsonFile model.jsonStrs
 
 
-viewJsonFile : String -> Html Msg
+viewJsonFile : List String -> Html Msg
 viewJsonFile jsonFile =
     div []
         [ h3 [] [ text "Json file" ]
-        , p [] [ text jsonFile ]
+        , ul [] (List.map viewElement jsonFile)
         ]
+
+
+viewElement : String -> Html Msg
+viewElement element =
+    li [] [ text element ]
 
 
 viewError : String -> Html Msg
@@ -72,6 +77,7 @@ update msg model =
 init : () -> ( JsonModel, Cmd Msg )
 init _ =
     ( { jsonStr = ""
+      , jsonStrs = []
       , errorMessage = Nothing
       }
     , Cmd.none

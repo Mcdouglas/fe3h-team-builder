@@ -1,24 +1,27 @@
 module JsonLoader exposing (..)
 
+import ClassCategoriesDecoder exposing (classCategoriesDecoder)
 import Http
+import Json.Decode exposing (Error(..), decodeString)
 
 
 type alias JsonModel =
     { jsonStr : String
+    , jsonStrs : List String
     , errorMessage : Maybe String
     }
 
 
 type Msg
     = SendHttpRequest
-    | DataReceived (Result Http.Error String)
+    | DataReceived (Result Http.Error (List String))
 
 
 getJsonFile : String -> Cmd Msg
 getJsonFile url =
     Http.get
         { url = url
-        , expect = Http.expectString DataReceived
+        , expect = Http.expectJson DataReceived classCategoriesDecoder
         }
 
 
@@ -28,14 +31,8 @@ handleHttpResponse url msg model =
         SendHttpRequest ->
             ( model, getJsonFile url )
 
-        DataReceived (Ok jsonFile) ->
-            let
-                jsonStr =
-                    jsonFile
-
-                -- TODO Improve with Json.Decode
-            in
-            ( { model | jsonStr = jsonStr }, Cmd.none )
+        DataReceived (Ok jsonStrs) ->
+            ( { model | jsonStrs = jsonStrs }, Cmd.none )
 
         DataReceived (Err httpError) ->
             ( { model
@@ -43,6 +40,16 @@ handleHttpResponse url msg model =
               }
             , Cmd.none
             )
+
+
+handleJsonError : Json.Decode.Error -> Maybe String
+handleJsonError error =
+    case error of
+        Failure errorMessage _ ->
+            Just errorMessage
+
+        _ ->
+            Just "Error: Invalid JSON"
 
 
 buildErrorMessage : Http.Error -> String
