@@ -6,7 +6,8 @@
   "scripts": {
     "build": "elm make src/HomePage.elm --output=bundle.js",
     "watch": "elm-live src/HomePage.elm -o  -- --output=bundle.js",
-    "test": "elm-test"
+    "test": "elm-test",
+    "try": "elm-repl"
   },
   "keywords": [
     "fe3h",
@@ -24,7 +25,11 @@
     "optimize",
     "optimization",
     "build",
-    "organize"
+    "organize",
+    "elm",
+    "elm-live",
+    "elm-test",
+    "elm-format"
   ],
   "author": "mcdouglas",
   "license": "MIT"
