@@ -44,8 +44,21 @@ type alias Proficiency =
     { id : Int, subject : Subject, bonus : Int }
 
 
+type Category
+    = Starting
+    | Beginner
+    | Intermediate
+    | Advanced
+    | Master
+    | Unique
+
+
+type alias ClassCategory =
+    { id : Int, category : Category, experience : Int, level: Int }
+
+
 type alias Class =
-    { id : Int, name : String, experience : Int, proficiency : Proficiency, certificationRequirement : List Study, genderRequirement : Gender }
+    { id : Int, name : String, classCategory : ClassCategory, proficiency : Proficiency, certificationRequirement : List Study, genderRequirement : Gender }
 
 
 type alias ClassSkill =
