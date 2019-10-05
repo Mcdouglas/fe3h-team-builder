@@ -4,6 +4,7 @@
   "description": "A tool made for organize and optimize the team in fire emblem three houses",
   "main": "index.html",
   "scripts": {
+    "build": "elm make src/HomePage.elm --output=bundle.js",
     "watch": "elm-live src/HomePage.elm -o  -- --output=bundle.js",
     "test": "elm-test"
   },
