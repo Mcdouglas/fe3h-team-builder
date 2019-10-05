@@ -1,4 +1,4 @@
-module Model exposing (..)
+module CustomTypes exposing (..)
 
 
 type Gender
