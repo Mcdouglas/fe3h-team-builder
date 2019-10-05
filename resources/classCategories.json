@@ -28,5 +28,9 @@
         "category": "Master",
         "experience": 200,
         "level": 30
+    },
+    {
+        "id": 5,
+        "category": "Unique"
     }
 ]
