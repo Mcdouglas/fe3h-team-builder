@@ -54,7 +54,7 @@ type Category
 
 
 type alias ClassCategory =
-    { id : Int, category : Category, experience : Int, level : Int }
+    { id : Int, category : String, experience : Int, level : Int }
 
 
 type alias Class =

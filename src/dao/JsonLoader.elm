@@ -1,71 +1,54 @@
 module JsonLoader exposing (..)
 
-import ClassCategoriesDecoder exposing (classCategoriesDecoder)
+import CustomModel exposing (JsonModel, Msg(..))
+import Html exposing (..)
 import Http
-import Json.Decode exposing (Error(..), decodeString)
+import Json.Decode exposing (Decoder, Error(..), decodeString, list, string)
 
 
-type alias JsonModel =
-    { jsonStr : String
-    , jsonStrs : List String
-    , errorMessage : Maybe String
-    }
+defaultDecoder : Decoder (List String)
+defaultDecoder =
+    list string
 
 
-type Msg
-    = SendHttpRequest
-    | DataReceived (Result Http.Error (List String))
-
-
-getJsonFile : String -> Cmd Msg
-getJsonFile url =
+defaultHttpCommand : Cmd Msg
+defaultHttpCommand =
     Http.get
-        { url = url
-        , expect = Http.expectJson DataReceived classCategoriesDecoder
+        { url = "../../resources/flat.json"
+        , expect = Http.expectJson DataReceived defaultDecoder
         }
 
 
-handleHttpResponse : String -> Msg -> JsonModel -> ( JsonModel, Cmd Msg )
-handleHttpResponse url msg model =
-    case msg of
-        SendHttpRequest ->
-            ( model, getJsonFile url )
+viewJsonFileOrError : JsonModel -> Html Msg
+viewJsonFileOrError model =
+    case model.errorMessage of
+        Just message ->
+            viewError message
 
-        DataReceived (Ok jsonStrs) ->
-            ( { model | jsonStrs = jsonStrs }, Cmd.none )
-
-        DataReceived (Err httpError) ->
-            ( { model
-                | errorMessage = Just (buildErrorMessage httpError)
-              }
-            , Cmd.none
-            )
+        Nothing ->
+            viewJsonFile model.elements
 
 
-handleJsonError : Json.Decode.Error -> Maybe String
-handleJsonError error =
-    case error of
-        Failure errorMessage _ ->
-            Just errorMessage
+viewError : String -> Html Msg
+viewError errorMessage =
+    let
+        errorHeading =
+            "Couldn't fetch json file at this time."
+    in
+    div []
+        [ h3 [] [ text errorHeading ]
+        , text ("Error: " ++ errorMessage)
+        ]
 
-        _ ->
-            Just "Error: Invalid JSON"
+
+viewJsonFile : List String -> Html Msg
+viewJsonFile jsonFile =
+    div []
+        [ h3 [] [ text "Json file" ]
+        , ul [] (List.map viewElement jsonFile)
+        ]
 
 
-buildErrorMessage : Http.Error -> String
-buildErrorMessage httpError =
-    case httpError of
-        Http.BadUrl message ->
-            message
-
-        Http.Timeout ->
-            "Server is taking too long to respond. Please try again later."
-
-        Http.NetworkError ->
-            "Unable to reach server."
-
-        Http.BadStatus statusCode ->
-            "Request failed with status code: " ++ String.fromInt statusCode
-
-        Http.BadBody message ->
-            message
+viewElement : String -> Html Msg
+viewElement element =
+    li [] [ text element ]

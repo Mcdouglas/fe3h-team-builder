@@ -1,16 +1,13 @@
 module HomePage exposing (main)
 
 import Browser
+import CustomModel exposing (JsonModel, Msg(..))
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 import Http
-import JsonLoader exposing (JsonModel, Msg(..), handleHttpResponse)
-
-
-url : String
-url =
-    "./resources/flat.json"
+import JsonDao exposing (handleHttpResponse, setup)
+import JsonLoader exposing (viewJsonFileOrError)
 
 
 view model =
@@ -27,61 +24,19 @@ view model =
                 """
             ]
         , div []
-            [ button [ onClick SendHttpRequest ]
-                [ text "Get data from server" ]
-            , viewJsonFileOrError model
+            [ viewJsonFileOrError model
             ]
-        ]
-
-
-viewJsonFileOrError : JsonModel -> Html Msg
-viewJsonFileOrError model =
-    case model.errorMessage of
-        Just message ->
-            viewError message
-
-        Nothing ->
-            viewJsonFile model.jsonStrs
-
-
-viewJsonFile : List String -> Html Msg
-viewJsonFile jsonFile =
-    div []
-        [ h3 [] [ text "Json file" ]
-        , ul [] (List.map viewElement jsonFile)
-        ]
-
-
-viewElement : String -> Html Msg
-viewElement element =
-    li [] [ text element ]
-
-
-viewError : String -> Html Msg
-viewError errorMessage =
-    let
-        errorHeading =
-            "Couldn't fetch json file at this time."
-    in
-    div []
-        [ h3 [] [ text errorHeading ]
-        , text ("Error: " ++ errorMessage)
         ]
 
 
 update : Msg -> JsonModel -> ( JsonModel, Cmd Msg )
 update msg model =
-    handleHttpResponse url msg model
+    handleHttpResponse msg model
 
 
 init : () -> ( JsonModel, Cmd Msg )
 init _ =
-    ( { jsonStr = ""
-      , jsonStrs = []
-      , errorMessage = Nothing
-      }
-    , Cmd.none
-    )
+    setup
 
 
 main : Program () JsonModel Msg
