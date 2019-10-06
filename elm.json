@@ -5,6 +5,7 @@
         "src/dao",
         "src/dao/json-loader",
         "src/model",
+        "src/tools",
         "src/view"
     ],
     "elm-version": "0.19.0",

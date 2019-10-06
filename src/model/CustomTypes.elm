@@ -5,12 +5,6 @@ import Job exposing (..)
 import Stringable exposing (..)
 
 
-type Gender
-    = Male
-    | Female
-    | Any
-
-
 type Subject
     = Sword
     | Lance

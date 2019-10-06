@@ -1,15 +1,11 @@
 module JsonDecoders exposing (..)
 
 import Category exposing (CategoryUnionType(..))
+import Gender exposing (GenderUnionType(..))
 import Job exposing (..)
 import JobCategory exposing (JobCategory)
 import Json.Decode exposing (Decoder, andThen, field, int, list, string)
 import Json.Decode.Pipeline exposing (custom, optional, optionalAt, required, requiredAt)
-
-
-defaultDecoder : Decoder (List String)
-defaultDecoder =
-    list string
 
 
 categoryDecoder : String -> Decoder CategoryUnionType
@@ -46,6 +42,19 @@ jobCategoriesDecoder =
         |> optional "level" int 0
 
 
+genderDecoder : String -> Decoder GenderUnionType
+genderDecoder gender =
+    case gender of
+        "Male" ->
+            Json.Decode.succeed (Male gender)
+
+        "Female" ->
+            Json.Decode.succeed (Female gender)
+
+        _ ->
+            Json.Decode.succeed None
+
+
 jobsDecoder : Decoder Job
 jobsDecoder =
     Json.Decode.succeed Job
@@ -55,5 +64,5 @@ jobsDecoder =
         |> optional "proficiencyIdList" (list int) []
         |> optional "certificationIdList" (list int) []
         |> optional "masteryIdList" (list int) []
-        |> optional "gender" string ""
+        |> custom (field "gender" string |> andThen genderDecoder)
         |> optional "note" string ""

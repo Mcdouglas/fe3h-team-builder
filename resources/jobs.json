@@ -4,6 +4,7 @@
         "name": "Commoner",
         "jobCategoryId": 0,
         "masteryId": 0,
+        "gender": "",
         "note": "Can use some magic"
     },
     {
@@ -11,6 +12,7 @@
         "name": "Noble",
         "jobCategoryId": 0,
         "masteryId": 0,
+        "gender": "",
         "note": "Can use some magic"
     },
     {
@@ -26,6 +28,7 @@
         "masteryIdList": [
             0
         ],
+        "gender": "",
         "note": "Can use magic"
     }
 ]

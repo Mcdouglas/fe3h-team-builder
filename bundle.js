@@ -6000,16 +6000,36 @@ var author$project$Job$Job = F8(
 	function (id, name, jobCategoryId, proficiencyIdList, certificationIdList, masteryIdList, gender, note) {
 		return {certificationIdList: certificationIdList, gender: gender, id: id, jobCategoryId: jobCategoryId, masteryIdList: masteryIdList, name: name, note: note, proficiencyIdList: proficiencyIdList};
 	});
+var author$project$Gender$Female = function (a) {
+	return {$: 'Female', a: a};
+};
+var author$project$Gender$Male = function (a) {
+	return {$: 'Male', a: a};
+};
+var author$project$Gender$None = {$: 'None'};
+var author$project$JsonDecoders$genderDecoder = function (gender) {
+	switch (gender) {
+		case 'Male':
+			return elm$json$Json$Decode$succeed(
+				author$project$Gender$Male(gender));
+		case 'Female':
+			return elm$json$Json$Decode$succeed(
+				author$project$Gender$Female(gender));
+		default:
+			return elm$json$Json$Decode$succeed(author$project$Gender$None);
+	}
+};
 var author$project$JsonDecoders$jobsDecoder = A4(
 	NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional,
 	'note',
 	elm$json$Json$Decode$string,
 	'',
-	A4(
-		NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional,
-		'gender',
-		elm$json$Json$Decode$string,
-		'',
+	A2(
+		NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom,
+		A2(
+			elm$json$Json$Decode$andThen,
+			author$project$JsonDecoders$genderDecoder,
+			A2(elm$json$Json$Decode$field, 'gender', elm$json$Json$Decode$string)),
 		A4(
 			NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional,
 			'masteryIdList',
@@ -6209,6 +6229,18 @@ var author$project$ViewHandler$viewJobCategoriesJson = function (model) {
 				A2(elm$core$List$map, author$project$ViewHandler$viewJobCategoryJson, model.jobCategories))
 			]));
 };
+var author$project$Gender$genderToString = function (gender) {
+	switch (gender.$) {
+		case 'Male':
+			var value = gender.a;
+			return value;
+		case 'Female':
+			var value = gender.a;
+			return value;
+		default:
+			return '';
+	}
+};
 var elm$core$Basics$negate = function (n) {
 	return -n;
 };
@@ -6261,7 +6293,7 @@ var author$project$Job$jobToStringable = {
 			author$project$Stringable$toString,
 			author$project$Stringable$list(author$project$Stringable$int),
 			certificationIdList);
-		return 'Job { ' + ('id: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, id) + (', name: ' + (name + (', jobCategoryId: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, jobCategoryId) + (', proficiencyIdList: ' + (pil + (', certificationIdList: ' + (cil + (', masteryIdList: ' + (mil + (', gender: ' + (gender + (', note: ' + (note + ' }'))))))))))))))));
+		return 'Job { ' + ('id: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, id) + (', name: ' + (name + (', jobCategoryId: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, jobCategoryId) + (', proficiencyIdList: ' + (pil + (', certificationIdList: ' + (cil + (', masteryIdList: ' + (mil + (', gender: ' + (author$project$Gender$genderToString(gender) + (', note: ' + (note + ' }'))))))))))))))));
 	}
 };
 var author$project$ViewHandler$viewJobJson = function (job) {

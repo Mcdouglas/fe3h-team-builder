@@ -1,10 +1,11 @@
 module Job exposing (..)
 
+import Gender exposing (GenderUnionType(..), genderToString)
 import Stringable exposing (..)
 
 
 type alias Job =
-    { id : Int, name : String, jobCategoryId : Int, proficiencyIdList : List Int, certificationIdList : List Int, masteryIdList : List Int, gender : String, note : String }
+    { id : Int, name : String, jobCategoryId : Int, proficiencyIdList : List Int, certificationIdList : List Int, masteryIdList : List Int, gender : GenderUnionType, note : String }
 
 
 jobToStringable : Stringable Job
@@ -35,7 +36,7 @@ jobToStringable =
                 ++ ", masteryIdList: "
                 ++ mil
                 ++ ", gender: "
-                ++ gender
+                ++ genderToString gender
                 ++ ", note: "
                 ++ note
                 ++ " }"
