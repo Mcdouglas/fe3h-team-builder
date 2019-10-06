@@ -7,7 +7,7 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 import Http
 import JsonDao exposing (handleHttpResponse, setup)
-import JsonLoader exposing (viewJsonFileOrError)
+import ViewHandler exposing (viewJsonFileOrError)
 
 
 view model =
@@ -24,8 +24,7 @@ view model =
                 """
             ]
         , div []
-            [ viewJsonFileOrError model
-            ]
+            [ viewJsonFileOrError model ]
         ]
 
 

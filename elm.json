@@ -3,7 +3,8 @@
     "source-directories": [
         "src",
         "src/dao",
-        "src/model"
+        "src/model",
+        "src/view"
     ],
     "elm-version": "0.19.0",
     "dependencies": {

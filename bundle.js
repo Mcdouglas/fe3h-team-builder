@@ -6038,35 +6038,47 @@ var elm$virtual_dom$VirtualDom$toHandlerInt = function (handler) {
 			return 3;
 	}
 };
-var elm$html$Html$div = _VirtualDom_node('div');
-var elm$html$Html$h3 = _VirtualDom_node('h3');
+var elm$html$Html$td = _VirtualDom_node('td');
 var elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var elm$html$Html$text = elm$virtual_dom$VirtualDom$text;
-var author$project$JsonLoader$viewError = function (errorMessage) {
-	var errorHeading = 'Couldn\'t fetch json file at this time.';
+var elm$html$Html$tr = _VirtualDom_node('tr');
+var author$project$ViewHandler$viewClassCategory = function (element) {
 	return A2(
-		elm$html$Html$div,
+		elm$html$Html$tr,
 		_List_Nil,
 		_List_fromArray(
 			[
 				A2(
-				elm$html$Html$h3,
+				elm$html$Html$td,
 				_List_Nil,
 				_List_fromArray(
 					[
-						elm$html$Html$text(errorHeading)
+						elm$html$Html$text(
+						elm$core$String$fromInt(element.id))
 					])),
-				elm$html$Html$text('Error: ' + errorMessage)
-			]));
-};
-var elm$html$Html$li = _VirtualDom_node('li');
-var author$project$JsonLoader$viewElement = function (element) {
-	return A2(
-		elm$html$Html$li,
-		_List_Nil,
-		_List_fromArray(
-			[
-				elm$html$Html$text(element)
+				A2(
+				elm$html$Html$td,
+				_List_Nil,
+				_List_fromArray(
+					[
+						elm$html$Html$text(element.category)
+					])),
+				A2(
+				elm$html$Html$td,
+				_List_Nil,
+				_List_fromArray(
+					[
+						elm$html$Html$text(
+						elm$core$String$fromInt(element.experience))
+					])),
+				A2(
+				elm$html$Html$td,
+				_List_Nil,
+				_List_fromArray(
+					[
+						elm$html$Html$text(
+						elm$core$String$fromInt(element.level))
+					]))
 			]));
 };
 var elm$core$List$map = F2(
@@ -6083,8 +6095,32 @@ var elm$core$List$map = F2(
 			_List_Nil,
 			xs);
 	});
+var elm$html$Html$div = _VirtualDom_node('div');
 var elm$html$Html$ul = _VirtualDom_node('ul');
-var author$project$JsonLoader$viewJsonFile = function (jsonFile) {
+var author$project$ViewHandler$viewClassCategories = function (elements) {
+	return A2(
+		elm$html$Html$div,
+		_List_Nil,
+		_List_fromArray(
+			[
+				A2(
+				elm$html$Html$ul,
+				_List_Nil,
+				A2(elm$core$List$map, author$project$ViewHandler$viewClassCategory, elements))
+			]));
+};
+var elm$html$Html$li = _VirtualDom_node('li');
+var author$project$ViewHandler$viewElement = function (element) {
+	return A2(
+		elm$html$Html$li,
+		_List_Nil,
+		_List_fromArray(
+			[
+				elm$html$Html$text(element)
+			]));
+};
+var elm$html$Html$h3 = _VirtualDom_node('h3');
+var author$project$ViewHandler$viewFlatFile = function (elements) {
 	return A2(
 		elm$html$Html$div,
 		_List_Nil,
@@ -6100,16 +6136,79 @@ var author$project$JsonLoader$viewJsonFile = function (jsonFile) {
 				A2(
 				elm$html$Html$ul,
 				_List_Nil,
-				A2(elm$core$List$map, author$project$JsonLoader$viewElement, jsonFile))
+				A2(elm$core$List$map, author$project$ViewHandler$viewElement, elements))
 			]));
 };
-var author$project$JsonLoader$viewJsonFileOrError = function (model) {
+var elm$html$Html$th = _VirtualDom_node('th');
+var author$project$ViewHandler$viewTableHeader = A2(
+	elm$html$Html$tr,
+	_List_Nil,
+	_List_fromArray(
+		[
+			A2(
+			elm$html$Html$th,
+			_List_Nil,
+			_List_fromArray(
+				[
+					elm$html$Html$text('Id')
+				])),
+			A2(
+			elm$html$Html$th,
+			_List_Nil,
+			_List_fromArray(
+				[
+					elm$html$Html$text('Category')
+				])),
+			A2(
+			elm$html$Html$th,
+			_List_Nil,
+			_List_fromArray(
+				[
+					elm$html$Html$text('Experience')
+				])),
+			A2(
+			elm$html$Html$th,
+			_List_Nil,
+			_List_fromArray(
+				[
+					elm$html$Html$text('Level req.')
+				]))
+		]));
+var author$project$ViewHandler$viewEntirePage = function (model) {
+	return A2(
+		elm$html$Html$div,
+		_List_Nil,
+		_List_fromArray(
+			[
+				author$project$ViewHandler$viewFlatFile(model.elements),
+				author$project$ViewHandler$viewTableHeader,
+				author$project$ViewHandler$viewClassCategories(model.classCategories)
+			]));
+};
+var author$project$ViewHandler$viewError = function (errorMessage) {
+	var errorHeading = 'Couldn\'t fetch json file at this time.';
+	return A2(
+		elm$html$Html$div,
+		_List_Nil,
+		_List_fromArray(
+			[
+				A2(
+				elm$html$Html$h3,
+				_List_Nil,
+				_List_fromArray(
+					[
+						elm$html$Html$text(errorHeading)
+					])),
+				elm$html$Html$text('Error: ' + errorMessage)
+			]));
+};
+var author$project$ViewHandler$viewJsonFileOrError = function (model) {
 	var _n0 = model.errorMessage;
 	if (_n0.$ === 'Just') {
 		var message = _n0.a;
-		return author$project$JsonLoader$viewError(message);
+		return author$project$ViewHandler$viewError(message);
 	} else {
-		return author$project$JsonLoader$viewJsonFile(model.elements);
+		return author$project$ViewHandler$viewEntirePage(model);
 	}
 };
 var elm$html$Html$h1 = _VirtualDom_node('h1');
@@ -6160,7 +6259,7 @@ var author$project$HomePage$view = function (model) {
 				_List_Nil,
 				_List_fromArray(
 					[
-						author$project$JsonLoader$viewJsonFileOrError(model)
+						author$project$ViewHandler$viewJsonFileOrError(model)
 					]))
 			]));
 };
