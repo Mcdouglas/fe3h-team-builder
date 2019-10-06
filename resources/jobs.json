@@ -1,0 +1,34 @@
+[
+    {
+        "id": 0,
+        "name": "Commoner",
+        "jobCategoryId": 0,
+        "masteryId": 0,
+        "gender": "",
+        "note": "Can use some magic"
+    },
+    {
+        "id": 1,
+        "name": "Noble",
+        "jobCategoryId": 0,
+        "masteryId": 0,
+        "gender": "",
+        "note": "Can use some magic"
+    },
+    {
+        "id": 666,
+        "name": "Mortal Savant",
+        "jobCategoryId": 4,
+        "proficiencyIdList": [
+            0
+        ],
+        "certificationIdList": [
+            0
+        ],
+        "masteryIdList": [
+            0
+        ],
+        "gender": "",
+        "note": "Can use magic"
+    }
+]
