@@ -1,15 +1,15 @@
 module JsonDao exposing (..)
 
-import CustomTypes exposing (..)
 import Http
 import HttpCommands exposing (..)
+import Job exposing (..)
+import JobCategory exposing (..)
 import Json.Decode exposing (Decoder, Error(..), decodeString, list, string)
 import JsonDecoders exposing (..)
 
 
 type alias JsonModel =
-    { elements : List String
-    , jobCategories : List JobCategory
+    { jobCategories : List JobCategory
     , jobs : List Job
     , errorMessage : Maybe String
     }
@@ -20,9 +20,8 @@ setup =
     ( JsonModel
         []
         []
-        []
         Nothing
-    , defaultHttpCommand
+    , getJobCategories
     )
 
 
@@ -30,17 +29,7 @@ handleHttpResponse : Msg -> JsonModel -> ( JsonModel, Cmd Msg )
 handleHttpResponse msg model =
     case msg of
         SendHttpRequest ->
-            ( model, defaultHttpCommand )
-
-        DataReceived (Ok elements) ->
-            ( { model | elements = elements }, getJobCategories )
-
-        DataReceived (Err httpError) ->
-            ( { model
-                | errorMessage = Just (buildErrorMessage httpError)
-              }
-            , Cmd.none
-            )
+            ( model, getJobCategories )
 
         JobCategoriesReceived (Ok elements) ->
             ( { model | jobCategories = elements }, getJobs )

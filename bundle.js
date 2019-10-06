@@ -4485,9 +4485,13 @@ function _Browser_load(url)
 		}
 	}));
 }
-var author$project$HttpCommands$DataReceived = function (a) {
-	return {$: 'DataReceived', a: a};
+var author$project$HttpCommands$JobCategoriesReceived = function (a) {
+	return {$: 'JobCategoriesReceived', a: a};
 };
+var elm$core$Basics$apR = F2(
+	function (x, f) {
+		return f(x);
+	});
 var elm$core$Array$branchFactor = 32;
 var elm$core$Array$Array_elm_builtin = F4(
 	function (a, b, c, d) {
@@ -4634,10 +4638,6 @@ var elm$core$Array$compressNodes = F2(
 				continue compressNodes;
 			}
 		}
-	});
-var elm$core$Basics$apR = F2(
-	function (x, f) {
-		return f(x);
 	});
 var elm$core$Basics$eq = _Utils_equal;
 var elm$core$Tuple$first = function (_n0) {
@@ -4963,9 +4963,136 @@ var elm$json$Json$Decode$errorToStringHelp = F2(
 			}
 		}
 	});
-var elm$json$Json$Decode$list = _Json_decodeList;
+var elm$json$Json$Decode$map2 = _Json_map2;
+var NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom = elm$json$Json$Decode$map2(elm$core$Basics$apR);
+var elm$json$Json$Decode$andThen = _Json_andThen;
+var elm$json$Json$Decode$decodeValue = _Json_run;
+var elm$json$Json$Decode$fail = _Json_fail;
+var elm$json$Json$Decode$null = _Json_decodeNull;
+var elm$json$Json$Decode$oneOf = _Json_oneOf;
+var elm$json$Json$Decode$succeed = _Json_succeed;
+var elm$json$Json$Decode$value = _Json_decodeValue;
+var NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optionalDecoder = F3(
+	function (pathDecoder, valDecoder, fallback) {
+		var nullOr = function (decoder) {
+			return elm$json$Json$Decode$oneOf(
+				_List_fromArray(
+					[
+						decoder,
+						elm$json$Json$Decode$null(fallback)
+					]));
+		};
+		var handleResult = function (input) {
+			var _n0 = A2(elm$json$Json$Decode$decodeValue, pathDecoder, input);
+			if (_n0.$ === 'Ok') {
+				var rawValue = _n0.a;
+				var _n1 = A2(
+					elm$json$Json$Decode$decodeValue,
+					nullOr(valDecoder),
+					rawValue);
+				if (_n1.$ === 'Ok') {
+					var finalResult = _n1.a;
+					return elm$json$Json$Decode$succeed(finalResult);
+				} else {
+					var finalErr = _n1.a;
+					return elm$json$Json$Decode$fail(
+						elm$json$Json$Decode$errorToString(finalErr));
+				}
+			} else {
+				return elm$json$Json$Decode$succeed(fallback);
+			}
+		};
+		return A2(elm$json$Json$Decode$andThen, handleResult, elm$json$Json$Decode$value);
+	});
+var elm$json$Json$Decode$field = _Json_decodeField;
+var NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional = F4(
+	function (key, valDecoder, fallback, decoder) {
+		return A2(
+			NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom,
+			A3(
+				NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optionalDecoder,
+				A2(elm$json$Json$Decode$field, key, elm$json$Json$Decode$value),
+				valDecoder,
+				fallback),
+			decoder);
+	});
+var NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required = F3(
+	function (key, valDecoder, decoder) {
+		return A2(
+			NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom,
+			A2(elm$json$Json$Decode$field, key, valDecoder),
+			decoder);
+	});
+var author$project$JobCategory$JobCategory = F4(
+	function (id, category, experience, level) {
+		return {category: category, experience: experience, id: id, level: level};
+	});
+var author$project$Category$Advanced = function (a) {
+	return {$: 'Advanced', a: a};
+};
+var author$project$Category$Beginner = function (a) {
+	return {$: 'Beginner', a: a};
+};
+var author$project$Category$Intermediate = function (a) {
+	return {$: 'Intermediate', a: a};
+};
+var author$project$Category$Master = function (a) {
+	return {$: 'Master', a: a};
+};
+var author$project$Category$Starting = function (a) {
+	return {$: 'Starting', a: a};
+};
+var author$project$Category$Unique = function (a) {
+	return {$: 'Unique', a: a};
+};
+var author$project$JsonDecoders$categoryDecoder = function (category) {
+	switch (category) {
+		case 'Starting':
+			return elm$json$Json$Decode$succeed(
+				author$project$Category$Starting(category));
+		case 'Beginner':
+			return elm$json$Json$Decode$succeed(
+				author$project$Category$Beginner(category));
+		case 'Intermediate':
+			return elm$json$Json$Decode$succeed(
+				author$project$Category$Intermediate(category));
+		case 'Advanced':
+			return elm$json$Json$Decode$succeed(
+				author$project$Category$Advanced(category));
+		case 'Master':
+			return elm$json$Json$Decode$succeed(
+				author$project$Category$Master(category));
+		case 'Unique':
+			return elm$json$Json$Decode$succeed(
+				author$project$Category$Unique(category));
+		default:
+			return elm$json$Json$Decode$succeed(
+				author$project$Category$Starting(category));
+	}
+};
+var elm$json$Json$Decode$int = _Json_decodeInt;
 var elm$json$Json$Decode$string = _Json_decodeString;
-var author$project$JsonDecoders$defaultDecoder = elm$json$Json$Decode$list(elm$json$Json$Decode$string);
+var author$project$JsonDecoders$jobCategoriesDecoder = A4(
+	NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional,
+	'level',
+	elm$json$Json$Decode$int,
+	0,
+	A4(
+		NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional,
+		'experience',
+		elm$json$Json$Decode$int,
+		0,
+		A2(
+			NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom,
+			A2(
+				elm$json$Json$Decode$andThen,
+				author$project$JsonDecoders$categoryDecoder,
+				A2(elm$json$Json$Decode$field, 'category', elm$json$Json$Decode$string)),
+			A3(
+				NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+				'id',
+				elm$json$Json$Decode$int,
+				elm$json$Json$Decode$succeed(author$project$JobCategory$JobCategory)))));
 var elm$core$Result$mapError = F2(
 	function (f, result) {
 		if (result.$ === 'Ok') {
@@ -5847,153 +5974,7 @@ var elm$http$Http$get = function (r) {
 	return elm$http$Http$request(
 		{body: elm$http$Http$emptyBody, expect: r.expect, headers: _List_Nil, method: 'GET', timeout: elm$core$Maybe$Nothing, tracker: elm$core$Maybe$Nothing, url: r.url});
 };
-var author$project$HttpCommands$defaultHttpCommand = elm$http$Http$get(
-	{
-		expect: A2(elm$http$Http$expectJson, author$project$HttpCommands$DataReceived, author$project$JsonDecoders$defaultDecoder),
-		url: '../../resources/flat.json'
-	});
-var author$project$JsonDao$JsonModel = F4(
-	function (elements, jobCategories, jobs, errorMessage) {
-		return {elements: elements, errorMessage: errorMessage, jobCategories: jobCategories, jobs: jobs};
-	});
-var author$project$JsonDao$setup = _Utils_Tuple2(
-	A4(author$project$JsonDao$JsonModel, _List_Nil, _List_Nil, _List_Nil, elm$core$Maybe$Nothing),
-	author$project$HttpCommands$defaultHttpCommand);
-var author$project$HomePage$init = function (_n0) {
-	return author$project$JsonDao$setup;
-};
-var author$project$HttpCommands$JobCategoriesReceived = function (a) {
-	return {$: 'JobCategoriesReceived', a: a};
-};
-var elm$json$Json$Decode$map2 = _Json_map2;
-var NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom = elm$json$Json$Decode$map2(elm$core$Basics$apR);
-var elm$json$Json$Decode$andThen = _Json_andThen;
-var elm$json$Json$Decode$decodeValue = _Json_run;
-var elm$json$Json$Decode$fail = _Json_fail;
-var elm$json$Json$Decode$null = _Json_decodeNull;
-var elm$json$Json$Decode$oneOf = _Json_oneOf;
-var elm$json$Json$Decode$succeed = _Json_succeed;
-var elm$json$Json$Decode$value = _Json_decodeValue;
-var NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optionalDecoder = F3(
-	function (pathDecoder, valDecoder, fallback) {
-		var nullOr = function (decoder) {
-			return elm$json$Json$Decode$oneOf(
-				_List_fromArray(
-					[
-						decoder,
-						elm$json$Json$Decode$null(fallback)
-					]));
-		};
-		var handleResult = function (input) {
-			var _n0 = A2(elm$json$Json$Decode$decodeValue, pathDecoder, input);
-			if (_n0.$ === 'Ok') {
-				var rawValue = _n0.a;
-				var _n1 = A2(
-					elm$json$Json$Decode$decodeValue,
-					nullOr(valDecoder),
-					rawValue);
-				if (_n1.$ === 'Ok') {
-					var finalResult = _n1.a;
-					return elm$json$Json$Decode$succeed(finalResult);
-				} else {
-					var finalErr = _n1.a;
-					return elm$json$Json$Decode$fail(
-						elm$json$Json$Decode$errorToString(finalErr));
-				}
-			} else {
-				return elm$json$Json$Decode$succeed(fallback);
-			}
-		};
-		return A2(elm$json$Json$Decode$andThen, handleResult, elm$json$Json$Decode$value);
-	});
-var elm$json$Json$Decode$field = _Json_decodeField;
-var NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional = F4(
-	function (key, valDecoder, fallback, decoder) {
-		return A2(
-			NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom,
-			A3(
-				NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optionalDecoder,
-				A2(elm$json$Json$Decode$field, key, elm$json$Json$Decode$value),
-				valDecoder,
-				fallback),
-			decoder);
-	});
-var NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required = F3(
-	function (key, valDecoder, decoder) {
-		return A2(
-			NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom,
-			A2(elm$json$Json$Decode$field, key, valDecoder),
-			decoder);
-	});
-var author$project$CustomTypes$JobCategory = F4(
-	function (id, category, experience, level) {
-		return {category: category, experience: experience, id: id, level: level};
-	});
-var author$project$Category$Advanced = function (a) {
-	return {$: 'Advanced', a: a};
-};
-var author$project$Category$Beginner = function (a) {
-	return {$: 'Beginner', a: a};
-};
-var author$project$Category$Intermediate = function (a) {
-	return {$: 'Intermediate', a: a};
-};
-var author$project$Category$Master = function (a) {
-	return {$: 'Master', a: a};
-};
-var author$project$Category$Starting = function (a) {
-	return {$: 'Starting', a: a};
-};
-var author$project$Category$Unique = function (a) {
-	return {$: 'Unique', a: a};
-};
-var author$project$JsonDecoders$categoryDecoder = function (category) {
-	switch (category) {
-		case 'Starting':
-			return elm$json$Json$Decode$succeed(
-				author$project$Category$Starting(category));
-		case 'Beginner':
-			return elm$json$Json$Decode$succeed(
-				author$project$Category$Beginner(category));
-		case 'Intermediate':
-			return elm$json$Json$Decode$succeed(
-				author$project$Category$Intermediate(category));
-		case 'Advanced':
-			return elm$json$Json$Decode$succeed(
-				author$project$Category$Advanced(category));
-		case 'Master':
-			return elm$json$Json$Decode$succeed(
-				author$project$Category$Master(category));
-		case 'Unique':
-			return elm$json$Json$Decode$succeed(
-				author$project$Category$Unique(category));
-		default:
-			return elm$json$Json$Decode$succeed(
-				author$project$Category$Starting(category));
-	}
-};
-var elm$json$Json$Decode$int = _Json_decodeInt;
-var author$project$JsonDecoders$jobCategoriesDecoder = A4(
-	NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional,
-	'level',
-	elm$json$Json$Decode$int,
-	0,
-	A4(
-		NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional,
-		'experience',
-		elm$json$Json$Decode$int,
-		0,
-		A2(
-			NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom,
-			A2(
-				elm$json$Json$Decode$andThen,
-				author$project$JsonDecoders$categoryDecoder,
-				A2(elm$json$Json$Decode$field, 'category', elm$json$Json$Decode$string)),
-			A3(
-				NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-				'id',
-				elm$json$Json$Decode$int,
-				elm$json$Json$Decode$succeed(author$project$CustomTypes$JobCategory)))));
+var elm$json$Json$Decode$list = _Json_decodeList;
 var author$project$HttpCommands$getJobCategories = elm$http$Http$get(
 	{
 		expect: A2(
@@ -6002,10 +5983,20 @@ var author$project$HttpCommands$getJobCategories = elm$http$Http$get(
 			elm$json$Json$Decode$list(author$project$JsonDecoders$jobCategoriesDecoder)),
 		url: '../../resources/job-categories.json'
 	});
+var author$project$JsonDao$JsonModel = F3(
+	function (jobCategories, jobs, errorMessage) {
+		return {errorMessage: errorMessage, jobCategories: jobCategories, jobs: jobs};
+	});
+var author$project$JsonDao$setup = _Utils_Tuple2(
+	A3(author$project$JsonDao$JsonModel, _List_Nil, _List_Nil, elm$core$Maybe$Nothing),
+	author$project$HttpCommands$getJobCategories);
+var author$project$HomePage$init = function (_n0) {
+	return author$project$JsonDao$setup;
+};
 var author$project$HttpCommands$JobsReceived = function (a) {
 	return {$: 'JobsReceived', a: a};
 };
-var author$project$CustomTypes$Job = F8(
+var author$project$Job$Job = F8(
 	function (id, name, jobCategoryId, proficiencyIdList, certificationIdList, masteryIdList, gender, note) {
 		return {certificationIdList: certificationIdList, gender: gender, id: id, jobCategoryId: jobCategoryId, masteryIdList: masteryIdList, name: name, note: note, proficiencyIdList: proficiencyIdList};
 	});
@@ -6046,7 +6037,7 @@ var author$project$JsonDecoders$jobsDecoder = A4(
 								NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
 								'id',
 								elm$json$Json$Decode$int,
-								elm$json$Json$Decode$succeed(author$project$CustomTypes$Job)))))))));
+								elm$json$Json$Decode$succeed(author$project$Job$Job)))))))));
 var author$project$HttpCommands$getJobs = elm$http$Http$get(
 	{
 		expect: A2(
@@ -6078,26 +6069,7 @@ var author$project$JsonDao$handleHttpResponse = F2(
 	function (msg, model) {
 		switch (msg.$) {
 			case 'SendHttpRequest':
-				return _Utils_Tuple2(model, author$project$HttpCommands$defaultHttpCommand);
-			case 'DataReceived':
-				if (msg.a.$ === 'Ok') {
-					var elements = msg.a.a;
-					return _Utils_Tuple2(
-						_Utils_update(
-							model,
-							{elements: elements}),
-						author$project$HttpCommands$getJobCategories);
-				} else {
-					var httpError = msg.a.a;
-					return _Utils_Tuple2(
-						_Utils_update(
-							model,
-							{
-								errorMessage: elm$core$Maybe$Just(
-									author$project$JsonDao$buildErrorMessage(httpError))
-							}),
-						elm$core$Platform$Cmd$none);
-				}
+				return _Utils_Tuple2(model, author$project$HttpCommands$getJobCategories);
 			case 'JobCategoriesReceived':
 				if (msg.a.$ === 'Ok') {
 					var elements = msg.a.a;
@@ -6142,233 +6114,6 @@ var author$project$HomePage$update = F2(
 	function (msg, model) {
 		return A2(author$project$JsonDao$handleHttpResponse, msg, model);
 	});
-var elm$json$Json$Decode$map = _Json_map1;
-var elm$virtual_dom$VirtualDom$toHandlerInt = function (handler) {
-	switch (handler.$) {
-		case 'Normal':
-			return 0;
-		case 'MayStopPropagation':
-			return 1;
-		case 'MayPreventDefault':
-			return 2;
-		default:
-			return 3;
-	}
-};
-var elm$html$Html$li = _VirtualDom_node('li');
-var elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
-var elm$html$Html$text = elm$virtual_dom$VirtualDom$text;
-var author$project$ViewHandler$viewElement = function (element) {
-	return A2(
-		elm$html$Html$li,
-		_List_Nil,
-		_List_fromArray(
-			[
-				elm$html$Html$text(element)
-			]));
-};
-var elm$core$List$map = F2(
-	function (f, xs) {
-		return A3(
-			elm$core$List$foldr,
-			F2(
-				function (x, acc) {
-					return A2(
-						elm$core$List$cons,
-						f(x),
-						acc);
-				}),
-			_List_Nil,
-			xs);
-	});
-var elm$html$Html$div = _VirtualDom_node('div');
-var elm$html$Html$h3 = _VirtualDom_node('h3');
-var elm$html$Html$ul = _VirtualDom_node('ul');
-var author$project$ViewHandler$viewFlatFile = function (elements) {
-	return A2(
-		elm$html$Html$div,
-		_List_Nil,
-		_List_fromArray(
-			[
-				A2(
-				elm$html$Html$h3,
-				_List_Nil,
-				_List_fromArray(
-					[
-						elm$html$Html$text('Json file')
-					])),
-				A2(
-				elm$html$Html$ul,
-				_List_Nil,
-				A2(elm$core$List$map, author$project$ViewHandler$viewElement, elements))
-			]));
-};
-var elm$html$Html$th = _VirtualDom_node('th');
-var elm$html$Html$tr = _VirtualDom_node('tr');
-var author$project$ViewHandler$viewHeaderJob = A2(
-	elm$html$Html$tr,
-	_List_Nil,
-	_List_fromArray(
-		[
-			A2(
-			elm$html$Html$th,
-			_List_Nil,
-			_List_fromArray(
-				[
-					elm$html$Html$text('Id')
-				])),
-			A2(
-			elm$html$Html$th,
-			_List_Nil,
-			_List_fromArray(
-				[
-					elm$html$Html$text('Category')
-				])),
-			A2(
-			elm$html$Html$th,
-			_List_Nil,
-			_List_fromArray(
-				[
-					elm$html$Html$text('Experience')
-				])),
-			A2(
-			elm$html$Html$th,
-			_List_Nil,
-			_List_fromArray(
-				[
-					elm$html$Html$text('Level req.')
-				]))
-		]));
-var author$project$ViewHandler$viewSplitRow = function (elements) {
-	return elm$html$Html$text(
-		A2(elm$core$String$join, ', ', elements));
-};
-var elm$html$Html$td = _VirtualDom_node('td');
-var author$project$ViewHandler$viewJob = function (element) {
-	return A2(
-		elm$html$Html$tr,
-		_List_Nil,
-		_List_fromArray(
-			[
-				A2(
-				elm$html$Html$td,
-				_List_Nil,
-				_List_fromArray(
-					[
-						elm$html$Html$text(
-						elm$core$String$fromInt(element.id))
-					])),
-				A2(
-				elm$html$Html$td,
-				_List_Nil,
-				_List_fromArray(
-					[
-						elm$html$Html$text(element.name)
-					])),
-				A2(
-				elm$html$Html$td,
-				_List_Nil,
-				_List_fromArray(
-					[
-						elm$html$Html$text(
-						elm$core$String$fromInt(element.jobCategoryId))
-					])),
-				A2(
-				elm$html$Html$td,
-				_List_Nil,
-				_List_fromArray(
-					[
-						author$project$ViewHandler$viewSplitRow(
-						A2(elm$core$List$map, elm$core$String$fromInt, element.proficiencyIdList))
-					])),
-				A2(
-				elm$html$Html$td,
-				_List_Nil,
-				_List_fromArray(
-					[
-						author$project$ViewHandler$viewSplitRow(
-						A2(elm$core$List$map, elm$core$String$fromInt, element.certificationIdList))
-					])),
-				A2(
-				elm$html$Html$td,
-				_List_Nil,
-				_List_fromArray(
-					[
-						author$project$ViewHandler$viewSplitRow(
-						A2(elm$core$List$map, elm$core$String$fromInt, element.masteryIdList))
-					])),
-				A2(
-				elm$html$Html$td,
-				_List_Nil,
-				_List_fromArray(
-					[
-						elm$html$Html$text(element.gender)
-					])),
-				A2(
-				elm$html$Html$td,
-				_List_Nil,
-				_List_fromArray(
-					[
-						elm$html$Html$text(element.note)
-					]))
-			]));
-};
-var author$project$ViewHandler$viewRowsJob = function (elements) {
-	return A2(
-		elm$html$Html$div,
-		_List_Nil,
-		_List_fromArray(
-			[
-				A2(
-				elm$html$Html$ul,
-				_List_Nil,
-				A2(elm$core$List$map, author$project$ViewHandler$viewJob, elements))
-			]));
-};
-var author$project$ViewHandler$viewTableJob = function (model) {
-	return A2(
-		elm$html$Html$div,
-		_List_Nil,
-		_List_fromArray(
-			[
-				author$project$ViewHandler$viewHeaderJob,
-				author$project$ViewHandler$viewRowsJob(model.jobs)
-			]));
-};
-var author$project$ViewHandler$viewHeaderJobCategory = A2(
-	elm$html$Html$tr,
-	_List_Nil,
-	_List_fromArray(
-		[
-			A2(
-			elm$html$Html$th,
-			_List_Nil,
-			_List_fromArray(
-				[
-					elm$html$Html$text('Id')
-				])),
-			A2(
-			elm$html$Html$th,
-			_List_Nil,
-			_List_fromArray(
-				[
-					elm$html$Html$text('Category')
-				])),
-			A2(
-			elm$html$Html$th,
-			_List_Nil,
-			_List_fromArray(
-				[
-					elm$html$Html$text('Experience')
-				])),
-			A2(
-			elm$html$Html$th,
-			_List_Nil,
-			_List_fromArray(
-				[
-					elm$html$Html$text('Level req.')
-				]))
-		]));
 var author$project$Category$categoryToString = function (category) {
 	switch (category.$) {
 		case 'Starting':
@@ -6391,47 +6136,68 @@ var author$project$Category$categoryToString = function (category) {
 			return value;
 	}
 };
-var author$project$ViewHandler$viewJobCategory = function (element) {
+var author$project$Stringable$int = {
+	stringable: function (x) {
+		return elm$core$String$fromInt(x);
+	}
+};
+var author$project$Stringable$toString = F2(
+	function (_n0, x) {
+		var stringable = _n0.stringable;
+		return stringable(x);
+	});
+var author$project$JobCategory$jobCategoryToStringable = {
+	stringable: function (_n0) {
+		var id = _n0.id;
+		var category = _n0.category;
+		var experience = _n0.experience;
+		var level = _n0.level;
+		var str = author$project$Category$categoryToString(category);
+		return 'Job { ' + ('id: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, id) + (', category: ' + (str + (', experience: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, experience) + (', level: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, level) + ' }'))))))));
+	}
+};
+var elm$json$Json$Decode$map = _Json_map1;
+var elm$virtual_dom$VirtualDom$toHandlerInt = function (handler) {
+	switch (handler.$) {
+		case 'Normal':
+			return 0;
+		case 'MayStopPropagation':
+			return 1;
+		case 'MayPreventDefault':
+			return 2;
+		default:
+			return 3;
+	}
+};
+var elm$html$Html$div = _VirtualDom_node('div');
+var elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
+var elm$html$Html$text = elm$virtual_dom$VirtualDom$text;
+var author$project$ViewHandler$viewJobCategoryJson = function (element) {
+	var str = A2(author$project$Stringable$toString, author$project$JobCategory$jobCategoryToStringable, element);
 	return A2(
-		elm$html$Html$tr,
+		elm$html$Html$div,
 		_List_Nil,
 		_List_fromArray(
 			[
-				A2(
-				elm$html$Html$td,
-				_List_Nil,
-				_List_fromArray(
-					[
-						elm$html$Html$text(
-						elm$core$String$fromInt(element.id))
-					])),
-				A2(
-				elm$html$Html$td,
-				_List_Nil,
-				_List_fromArray(
-					[
-						elm$html$Html$text(
-						author$project$Category$categoryToString(element.category))
-					])),
-				A2(
-				elm$html$Html$td,
-				_List_Nil,
-				_List_fromArray(
-					[
-						elm$html$Html$text(
-						elm$core$String$fromInt(element.experience))
-					])),
-				A2(
-				elm$html$Html$td,
-				_List_Nil,
-				_List_fromArray(
-					[
-						elm$html$Html$text(
-						elm$core$String$fromInt(element.level))
-					]))
+				elm$html$Html$text(str)
 			]));
 };
-var author$project$ViewHandler$viewRowsJobCategory = function (elements) {
+var elm$core$List$map = F2(
+	function (f, xs) {
+		return A3(
+			elm$core$List$foldr,
+			F2(
+				function (x, acc) {
+					return A2(
+						elm$core$List$cons,
+						f(x),
+						acc);
+				}),
+			_List_Nil,
+			xs);
+	});
+var elm$html$Html$ul = _VirtualDom_node('ul');
+var author$project$ViewHandler$viewJobCategoriesJson = function (model) {
 	return A2(
 		elm$html$Html$div,
 		_List_Nil,
@@ -6440,17 +6206,84 @@ var author$project$ViewHandler$viewRowsJobCategory = function (elements) {
 				A2(
 				elm$html$Html$ul,
 				_List_Nil,
-				A2(elm$core$List$map, author$project$ViewHandler$viewJobCategory, elements))
+				A2(elm$core$List$map, author$project$ViewHandler$viewJobCategoryJson, model.jobCategories))
 			]));
 };
-var author$project$ViewHandler$viewTableJobCategory = function (model) {
+var elm$core$Basics$negate = function (n) {
+	return -n;
+};
+var elm$core$String$slice = _String_slice;
+var elm$core$String$dropRight = F2(
+	function (n, string) {
+		return (n < 1) ? string : A3(elm$core$String$slice, 0, -n, string);
+	});
+var author$project$Stringable$list = function (nestedStringable) {
+	return {
+		stringable: function (xs) {
+			var str = A2(
+				elm$core$String$dropRight,
+				2,
+				A3(
+					elm$core$List$foldl,
+					F2(
+						function (a, b) {
+							return a + (', ' + b);
+						}),
+					'',
+					elm$core$List$reverse(
+						A2(
+							elm$core$List$map,
+							author$project$Stringable$toString(nestedStringable),
+							xs))));
+			return '[ ' + (str + ' ]');
+		}
+	};
+};
+var author$project$Job$jobToStringable = {
+	stringable: function (_n0) {
+		var id = _n0.id;
+		var name = _n0.name;
+		var jobCategoryId = _n0.jobCategoryId;
+		var proficiencyIdList = _n0.proficiencyIdList;
+		var certificationIdList = _n0.certificationIdList;
+		var masteryIdList = _n0.masteryIdList;
+		var gender = _n0.gender;
+		var note = _n0.note;
+		var pil = A2(
+			author$project$Stringable$toString,
+			author$project$Stringable$list(author$project$Stringable$int),
+			proficiencyIdList);
+		var mil = A2(
+			author$project$Stringable$toString,
+			author$project$Stringable$list(author$project$Stringable$int),
+			masteryIdList);
+		var cil = A2(
+			author$project$Stringable$toString,
+			author$project$Stringable$list(author$project$Stringable$int),
+			certificationIdList);
+		return 'Job { ' + ('id: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, id) + (', name: ' + (name + (', jobCategoryId: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, jobCategoryId) + (', proficiencyIdList: ' + (pil + (', certificationIdList: ' + (cil + (', masteryIdList: ' + (mil + (', gender: ' + (gender + (', note: ' + (note + ' }'))))))))))))))));
+	}
+};
+var author$project$ViewHandler$viewJobJson = function (job) {
+	var str = A2(author$project$Stringable$toString, author$project$Job$jobToStringable, job);
 	return A2(
 		elm$html$Html$div,
 		_List_Nil,
 		_List_fromArray(
 			[
-				author$project$ViewHandler$viewHeaderJobCategory,
-				author$project$ViewHandler$viewRowsJobCategory(model.jobCategories)
+				elm$html$Html$text(str)
+			]));
+};
+var author$project$ViewHandler$viewJobsJson = function (model) {
+	return A2(
+		elm$html$Html$div,
+		_List_Nil,
+		_List_fromArray(
+			[
+				A2(
+				elm$html$Html$ul,
+				_List_Nil,
+				A2(elm$core$List$map, author$project$ViewHandler$viewJobJson, model.jobs))
 			]));
 };
 var author$project$ViewHandler$viewEntirePage = function (model) {
@@ -6459,11 +6292,11 @@ var author$project$ViewHandler$viewEntirePage = function (model) {
 		_List_Nil,
 		_List_fromArray(
 			[
-				author$project$ViewHandler$viewFlatFile(model.elements),
-				author$project$ViewHandler$viewTableJobCategory(model),
-				author$project$ViewHandler$viewTableJob(model)
+				author$project$ViewHandler$viewJobCategoriesJson(model),
+				author$project$ViewHandler$viewJobsJson(model)
 			]));
 };
+var elm$html$Html$h3 = _VirtualDom_node('h3');
 var author$project$ViewHandler$viewError = function (errorMessage) {
 	var errorHeading = 'Couldn\'t fetch json file at this time.';
 	return A2(
@@ -6598,7 +6431,6 @@ var elm$core$Task$perform = F2(
 				A2(elm$core$Task$map, toMessage, task)));
 	});
 var elm$core$String$length = _String_length;
-var elm$core$String$slice = _String_slice;
 var elm$core$String$dropLeft = F2(
 	function (n, string) {
 		return (n < 1) ? string : A3(

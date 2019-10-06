@@ -1,7 +1,8 @@
 module JsonDecoders exposing (..)
 
 import Category exposing (CategoryUnionType(..))
-import CustomTypes exposing (Job, JobCategory)
+import Job exposing (..)
+import JobCategory exposing (JobCategory)
 import Json.Decode exposing (Decoder, andThen, field, int, list, string)
 import Json.Decode.Pipeline exposing (custom, optional, optionalAt, required, requiredAt)
 

@@ -1,10 +1,12 @@
 module ViewHandler exposing (..)
 
 import Category exposing (CategoryUnionType(..), categoryToString)
-import CustomTypes exposing (Job, JobCategory)
 import Html exposing (..)
 import HttpCommands exposing (Msg(..))
+import Job exposing (..)
+import JobCategory exposing (..)
 import JsonDao exposing (JsonModel)
+import Stringable exposing (..)
 
 
 viewJsonFileOrError : JsonModel -> Html Msg
@@ -32,117 +34,38 @@ viewError errorMessage =
 viewEntirePage : JsonModel -> Html Msg
 viewEntirePage model =
     div []
-        [ viewFlatFile model.elements
-        , viewTableJobCategory model
-        , viewTableJob model
+        [ viewJobCategoriesJson model
+        , viewJobsJson model
         ]
 
 
-viewFlatFile : List String -> Html Msg
-viewFlatFile elements =
+viewJobCategoriesJson : JsonModel -> Html Msg
+viewJobCategoriesJson model =
     div []
-        [ h3 [] [ text "Json file" ]
-        , ul [] (List.map viewElement elements)
-        ]
+        [ ul [] (List.map viewJobCategoryJson model.jobCategories) ]
 
 
-viewElement : String -> Html Msg
-viewElement element =
-    li [] [ text element ]
-
-
-viewTableJobCategory : JsonModel -> Html Msg
-viewTableJobCategory model =
+viewJobCategoryJson : JobCategory -> Html Msg
+viewJobCategoryJson element =
+    let
+        str =
+            toString jobCategoryToStringable element
+    in
     div []
-        [ viewHeaderJobCategory
-        , viewRowsJobCategory model.jobCategories
-        ]
+        [ text str ]
 
 
-viewHeaderJobCategory : Html Msg
-viewHeaderJobCategory =
-    tr []
-        [ th []
-            [ text "Id" ]
-        , th []
-            [ text "Category" ]
-        , th []
-            [ text "Experience" ]
-        , th []
-            [ text "Level req." ]
-        ]
-
-
-viewRowsJobCategory : List JobCategory -> Html Msg
-viewRowsJobCategory elements =
+viewJobsJson : JsonModel -> Html Msg
+viewJobsJson model =
     div []
-        [ ul [] (List.map viewJobCategory elements) ]
+        [ ul [] (List.map viewJobJson model.jobs) ]
 
 
-viewJobCategory : JobCategory -> Html Msg
-viewJobCategory element =
-    tr []
-        [ td []
-            [ text (String.fromInt element.id) ]
-        , td []
-            [ text (categoryToString element.category) ]
-        , td []
-            [ text (String.fromInt element.experience) ]
-        , td []
-            [ text (String.fromInt element.level) ]
-        ]
-
-
-viewTableJob : JsonModel -> Html Msg
-viewTableJob model =
+viewJobJson : Job -> Html Msg
+viewJobJson job =
+    let
+        str =
+            toString jobToStringable job
+    in
     div []
-        [ viewHeaderJob
-        , viewRowsJob model.jobs
-        ]
-
-
-viewHeaderJob : Html Msg
-viewHeaderJob =
-    tr []
-        [ th []
-            [ text "Id" ]
-        , th []
-            [ text "Category" ]
-        , th []
-            [ text "Experience" ]
-        , th []
-            [ text "Level req." ]
-        ]
-
-
-viewRowsJob : List Job -> Html Msg
-viewRowsJob elements =
-    div []
-        [ ul [] (List.map viewJob elements) ]
-
-
-viewJob : Job -> Html Msg
-viewJob element =
-    tr []
-        [ td []
-            [ text (String.fromInt element.id) ]
-        , td []
-            [ text element.name ]
-        , td []
-            [ text (String.fromInt element.jobCategoryId) ]
-        , td []
-            [ viewSplitRow (List.map String.fromInt element.proficiencyIdList) ]
-        , td []
-            [ viewSplitRow (List.map String.fromInt element.certificationIdList) ]
-        , td []
-            [ viewSplitRow (List.map String.fromInt element.masteryIdList) ]
-        , td []
-            [ text element.gender ]
-        , td []
-            [ text element.note ]
-        ]
-
-
-viewSplitRow : List String -> Html Msg
-viewSplitRow elements =
-    text (String.join ", " elements)
+        [ text str ]
