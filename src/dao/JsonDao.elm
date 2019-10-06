@@ -10,6 +10,7 @@ import JsonDecoders exposing (..)
 type alias JsonModel =
     { elements : List String
     , classCategories : List ClassCategory
+    , classes : List Class
     , errorMessage : Maybe String
     }
 
@@ -17,6 +18,7 @@ type alias JsonModel =
 setup : ( JsonModel, Cmd Msg )
 setup =
     ( JsonModel
+        []
         []
         []
         Nothing
@@ -41,9 +43,19 @@ handleHttpResponse msg model =
             )
 
         ClassCategoriesReceived (Ok elements) ->
-            ( { model | classCategories = elements }, Cmd.none )
+            ( { model | classCategories = elements }, getClasses )
 
         ClassCategoriesReceived (Err httpError) ->
+            ( { model
+                | errorMessage = Just (buildErrorMessage httpError)
+              }
+            , Cmd.none
+            )
+
+        ClassesReceived (Ok elements) ->
+            ( { model | classes = elements }, Cmd.none )
+
+        ClassesReceived (Err httpError) ->
             ( { model
                 | errorMessage = Just (buildErrorMessage httpError)
               }

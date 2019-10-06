@@ -5852,12 +5852,12 @@ var author$project$HttpCommands$defaultHttpCommand = elm$http$Http$get(
 		expect: A2(elm$http$Http$expectJson, author$project$HttpCommands$DataReceived, author$project$JsonDecoders$defaultDecoder),
 		url: '../../resources/flat.json'
 	});
-var author$project$JsonDao$JsonModel = F3(
-	function (elements, classCategories, errorMessage) {
-		return {classCategories: classCategories, elements: elements, errorMessage: errorMessage};
+var author$project$JsonDao$JsonModel = F4(
+	function (elements, classCategories, classes, errorMessage) {
+		return {classCategories: classCategories, classes: classes, elements: elements, errorMessage: errorMessage};
 	});
 var author$project$JsonDao$setup = _Utils_Tuple2(
-	A3(author$project$JsonDao$JsonModel, _List_Nil, _List_Nil, elm$core$Maybe$Nothing),
+	A4(author$project$JsonDao$JsonModel, _List_Nil, _List_Nil, _List_Nil, elm$core$Maybe$Nothing),
 	author$project$HttpCommands$defaultHttpCommand);
 var author$project$HomePage$init = function (_n0) {
 	return author$project$JsonDao$setup;
@@ -5929,6 +5929,49 @@ var author$project$CustomTypes$ClassCategory = F4(
 	function (id, category, experience, level) {
 		return {category: category, experience: experience, id: id, level: level};
 	});
+var author$project$Category$Advanced = function (a) {
+	return {$: 'Advanced', a: a};
+};
+var author$project$Category$Beginner = function (a) {
+	return {$: 'Beginner', a: a};
+};
+var author$project$Category$Intermediate = function (a) {
+	return {$: 'Intermediate', a: a};
+};
+var author$project$Category$Master = function (a) {
+	return {$: 'Master', a: a};
+};
+var author$project$Category$Starting = function (a) {
+	return {$: 'Starting', a: a};
+};
+var author$project$Category$Unique = function (a) {
+	return {$: 'Unique', a: a};
+};
+var author$project$JsonDecoders$categoryDecoder = function (category) {
+	switch (category) {
+		case 'Starting':
+			return elm$json$Json$Decode$succeed(
+				author$project$Category$Starting(category));
+		case 'Beginner':
+			return elm$json$Json$Decode$succeed(
+				author$project$Category$Beginner(category));
+		case 'Intermediate':
+			return elm$json$Json$Decode$succeed(
+				author$project$Category$Intermediate(category));
+		case 'Advanced':
+			return elm$json$Json$Decode$succeed(
+				author$project$Category$Advanced(category));
+		case 'Master':
+			return elm$json$Json$Decode$succeed(
+				author$project$Category$Master(category));
+		case 'Unique':
+			return elm$json$Json$Decode$succeed(
+				author$project$Category$Unique(category));
+		default:
+			return elm$json$Json$Decode$succeed(
+				author$project$Category$Starting(category));
+	}
+};
 var elm$json$Json$Decode$int = _Json_decodeInt;
 var author$project$JsonDecoders$classCategoriesDecoder = A4(
 	NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional,
@@ -5940,10 +5983,12 @@ var author$project$JsonDecoders$classCategoriesDecoder = A4(
 		'experience',
 		elm$json$Json$Decode$int,
 		0,
-		A3(
-			NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-			'category',
-			elm$json$Json$Decode$string,
+		A2(
+			NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom,
+			A2(
+				elm$json$Json$Decode$andThen,
+				author$project$JsonDecoders$categoryDecoder,
+				A2(elm$json$Json$Decode$field, 'category', elm$json$Json$Decode$string)),
 			A3(
 				NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
 				'id',
@@ -5956,6 +6001,59 @@ var author$project$HttpCommands$getClassCategories = elm$http$Http$get(
 			author$project$HttpCommands$ClassCategoriesReceived,
 			elm$json$Json$Decode$list(author$project$JsonDecoders$classCategoriesDecoder)),
 		url: '../../resources/class-categories.json'
+	});
+var author$project$HttpCommands$ClassesReceived = function (a) {
+	return {$: 'ClassesReceived', a: a};
+};
+var author$project$CustomTypes$Class = F8(
+	function (id, name, classCategoryId, proficiencyIdList, certificationIdList, masteryIdList, gender, note) {
+		return {certificationIdList: certificationIdList, classCategoryId: classCategoryId, gender: gender, id: id, masteryIdList: masteryIdList, name: name, note: note, proficiencyIdList: proficiencyIdList};
+	});
+var author$project$JsonDecoders$classesDecoder = A4(
+	NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional,
+	'note',
+	elm$json$Json$Decode$string,
+	'',
+	A4(
+		NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional,
+		'gender',
+		elm$json$Json$Decode$string,
+		'',
+		A4(
+			NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional,
+			'masteryIdList',
+			elm$json$Json$Decode$list(elm$json$Json$Decode$int),
+			_List_Nil,
+			A4(
+				NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional,
+				'certificationIdList',
+				elm$json$Json$Decode$list(elm$json$Json$Decode$int),
+				_List_Nil,
+				A4(
+					NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional,
+					'proficiencyIdList',
+					elm$json$Json$Decode$list(elm$json$Json$Decode$int),
+					_List_Nil,
+					A3(
+						NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+						'classCategoryId',
+						elm$json$Json$Decode$int,
+						A3(
+							NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+							'name',
+							elm$json$Json$Decode$string,
+							A3(
+								NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+								'id',
+								elm$json$Json$Decode$int,
+								elm$json$Json$Decode$succeed(author$project$CustomTypes$Class)))))))));
+var author$project$HttpCommands$getClasses = elm$http$Http$get(
+	{
+		expect: A2(
+			elm$http$Http$expectJson,
+			author$project$HttpCommands$ClassesReceived,
+			elm$json$Json$Decode$list(author$project$JsonDecoders$classesDecoder)),
+		url: '../../resources/classes.json'
 	});
 var author$project$JsonDao$buildErrorMessage = function (httpError) {
 	switch (httpError.$) {
@@ -6000,13 +6098,32 @@ var author$project$JsonDao$handleHttpResponse = F2(
 							}),
 						elm$core$Platform$Cmd$none);
 				}
-			default:
+			case 'ClassCategoriesReceived':
 				if (msg.a.$ === 'Ok') {
 					var elements = msg.a.a;
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
 							{classCategories: elements}),
+						author$project$HttpCommands$getClasses);
+				} else {
+					var httpError = msg.a.a;
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{
+								errorMessage: elm$core$Maybe$Just(
+									author$project$JsonDao$buildErrorMessage(httpError))
+							}),
+						elm$core$Platform$Cmd$none);
+				}
+			default:
+				if (msg.a.$ === 'Ok') {
+					var elements = msg.a.a;
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{classes: elements}),
 						elm$core$Platform$Cmd$none);
 				} else {
 					var httpError = msg.a.a;
@@ -6086,61 +6203,9 @@ var author$project$ViewHandler$viewFlatFile = function (elements) {
 				A2(elm$core$List$map, author$project$ViewHandler$viewElement, elements))
 			]));
 };
-var elm$html$Html$td = _VirtualDom_node('td');
-var elm$html$Html$tr = _VirtualDom_node('tr');
-var author$project$ViewHandler$viewClassCategory = function (element) {
-	return A2(
-		elm$html$Html$tr,
-		_List_Nil,
-		_List_fromArray(
-			[
-				A2(
-				elm$html$Html$td,
-				_List_Nil,
-				_List_fromArray(
-					[
-						elm$html$Html$text(
-						elm$core$String$fromInt(element.id))
-					])),
-				A2(
-				elm$html$Html$td,
-				_List_Nil,
-				_List_fromArray(
-					[
-						elm$html$Html$text(element.category)
-					])),
-				A2(
-				elm$html$Html$td,
-				_List_Nil,
-				_List_fromArray(
-					[
-						elm$html$Html$text(
-						elm$core$String$fromInt(element.experience))
-					])),
-				A2(
-				elm$html$Html$td,
-				_List_Nil,
-				_List_fromArray(
-					[
-						elm$html$Html$text(
-						elm$core$String$fromInt(element.level))
-					]))
-			]));
-};
-var author$project$ViewHandler$viewClassCategories = function (elements) {
-	return A2(
-		elm$html$Html$div,
-		_List_Nil,
-		_List_fromArray(
-			[
-				A2(
-				elm$html$Html$ul,
-				_List_Nil,
-				A2(elm$core$List$map, author$project$ViewHandler$viewClassCategory, elements))
-			]));
-};
 var elm$html$Html$th = _VirtualDom_node('th');
-var author$project$ViewHandler$viewTableHeader = A2(
+var elm$html$Html$tr = _VirtualDom_node('tr');
+var author$project$ViewHandler$viewHeaderClass = A2(
 	elm$html$Html$tr,
 	_List_Nil,
 	_List_fromArray(
@@ -6174,14 +6239,218 @@ var author$project$ViewHandler$viewTableHeader = A2(
 					elm$html$Html$text('Level req.')
 				]))
 		]));
-var author$project$ViewHandler$viewTableClassCategories = function (model) {
+var author$project$ViewHandler$viewSplitRow = function (elements) {
+	return elm$html$Html$text(
+		A2(elm$core$String$join, ', ', elements));
+};
+var elm$html$Html$td = _VirtualDom_node('td');
+var author$project$ViewHandler$viewClass = function (element) {
+	return A2(
+		elm$html$Html$tr,
+		_List_Nil,
+		_List_fromArray(
+			[
+				A2(
+				elm$html$Html$td,
+				_List_Nil,
+				_List_fromArray(
+					[
+						elm$html$Html$text(
+						elm$core$String$fromInt(element.id))
+					])),
+				A2(
+				elm$html$Html$td,
+				_List_Nil,
+				_List_fromArray(
+					[
+						elm$html$Html$text(element.name)
+					])),
+				A2(
+				elm$html$Html$td,
+				_List_Nil,
+				_List_fromArray(
+					[
+						elm$html$Html$text(
+						elm$core$String$fromInt(element.classCategoryId))
+					])),
+				A2(
+				elm$html$Html$td,
+				_List_Nil,
+				_List_fromArray(
+					[
+						author$project$ViewHandler$viewSplitRow(
+						A2(elm$core$List$map, elm$core$String$fromInt, element.proficiencyIdList))
+					])),
+				A2(
+				elm$html$Html$td,
+				_List_Nil,
+				_List_fromArray(
+					[
+						author$project$ViewHandler$viewSplitRow(
+						A2(elm$core$List$map, elm$core$String$fromInt, element.certificationIdList))
+					])),
+				A2(
+				elm$html$Html$td,
+				_List_Nil,
+				_List_fromArray(
+					[
+						author$project$ViewHandler$viewSplitRow(
+						A2(elm$core$List$map, elm$core$String$fromInt, element.masteryIdList))
+					])),
+				A2(
+				elm$html$Html$td,
+				_List_Nil,
+				_List_fromArray(
+					[
+						elm$html$Html$text(element.gender)
+					])),
+				A2(
+				elm$html$Html$td,
+				_List_Nil,
+				_List_fromArray(
+					[
+						elm$html$Html$text(element.note)
+					]))
+			]));
+};
+var author$project$ViewHandler$viewRowsClass = function (elements) {
 	return A2(
 		elm$html$Html$div,
 		_List_Nil,
 		_List_fromArray(
 			[
-				author$project$ViewHandler$viewTableHeader,
-				author$project$ViewHandler$viewClassCategories(model.classCategories)
+				A2(
+				elm$html$Html$ul,
+				_List_Nil,
+				A2(elm$core$List$map, author$project$ViewHandler$viewClass, elements))
+			]));
+};
+var author$project$ViewHandler$viewTableClass = function (model) {
+	return A2(
+		elm$html$Html$div,
+		_List_Nil,
+		_List_fromArray(
+			[
+				author$project$ViewHandler$viewHeaderClass,
+				author$project$ViewHandler$viewRowsClass(model.classes)
+			]));
+};
+var author$project$ViewHandler$viewHeaderClassCategory = A2(
+	elm$html$Html$tr,
+	_List_Nil,
+	_List_fromArray(
+		[
+			A2(
+			elm$html$Html$th,
+			_List_Nil,
+			_List_fromArray(
+				[
+					elm$html$Html$text('Id')
+				])),
+			A2(
+			elm$html$Html$th,
+			_List_Nil,
+			_List_fromArray(
+				[
+					elm$html$Html$text('Category')
+				])),
+			A2(
+			elm$html$Html$th,
+			_List_Nil,
+			_List_fromArray(
+				[
+					elm$html$Html$text('Experience')
+				])),
+			A2(
+			elm$html$Html$th,
+			_List_Nil,
+			_List_fromArray(
+				[
+					elm$html$Html$text('Level req.')
+				]))
+		]));
+var author$project$Category$categoryToString = function (category) {
+	switch (category.$) {
+		case 'Starting':
+			var value = category.a;
+			return value;
+		case 'Beginner':
+			var value = category.a;
+			return value;
+		case 'Intermediate':
+			var value = category.a;
+			return value;
+		case 'Advanced':
+			var value = category.a;
+			return value;
+		case 'Master':
+			var value = category.a;
+			return value;
+		default:
+			var value = category.a;
+			return value;
+	}
+};
+var author$project$ViewHandler$viewClassCategory = function (element) {
+	return A2(
+		elm$html$Html$tr,
+		_List_Nil,
+		_List_fromArray(
+			[
+				A2(
+				elm$html$Html$td,
+				_List_Nil,
+				_List_fromArray(
+					[
+						elm$html$Html$text(
+						elm$core$String$fromInt(element.id))
+					])),
+				A2(
+				elm$html$Html$td,
+				_List_Nil,
+				_List_fromArray(
+					[
+						elm$html$Html$text(
+						author$project$Category$categoryToString(element.category))
+					])),
+				A2(
+				elm$html$Html$td,
+				_List_Nil,
+				_List_fromArray(
+					[
+						elm$html$Html$text(
+						elm$core$String$fromInt(element.experience))
+					])),
+				A2(
+				elm$html$Html$td,
+				_List_Nil,
+				_List_fromArray(
+					[
+						elm$html$Html$text(
+						elm$core$String$fromInt(element.level))
+					]))
+			]));
+};
+var author$project$ViewHandler$viewRowsClassCategory = function (elements) {
+	return A2(
+		elm$html$Html$div,
+		_List_Nil,
+		_List_fromArray(
+			[
+				A2(
+				elm$html$Html$ul,
+				_List_Nil,
+				A2(elm$core$List$map, author$project$ViewHandler$viewClassCategory, elements))
+			]));
+};
+var author$project$ViewHandler$viewTableClassCategory = function (model) {
+	return A2(
+		elm$html$Html$div,
+		_List_Nil,
+		_List_fromArray(
+			[
+				author$project$ViewHandler$viewHeaderClassCategory,
+				author$project$ViewHandler$viewRowsClassCategory(model.classCategories)
 			]));
 };
 var author$project$ViewHandler$viewEntirePage = function (model) {
@@ -6191,7 +6460,8 @@ var author$project$ViewHandler$viewEntirePage = function (model) {
 		_List_fromArray(
 			[
 				author$project$ViewHandler$viewFlatFile(model.elements),
-				author$project$ViewHandler$viewTableClassCategories(model)
+				author$project$ViewHandler$viewTableClassCategory(model),
+				author$project$ViewHandler$viewTableClass(model)
 			]));
 };
 var author$project$ViewHandler$viewError = function (errorMessage) {

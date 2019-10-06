@@ -1,5 +1,7 @@
 module CustomTypes exposing (..)
 
+import Category exposing (..)
+
 
 type Gender
     = Male
@@ -44,21 +46,12 @@ type alias Proficiency =
     { id : Int, subject : Subject, bonus : Int }
 
 
-type Category
-    = Starting
-    | Beginner
-    | Intermediate
-    | Advanced
-    | Master
-    | Unique
-
-
 type alias ClassCategory =
-    { id : Int, category : String, experience : Int, level : Int }
+    { id : Int, category : CategoryUnionType, experience : Int, level : Int }
 
 
 type alias Class =
-    { id : Int, name : String, classCategory : ClassCategory, proficiency : Proficiency, certificationRequirement : List Study, genderRequirement : Gender }
+    { id : Int, name : String, classCategoryId : Int, proficiencyIdList : List Int, certificationIdList : List Int, masteryIdList : List Int, gender : String, note : String }
 
 
 type alias ClassSkill =

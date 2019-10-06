@@ -1,6 +1,7 @@
 module ViewHandler exposing (..)
 
-import CustomTypes exposing (ClassCategory)
+import Category exposing (CategoryUnionType(..), categoryToString)
+import CustomTypes exposing (Class, ClassCategory)
 import Html exposing (..)
 import HttpCommands exposing (Msg(..))
 import JsonDao exposing (JsonModel)
@@ -32,7 +33,8 @@ viewEntirePage : JsonModel -> Html Msg
 viewEntirePage model =
     div []
         [ viewFlatFile model.elements
-        , viewTableClassCategories model
+        , viewTableClassCategory model
+        , viewTableClass model
         ]
 
 
@@ -49,16 +51,16 @@ viewElement element =
     li [] [ text element ]
 
 
-viewTableClassCategories : JsonModel -> Html Msg
-viewTableClassCategories model =
+viewTableClassCategory : JsonModel -> Html Msg
+viewTableClassCategory model =
     div []
-        [ viewTableHeader
-        , viewClassCategories model.classCategories
+        [ viewHeaderClassCategory
+        , viewRowsClassCategory model.classCategories
         ]
 
 
-viewTableHeader : Html Msg
-viewTableHeader =
+viewHeaderClassCategory : Html Msg
+viewHeaderClassCategory =
     tr []
         [ th []
             [ text "Id" ]
@@ -71,8 +73,8 @@ viewTableHeader =
         ]
 
 
-viewClassCategories : List ClassCategory -> Html Msg
-viewClassCategories elements =
+viewRowsClassCategory : List ClassCategory -> Html Msg
+viewRowsClassCategory elements =
     div []
         [ ul [] (List.map viewClassCategory elements) ]
 
@@ -83,9 +85,68 @@ viewClassCategory element =
         [ td []
             [ text (String.fromInt element.id) ]
         , td []
-            [ text element.category ]
+            [ text (categoryToString element.category) ]
         , td []
             [ text (String.fromInt element.experience) ]
         , td []
             [ text (String.fromInt element.level) ]
         ]
+
+
+viewTableClass : JsonModel -> Html Msg
+viewTableClass model =
+    div []
+        [ viewHeaderClass
+        , viewRowsClass model.classes
+        ]
+
+
+viewHeaderClass : Html Msg
+viewHeaderClass =
+    tr []
+        [ th []
+            [ text "Id" ]
+        , th []
+            [ text "Category" ]
+        , th []
+            [ text "Experience" ]
+        , th []
+            [ text "Level req." ]
+        ]
+
+
+viewRowsClass : List Class -> Html Msg
+viewRowsClass elements =
+    div []
+        [ ul [] (List.map viewClass elements) ]
+
+
+viewClass : Class -> Html Msg
+viewClass element =
+    tr []
+        [ td []
+            [ text (String.fromInt element.id) ]
+        , td []
+            [ text element.name ]
+        , td []
+            [ text (String.fromInt element.classCategoryId) ]
+        , td []
+            [ viewSplitRow (List.map String.fromInt element.proficiencyIdList) ]
+        , td []
+            [ viewSplitRow (List.map String.fromInt element.certificationIdList) ]
+        , td []
+            [ viewSplitRow (List.map String.fromInt element.masteryIdList) ]
+        , td []
+            [ text element.gender ]
+        , td []
+            [ text element.note ]
+        ]
+
+
+viewSplitRow : List String -> Html Msg
+viewSplitRow elements =
+    text (String.join ", " elements)
+
+
+
+--    { id : Int, name : String, classCategoryId : Int, proficiencyIdList : List Int, certificationIdList : List Int, masteryIdList: List Int, gender : String, note: String }
