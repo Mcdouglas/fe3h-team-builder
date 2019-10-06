@@ -13,10 +13,14 @@ type Msg
     | JobsReceived (Result Http.Error (List Job))
 
 
+resourcesDirLocation =
+    "../../resources/"
+
+
 getJobCategories : Cmd Msg
 getJobCategories =
     Http.get
-        { url = "../../resources/job-categories.json"
+        { url = resourcesDirLocation ++ "job-categories.json"
         , expect = Http.expectJson JobCategoriesReceived (list jobCategoriesDecoder)
         }
 
@@ -24,6 +28,6 @@ getJobCategories =
 getJobs : Cmd Msg
 getJobs =
     Http.get
-        { url = "../../resources/Jobs.json"
+        { url = resourcesDirLocation ++ "jobs.json"
         , expect = Http.expectJson JobsReceived (list jobsDecoder)
         }

@@ -15,6 +15,9 @@ cache:
 install:
   - npm install
 
+after_script : 
+  - sed -i "s/\"..\/..\/resources/\"https:\/\/raw.githubusercontent.com\/Mcdouglas\/fe3h-team-builder\/master\/resources/g" bundle.js
+
 script:
   - elm-format --validate . && elm-test
  

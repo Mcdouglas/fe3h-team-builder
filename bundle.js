@@ -4488,6 +4488,7 @@ function _Browser_load(url)
 var author$project$HttpCommands$JobCategoriesReceived = function (a) {
 	return {$: 'JobCategoriesReceived', a: a};
 };
+var author$project$HttpCommands$resourcesDirLocation = '../../resources/';
 var elm$core$Basics$apR = F2(
 	function (x, f) {
 		return f(x);
@@ -5981,7 +5982,7 @@ var author$project$HttpCommands$getJobCategories = elm$http$Http$get(
 			elm$http$Http$expectJson,
 			author$project$HttpCommands$JobCategoriesReceived,
 			elm$json$Json$Decode$list(author$project$JsonDecoders$jobCategoriesDecoder)),
-		url: '../../resources/job-categories.json'
+		url: author$project$HttpCommands$resourcesDirLocation + 'job-categories.json'
 	});
 var author$project$JsonDao$JsonModel = F3(
 	function (jobCategories, jobs, errorMessage) {
@@ -6064,7 +6065,7 @@ var author$project$HttpCommands$getJobs = elm$http$Http$get(
 			elm$http$Http$expectJson,
 			author$project$HttpCommands$JobsReceived,
 			elm$json$Json$Decode$list(author$project$JsonDecoders$jobsDecoder)),
-		url: '../../resources/Jobs.json'
+		url: author$project$HttpCommands$resourcesDirLocation + 'jobs.json'
 	});
 var author$project$JsonDao$buildErrorMessage = function (httpError) {
 	switch (httpError.$) {
