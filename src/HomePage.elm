@@ -1,13 +1,13 @@
 module HomePage exposing (main)
 
 import Browser
+import DebugView exposing (viewJsonFileOrError)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 import Http
 import HttpCommands exposing (Msg(..))
 import JsonDao exposing (JsonModel, handleHttpResponse, setup)
-import DebugView exposing (viewJsonFileOrError)
 
 
 view model =
