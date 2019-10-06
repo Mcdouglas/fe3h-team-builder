@@ -2,21 +2,21 @@
     {
         "id": 0,
         "name": "Commoner",
-        "classCategoryId": 0,
+        "jobCategoryId": 0,
         "masteryId": 0,
         "note": "Can use some magic"
     },
     {
         "id": 1,
         "name": "Noble",
-        "classCategoryId": 0,
+        "jobCategoryId": 0,
         "masteryId": 0,
         "note": "Can use some magic"
     },
     {
         "id": 666,
         "name": "Mortal Savant",
-        "classCategoryId": 4,
+        "jobCategoryId": 4,
         "proficiencyIdList": [
             0
         ],

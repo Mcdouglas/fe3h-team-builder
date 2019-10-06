@@ -1,6 +1,6 @@
 module HttpCommands exposing (..)
 
-import CustomTypes exposing (Class, ClassCategory)
+import CustomTypes exposing (Job, JobCategory)
 import Http
 import Json.Decode exposing (list)
 import JsonDecoders exposing (..)
@@ -9,8 +9,8 @@ import JsonDecoders exposing (..)
 type Msg
     = SendHttpRequest
     | DataReceived (Result Http.Error (List String))
-    | ClassCategoriesReceived (Result Http.Error (List ClassCategory))
-    | ClassesReceived (Result Http.Error (List Class))
+    | JobCategoriesReceived (Result Http.Error (List JobCategory))
+    | JobsReceived (Result Http.Error (List Job))
 
 
 defaultHttpCommand : Cmd Msg
@@ -21,17 +21,17 @@ defaultHttpCommand =
         }
 
 
-getClassCategories : Cmd Msg
-getClassCategories =
+getJobCategories : Cmd Msg
+getJobCategories =
     Http.get
-        { url = "../../resources/class-categories.json"
-        , expect = Http.expectJson ClassCategoriesReceived (list classCategoriesDecoder)
+        { url = "../../resources/job-categories.json"
+        , expect = Http.expectJson JobCategoriesReceived (list jobCategoriesDecoder)
         }
 
 
-getClasses : Cmd Msg
-getClasses =
+getJobs : Cmd Msg
+getJobs =
     Http.get
-        { url = "../../resources/classes.json"
-        , expect = Http.expectJson ClassesReceived (list classesDecoder)
+        { url = "../../resources/Jobs.json"
+        , expect = Http.expectJson JobsReceived (list jobsDecoder)
         }

@@ -46,16 +46,16 @@ type alias Proficiency =
     { id : Int, subject : Subject, bonus : Int }
 
 
-type alias ClassCategory =
+type alias JobCategory =
     { id : Int, category : CategoryUnionType, experience : Int, level : Int }
 
 
-type alias Class =
-    { id : Int, name : String, classCategoryId : Int, proficiencyIdList : List Int, certificationIdList : List Int, masteryIdList : List Int, gender : String, note : String }
+type alias Job =
+    { id : Int, name : String, jobCategoryId : Int, proficiencyIdList : List Int, certificationIdList : List Int, masteryIdList : List Int, gender : String, note : String }
 
 
-type alias ClassSkill =
-    { id : Int, name : String, learningClass : Class }
+type alias JobSkill =
+    { id : Int, name : String, learningJob : Job }
 
 
 type alias StudySkill =

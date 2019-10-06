@@ -1,7 +1,7 @@
 module ViewHandler exposing (..)
 
 import Category exposing (CategoryUnionType(..), categoryToString)
-import CustomTypes exposing (Class, ClassCategory)
+import CustomTypes exposing (Job, JobCategory)
 import Html exposing (..)
 import HttpCommands exposing (Msg(..))
 import JsonDao exposing (JsonModel)
@@ -33,8 +33,8 @@ viewEntirePage : JsonModel -> Html Msg
 viewEntirePage model =
     div []
         [ viewFlatFile model.elements
-        , viewTableClassCategory model
-        , viewTableClass model
+        , viewTableJobCategory model
+        , viewTableJob model
         ]
 
 
@@ -51,16 +51,16 @@ viewElement element =
     li [] [ text element ]
 
 
-viewTableClassCategory : JsonModel -> Html Msg
-viewTableClassCategory model =
+viewTableJobCategory : JsonModel -> Html Msg
+viewTableJobCategory model =
     div []
-        [ viewHeaderClassCategory
-        , viewRowsClassCategory model.classCategories
+        [ viewHeaderJobCategory
+        , viewRowsJobCategory model.jobCategories
         ]
 
 
-viewHeaderClassCategory : Html Msg
-viewHeaderClassCategory =
+viewHeaderJobCategory : Html Msg
+viewHeaderJobCategory =
     tr []
         [ th []
             [ text "Id" ]
@@ -73,14 +73,14 @@ viewHeaderClassCategory =
         ]
 
 
-viewRowsClassCategory : List ClassCategory -> Html Msg
-viewRowsClassCategory elements =
+viewRowsJobCategory : List JobCategory -> Html Msg
+viewRowsJobCategory elements =
     div []
-        [ ul [] (List.map viewClassCategory elements) ]
+        [ ul [] (List.map viewJobCategory elements) ]
 
 
-viewClassCategory : ClassCategory -> Html Msg
-viewClassCategory element =
+viewJobCategory : JobCategory -> Html Msg
+viewJobCategory element =
     tr []
         [ td []
             [ text (String.fromInt element.id) ]
@@ -93,16 +93,16 @@ viewClassCategory element =
         ]
 
 
-viewTableClass : JsonModel -> Html Msg
-viewTableClass model =
+viewTableJob : JsonModel -> Html Msg
+viewTableJob model =
     div []
-        [ viewHeaderClass
-        , viewRowsClass model.classes
+        [ viewHeaderJob
+        , viewRowsJob model.jobs
         ]
 
 
-viewHeaderClass : Html Msg
-viewHeaderClass =
+viewHeaderJob : Html Msg
+viewHeaderJob =
     tr []
         [ th []
             [ text "Id" ]
@@ -115,21 +115,21 @@ viewHeaderClass =
         ]
 
 
-viewRowsClass : List Class -> Html Msg
-viewRowsClass elements =
+viewRowsJob : List Job -> Html Msg
+viewRowsJob elements =
     div []
-        [ ul [] (List.map viewClass elements) ]
+        [ ul [] (List.map viewJob elements) ]
 
 
-viewClass : Class -> Html Msg
-viewClass element =
+viewJob : Job -> Html Msg
+viewJob element =
     tr []
         [ td []
             [ text (String.fromInt element.id) ]
         , td []
             [ text element.name ]
         , td []
-            [ text (String.fromInt element.classCategoryId) ]
+            [ text (String.fromInt element.jobCategoryId) ]
         , td []
             [ viewSplitRow (List.map String.fromInt element.proficiencyIdList) ]
         , td []
@@ -146,7 +146,3 @@ viewClass element =
 viewSplitRow : List String -> Html Msg
 viewSplitRow elements =
     text (String.join ", " elements)
-
-
-
---    { id : Int, name : String, classCategoryId : Int, proficiencyIdList : List Int, certificationIdList : List Int, masteryIdList: List Int, gender : String, note: String }

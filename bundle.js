@@ -5853,8 +5853,8 @@ var author$project$HttpCommands$defaultHttpCommand = elm$http$Http$get(
 		url: '../../resources/flat.json'
 	});
 var author$project$JsonDao$JsonModel = F4(
-	function (elements, classCategories, classes, errorMessage) {
-		return {classCategories: classCategories, classes: classes, elements: elements, errorMessage: errorMessage};
+	function (elements, jobCategories, jobs, errorMessage) {
+		return {elements: elements, errorMessage: errorMessage, jobCategories: jobCategories, jobs: jobs};
 	});
 var author$project$JsonDao$setup = _Utils_Tuple2(
 	A4(author$project$JsonDao$JsonModel, _List_Nil, _List_Nil, _List_Nil, elm$core$Maybe$Nothing),
@@ -5862,8 +5862,8 @@ var author$project$JsonDao$setup = _Utils_Tuple2(
 var author$project$HomePage$init = function (_n0) {
 	return author$project$JsonDao$setup;
 };
-var author$project$HttpCommands$ClassCategoriesReceived = function (a) {
-	return {$: 'ClassCategoriesReceived', a: a};
+var author$project$HttpCommands$JobCategoriesReceived = function (a) {
+	return {$: 'JobCategoriesReceived', a: a};
 };
 var elm$json$Json$Decode$map2 = _Json_map2;
 var NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom = elm$json$Json$Decode$map2(elm$core$Basics$apR);
@@ -5925,7 +5925,7 @@ var NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required = F3(
 			A2(elm$json$Json$Decode$field, key, valDecoder),
 			decoder);
 	});
-var author$project$CustomTypes$ClassCategory = F4(
+var author$project$CustomTypes$JobCategory = F4(
 	function (id, category, experience, level) {
 		return {category: category, experience: experience, id: id, level: level};
 	});
@@ -5973,7 +5973,7 @@ var author$project$JsonDecoders$categoryDecoder = function (category) {
 	}
 };
 var elm$json$Json$Decode$int = _Json_decodeInt;
-var author$project$JsonDecoders$classCategoriesDecoder = A4(
+var author$project$JsonDecoders$jobCategoriesDecoder = A4(
 	NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional,
 	'level',
 	elm$json$Json$Decode$int,
@@ -5993,23 +5993,23 @@ var author$project$JsonDecoders$classCategoriesDecoder = A4(
 				NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
 				'id',
 				elm$json$Json$Decode$int,
-				elm$json$Json$Decode$succeed(author$project$CustomTypes$ClassCategory)))));
-var author$project$HttpCommands$getClassCategories = elm$http$Http$get(
+				elm$json$Json$Decode$succeed(author$project$CustomTypes$JobCategory)))));
+var author$project$HttpCommands$getJobCategories = elm$http$Http$get(
 	{
 		expect: A2(
 			elm$http$Http$expectJson,
-			author$project$HttpCommands$ClassCategoriesReceived,
-			elm$json$Json$Decode$list(author$project$JsonDecoders$classCategoriesDecoder)),
-		url: '../../resources/class-categories.json'
+			author$project$HttpCommands$JobCategoriesReceived,
+			elm$json$Json$Decode$list(author$project$JsonDecoders$jobCategoriesDecoder)),
+		url: '../../resources/job-categories.json'
 	});
-var author$project$HttpCommands$ClassesReceived = function (a) {
-	return {$: 'ClassesReceived', a: a};
+var author$project$HttpCommands$JobsReceived = function (a) {
+	return {$: 'JobsReceived', a: a};
 };
-var author$project$CustomTypes$Class = F8(
-	function (id, name, classCategoryId, proficiencyIdList, certificationIdList, masteryIdList, gender, note) {
-		return {certificationIdList: certificationIdList, classCategoryId: classCategoryId, gender: gender, id: id, masteryIdList: masteryIdList, name: name, note: note, proficiencyIdList: proficiencyIdList};
+var author$project$CustomTypes$Job = F8(
+	function (id, name, jobCategoryId, proficiencyIdList, certificationIdList, masteryIdList, gender, note) {
+		return {certificationIdList: certificationIdList, gender: gender, id: id, jobCategoryId: jobCategoryId, masteryIdList: masteryIdList, name: name, note: note, proficiencyIdList: proficiencyIdList};
 	});
-var author$project$JsonDecoders$classesDecoder = A4(
+var author$project$JsonDecoders$jobsDecoder = A4(
 	NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional,
 	'note',
 	elm$json$Json$Decode$string,
@@ -6036,7 +6036,7 @@ var author$project$JsonDecoders$classesDecoder = A4(
 					_List_Nil,
 					A3(
 						NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-						'classCategoryId',
+						'jobCategoryId',
 						elm$json$Json$Decode$int,
 						A3(
 							NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
@@ -6046,14 +6046,14 @@ var author$project$JsonDecoders$classesDecoder = A4(
 								NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
 								'id',
 								elm$json$Json$Decode$int,
-								elm$json$Json$Decode$succeed(author$project$CustomTypes$Class)))))))));
-var author$project$HttpCommands$getClasses = elm$http$Http$get(
+								elm$json$Json$Decode$succeed(author$project$CustomTypes$Job)))))))));
+var author$project$HttpCommands$getJobs = elm$http$Http$get(
 	{
 		expect: A2(
 			elm$http$Http$expectJson,
-			author$project$HttpCommands$ClassesReceived,
-			elm$json$Json$Decode$list(author$project$JsonDecoders$classesDecoder)),
-		url: '../../resources/classes.json'
+			author$project$HttpCommands$JobsReceived,
+			elm$json$Json$Decode$list(author$project$JsonDecoders$jobsDecoder)),
+		url: '../../resources/Jobs.json'
 	});
 var author$project$JsonDao$buildErrorMessage = function (httpError) {
 	switch (httpError.$) {
@@ -6086,7 +6086,7 @@ var author$project$JsonDao$handleHttpResponse = F2(
 						_Utils_update(
 							model,
 							{elements: elements}),
-						author$project$HttpCommands$getClassCategories);
+						author$project$HttpCommands$getJobCategories);
 				} else {
 					var httpError = msg.a.a;
 					return _Utils_Tuple2(
@@ -6098,14 +6098,14 @@ var author$project$JsonDao$handleHttpResponse = F2(
 							}),
 						elm$core$Platform$Cmd$none);
 				}
-			case 'ClassCategoriesReceived':
+			case 'JobCategoriesReceived':
 				if (msg.a.$ === 'Ok') {
 					var elements = msg.a.a;
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
-							{classCategories: elements}),
-						author$project$HttpCommands$getClasses);
+							{jobCategories: elements}),
+						author$project$HttpCommands$getJobs);
 				} else {
 					var httpError = msg.a.a;
 					return _Utils_Tuple2(
@@ -6123,7 +6123,7 @@ var author$project$JsonDao$handleHttpResponse = F2(
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
-							{classes: elements}),
+							{jobs: elements}),
 						elm$core$Platform$Cmd$none);
 				} else {
 					var httpError = msg.a.a;
@@ -6205,7 +6205,7 @@ var author$project$ViewHandler$viewFlatFile = function (elements) {
 };
 var elm$html$Html$th = _VirtualDom_node('th');
 var elm$html$Html$tr = _VirtualDom_node('tr');
-var author$project$ViewHandler$viewHeaderClass = A2(
+var author$project$ViewHandler$viewHeaderJob = A2(
 	elm$html$Html$tr,
 	_List_Nil,
 	_List_fromArray(
@@ -6244,7 +6244,7 @@ var author$project$ViewHandler$viewSplitRow = function (elements) {
 		A2(elm$core$String$join, ', ', elements));
 };
 var elm$html$Html$td = _VirtualDom_node('td');
-var author$project$ViewHandler$viewClass = function (element) {
+var author$project$ViewHandler$viewJob = function (element) {
 	return A2(
 		elm$html$Html$tr,
 		_List_Nil,
@@ -6271,7 +6271,7 @@ var author$project$ViewHandler$viewClass = function (element) {
 				_List_fromArray(
 					[
 						elm$html$Html$text(
-						elm$core$String$fromInt(element.classCategoryId))
+						elm$core$String$fromInt(element.jobCategoryId))
 					])),
 				A2(
 				elm$html$Html$td,
@@ -6313,7 +6313,7 @@ var author$project$ViewHandler$viewClass = function (element) {
 					]))
 			]));
 };
-var author$project$ViewHandler$viewRowsClass = function (elements) {
+var author$project$ViewHandler$viewRowsJob = function (elements) {
 	return A2(
 		elm$html$Html$div,
 		_List_Nil,
@@ -6322,20 +6322,20 @@ var author$project$ViewHandler$viewRowsClass = function (elements) {
 				A2(
 				elm$html$Html$ul,
 				_List_Nil,
-				A2(elm$core$List$map, author$project$ViewHandler$viewClass, elements))
+				A2(elm$core$List$map, author$project$ViewHandler$viewJob, elements))
 			]));
 };
-var author$project$ViewHandler$viewTableClass = function (model) {
+var author$project$ViewHandler$viewTableJob = function (model) {
 	return A2(
 		elm$html$Html$div,
 		_List_Nil,
 		_List_fromArray(
 			[
-				author$project$ViewHandler$viewHeaderClass,
-				author$project$ViewHandler$viewRowsClass(model.classes)
+				author$project$ViewHandler$viewHeaderJob,
+				author$project$ViewHandler$viewRowsJob(model.jobs)
 			]));
 };
-var author$project$ViewHandler$viewHeaderClassCategory = A2(
+var author$project$ViewHandler$viewHeaderJobCategory = A2(
 	elm$html$Html$tr,
 	_List_Nil,
 	_List_fromArray(
@@ -6391,7 +6391,7 @@ var author$project$Category$categoryToString = function (category) {
 			return value;
 	}
 };
-var author$project$ViewHandler$viewClassCategory = function (element) {
+var author$project$ViewHandler$viewJobCategory = function (element) {
 	return A2(
 		elm$html$Html$tr,
 		_List_Nil,
@@ -6431,7 +6431,7 @@ var author$project$ViewHandler$viewClassCategory = function (element) {
 					]))
 			]));
 };
-var author$project$ViewHandler$viewRowsClassCategory = function (elements) {
+var author$project$ViewHandler$viewRowsJobCategory = function (elements) {
 	return A2(
 		elm$html$Html$div,
 		_List_Nil,
@@ -6440,17 +6440,17 @@ var author$project$ViewHandler$viewRowsClassCategory = function (elements) {
 				A2(
 				elm$html$Html$ul,
 				_List_Nil,
-				A2(elm$core$List$map, author$project$ViewHandler$viewClassCategory, elements))
+				A2(elm$core$List$map, author$project$ViewHandler$viewJobCategory, elements))
 			]));
 };
-var author$project$ViewHandler$viewTableClassCategory = function (model) {
+var author$project$ViewHandler$viewTableJobCategory = function (model) {
 	return A2(
 		elm$html$Html$div,
 		_List_Nil,
 		_List_fromArray(
 			[
-				author$project$ViewHandler$viewHeaderClassCategory,
-				author$project$ViewHandler$viewRowsClassCategory(model.classCategories)
+				author$project$ViewHandler$viewHeaderJobCategory,
+				author$project$ViewHandler$viewRowsJobCategory(model.jobCategories)
 			]));
 };
 var author$project$ViewHandler$viewEntirePage = function (model) {
@@ -6460,8 +6460,8 @@ var author$project$ViewHandler$viewEntirePage = function (model) {
 		_List_fromArray(
 			[
 				author$project$ViewHandler$viewFlatFile(model.elements),
-				author$project$ViewHandler$viewTableClassCategory(model),
-				author$project$ViewHandler$viewTableClass(model)
+				author$project$ViewHandler$viewTableJobCategory(model),
+				author$project$ViewHandler$viewTableJob(model)
 			]));
 };
 var author$project$ViewHandler$viewError = function (errorMessage) {

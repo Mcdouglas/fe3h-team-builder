@@ -9,8 +9,8 @@ import JsonDecoders exposing (..)
 
 type alias JsonModel =
     { elements : List String
-    , classCategories : List ClassCategory
-    , classes : List Class
+    , jobCategories : List JobCategory
+    , jobs : List Job
     , errorMessage : Maybe String
     }
 
@@ -33,7 +33,7 @@ handleHttpResponse msg model =
             ( model, defaultHttpCommand )
 
         DataReceived (Ok elements) ->
-            ( { model | elements = elements }, getClassCategories )
+            ( { model | elements = elements }, getJobCategories )
 
         DataReceived (Err httpError) ->
             ( { model
@@ -42,20 +42,20 @@ handleHttpResponse msg model =
             , Cmd.none
             )
 
-        ClassCategoriesReceived (Ok elements) ->
-            ( { model | classCategories = elements }, getClasses )
+        JobCategoriesReceived (Ok elements) ->
+            ( { model | jobCategories = elements }, getJobs )
 
-        ClassCategoriesReceived (Err httpError) ->
+        JobCategoriesReceived (Err httpError) ->
             ( { model
                 | errorMessage = Just (buildErrorMessage httpError)
               }
             , Cmd.none
             )
 
-        ClassesReceived (Ok elements) ->
-            ( { model | classes = elements }, Cmd.none )
+        JobsReceived (Ok elements) ->
+            ( { model | jobs = elements }, Cmd.none )
 
-        ClassesReceived (Err httpError) ->
+        JobsReceived (Err httpError) ->
             ( { model
                 | errorMessage = Just (buildErrorMessage httpError)
               }
