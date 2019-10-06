@@ -1,4 +1,4 @@
-module ViewHandler exposing (..)
+module DebugView exposing (..)
 
 import Category exposing (CategoryUnionType(..), categoryToString)
 import Html exposing (..)

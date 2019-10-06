@@ -6192,7 +6192,7 @@ var elm$virtual_dom$VirtualDom$toHandlerInt = function (handler) {
 var elm$html$Html$div = _VirtualDom_node('div');
 var elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var elm$html$Html$text = elm$virtual_dom$VirtualDom$text;
-var author$project$ViewHandler$viewJobCategoryJson = function (element) {
+var author$project$DebugView$viewJobCategoryJson = function (element) {
 	var str = A2(author$project$Stringable$toString, author$project$JobCategory$jobCategoryToStringable, element);
 	return A2(
 		elm$html$Html$div,
@@ -6217,7 +6217,7 @@ var elm$core$List$map = F2(
 			xs);
 	});
 var elm$html$Html$ul = _VirtualDom_node('ul');
-var author$project$ViewHandler$viewJobCategoriesJson = function (model) {
+var author$project$DebugView$viewJobCategoriesJson = function (model) {
 	return A2(
 		elm$html$Html$div,
 		_List_Nil,
@@ -6226,7 +6226,7 @@ var author$project$ViewHandler$viewJobCategoriesJson = function (model) {
 				A2(
 				elm$html$Html$ul,
 				_List_Nil,
-				A2(elm$core$List$map, author$project$ViewHandler$viewJobCategoryJson, model.jobCategories))
+				A2(elm$core$List$map, author$project$DebugView$viewJobCategoryJson, model.jobCategories))
 			]));
 };
 var author$project$Gender$genderToString = function (gender) {
@@ -6296,7 +6296,7 @@ var author$project$Job$jobToStringable = {
 		return 'Job { ' + ('id: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, id) + (', name: ' + (name + (', jobCategoryId: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, jobCategoryId) + (', proficiencyIdList: ' + (pil + (', certificationIdList: ' + (cil + (', masteryIdList: ' + (mil + (', gender: ' + (author$project$Gender$genderToString(gender) + (', note: ' + (note + ' }'))))))))))))))));
 	}
 };
-var author$project$ViewHandler$viewJobJson = function (job) {
+var author$project$DebugView$viewJobJson = function (job) {
 	var str = A2(author$project$Stringable$toString, author$project$Job$jobToStringable, job);
 	return A2(
 		elm$html$Html$div,
@@ -6306,7 +6306,7 @@ var author$project$ViewHandler$viewJobJson = function (job) {
 				elm$html$Html$text(str)
 			]));
 };
-var author$project$ViewHandler$viewJobsJson = function (model) {
+var author$project$DebugView$viewJobsJson = function (model) {
 	return A2(
 		elm$html$Html$div,
 		_List_Nil,
@@ -6315,21 +6315,21 @@ var author$project$ViewHandler$viewJobsJson = function (model) {
 				A2(
 				elm$html$Html$ul,
 				_List_Nil,
-				A2(elm$core$List$map, author$project$ViewHandler$viewJobJson, model.jobs))
+				A2(elm$core$List$map, author$project$DebugView$viewJobJson, model.jobs))
 			]));
 };
-var author$project$ViewHandler$viewEntirePage = function (model) {
+var author$project$DebugView$viewEntirePage = function (model) {
 	return A2(
 		elm$html$Html$div,
 		_List_Nil,
 		_List_fromArray(
 			[
-				author$project$ViewHandler$viewJobCategoriesJson(model),
-				author$project$ViewHandler$viewJobsJson(model)
+				author$project$DebugView$viewJobCategoriesJson(model),
+				author$project$DebugView$viewJobsJson(model)
 			]));
 };
 var elm$html$Html$h3 = _VirtualDom_node('h3');
-var author$project$ViewHandler$viewError = function (errorMessage) {
+var author$project$DebugView$viewError = function (errorMessage) {
 	var errorHeading = 'Couldn\'t fetch json file at this time.';
 	return A2(
 		elm$html$Html$div,
@@ -6346,13 +6346,13 @@ var author$project$ViewHandler$viewError = function (errorMessage) {
 				elm$html$Html$text('Error: ' + errorMessage)
 			]));
 };
-var author$project$ViewHandler$viewJsonFileOrError = function (model) {
+var author$project$DebugView$viewJsonFileOrError = function (model) {
 	var _n0 = model.errorMessage;
 	if (_n0.$ === 'Just') {
 		var message = _n0.a;
-		return author$project$ViewHandler$viewError(message);
+		return author$project$DebugView$viewError(message);
 	} else {
-		return author$project$ViewHandler$viewEntirePage(model);
+		return author$project$DebugView$viewEntirePage(model);
 	}
 };
 var elm$html$Html$h1 = _VirtualDom_node('h1');
@@ -6386,7 +6386,7 @@ var author$project$HomePage$view = function (model) {
 				_List_Nil,
 				_List_fromArray(
 					[
-						author$project$ViewHandler$viewJsonFileOrError(model)
+						author$project$DebugView$viewJsonFileOrError(model)
 					]))
 			]));
 };

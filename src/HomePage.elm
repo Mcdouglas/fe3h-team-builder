@@ -7,7 +7,7 @@ import Html.Events exposing (onClick)
 import Http
 import HttpCommands exposing (Msg(..))
 import JsonDao exposing (JsonModel, handleHttpResponse, setup)
-import ViewHandler exposing (viewJsonFileOrError)
+import DebugView exposing (viewJsonFileOrError)
 
 
 view model =
