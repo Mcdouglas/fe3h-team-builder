@@ -1,8 +1,10 @@
 module ViewHandler exposing (..)
 
 import CustomTypes exposing (ClassCategory)
-import CustomModel exposing (JsonModel, Msg(..))
 import Html exposing (..)
+import HttpCommands exposing (Msg(..))
+import JsonDao exposing (JsonModel)
+
 
 viewJsonFileOrError : JsonModel -> Html Msg
 viewJsonFileOrError model =
@@ -29,10 +31,10 @@ viewError errorMessage =
 viewEntirePage : JsonModel -> Html Msg
 viewEntirePage model =
     div []
-        [ viewFlatFile model.elements 
-        , viewTableHeader
-        , viewClassCategories model.classCategories
+        [ viewFlatFile model.elements
+        , viewTableClassCategories model
         ]
+
 
 viewFlatFile : List String -> Html Msg
 viewFlatFile elements =
@@ -45,6 +47,15 @@ viewFlatFile elements =
 viewElement : String -> Html Msg
 viewElement element =
     li [] [ text element ]
+
+
+viewTableClassCategories : JsonModel -> Html Msg
+viewTableClassCategories model =
+    div []
+        [ viewTableHeader
+        , viewClassCategories model.classCategories
+        ]
+
 
 viewTableHeader : Html Msg
 viewTableHeader =
@@ -59,10 +70,12 @@ viewTableHeader =
             [ text "Level req." ]
         ]
 
+
 viewClassCategories : List ClassCategory -> Html Msg
 viewClassCategories elements =
     div []
         [ ul [] (List.map viewClassCategory elements) ]
+
 
 viewClassCategory : ClassCategory -> Html Msg
 viewClassCategory element =

@@ -4485,11 +4485,7 @@ function _Browser_load(url)
 		}
 	}));
 }
-var author$project$CustomModel$JsonModel = F3(
-	function (elements, classCategories, errorMessage) {
-		return {classCategories: classCategories, elements: elements, errorMessage: errorMessage};
-	});
-var author$project$CustomModel$DataReceived = function (a) {
+var author$project$HttpCommands$DataReceived = function (a) {
 	return {$: 'DataReceived', a: a};
 };
 var elm$core$Array$branchFactor = 32;
@@ -4969,7 +4965,7 @@ var elm$json$Json$Decode$errorToStringHelp = F2(
 	});
 var elm$json$Json$Decode$list = _Json_decodeList;
 var elm$json$Json$Decode$string = _Json_decodeString;
-var author$project$JsonLoader$defaultDecoder = elm$json$Json$Decode$list(elm$json$Json$Decode$string);
+var author$project$JsonDecoders$defaultDecoder = elm$json$Json$Decode$list(elm$json$Json$Decode$string);
 var elm$core$Result$mapError = F2(
 	function (f, result) {
 		if (result.$ === 'Ok') {
@@ -5851,16 +5847,23 @@ var elm$http$Http$get = function (r) {
 	return elm$http$Http$request(
 		{body: elm$http$Http$emptyBody, expect: r.expect, headers: _List_Nil, method: 'GET', timeout: elm$core$Maybe$Nothing, tracker: elm$core$Maybe$Nothing, url: r.url});
 };
-var author$project$JsonLoader$defaultHttpCommand = elm$http$Http$get(
+var author$project$HttpCommands$defaultHttpCommand = elm$http$Http$get(
 	{
-		expect: A2(elm$http$Http$expectJson, author$project$CustomModel$DataReceived, author$project$JsonLoader$defaultDecoder),
+		expect: A2(elm$http$Http$expectJson, author$project$HttpCommands$DataReceived, author$project$JsonDecoders$defaultDecoder),
 		url: '../../resources/flat.json'
 	});
+var author$project$JsonDao$JsonModel = F3(
+	function (elements, classCategories, errorMessage) {
+		return {classCategories: classCategories, elements: elements, errorMessage: errorMessage};
+	});
 var author$project$JsonDao$setup = _Utils_Tuple2(
-	A3(author$project$CustomModel$JsonModel, _List_Nil, _List_Nil, elm$core$Maybe$Nothing),
-	author$project$JsonLoader$defaultHttpCommand);
+	A3(author$project$JsonDao$JsonModel, _List_Nil, _List_Nil, elm$core$Maybe$Nothing),
+	author$project$HttpCommands$defaultHttpCommand);
 var author$project$HomePage$init = function (_n0) {
 	return author$project$JsonDao$setup;
+};
+var author$project$HttpCommands$ClassCategoriesReceived = function (a) {
+	return {$: 'ClassCategoriesReceived', a: a};
 };
 var elm$json$Json$Decode$map2 = _Json_map2;
 var NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom = elm$json$Json$Decode$map2(elm$core$Basics$apR);
@@ -5927,7 +5930,7 @@ var author$project$CustomTypes$ClassCategory = F4(
 		return {category: category, experience: experience, id: id, level: level};
 	});
 var elm$json$Json$Decode$int = _Json_decodeInt;
-var author$project$ClassCategoriesJsonLoader$classCategoriesDecoder = A4(
+var author$project$JsonDecoders$classCategoriesDecoder = A4(
 	NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional,
 	'level',
 	elm$json$Json$Decode$int,
@@ -5946,15 +5949,12 @@ var author$project$ClassCategoriesJsonLoader$classCategoriesDecoder = A4(
 				'id',
 				elm$json$Json$Decode$int,
 				elm$json$Json$Decode$succeed(author$project$CustomTypes$ClassCategory)))));
-var author$project$CustomModel$ClassCategoriesReceived = function (a) {
-	return {$: 'ClassCategoriesReceived', a: a};
-};
-var author$project$ClassCategoriesJsonLoader$getClassCategories = elm$http$Http$get(
+var author$project$HttpCommands$getClassCategories = elm$http$Http$get(
 	{
 		expect: A2(
 			elm$http$Http$expectJson,
-			author$project$CustomModel$ClassCategoriesReceived,
-			elm$json$Json$Decode$list(author$project$ClassCategoriesJsonLoader$classCategoriesDecoder)),
+			author$project$HttpCommands$ClassCategoriesReceived,
+			elm$json$Json$Decode$list(author$project$JsonDecoders$classCategoriesDecoder)),
 		url: '../../resources/class-categories.json'
 	});
 var author$project$JsonDao$buildErrorMessage = function (httpError) {
@@ -5980,7 +5980,7 @@ var author$project$JsonDao$handleHttpResponse = F2(
 	function (msg, model) {
 		switch (msg.$) {
 			case 'SendHttpRequest':
-				return _Utils_Tuple2(model, author$project$JsonLoader$defaultHttpCommand);
+				return _Utils_Tuple2(model, author$project$HttpCommands$defaultHttpCommand);
 			case 'DataReceived':
 				if (msg.a.$ === 'Ok') {
 					var elements = msg.a.a;
@@ -5988,7 +5988,7 @@ var author$project$JsonDao$handleHttpResponse = F2(
 						_Utils_update(
 							model,
 							{elements: elements}),
-						author$project$ClassCategoriesJsonLoader$getClassCategories);
+						author$project$HttpCommands$getClassCategories);
 				} else {
 					var httpError = msg.a.a;
 					return _Utils_Tuple2(
@@ -6038,9 +6038,55 @@ var elm$virtual_dom$VirtualDom$toHandlerInt = function (handler) {
 			return 3;
 	}
 };
-var elm$html$Html$td = _VirtualDom_node('td');
+var elm$html$Html$li = _VirtualDom_node('li');
 var elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var elm$html$Html$text = elm$virtual_dom$VirtualDom$text;
+var author$project$ViewHandler$viewElement = function (element) {
+	return A2(
+		elm$html$Html$li,
+		_List_Nil,
+		_List_fromArray(
+			[
+				elm$html$Html$text(element)
+			]));
+};
+var elm$core$List$map = F2(
+	function (f, xs) {
+		return A3(
+			elm$core$List$foldr,
+			F2(
+				function (x, acc) {
+					return A2(
+						elm$core$List$cons,
+						f(x),
+						acc);
+				}),
+			_List_Nil,
+			xs);
+	});
+var elm$html$Html$div = _VirtualDom_node('div');
+var elm$html$Html$h3 = _VirtualDom_node('h3');
+var elm$html$Html$ul = _VirtualDom_node('ul');
+var author$project$ViewHandler$viewFlatFile = function (elements) {
+	return A2(
+		elm$html$Html$div,
+		_List_Nil,
+		_List_fromArray(
+			[
+				A2(
+				elm$html$Html$h3,
+				_List_Nil,
+				_List_fromArray(
+					[
+						elm$html$Html$text('Json file')
+					])),
+				A2(
+				elm$html$Html$ul,
+				_List_Nil,
+				A2(elm$core$List$map, author$project$ViewHandler$viewElement, elements))
+			]));
+};
+var elm$html$Html$td = _VirtualDom_node('td');
 var elm$html$Html$tr = _VirtualDom_node('tr');
 var author$project$ViewHandler$viewClassCategory = function (element) {
 	return A2(
@@ -6081,22 +6127,6 @@ var author$project$ViewHandler$viewClassCategory = function (element) {
 					]))
 			]));
 };
-var elm$core$List$map = F2(
-	function (f, xs) {
-		return A3(
-			elm$core$List$foldr,
-			F2(
-				function (x, acc) {
-					return A2(
-						elm$core$List$cons,
-						f(x),
-						acc);
-				}),
-			_List_Nil,
-			xs);
-	});
-var elm$html$Html$div = _VirtualDom_node('div');
-var elm$html$Html$ul = _VirtualDom_node('ul');
 var author$project$ViewHandler$viewClassCategories = function (elements) {
 	return A2(
 		elm$html$Html$div,
@@ -6107,36 +6137,6 @@ var author$project$ViewHandler$viewClassCategories = function (elements) {
 				elm$html$Html$ul,
 				_List_Nil,
 				A2(elm$core$List$map, author$project$ViewHandler$viewClassCategory, elements))
-			]));
-};
-var elm$html$Html$li = _VirtualDom_node('li');
-var author$project$ViewHandler$viewElement = function (element) {
-	return A2(
-		elm$html$Html$li,
-		_List_Nil,
-		_List_fromArray(
-			[
-				elm$html$Html$text(element)
-			]));
-};
-var elm$html$Html$h3 = _VirtualDom_node('h3');
-var author$project$ViewHandler$viewFlatFile = function (elements) {
-	return A2(
-		elm$html$Html$div,
-		_List_Nil,
-		_List_fromArray(
-			[
-				A2(
-				elm$html$Html$h3,
-				_List_Nil,
-				_List_fromArray(
-					[
-						elm$html$Html$text('Json file')
-					])),
-				A2(
-				elm$html$Html$ul,
-				_List_Nil,
-				A2(elm$core$List$map, author$project$ViewHandler$viewElement, elements))
 			]));
 };
 var elm$html$Html$th = _VirtualDom_node('th');
@@ -6174,6 +6174,16 @@ var author$project$ViewHandler$viewTableHeader = A2(
 					elm$html$Html$text('Level req.')
 				]))
 		]));
+var author$project$ViewHandler$viewTableClassCategories = function (model) {
+	return A2(
+		elm$html$Html$div,
+		_List_Nil,
+		_List_fromArray(
+			[
+				author$project$ViewHandler$viewTableHeader,
+				author$project$ViewHandler$viewClassCategories(model.classCategories)
+			]));
+};
 var author$project$ViewHandler$viewEntirePage = function (model) {
 	return A2(
 		elm$html$Html$div,
@@ -6181,8 +6191,7 @@ var author$project$ViewHandler$viewEntirePage = function (model) {
 		_List_fromArray(
 			[
 				author$project$ViewHandler$viewFlatFile(model.elements),
-				author$project$ViewHandler$viewTableHeader,
-				author$project$ViewHandler$viewClassCategories(model.classCategories)
+				author$project$ViewHandler$viewTableClassCategories(model)
 			]));
 };
 var author$project$ViewHandler$viewError = function (errorMessage) {
@@ -6212,8 +6221,6 @@ var author$project$ViewHandler$viewJsonFileOrError = function (model) {
 	}
 };
 var elm$html$Html$h1 = _VirtualDom_node('h1');
-var elm$html$Html$p = _VirtualDom_node('p');
-var elm$html$Html$strong = _VirtualDom_node('strong');
 var elm$json$Json$Encode$string = _Json_wrap;
 var elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -6237,22 +6244,7 @@ var author$project$HomePage$view = function (model) {
 				_List_Nil,
 				_List_fromArray(
 					[
-						elm$html$Html$text('Welcome to Dunder Mifflin!')
-					])),
-				A2(
-				elm$html$Html$p,
-				_List_Nil,
-				_List_fromArray(
-					[
-						elm$html$Html$text('Dunder Mifflin Inc. (stock symbol '),
-						A2(
-						elm$html$Html$strong,
-						_List_Nil,
-						_List_fromArray(
-							[
-								elm$html$Html$text('DMI')
-							])),
-						elm$html$Html$text(' \n                ) is a micro-cap regional paper and office \n                supply distributor with an emphasis on servicing \n                small-business clients.\n                ')
+						elm$html$Html$text('Fire Emblem Three Houses - Team Builder!')
 					])),
 				A2(
 				elm$html$Html$div,

@@ -1,13 +1,17 @@
 module JsonDao exposing (..)
 
--- import ClassCategoriesJsonLoader exposing (..)
-
-import ClassCategoriesJsonLoader exposing (getClassCategories)
-import CustomModel exposing (JsonModel, Msg(..))
 import CustomTypes exposing (..)
 import Http
+import HttpCommands exposing (..)
 import Json.Decode exposing (Decoder, Error(..), decodeString, list, string)
-import JsonLoader exposing (defaultHttpCommand)
+import JsonDecoders exposing (..)
+
+
+type alias JsonModel =
+    { elements : List String
+    , classCategories : List ClassCategory
+    , errorMessage : Maybe String
+    }
 
 
 setup : ( JsonModel, Cmd Msg )
