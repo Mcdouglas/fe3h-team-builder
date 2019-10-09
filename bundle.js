@@ -4320,6 +4320,10 @@ var author$project$CustomTypes$JobCategory = F4(
 var author$project$CustomTypes$Master = {$: 'Master'};
 var author$project$CustomTypes$Starting = {$: 'Starting'};
 var author$project$CustomTypes$Unique = {$: 'Unique'};
+var elm$core$Maybe$Just = function (a) {
+	return {$: 'Just', a: a};
+};
+var elm$core$Maybe$Nothing = {$: 'Nothing'};
 var elm$core$Basics$EQ = {$: 'EQ'};
 var elm$core$Basics$LT = {$: 'LT'};
 var elm$core$Elm$JsArray$foldr = _JsArray_foldr;
@@ -4402,58 +4406,154 @@ var elm$core$Set$toList = function (_n0) {
 };
 var author$project$DataBuilder$getJobCategories = _List_fromArray(
 	[
-		A4(author$project$CustomTypes$JobCategory, 0, author$project$CustomTypes$Starting, 20, 0),
-		A4(author$project$CustomTypes$JobCategory, 1, author$project$CustomTypes$Beginner, 60, 5),
-		A4(author$project$CustomTypes$JobCategory, 2, author$project$CustomTypes$Intermediate, 100, 10),
-		A4(author$project$CustomTypes$JobCategory, 3, author$project$CustomTypes$Advanced, 150, 20),
-		A4(author$project$CustomTypes$JobCategory, 4, author$project$CustomTypes$Master, 200, 30),
-		A4(author$project$CustomTypes$JobCategory, 5, author$project$CustomTypes$Unique, 0, 0)
+		A4(
+		author$project$CustomTypes$JobCategory,
+		0,
+		author$project$CustomTypes$Starting,
+		elm$core$Maybe$Just(20),
+		elm$core$Maybe$Just(0)),
+		A4(
+		author$project$CustomTypes$JobCategory,
+		1,
+		author$project$CustomTypes$Beginner,
+		elm$core$Maybe$Just(60),
+		elm$core$Maybe$Just(5)),
+		A4(
+		author$project$CustomTypes$JobCategory,
+		2,
+		author$project$CustomTypes$Intermediate,
+		elm$core$Maybe$Just(100),
+		elm$core$Maybe$Just(10)),
+		A4(
+		author$project$CustomTypes$JobCategory,
+		3,
+		author$project$CustomTypes$Advanced,
+		elm$core$Maybe$Just(150),
+		elm$core$Maybe$Just(20)),
+		A4(
+		author$project$CustomTypes$JobCategory,
+		4,
+		author$project$CustomTypes$Master,
+		elm$core$Maybe$Just(200),
+		elm$core$Maybe$Just(30)),
+		A4(author$project$CustomTypes$JobCategory, 5, author$project$CustomTypes$Unique, elm$core$Maybe$Nothing, elm$core$Maybe$Nothing)
 	]);
-var author$project$CustomTypes$Job = F8(
-	function (id, name, jobCategoryId, proficiencyIdList, certificationIdList, masteryIdList, gender, note) {
-		return {certificationIdList: certificationIdList, gender: gender, id: id, jobCategoryId: jobCategoryId, masteryIdList: masteryIdList, name: name, note: note, proficiencyIdList: proficiencyIdList};
-	});
-var author$project$CustomTypes$None = {$: 'None'};
-var elm$core$Maybe$Just = function (a) {
-	return {$: 'Just', a: a};
+var author$project$CustomTypes$CanUseMagic = {$: 'CanUseMagic'};
+var author$project$CustomTypes$CanUseSomeMagic = {$: 'CanUseSomeMagic'};
+var author$project$CustomTypes$Female = {$: 'Female'};
+var author$project$CustomTypes$Job = function (id) {
+	return function (name) {
+		return function (jobCategoryId) {
+			return function (proficiencyIdList) {
+				return function (certificationIdList) {
+					return function (masteryIdList) {
+						return function (gender) {
+							return function (magicUsage) {
+								return function (note) {
+									return function (customExperience) {
+										return function (customLevel) {
+											return {certificationIdList: certificationIdList, customExperience: customExperience, customLevel: customLevel, gender: gender, id: id, jobCategoryId: jobCategoryId, magicUsage: magicUsage, masteryIdList: masteryIdList, name: name, note: note, proficiencyIdList: proficiencyIdList};
+										};
+									};
+								};
+							};
+						};
+					};
+				};
+			};
+		};
+	};
 };
-var elm$core$Maybe$Nothing = {$: 'Nothing'};
+var author$project$CustomTypes$Male = {$: 'Male'};
 var author$project$DataBuilder$getJobs = _List_fromArray(
 	[
-		A8(
-		author$project$CustomTypes$Job,
-		0,
-		'Commoner',
-		0,
-		_List_Nil,
-		_List_Nil,
-		_List_Nil,
-		author$project$CustomTypes$None,
-		elm$core$Maybe$Just('Can use some magic')),
-		A8(
-		author$project$CustomTypes$Job,
-		1,
-		'Noble',
-		0,
-		_List_Nil,
-		_List_Nil,
-		_List_Nil,
-		author$project$CustomTypes$None,
-		elm$core$Maybe$Just('Can use some magic')),
-		A8(author$project$CustomTypes$Job, 2, 'Myrmidon', 0, _List_Nil, _List_Nil, _List_Nil, author$project$CustomTypes$None, elm$core$Maybe$Nothing),
-		A8(author$project$CustomTypes$Job, 3, 'Soldier', 0, _List_Nil, _List_Nil, _List_Nil, author$project$CustomTypes$None, elm$core$Maybe$Nothing),
-		A8(author$project$CustomTypes$Job, 4, 'Fighter', 0, _List_Nil, _List_Nil, _List_Nil, author$project$CustomTypes$None, elm$core$Maybe$Nothing),
-		A8(author$project$CustomTypes$Job, 5, 'Monk', 0, _List_Nil, _List_Nil, _List_Nil, author$project$CustomTypes$None, elm$core$Maybe$Nothing),
-		A8(
-		author$project$CustomTypes$Job,
-		42,
-		'Mortal Savant',
-		4,
-		_List_Nil,
-		_List_Nil,
-		_List_Nil,
-		author$project$CustomTypes$None,
-		elm$core$Maybe$Just('Can use magic'))
+		author$project$CustomTypes$Job(0)('Commoner')(0)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just(author$project$CustomTypes$CanUseSomeMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(1)('Noble')(0)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just(author$project$CustomTypes$CanUseSomeMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(2)('Myrmidon')(1)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(3)('Soldier')(1)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(4)('Fighter')(1)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(5)('Monk')(1)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(6)('Lord')(2)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just('Edelgard, Dimitri and Claude only'))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(7)('Mercenary')(2)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(8)('Thief')(2)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(9)('Cavalier')(2)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(10)('Pegasus Knight')(12)(_List_Nil)(_List_Nil)(_List_Nil)(
+		elm$core$Maybe$Just(author$project$CustomTypes$Female))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(11)('Brigand')(2)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(12)('Armored Knight')(12)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(13)('Archer')(2)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(14)('Brawler')(2)(_List_Nil)(_List_Nil)(_List_Nil)(
+		elm$core$Maybe$Just(author$project$CustomTypes$Male))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(15)('Mage')(2)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(16)('Dark Mage')(12)(_List_Nil)(_List_Nil)(_List_Nil)(
+		elm$core$Maybe$Just(author$project$CustomTypes$Male))(
+		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(17)('Priest')(2)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(18)('Swordmaster')(3)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(19)('Hero')(3)(_List_Nil)(_List_Nil)(_List_Nil)(
+		elm$core$Maybe$Just(author$project$CustomTypes$Male))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(20)('Assassin')(3)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(21)('Paladin')(3)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(22)('Warrior')(3)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(23)('Fortress Knight')(3)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(24)('Wyvern Rider')(3)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(25)('Sniper')(3)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(26)('Grappler')(3)(_List_Nil)(_List_Nil)(_List_Nil)(
+		elm$core$Maybe$Just(author$project$CustomTypes$Male))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(27)('Warlock')(3)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(28)('Dark Bishop')(3)(_List_Nil)(_List_Nil)(_List_Nil)(
+		elm$core$Maybe$Just(author$project$CustomTypes$Male))(
+		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(29)('Bishop')(3)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(30)('Mortal Savant')(4)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(31)('Falcon Knight')(4)(_List_Nil)(_List_Nil)(_List_Nil)(
+		elm$core$Maybe$Just(author$project$CustomTypes$Female))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(32)('War Master')(4)(_List_Nil)(_List_Nil)(_List_Nil)(
+		elm$core$Maybe$Just(author$project$CustomTypes$Male))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(33)('Wyvern Lord')(4)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(34)('Great Knight')(4)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(35)('Bow Knight')(4)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(36)('Gremory')(4)(_List_Nil)(_List_Nil)(_List_Nil)(
+		elm$core$Maybe$Just(author$project$CustomTypes$Female))(
+		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(37)('Dark Knight')(4)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(38)('Holy Knight')(4)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(39)('Dancer')(5)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just(100))(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(40)('Enlightened One')(5)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(
+		elm$core$Maybe$Just('Byleth only'))(
+		elm$core$Maybe$Just(100))(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(41)('Armored Lord')(5)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just('Edelgard only'))(
+		elm$core$Maybe$Just(150))(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(42)('Emperor')(5)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just('Edelgard only'))(
+		elm$core$Maybe$Just(200))(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(43)('High Lord')(5)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just('Dimitri only'))(
+		elm$core$Maybe$Just(150))(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(44)('Great Lord')(5)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just('Dimitri only'))(
+		elm$core$Maybe$Just(200))(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(45)('Wyvern Master')(5)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just('Claude only'))(
+		elm$core$Maybe$Just(150))(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(46)('Barbarossa')(5)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just('Claude only'))(
+		elm$core$Maybe$Just(200))(elm$core$Maybe$Nothing)
 	]);
 var author$project$GlobalModel$Model = F3(
 	function (jobCategories, jobs, errorMessage) {
@@ -4491,15 +4591,63 @@ var author$project$Stringable$toString = F2(
 		var stringable = _n0.stringable;
 		return stringable(x);
 	});
+var elm$core$Basics$apR = F2(
+	function (x, f) {
+		return f(x);
+	});
 var elm$core$Basics$append = _Utils_append;
+var elm$core$Maybe$map = F2(
+	function (f, maybe) {
+		if (maybe.$ === 'Just') {
+			var value = maybe.a;
+			return elm$core$Maybe$Just(
+				f(value));
+		} else {
+			return elm$core$Maybe$Nothing;
+		}
+	});
+var elm$core$Maybe$withDefault = F2(
+	function (_default, maybe) {
+		if (maybe.$ === 'Just') {
+			var value = maybe.a;
+			return value;
+		} else {
+			return _default;
+		}
+	});
 var author$project$Stringable$jobCategoryToStringable = {
 	stringable: function (_n0) {
 		var id = _n0.id;
 		var category = _n0.category;
 		var experience = _n0.experience;
 		var level = _n0.level;
-		var str = author$project$Stringable$categoryToString(category);
-		return 'JobCategory { ' + ('id: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, id) + (', category: ' + (str + (', experience: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, experience) + (', level: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, level) + ' }'))))))));
+		return 'JobCategory { ' + ('id: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, id) + (', category: ' + (author$project$Stringable$categoryToString(category) + (A2(
+			elm$core$Maybe$withDefault,
+			'',
+			A2(
+				elm$core$Maybe$map,
+				function (a) {
+					return ', experience: ' + a;
+				},
+				A2(
+					elm$core$Maybe$map,
+					function (a) {
+						return A2(author$project$Stringable$toString, author$project$Stringable$int, a);
+					},
+					experience))) + (A2(
+			elm$core$Maybe$withDefault,
+			'',
+			A2(
+				elm$core$Maybe$map,
+				function (a) {
+					return ', level: ' + a;
+				},
+				A2(
+					elm$core$Maybe$map,
+					function (a) {
+						return A2(author$project$Stringable$toString, author$project$Stringable$int, a);
+					},
+					level))) + ' }'))))));
 	}
 };
 var elm$core$Basics$identity = function (x) {
@@ -4580,10 +4728,6 @@ var elm$core$Array$compressNodes = F2(
 				continue compressNodes;
 			}
 		}
-	});
-var elm$core$Basics$apR = F2(
-	function (x, f) {
-		return f(x);
 	});
 var elm$core$Basics$eq = _Utils_equal;
 var elm$core$Tuple$first = function (_n0) {
@@ -5005,13 +5149,10 @@ var author$project$DebugView$viewJobCategoriesJson = function (model) {
 			]));
 };
 var author$project$Stringable$genderToString = function (gender) {
-	switch (gender.$) {
-		case 'Male':
-			return 'Male';
-		case 'Female':
-			return 'Female';
-		default:
-			return 'None';
+	if (gender.$ === 'Male') {
+		return 'Male';
+	} else {
+		return 'Female';
 	}
 };
 var elm$core$Basics$negate = function (n) {
@@ -5044,25 +5185,13 @@ var author$project$Stringable$list = function (nestedStringable) {
 		}
 	};
 };
-var elm$core$Maybe$map = F2(
-	function (f, maybe) {
-		if (maybe.$ === 'Just') {
-			var value = maybe.a;
-			return elm$core$Maybe$Just(
-				f(value));
-		} else {
-			return elm$core$Maybe$Nothing;
-		}
-	});
-var elm$core$Maybe$withDefault = F2(
-	function (_default, maybe) {
-		if (maybe.$ === 'Just') {
-			var value = maybe.a;
-			return value;
-		} else {
-			return _default;
-		}
-	});
+var author$project$Stringable$magicUsageToString = function (magicUsage) {
+	if (magicUsage.$ === 'CanUseMagic') {
+		return 'Can use magic';
+	} else {
+		return 'Can use some magic';
+	}
+};
 var author$project$Stringable$jobToStringable = {
 	stringable: function (_n0) {
 		var id = _n0.id;
@@ -5072,20 +5201,46 @@ var author$project$Stringable$jobToStringable = {
 		var certificationIdList = _n0.certificationIdList;
 		var masteryIdList = _n0.masteryIdList;
 		var gender = _n0.gender;
+		var magicUsage = _n0.magicUsage;
 		var note = _n0.note;
-		var pil = A2(
+		var customExperience = _n0.customExperience;
+		var customLevel = _n0.customLevel;
+		return 'Job { ' + ('id: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, id) + (', name: ' + (name + (', jobCategoryId: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, jobCategoryId) + (', proficiencyIdList: ' + (A2(
 			author$project$Stringable$toString,
 			author$project$Stringable$list(author$project$Stringable$int),
-			proficiencyIdList);
-		var mil = A2(
+			proficiencyIdList) + (', certificationIdList: ' + (A2(
 			author$project$Stringable$toString,
 			author$project$Stringable$list(author$project$Stringable$int),
-			masteryIdList);
-		var cil = A2(
+			certificationIdList) + (', masteryIdList: ' + (A2(
 			author$project$Stringable$toString,
 			author$project$Stringable$list(author$project$Stringable$int),
-			certificationIdList);
-		return 'Job { ' + ('id: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, id) + (', name: ' + (name + (', jobCategoryId: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, jobCategoryId) + (', proficiencyIdList: ' + (pil + (', certificationIdList: ' + (cil + (', masteryIdList: ' + (mil + (', gender: ' + (author$project$Stringable$genderToString(gender) + (A2(
+			masteryIdList) + (A2(
+			elm$core$Maybe$withDefault,
+			'',
+			A2(
+				elm$core$Maybe$map,
+				function (a) {
+					return ', gender: ' + a;
+				},
+				A2(
+					elm$core$Maybe$map,
+					function (a) {
+						return author$project$Stringable$genderToString(a);
+					},
+					gender))) + (A2(
+			elm$core$Maybe$withDefault,
+			'',
+			A2(
+				elm$core$Maybe$map,
+				function (a) {
+					return ', magicUsage: ' + a;
+				},
+				A2(
+					elm$core$Maybe$map,
+					function (a) {
+						return author$project$Stringable$magicUsageToString(a);
+					},
+					magicUsage))) + (A2(
 			elm$core$Maybe$withDefault,
 			'',
 			A2(
@@ -5093,7 +5248,33 @@ var author$project$Stringable$jobToStringable = {
 				function (a) {
 					return ', note: ' + a;
 				},
-				note)) + ' }')))))))))))))));
+				note)) + (A2(
+			elm$core$Maybe$withDefault,
+			'',
+			A2(
+				elm$core$Maybe$map,
+				function (a) {
+					return ', customExperience: ' + a;
+				},
+				A2(
+					elm$core$Maybe$map,
+					function (a) {
+						return A2(author$project$Stringable$toString, author$project$Stringable$int, a);
+					},
+					customExperience))) + (A2(
+			elm$core$Maybe$withDefault,
+			'',
+			A2(
+				elm$core$Maybe$map,
+				function (a) {
+					return ', customLevel: ' + a;
+				},
+				A2(
+					elm$core$Maybe$map,
+					function (a) {
+						return A2(author$project$Stringable$toString, author$project$Stringable$int, a);
+					},
+					customLevel))) + ' }')))))))))))))))));
 	}
 };
 var author$project$DebugView$viewJobJson = function (job) {

@@ -100,8 +100,15 @@ genderToString gender =
         Female ->
             "Female"
 
-        _ ->
-            "None"
+
+magicUsageToString : MagicUsage -> String
+magicUsageToString magicUsage =
+    case magicUsage of
+        CanUseMagic ->
+            "Can use magic"
+
+        CanUseSomeMagic ->
+            "Can use some magic"
 
 
 categoryToString : CategoryUnionType -> String
@@ -129,17 +136,7 @@ categoryToString category =
 jobToStringable : Stringable Job
 jobToStringable =
     { stringable =
-        \{ id, name, jobCategoryId, proficiencyIdList, certificationIdList, masteryIdList, gender, note } ->
-            let
-                pil =
-                    proficiencyIdList |> toString (list int)
-
-                cil =
-                    certificationIdList |> toString (list int)
-
-                mil =
-                    masteryIdList |> toString (list int)
-            in
+        \{ id, name, jobCategoryId, proficiencyIdList, certificationIdList, masteryIdList, gender, magicUsage, note, customExperience, customLevel } ->
             "Job { "
                 ++ "id: "
                 ++ toString int id
@@ -148,14 +145,16 @@ jobToStringable =
                 ++ ", jobCategoryId: "
                 ++ toString int jobCategoryId
                 ++ ", proficiencyIdList: "
-                ++ pil
+                ++ (proficiencyIdList |> toString (list int))
                 ++ ", certificationIdList: "
-                ++ cil
+                ++ (certificationIdList |> toString (list int))
                 ++ ", masteryIdList: "
-                ++ mil
-                ++ ", gender: "
-                ++ genderToString gender
+                ++ (masteryIdList |> toString (list int))
+                ++ (gender |> Maybe.map (\a -> genderToString a) |> Maybe.map (\a -> ", gender: " ++ a) |> Maybe.withDefault "")
+                ++ (magicUsage |> Maybe.map (\a -> magicUsageToString a) |> Maybe.map (\a -> ", magicUsage: " ++ a) |> Maybe.withDefault "")
                 ++ (note |> Maybe.map (\a -> ", note: " ++ a) |> Maybe.withDefault "")
+                ++ (customExperience |> Maybe.map (\a -> toString int a) |> Maybe.map (\a -> ", customExperience: " ++ a) |> Maybe.withDefault "")
+                ++ (customLevel |> Maybe.map (\a -> toString int a) |> Maybe.map (\a -> ", customLevel: " ++ a) |> Maybe.withDefault "")
                 ++ " }"
     }
 
@@ -164,18 +163,12 @@ jobCategoryToStringable : Stringable JobCategory
 jobCategoryToStringable =
     { stringable =
         \{ id, category, experience, level } ->
-            let
-                str =
-                    categoryToString category
-            in
             "JobCategory { "
                 ++ "id: "
                 ++ toString int id
                 ++ ", category: "
-                ++ str
-                ++ ", experience: "
-                ++ toString int experience
-                ++ ", level: "
-                ++ toString int level
+                ++ categoryToString category
+                ++ (experience |> Maybe.map (\a -> toString int a) |> Maybe.map (\a -> ", experience: " ++ a) |> Maybe.withDefault "")
+                ++ (level |> Maybe.map (\a -> toString int a) |> Maybe.map (\a -> ", level: " ++ a) |> Maybe.withDefault "")
                 ++ " }"
     }
