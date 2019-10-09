@@ -50,7 +50,7 @@ type MagicUsage
 
 
 type alias Study =
-    { id : Int, subject : Subject, rank : Rank }
+    { subject : Subject, rank : Rank }
 
 
 type alias Proficiency =
@@ -61,8 +61,22 @@ type alias JobCategory =
     { id : Int, category : CategoryUnionType, experience : Maybe Int, level : Maybe Int }
 
 
+getJobCategory : ( List JobCategory, Int ) -> Maybe JobCategory
+getJobCategory ( jobCategories, val ) =
+    jobCategories
+        |> List.filter (\x -> x.id == val)
+        |> List.head
+
+
 type alias Job =
-    { id : Int, name : String, jobCategoryId : Int, proficiencyIdList : List Int, certificationIdList : List Int, masteryIdList : List Int, gender : Maybe GenderUnionType, magicUsage : Maybe MagicUsage, note : Maybe String, customExperience : Maybe Int, customLevel : Maybe Int }
+    { id : Int, name : String, jobCategoryId : Int, proficiencyIdList : List Int, certificationList : List Study, masteryIdList : List Int, gender : Maybe GenderUnionType, magicUsage : Maybe MagicUsage, note : Maybe String, customExperience : Maybe Int, customLevel : Maybe Int }
+
+
+getJob : ( List Job, Int ) -> Maybe Job
+getJob ( jobs, val ) =
+    jobs
+        |> List.filter (\x -> x.id == val)
+        |> List.head
 
 
 type alias JobSkill =

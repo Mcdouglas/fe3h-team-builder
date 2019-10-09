@@ -24,61 +24,59 @@ getJobCategories =
     ]
 
 
-getJobCategory : ( List JobCategory, Int ) -> Maybe JobCategory
-getJobCategory ( jobCategories, val ) =
-    jobCategories
-        |> List.filter (\x -> x.id == val)
-        |> List.head
-
-
 getJobs : List Job
 getJobs =
     [ -- Starting
+      -- { id : Int, name : String, jobCategoryId : Int, proficiencyIdList : List Int,
+      -- certificationList : List Int, masteryIdList : List Int, gender : Maybe GenderUnionType,
+      -- magicUsage : Maybe MagicUsage, note : Maybe String, customExperience : Maybe Int, customLevel : Maybe Int }
       Job 0 "Commoner" 0 [] [] [] Nothing (Just CanUseSomeMagic) Nothing Nothing Nothing
     , Job 1 "Noble" 0 [] [] [] Nothing (Just CanUseSomeMagic) Nothing Nothing Nothing
-    , Job 2 "Myrmidon" 1 [] [] [] Nothing Nothing Nothing Nothing Nothing
-    , Job 3 "Soldier" 1 [] [] [] Nothing Nothing Nothing Nothing Nothing
-    , Job 4 "Fighter" 1 [] [] [] Nothing Nothing Nothing Nothing Nothing
-    , Job 5 "Monk" 1 [] [] [] Nothing (Just CanUseMagic) Nothing Nothing Nothing
 
     -- Beginner
-    , Job 6 "Lord" 2 [] [] [] Nothing Nothing (Just "Edelgard, Dimitri and Claude only") Nothing Nothing
-    , Job 7 "Mercenary" 2 [] [] [] Nothing Nothing Nothing Nothing Nothing
-    , Job 8 "Thief" 2 [] [] [] Nothing Nothing Nothing Nothing Nothing
-    , Job 9 "Cavalier" 2 [] [] [] Nothing Nothing Nothing Nothing Nothing
-    , Job 10 "Pegasus Knight" 12 [] [] [] (Just Female) Nothing Nothing Nothing Nothing
-    , Job 11 "Brigand" 2 [] [] [] Nothing Nothing Nothing Nothing Nothing
-    , Job 12 "Armored Knight" 12 [] [] [] Nothing Nothing Nothing Nothing Nothing
-    , Job 13 "Archer" 2 [] [] [] Nothing Nothing Nothing Nothing Nothing
-    , Job 14 "Brawler" 2 [] [] [] (Just Male) Nothing Nothing Nothing Nothing
-    , Job 15 "Mage" 2 [] [] [] Nothing (Just CanUseMagic) Nothing Nothing Nothing
-    , Job 16 "Dark Mage" 12 [] [] [] (Just Male) (Just CanUseMagic) Nothing Nothing Nothing
-    , Job 17 "Priest" 2 [] [] [] Nothing (Just CanUseMagic) Nothing Nothing Nothing
+    , Job 2 "Myrmidon" 1 [] [ Study Sword D ] [] Nothing Nothing Nothing Nothing Nothing
+    , Job 3 "Soldier" 1 [] [ Study Lance D ] [] Nothing Nothing Nothing Nothing Nothing
+    , Job 4 "Fighter" 1 [] [ Study Axe D, Study Bow D, Study Brawling D ] [] Nothing Nothing Nothing Nothing Nothing
+    , Job 5 "Monk" 1 [] [ Study Reason D, Study Faith D ] [] Nothing (Just CanUseMagic) Nothing Nothing Nothing
+
+    -- Intermediate
+    , Job 6 "Lord" 2 [] [ Study Sword Dplus, Study Authority C ] [] Nothing Nothing (Just "Edelgard, Dimitri and Claude only") Nothing Nothing
+    , Job 7 "Mercenary" 2 [] [ Study Sword C ] [] Nothing Nothing Nothing Nothing Nothing
+    , Job 8 "Thief" 2 [] [ Study Sword C ] [] Nothing Nothing Nothing Nothing Nothing
+    , Job 9 "Cavalier" 2 [] [ Study Lance C, Study Riding D ] [] Nothing Nothing Nothing Nothing Nothing
+    , Job 10 "Pegasus Knight" 12 [] [ Study Lance C, Study Flying D ] [] (Just Female) Nothing Nothing Nothing Nothing
+    , Job 11 "Brigand" 2 [] [ Study Axe C ] [] Nothing Nothing Nothing Nothing Nothing
+    , Job 12 "Armored Knight" 12 [] [ Study Axe C, Study HeavyArmor D ] [] Nothing Nothing Nothing Nothing Nothing
+    , Job 13 "Archer" 2 [] [ Study Bow C ] [] Nothing Nothing Nothing Nothing Nothing
+    , Job 14 "Brawler" 2 [] [ Study Brawling C ] [] (Just Male) Nothing Nothing Nothing Nothing
+    , Job 15 "Mage" 2 [] [ Study Reason C ] [] Nothing (Just CanUseMagic) Nothing Nothing Nothing
+    , Job 16 "Dark Mage" 12 [] [ Study Reason C ] [] (Just Male) (Just CanUseMagic) Nothing Nothing Nothing
+    , Job 17 "Priest" 2 [] [ Study Faith C ] [] Nothing (Just CanUseMagic) Nothing Nothing Nothing
 
     -- Advanced
-    , Job 18 "Swordmaster" 3 [] [] [] Nothing Nothing Nothing Nothing Nothing
-    , Job 19 "Hero" 3 [] [] [] (Just Male) Nothing Nothing Nothing Nothing
-    , Job 20 "Assassin" 3 [] [] [] Nothing Nothing Nothing Nothing Nothing
-    , Job 21 "Paladin" 3 [] [] [] Nothing Nothing Nothing Nothing Nothing
-    , Job 22 "Warrior" 3 [] [] [] Nothing Nothing Nothing Nothing Nothing
-    , Job 23 "Fortress Knight" 3 [] [] [] Nothing Nothing Nothing Nothing Nothing
-    , Job 24 "Wyvern Rider" 3 [] [] [] Nothing Nothing Nothing Nothing Nothing
-    , Job 25 "Sniper" 3 [] [] [] Nothing Nothing Nothing Nothing Nothing
-    , Job 26 "Grappler" 3 [] [] [] (Just Male) Nothing Nothing Nothing Nothing
-    , Job 27 "Warlock" 3 [] [] [] Nothing (Just CanUseMagic) Nothing Nothing Nothing
-    , Job 28 "Dark Bishop" 3 [] [] [] (Just Male) (Just CanUseMagic) Nothing Nothing Nothing
-    , Job 29 "Bishop" 3 [] [] [] Nothing (Just CanUseMagic) Nothing Nothing Nothing
+    , Job 18 "Swordmaster" 3 [] [ Study Sword A ] [] Nothing Nothing Nothing Nothing Nothing
+    , Job 19 "Hero" 3 [] [ Study Sword B, Study Axe C ] [] (Just Male) Nothing Nothing Nothing Nothing
+    , Job 20 "Assassin" 3 [] [ Study Sword B, Study Bow C ] [] Nothing Nothing Nothing Nothing Nothing
+    , Job 21 "Paladin" 3 [] [ Study Lance B, Study Riding B ] [] Nothing Nothing Nothing Nothing Nothing
+    , Job 22 "Warrior" 3 [] [ Study Axe A ] [] Nothing Nothing Nothing Nothing Nothing
+    , Job 23 "Fortress Knight" 3 [] [ Study Axe B, Study HeavyArmor B ] [] Nothing Nothing Nothing Nothing Nothing
+    , Job 24 "Wyvern Rider" 3 [] [ Study Axe B, Study Flying C ] [] Nothing Nothing Nothing Nothing Nothing
+    , Job 25 "Sniper" 3 [] [ Study Bow A ] [] Nothing Nothing Nothing Nothing Nothing
+    , Job 26 "Grappler" 3 [] [ Study Brawling A ] [] (Just Male) Nothing Nothing Nothing Nothing
+    , Job 27 "Warlock" 3 [] [ Study Reason A ] [] Nothing (Just CanUseMagic) Nothing Nothing Nothing
+    , Job 28 "Dark Bishop" 3 [] [ Study Reason A ] [] (Just Male) (Just CanUseMagic) Nothing Nothing Nothing
+    , Job 29 "Bishop" 3 [] [ Study Faith A ] [] Nothing (Just CanUseMagic) Nothing Nothing Nothing
 
     -- Master
-    , Job 30 "Mortal Savant" 4 [] [] [] Nothing (Just CanUseMagic) Nothing Nothing Nothing
-    , Job 31 "Falcon Knight" 4 [] [] [] (Just Female) Nothing Nothing Nothing Nothing
-    , Job 32 "War Master" 4 [] [] [] (Just Male) Nothing Nothing Nothing Nothing
-    , Job 33 "Wyvern Lord" 4 [] [] [] Nothing Nothing Nothing Nothing Nothing
-    , Job 34 "Great Knight" 4 [] [] [] Nothing Nothing Nothing Nothing Nothing
-    , Job 35 "Bow Knight" 4 [] [] [] Nothing Nothing Nothing Nothing Nothing
-    , Job 36 "Gremory" 4 [] [] [] (Just Female) (Just CanUseMagic) Nothing Nothing Nothing
-    , Job 37 "Dark Knight" 4 [] [] [] Nothing (Just CanUseMagic) Nothing Nothing Nothing
-    , Job 38 "Holy Knight" 4 [] [] [] Nothing (Just CanUseMagic) Nothing Nothing Nothing
+    , Job 30 "Mortal Savant" 4 [] [ Study Sword A, Study Reason Bplus ] [] Nothing (Just CanUseMagic) Nothing Nothing Nothing
+    , Job 31 "Falcon Knight" 4 [] [ Study Sword C, Study Lance A, Study Flying Bplus ] [] (Just Female) Nothing Nothing Nothing Nothing
+    , Job 32 "War Master" 4 [] [ Study Axe A, Study Brawling B ] [] (Just Male) Nothing Nothing Nothing Nothing
+    , Job 33 "Wyvern Lord" 4 [] [ Study Lance C, Study Axe A, Study Flying A ] [] Nothing Nothing Nothing Nothing Nothing
+    , Job 34 "Great Knight" 4 [] [ Study Axe Bplus, Study HeavyArmor A, Study Riding Bplus ] [] Nothing Nothing Nothing Nothing Nothing
+    , Job 35 "Bow Knight" 4 [] [ Study Lance C, Study Bow A, Study Riding A ] [] Nothing Nothing Nothing Nothing Nothing
+    , Job 36 "Gremory" 4 [] [ Study Reason A, Study Faith A ] [] (Just Female) (Just CanUseMagic) Nothing Nothing Nothing
+    , Job 37 "Dark Knight" 4 [] [ Study Lance C, Study Reason Bplus, Study Riding A ] [] Nothing (Just CanUseMagic) Nothing Nothing Nothing
+    , Job 38 "Holy Knight" 4 [] [ Study Lance C, Study Faith Bplus, Study Riding A ] [] Nothing (Just CanUseMagic) Nothing Nothing Nothing
 
     -- Unique
     , Job 39 "Dancer" 5 [] [] [] Nothing (Just CanUseMagic) Nothing (Just 100) Nothing

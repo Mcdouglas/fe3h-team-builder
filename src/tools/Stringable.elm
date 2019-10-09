@@ -133,10 +133,50 @@ categoryToString category =
             "Unique"
 
 
+rankToString : Rank -> String
+rankToString rank =
+    case rank of
+        E ->
+            "E"
+
+        Eplus ->
+            "E+"
+
+        D ->
+            "D"
+
+        Dplus ->
+            "D+"
+
+        C ->
+            "C"
+
+        Cplus ->
+            "C+"
+
+        B ->
+            "B"
+
+        Bplus ->
+            "B+"
+
+        A ->
+            "A"
+
+        Aplus ->
+            "A+"
+
+        S ->
+            "S"
+
+        Splus ->
+            "S+"
+
+
 jobToStringable : Stringable Job
 jobToStringable =
     { stringable =
-        \{ id, name, jobCategoryId, proficiencyIdList, certificationIdList, masteryIdList, gender, magicUsage, note, customExperience, customLevel } ->
+        \{ id, name, jobCategoryId, proficiencyIdList, certificationList, masteryIdList, gender, magicUsage, note, customExperience, customLevel } ->
             "Job { "
                 ++ "id: "
                 ++ toString int id
@@ -146,8 +186,8 @@ jobToStringable =
                 ++ toString int jobCategoryId
                 ++ ", proficiencyIdList: "
                 ++ (proficiencyIdList |> toString (list int))
-                ++ ", certificationIdList: "
-                ++ (certificationIdList |> toString (list int))
+                ++ ", certificationList: "
+                ++ "TODO"
                 ++ ", masteryIdList: "
                 ++ (masteryIdList |> toString (list int))
                 ++ (gender |> Maybe.map (\a -> genderToString a) |> Maybe.map (\a -> ", gender: " ++ a) |> Maybe.withDefault "")
