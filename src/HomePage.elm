@@ -1,7 +1,7 @@
 module HomePage exposing (main)
 
 import Browser exposing (sandbox)
-import DataBuilder exposing (Msg(..), getJobCategories, getJobs)
+import DataBuilder exposing (Msg(..), loadAllStaticData)
 import DebugView exposing (..)
 import GlobalModel exposing (Model)
 import Html exposing (..)
