@@ -42,7 +42,11 @@ type CategoryUnionType
 type GenderUnionType
     = Male
     | Female
-    | None
+
+
+type MagicUsage
+    = CanUseMagic
+    | CanUseSomeMagic
 
 
 type alias Study =
@@ -54,11 +58,11 @@ type alias Proficiency =
 
 
 type alias JobCategory =
-    { id : Int, category : CategoryUnionType, experience : Int, level : Int }
+    { id : Int, category : CategoryUnionType, experience : Maybe Int, level : Maybe Int }
 
 
 type alias Job =
-    { id : Int, name : String, jobCategoryId : Int, proficiencyIdList : List Int, certificationIdList : List Int, masteryIdList : List Int, gender : GenderUnionType, note : Maybe String }
+    { id : Int, name : String, jobCategoryId : Int, proficiencyIdList : List Int, certificationIdList : List Int, masteryIdList : List Int, gender : Maybe GenderUnionType, magicUsage : Maybe MagicUsage, note : Maybe String, customExperience : Maybe Int, customLevel : Maybe Int }
 
 
 type alias JobSkill =

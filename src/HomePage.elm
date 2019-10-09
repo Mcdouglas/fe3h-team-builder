@@ -11,7 +11,7 @@ import Html.Events exposing (onClick)
 
 init : Model
 init =
-    Model getJobCategories getJobs Nothing
+    loadAllStaticData
 
 
 view model =
