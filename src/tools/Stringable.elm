@@ -155,8 +155,7 @@ jobToStringable =
                 ++ mil
                 ++ ", gender: "
                 ++ genderToString gender
-                ++ ", note: "
-                ++ note
+                ++ (note |> Maybe.map (\a -> ", note: " ++ a) |> Maybe.withDefault "")
                 ++ " }"
     }
 
@@ -169,7 +168,7 @@ jobCategoryToStringable =
                 str =
                     categoryToString category
             in
-            "Job { "
+            "JobCategory { "
                 ++ "id: "
                 ++ toString int id
                 ++ ", category: "
