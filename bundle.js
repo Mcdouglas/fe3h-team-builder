@@ -4414,17 +4414,48 @@ var author$project$CustomTypes$Job = F8(
 		return {certificationIdList: certificationIdList, gender: gender, id: id, jobCategoryId: jobCategoryId, masteryIdList: masteryIdList, name: name, note: note, proficiencyIdList: proficiencyIdList};
 	});
 var author$project$CustomTypes$None = {$: 'None'};
+var elm$core$Maybe$Just = function (a) {
+	return {$: 'Just', a: a};
+};
+var elm$core$Maybe$Nothing = {$: 'Nothing'};
 var author$project$DataBuilder$getJobs = _List_fromArray(
 	[
-		A8(author$project$CustomTypes$Job, 0, 'Commoner', 0, _List_Nil, _List_Nil, _List_Nil, author$project$CustomTypes$None, 'Can use some magic'),
-		A8(author$project$CustomTypes$Job, 1, 'Noble', 0, _List_Nil, _List_Nil, _List_Nil, author$project$CustomTypes$None, 'Can use some magic'),
-		A8(author$project$CustomTypes$Job, 42, 'Mortal Savant', 4, _List_Nil, _List_Nil, _List_Nil, author$project$CustomTypes$None, 'Can use magic')
+		A8(
+		author$project$CustomTypes$Job,
+		0,
+		'Commoner',
+		0,
+		_List_Nil,
+		_List_Nil,
+		_List_Nil,
+		author$project$CustomTypes$None,
+		elm$core$Maybe$Just('Can use some magic')),
+		A8(
+		author$project$CustomTypes$Job,
+		1,
+		'Noble',
+		0,
+		_List_Nil,
+		_List_Nil,
+		_List_Nil,
+		author$project$CustomTypes$None,
+		elm$core$Maybe$Just('Can use some magic')),
+		A8(author$project$CustomTypes$Job, 2, 'Myrmidon', 0, _List_Nil, _List_Nil, _List_Nil, author$project$CustomTypes$None, elm$core$Maybe$Nothing),
+		A8(
+		author$project$CustomTypes$Job,
+		42,
+		'Mortal Savant',
+		4,
+		_List_Nil,
+		_List_Nil,
+		_List_Nil,
+		author$project$CustomTypes$None,
+		elm$core$Maybe$Just('Can use magic'))
 	]);
 var author$project$GlobalModel$Model = F3(
 	function (jobCategories, jobs, errorMessage) {
 		return {errorMessage: errorMessage, jobCategories: jobCategories, jobs: jobs};
 	});
-var elm$core$Maybe$Nothing = {$: 'Nothing'};
 var author$project$HomePage$init = A3(author$project$GlobalModel$Model, author$project$DataBuilder$getJobCategories, author$project$DataBuilder$getJobs, elm$core$Maybe$Nothing);
 var author$project$HomePage$update = F2(
 	function (msg, model) {
@@ -4445,9 +4476,6 @@ var author$project$Stringable$categoryToString = function (category) {
 		default:
 			return 'Unique';
 	}
-};
-var elm$core$Maybe$Just = function (a) {
-	return {$: 'Just', a: a};
 };
 var elm$core$String$fromInt = _String_fromNumber;
 var author$project$Stringable$int = {
@@ -5013,6 +5041,25 @@ var author$project$Stringable$list = function (nestedStringable) {
 		}
 	};
 };
+var elm$core$Maybe$map = F2(
+	function (f, maybe) {
+		if (maybe.$ === 'Just') {
+			var value = maybe.a;
+			return elm$core$Maybe$Just(
+				f(value));
+		} else {
+			return elm$core$Maybe$Nothing;
+		}
+	});
+var elm$core$Maybe$withDefault = F2(
+	function (_default, maybe) {
+		if (maybe.$ === 'Just') {
+			var value = maybe.a;
+			return value;
+		} else {
+			return _default;
+		}
+	});
 var author$project$Stringable$jobToStringable = {
 	stringable: function (_n0) {
 		var id = _n0.id;
@@ -5035,7 +5082,15 @@ var author$project$Stringable$jobToStringable = {
 			author$project$Stringable$toString,
 			author$project$Stringable$list(author$project$Stringable$int),
 			certificationIdList);
-		return 'Job { ' + ('id: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, id) + (', name: ' + (name + (', jobCategoryId: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, jobCategoryId) + (', proficiencyIdList: ' + (pil + (', certificationIdList: ' + (cil + (', masteryIdList: ' + (mil + (', gender: ' + (author$project$Stringable$genderToString(gender) + (', note: ' + (note + ' }'))))))))))))))));
+		return 'Job { ' + ('id: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, id) + (', name: ' + (name + (', jobCategoryId: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, jobCategoryId) + (', proficiencyIdList: ' + (pil + (', certificationIdList: ' + (cil + (', masteryIdList: ' + (mil + (', gender: ' + (author$project$Stringable$genderToString(gender) + (A2(
+			elm$core$Maybe$withDefault,
+			'',
+			A2(
+				elm$core$Maybe$map,
+				function (a) {
+					return ', note: ' + a;
+				},
+				note)) + ' }')))))))))))))));
 	}
 };
 var author$project$DebugView$viewJobJson = function (job) {

@@ -20,7 +20,8 @@ getJobCategories =
 
 getJobs : List Job
 getJobs =
-    [ Job 0 "Commoner" 0 [] [] [] None "Can use some magic"
-    , Job 1 "Noble" 0 [] [] [] None "Can use some magic"
-    , Job 42 "Mortal Savant" 4 [] [] [] None "Can use magic"
+    [ Job 0 "Commoner" 0 [] [] [] None (Just "Can use some magic")
+    , Job 1 "Noble" 0 [] [] [] None (Just "Can use some magic")
+    , Job 2 "Myrmidon" 0 [] [] [] None Nothing
+    , Job 42 "Mortal Savant" 4 [] [] [] None (Just "Can use magic")
     ]

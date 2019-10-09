@@ -58,7 +58,7 @@ type alias JobCategory =
 
 
 type alias Job =
-    { id : Int, name : String, jobCategoryId : Int, proficiencyIdList : List Int, certificationIdList : List Int, masteryIdList : List Int, gender : GenderUnionType, note : String }
+    { id : Int, name : String, jobCategoryId : Int, proficiencyIdList : List Int, certificationIdList : List Int, masteryIdList : List Int, gender : GenderUnionType, note : Maybe String }
 
 
 type alias JobSkill =
