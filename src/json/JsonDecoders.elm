@@ -65,7 +65,7 @@ jobsDecoder =
         |> required "name" string
         |> required "jobCategoryId" int
         |> optional "proficiencyIdList" (list int) []
-        |> optional "certificationIdList" (list int) []
+        |> optional "certificationList" (list int) []
         |> optional "masteryIdList" (list int) []
         |> custom (field "gender" string |> andThen genderDecoder)
         |> optional "note" string ""
