@@ -4441,6 +4441,9 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 		author$project$CustomTypes$None,
 		elm$core$Maybe$Just('Can use some magic')),
 		A8(author$project$CustomTypes$Job, 2, 'Myrmidon', 0, _List_Nil, _List_Nil, _List_Nil, author$project$CustomTypes$None, elm$core$Maybe$Nothing),
+		A8(author$project$CustomTypes$Job, 3, 'Soldier', 0, _List_Nil, _List_Nil, _List_Nil, author$project$CustomTypes$None, elm$core$Maybe$Nothing),
+		A8(author$project$CustomTypes$Job, 4, 'Fighter', 0, _List_Nil, _List_Nil, _List_Nil, author$project$CustomTypes$None, elm$core$Maybe$Nothing),
+		A8(author$project$CustomTypes$Job, 5, 'Monk', 0, _List_Nil, _List_Nil, _List_Nil, author$project$CustomTypes$None, elm$core$Maybe$Nothing),
 		A8(
 		author$project$CustomTypes$Job,
 		42,
@@ -4496,7 +4499,7 @@ var author$project$Stringable$jobCategoryToStringable = {
 		var experience = _n0.experience;
 		var level = _n0.level;
 		var str = author$project$Stringable$categoryToString(category);
-		return 'Job { ' + ('id: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, id) + (', category: ' + (str + (', experience: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, experience) + (', level: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, level) + ' }'))))))));
+		return 'JobCategory { ' + ('id: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, id) + (', category: ' + (str + (', experience: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, experience) + (', level: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, level) + ' }'))))))));
 	}
 };
 var elm$core$Basics$identity = function (x) {
