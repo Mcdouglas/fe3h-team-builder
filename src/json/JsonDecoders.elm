@@ -1,3 +1,6 @@
+-- Deprecated
+
+
 module JsonDecoders exposing (..)
 
 import Category exposing (CategoryUnionType(..))

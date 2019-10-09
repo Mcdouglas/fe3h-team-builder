@@ -1,5 +1,6 @@
 module Stringable exposing (..)
 
+import CustomTypes exposing (..)
 import Html exposing (br, div, text)
 
 
@@ -88,3 +89,94 @@ foobar =
 bazqux : Stringable BazQux
 bazqux =
     { stringable = \(BazQux x) -> "BazQux " ++ toString int x }
+
+
+genderToString : GenderUnionType -> String
+genderToString gender =
+    case gender of
+        Male ->
+            "Male"
+
+        Female ->
+            "Female"
+
+        _ ->
+            "None"
+
+
+categoryToString : CategoryUnionType -> String
+categoryToString category =
+    case category of
+        Starting ->
+            "Starting"
+
+        Beginner ->
+            "Beginner"
+
+        Intermediate ->
+            "Intermediate"
+
+        Advanced ->
+            "Advanced"
+
+        Master ->
+            "Master"
+
+        Unique ->
+            "Unique"
+
+
+jobToStringable : Stringable Job
+jobToStringable =
+    { stringable =
+        \{ id, name, jobCategoryId, proficiencyIdList, certificationIdList, masteryIdList, gender, note } ->
+            let
+                pil =
+                    proficiencyIdList |> toString (list int)
+
+                cil =
+                    certificationIdList |> toString (list int)
+
+                mil =
+                    masteryIdList |> toString (list int)
+            in
+            "Job { "
+                ++ "id: "
+                ++ toString int id
+                ++ ", name: "
+                ++ name
+                ++ ", jobCategoryId: "
+                ++ toString int jobCategoryId
+                ++ ", proficiencyIdList: "
+                ++ pil
+                ++ ", certificationIdList: "
+                ++ cil
+                ++ ", masteryIdList: "
+                ++ mil
+                ++ ", gender: "
+                ++ genderToString gender
+                ++ ", note: "
+                ++ note
+                ++ " }"
+    }
+
+
+jobCategoryToStringable : Stringable JobCategory
+jobCategoryToStringable =
+    { stringable =
+        \{ id, category, experience, level } ->
+            let
+                str =
+                    categoryToString category
+            in
+            "Job { "
+                ++ "id: "
+                ++ toString int id
+                ++ ", category: "
+                ++ str
+                ++ ", experience: "
+                ++ toString int experience
+                ++ ", level: "
+                ++ toString int level
+                ++ " }"
+    }

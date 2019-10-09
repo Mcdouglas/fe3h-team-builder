@@ -1,16 +1,14 @@
 module DebugView exposing (..)
 
-import Category exposing (CategoryUnionType(..), categoryToString)
+import CustomTypes exposing (..)
+import DataBuilder exposing (Msg(..))
+import GlobalModel exposing (Model)
 import Html exposing (..)
-import HttpCommands exposing (Msg(..))
-import Job exposing (..)
-import JobCategory exposing (..)
-import JsonDao exposing (JsonModel)
 import Stringable exposing (..)
 
 
-viewJsonFileOrError : JsonModel -> Html Msg
-viewJsonFileOrError model =
+viewModelOrError : Model -> Html Msg
+viewModelOrError model =
     case model.errorMessage of
         Just message ->
             viewError message
@@ -31,7 +29,7 @@ viewError errorMessage =
         ]
 
 
-viewEntirePage : JsonModel -> Html Msg
+viewEntirePage : Model -> Html Msg
 viewEntirePage model =
     div []
         [ viewJobCategoriesJson model
@@ -39,7 +37,7 @@ viewEntirePage model =
         ]
 
 
-viewJobCategoriesJson : JsonModel -> Html Msg
+viewJobCategoriesJson : Model -> Html Msg
 viewJobCategoriesJson model =
     div []
         [ ul [] (List.map viewJobCategoryJson model.jobCategories) ]
@@ -55,7 +53,7 @@ viewJobCategoryJson element =
         [ text str ]
 
 
-viewJobsJson : JsonModel -> Html Msg
+viewJobsJson : Model -> Html Msg
 viewJobsJson model =
     div []
         [ ul [] (List.map viewJobJson model.jobs) ]
