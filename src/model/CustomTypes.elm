@@ -54,7 +54,7 @@ type alias Study =
 
 
 type alias Proficiency =
-    { id : Int, subject : Subject, bonus : Int }
+    { subject : Subject, bonus : Int }
 
 
 type alias JobCategory =
@@ -69,7 +69,7 @@ getJobCategory ( jobCategories, val ) =
 
 
 type alias Job =
-    { id : Int, name : String, jobCategoryId : Int, proficiencyIdList : List Int, certificationList : List Study, masteryIdList : List Int, gender : Maybe GenderUnionType, magicUsage : Maybe MagicUsage, note : Maybe String, customExperience : Maybe Int, customLevel : Maybe Int }
+    { id : Int, name : String, jobCategoryId : Int, proficiencyList : List Proficiency, certificationList : List Study, masteryIdList : List Int, gender : Maybe GenderUnionType, magicUsage : Maybe MagicUsage, note : Maybe String, customExperience : Maybe Int, customLevel : Maybe Int }
 
 
 getJob : ( List Job, Int ) -> Maybe Job
