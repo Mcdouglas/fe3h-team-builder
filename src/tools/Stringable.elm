@@ -173,6 +173,43 @@ rankToString rank =
             "S+"
 
 
+subjectToString : Subject -> String
+subjectToString subject =
+    case subject of
+        Sword ->
+            "Sword"
+
+        Lance ->
+            "Lance"
+
+        Axe ->
+            "Axe"
+
+        Bow ->
+            "Bow"
+
+        Brawling ->
+            "Brawling"
+
+        Reason ->
+            "Reason"
+
+        Faith ->
+            "Faith"
+
+        Authority ->
+            "Authority"
+
+        HeavyArmor ->
+            "HeavyArmor"
+
+        Riding ->
+            "Riding"
+
+        Flying ->
+            "Flying"
+
+
 jobToStringable : Stringable Job
 jobToStringable =
     { stringable =
@@ -187,7 +224,10 @@ jobToStringable =
                 ++ ", proficiencyIdList: "
                 ++ (proficiencyIdList |> toString (list int))
                 ++ ", certificationList: "
-                ++ "TODO"
+                ++ (certificationList
+                        |> List.map (\e -> "{ subject: " ++ subjectToString e.subject ++ ", rank: " ++ rankToString e.rank ++ " }")
+                        |> List.foldl (\a b -> a ++ ", " ++ b) ""
+                   )
                 ++ ", masteryIdList: "
                 ++ (masteryIdList |> toString (list int))
                 ++ (gender |> Maybe.map (\a -> genderToString a) |> Maybe.map (\a -> ", gender: " ++ a) |> Maybe.withDefault "")
