@@ -213,7 +213,7 @@ subjectToString subject =
 jobToStringable : Stringable Job
 jobToStringable =
     { stringable =
-        \{ id, name, jobCategoryId, proficiencyIdList, certificationList, masteryIdList, gender, magicUsage, note, customExperience, customLevel } ->
+        \{ id, name, jobCategoryId, proficiencyList, certificationList, masteryIdList, gender, magicUsage, note, customExperience, customLevel } ->
             "Job { "
                 ++ "id: "
                 ++ toString int id
@@ -221,13 +221,18 @@ jobToStringable =
                 ++ name
                 ++ ", jobCategoryId: "
                 ++ toString int jobCategoryId
-                ++ ", proficiencyIdList: "
-                ++ (proficiencyIdList |> toString (list int))
-                ++ ", certificationList: "
+                ++ ", proficiencyList: ["
+                ++ (proficiencyList
+                        |> List.map (\e -> "{ subject: " ++ subjectToString e.subject ++ ", bonus " ++ toString int e.bonus ++ " }")
+                        |> List.foldl (\a b -> a ++ ", " ++ b) ""
+                   )
+                ++ "]"
+                ++ ", certificationList: ["
                 ++ (certificationList
                         |> List.map (\e -> "{ subject: " ++ subjectToString e.subject ++ ", rank: " ++ rankToString e.rank ++ " }")
                         |> List.foldl (\a b -> a ++ ", " ++ b) ""
                    )
+                ++ "]"
                 ++ ", masteryIdList: "
                 ++ (masteryIdList |> toString (list int))
                 ++ (gender |> Maybe.map (\a -> genderToString a) |> Maybe.map (\a -> ", gender: " ++ a) |> Maybe.withDefault "")

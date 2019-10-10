@@ -4457,7 +4457,7 @@ var author$project$CustomTypes$HeavyArmor = {$: 'HeavyArmor'};
 var author$project$CustomTypes$Job = function (id) {
 	return function (name) {
 		return function (jobCategoryId) {
-			return function (proficiencyIdList) {
+			return function (proficiencyList) {
 				return function (certificationList) {
 					return function (masteryIdList) {
 						return function (gender) {
@@ -4465,7 +4465,7 @@ var author$project$CustomTypes$Job = function (id) {
 								return function (note) {
 									return function (customExperience) {
 										return function (customLevel) {
-											return {certificationList: certificationList, customExperience: customExperience, customLevel: customLevel, gender: gender, id: id, jobCategoryId: jobCategoryId, magicUsage: magicUsage, masteryIdList: masteryIdList, name: name, note: note, proficiencyIdList: proficiencyIdList};
+											return {certificationList: certificationList, customExperience: customExperience, customLevel: customLevel, gender: gender, id: id, jobCategoryId: jobCategoryId, magicUsage: magicUsage, masteryIdList: masteryIdList, name: name, note: note, proficiencyList: proficiencyList};
 										};
 									};
 								};
@@ -4479,6 +4479,10 @@ var author$project$CustomTypes$Job = function (id) {
 };
 var author$project$CustomTypes$Lance = {$: 'Lance'};
 var author$project$CustomTypes$Male = {$: 'Male'};
+var author$project$CustomTypes$Proficiency = F2(
+	function (subject, bonus) {
+		return {bonus: bonus, subject: subject};
+	});
 var author$project$CustomTypes$Reason = {$: 'Reason'};
 var author$project$CustomTypes$Riding = {$: 'Riding'};
 var author$project$CustomTypes$Study = F2(
@@ -4492,180 +4496,333 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 		elm$core$Maybe$Just(author$project$CustomTypes$CanUseSomeMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(1)('Noble')(0)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(
 		elm$core$Maybe$Just(author$project$CustomTypes$CanUseSomeMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(2)('Myrmidon')(1)(_List_Nil)(
+		author$project$CustomTypes$Job(2)('Myrmidon')(1)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 1)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Sword, author$project$CustomTypes$D)
 			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(3)('Soldier')(1)(_List_Nil)(
+		author$project$CustomTypes$Job(3)('Soldier')(1)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 1)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Lance, author$project$CustomTypes$D)
 			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(4)('Fighter')(1)(_List_Nil)(
+		author$project$CustomTypes$Job(4)('Fighter')(1)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 1),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Bow, 1),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Brawling, 1)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Axe, author$project$CustomTypes$D),
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Bow, author$project$CustomTypes$D),
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Brawling, author$project$CustomTypes$D)
 			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(5)('Monk')(1)(_List_Nil)(
+		author$project$CustomTypes$Job(5)('Monk')(1)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Reason, 1),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Faith, 1)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Reason, author$project$CustomTypes$D),
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Faith, author$project$CustomTypes$D)
 			]))(_List_Nil)(elm$core$Maybe$Nothing)(
 		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(6)('Lord')(2)(_List_Nil)(
+		author$project$CustomTypes$Job(6)('Lord')(2)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 1),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Authority, 2)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Sword, author$project$CustomTypes$Dplus),
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Authority, author$project$CustomTypes$C)
 			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(
 		elm$core$Maybe$Just('Edelgard, Dimitri and Claude only'))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(7)('Mercenary')(2)(_List_Nil)(
+		author$project$CustomTypes$Job(7)('Mercenary')(2)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 1)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Sword, author$project$CustomTypes$C)
 			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(8)('Thief')(2)(_List_Nil)(
+		author$project$CustomTypes$Job(8)('Thief')(2)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Bow, 1)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Sword, author$project$CustomTypes$C)
 			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(9)('Cavalier')(2)(_List_Nil)(
+		author$project$CustomTypes$Job(9)('Cavalier')(2)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 1),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Riding, 2)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Lance, author$project$CustomTypes$C),
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Riding, author$project$CustomTypes$D)
 			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(10)('Pegasus Knight')(12)(_List_Nil)(
+		author$project$CustomTypes$Job(10)('Pegasus Knight')(12)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 1),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Flying, 2)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Lance, author$project$CustomTypes$C),
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Flying, author$project$CustomTypes$D)
 			]))(_List_Nil)(
 		elm$core$Maybe$Just(author$project$CustomTypes$Female))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(11)('Brigand')(2)(_List_Nil)(
+		author$project$CustomTypes$Job(11)('Brigand')(2)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Brawling, 1)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Axe, author$project$CustomTypes$C)
 			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(12)('Armored Knight')(12)(_List_Nil)(
+		author$project$CustomTypes$Job(12)('Armored Knight')(12)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 1),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$HeavyArmor, 1)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Axe, author$project$CustomTypes$C),
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$HeavyArmor, author$project$CustomTypes$D)
 			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(13)('Archer')(2)(_List_Nil)(
+		author$project$CustomTypes$Job(13)('Archer')(2)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 1),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Bow, 2)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Bow, author$project$CustomTypes$C)
 			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(14)('Brawler')(2)(_List_Nil)(
+		author$project$CustomTypes$Job(14)('Brawler')(2)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 1),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Brawling, 1)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Brawling, author$project$CustomTypes$C)
 			]))(_List_Nil)(
 		elm$core$Maybe$Just(author$project$CustomTypes$Male))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(15)('Mage')(2)(_List_Nil)(
+		author$project$CustomTypes$Job(15)('Mage')(2)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Reason, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Faith, 1)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Reason, author$project$CustomTypes$C)
 			]))(_List_Nil)(elm$core$Maybe$Nothing)(
 		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(16)('Dark Mage')(12)(_List_Nil)(
+		author$project$CustomTypes$Job(16)('Dark Mage')(12)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Reason, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Faith, 1)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Reason, author$project$CustomTypes$C)
 			]))(_List_Nil)(
 		elm$core$Maybe$Just(author$project$CustomTypes$Male))(
 		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(17)('Priest')(2)(_List_Nil)(
+		author$project$CustomTypes$Job(17)('Priest')(2)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Reason, 1),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Faith, 2)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Faith, author$project$CustomTypes$C)
 			]))(_List_Nil)(elm$core$Maybe$Nothing)(
 		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(18)('Swordmaster')(3)(_List_Nil)(
+		author$project$CustomTypes$Job(18)('Swordmaster')(3)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 3)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Sword, author$project$CustomTypes$A)
 			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(19)('Hero')(3)(_List_Nil)(
+		author$project$CustomTypes$Job(19)('Hero')(3)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 2)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Sword, author$project$CustomTypes$B),
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Axe, author$project$CustomTypes$C)
 			]))(_List_Nil)(
 		elm$core$Maybe$Just(author$project$CustomTypes$Male))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(20)('Assassin')(3)(_List_Nil)(
+		author$project$CustomTypes$Job(20)('Assassin')(3)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Bow, 2)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Sword, author$project$CustomTypes$B),
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Bow, author$project$CustomTypes$C)
 			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(21)('Paladin')(3)(_List_Nil)(
+		author$project$CustomTypes$Job(21)('Paladin')(3)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Riding, 3)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Lance, author$project$CustomTypes$B),
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Riding, author$project$CustomTypes$B)
 			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(22)('Warrior')(3)(_List_Nil)(
+		author$project$CustomTypes$Job(22)('Warrior')(3)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 3)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Axe, author$project$CustomTypes$A)
 			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(23)('Fortress Knight')(3)(_List_Nil)(
+		author$project$CustomTypes$Job(23)('Fortress Knight')(3)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$HeavyArmor, 3)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Axe, author$project$CustomTypes$B),
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$HeavyArmor, author$project$CustomTypes$B)
 			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(24)('Wyvern Rider')(3)(_List_Nil)(
+		author$project$CustomTypes$Job(24)('Wyvern Rider')(3)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Flying, 2)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Axe, author$project$CustomTypes$B),
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Flying, author$project$CustomTypes$C)
 			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(25)('Sniper')(3)(_List_Nil)(
+		author$project$CustomTypes$Job(25)('Sniper')(3)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Bow, 3)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Bow, author$project$CustomTypes$A)
 			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(26)('Grappler')(3)(_List_Nil)(
+		author$project$CustomTypes$Job(26)('Grappler')(3)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Brawling, 3)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Brawling, author$project$CustomTypes$A)
 			]))(_List_Nil)(
 		elm$core$Maybe$Just(author$project$CustomTypes$Male))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(27)('Warlock')(3)(_List_Nil)(
+		author$project$CustomTypes$Job(27)('Warlock')(3)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Reason, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Faith, 2)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Reason, author$project$CustomTypes$A)
 			]))(_List_Nil)(elm$core$Maybe$Nothing)(
 		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(28)('Dark Bishop')(3)(_List_Nil)(
+		author$project$CustomTypes$Job(28)('Dark Bishop')(3)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Reason, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Faith, 2)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Reason, author$project$CustomTypes$A)
 			]))(_List_Nil)(
 		elm$core$Maybe$Just(author$project$CustomTypes$Male))(
 		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(29)('Bishop')(3)(_List_Nil)(
+		author$project$CustomTypes$Job(29)('Bishop')(3)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Reason, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Faith, 3)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Faith, author$project$CustomTypes$A)
 			]))(_List_Nil)(elm$core$Maybe$Nothing)(
 		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(30)('Mortal Savant')(4)(_List_Nil)(
+		author$project$CustomTypes$Job(30)('Mortal Savant')(4)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Reason, 3)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Sword, author$project$CustomTypes$A),
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Reason, author$project$CustomTypes$Bplus)
 			]))(_List_Nil)(elm$core$Maybe$Nothing)(
 		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(31)('Falcon Knight')(4)(_List_Nil)(
+		author$project$CustomTypes$Job(31)('Falcon Knight')(4)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Flying, 3)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Sword, author$project$CustomTypes$C),
@@ -4673,35 +4830,63 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Flying, author$project$CustomTypes$Bplus)
 			]))(_List_Nil)(
 		elm$core$Maybe$Just(author$project$CustomTypes$Female))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(32)('War Master')(4)(_List_Nil)(
+		author$project$CustomTypes$Job(32)('War Master')(4)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Brawling, 3)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Axe, author$project$CustomTypes$A),
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Brawling, author$project$CustomTypes$B)
 			]))(_List_Nil)(
 		elm$core$Maybe$Just(author$project$CustomTypes$Male))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(33)('Wyvern Lord')(4)(_List_Nil)(
+		author$project$CustomTypes$Job(33)('Wyvern Lord')(4)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Flying, 3)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Lance, author$project$CustomTypes$C),
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Axe, author$project$CustomTypes$A),
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Flying, author$project$CustomTypes$A)
 			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(34)('Great Knight')(4)(_List_Nil)(
+		author$project$CustomTypes$Job(34)('Great Knight')(4)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$HeavyArmor, 3)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Axe, author$project$CustomTypes$Bplus),
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$HeavyArmor, author$project$CustomTypes$A),
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Riding, author$project$CustomTypes$Bplus)
 			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(35)('Bow Knight')(4)(_List_Nil)(
+		author$project$CustomTypes$Job(35)('Bow Knight')(4)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Bow, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Riding, 3)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Lance, author$project$CustomTypes$C),
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Bow, author$project$CustomTypes$A),
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Riding, author$project$CustomTypes$A)
 			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(36)('Gremory')(4)(_List_Nil)(
+		author$project$CustomTypes$Job(36)('Gremory')(4)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Reason, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Faith, 3)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Reason, author$project$CustomTypes$A),
@@ -4709,7 +4894,13 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 			]))(_List_Nil)(
 		elm$core$Maybe$Just(author$project$CustomTypes$Female))(
 		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(37)('Dark Knight')(4)(_List_Nil)(
+		author$project$CustomTypes$Job(37)('Dark Knight')(4)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Reason, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Riding, 3)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Lance, author$project$CustomTypes$C),
@@ -4717,7 +4908,13 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Riding, author$project$CustomTypes$A)
 			]))(_List_Nil)(elm$core$Maybe$Nothing)(
 		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(38)('Holy Knight')(4)(_List_Nil)(
+		author$project$CustomTypes$Job(38)('Holy Knight')(4)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Faith, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Riding, 3)
+			]))(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Lance, author$project$CustomTypes$C),
@@ -4725,29 +4922,77 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Riding, author$project$CustomTypes$A)
 			]))(_List_Nil)(elm$core$Maybe$Nothing)(
 		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(39)('Dancer')(5)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(
+		author$project$CustomTypes$Job(39)('Dancer')(5)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Authority, 3)
+			]))(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(
 		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(
 		elm$core$Maybe$Just(100))(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(40)('Enlightened One')(5)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(
+		author$project$CustomTypes$Job(40)('Enlightened One')(5)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Brawling, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Faith, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Authority, 3)
+			]))(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(
 		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(
 		elm$core$Maybe$Just('Byleth only'))(
 		elm$core$Maybe$Just(100))(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(41)('Armored Lord')(5)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(
+		author$project$CustomTypes$Job(41)('Armored Lord')(5)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Authority, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$HeavyArmor, 3)
+			]))(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(
 		elm$core$Maybe$Just('Edelgard only'))(
 		elm$core$Maybe$Just(150))(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(42)('Emperor')(5)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(
+		author$project$CustomTypes$Job(42)('Emperor')(5)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Authority, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$HeavyArmor, 3)
+			]))(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(
 		elm$core$Maybe$Just('Edelgard only'))(
 		elm$core$Maybe$Just(200))(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(43)('High Lord')(5)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(
+		author$project$CustomTypes$Job(43)('High Lord')(5)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Authority, 3)
+			]))(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(
 		elm$core$Maybe$Just('Dimitri only'))(
 		elm$core$Maybe$Just(150))(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(44)('Great Lord')(5)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(
+		author$project$CustomTypes$Job(44)('Great Lord')(5)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Authority, 3)
+			]))(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(
 		elm$core$Maybe$Just('Dimitri only'))(
 		elm$core$Maybe$Just(200))(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(45)('Wyvern Master')(5)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(
+		author$project$CustomTypes$Job(45)('Wyvern Master')(5)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Bow, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Authority, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Flying, 3)
+			]))(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(
 		elm$core$Maybe$Just('Claude only'))(
 		elm$core$Maybe$Just(150))(elm$core$Maybe$Nothing),
-		author$project$CustomTypes$Job(46)('Barbarossa')(5)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(
+		author$project$CustomTypes$Job(46)('Barbarossa')(5)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Bow, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Authority, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Flying, 3)
+			]))(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(
 		elm$core$Maybe$Just('Claude only'))(
 		elm$core$Maybe$Just(200))(elm$core$Maybe$Nothing)
 	]);
@@ -5448,7 +5693,7 @@ var author$project$Stringable$jobToStringable = {
 		var id = _n0.id;
 		var name = _n0.name;
 		var jobCategoryId = _n0.jobCategoryId;
-		var proficiencyIdList = _n0.proficiencyIdList;
+		var proficiencyList = _n0.proficiencyList;
 		var certificationList = _n0.certificationList;
 		var masteryIdList = _n0.masteryIdList;
 		var gender = _n0.gender;
@@ -5456,10 +5701,19 @@ var author$project$Stringable$jobToStringable = {
 		var note = _n0.note;
 		var customExperience = _n0.customExperience;
 		var customLevel = _n0.customLevel;
-		return 'Job { ' + ('id: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, id) + (', name: ' + (name + (', jobCategoryId: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, jobCategoryId) + (', proficiencyIdList: ' + (A2(
-			author$project$Stringable$toString,
-			author$project$Stringable$list(author$project$Stringable$int),
-			proficiencyIdList) + (', certificationList: ' + (A3(
+		return 'Job { ' + ('id: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, id) + (', name: ' + (name + (', jobCategoryId: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, jobCategoryId) + (', proficiencyList: [' + (A3(
+			elm$core$List$foldl,
+			F2(
+				function (a, b) {
+					return a + (', ' + b);
+				}),
+			'',
+			A2(
+				elm$core$List$map,
+				function (e) {
+					return '{ subject: ' + (author$project$Stringable$subjectToString(e.subject) + (', bonus ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, e.bonus) + ' }')));
+				},
+				proficiencyList)) + (']' + (', certificationList: [' + (A3(
 			elm$core$List$foldl,
 			F2(
 				function (a, b) {
@@ -5471,7 +5725,7 @@ var author$project$Stringable$jobToStringable = {
 				function (e) {
 					return '{ subject: ' + (author$project$Stringable$subjectToString(e.subject) + (', rank: ' + (author$project$Stringable$rankToString(e.rank) + ' }')));
 				},
-				certificationList)) + (', masteryIdList: ' + (A2(
+				certificationList)) + (']' + (', masteryIdList: ' + (A2(
 			author$project$Stringable$toString,
 			author$project$Stringable$list(author$project$Stringable$int),
 			masteryIdList) + (A2(
@@ -5534,7 +5788,7 @@ var author$project$Stringable$jobToStringable = {
 					function (a) {
 						return A2(author$project$Stringable$toString, author$project$Stringable$int, a);
 					},
-					customLevel))) + ' }')))))))))))))))));
+					customLevel))) + ' }')))))))))))))))))));
 	}
 };
 var author$project$DebugView$viewJobJson = function (job) {
