@@ -4438,18 +4438,12 @@ var author$project$DataBuilder$getJobCategories = _List_fromArray(
 		elm$core$Maybe$Just(30)),
 		A4(author$project$CustomTypes$JobCategory, 5, author$project$CustomTypes$Unique, elm$core$Maybe$Nothing, elm$core$Maybe$Nothing)
 	]);
-var author$project$CustomTypes$A = {$: 'A'};
 var author$project$CustomTypes$Authority = {$: 'Authority'};
 var author$project$CustomTypes$Axe = {$: 'Axe'};
-var author$project$CustomTypes$B = {$: 'B'};
 var author$project$CustomTypes$Bow = {$: 'Bow'};
-var author$project$CustomTypes$Bplus = {$: 'Bplus'};
 var author$project$CustomTypes$Brawling = {$: 'Brawling'};
-var author$project$CustomTypes$C = {$: 'C'};
 var author$project$CustomTypes$CanUseMagic = {$: 'CanUseMagic'};
 var author$project$CustomTypes$CanUseSomeMagic = {$: 'CanUseSomeMagic'};
-var author$project$CustomTypes$D = {$: 'D'};
-var author$project$CustomTypes$Dplus = {$: 'Dplus'};
 var author$project$CustomTypes$Faith = {$: 'Faith'};
 var author$project$CustomTypes$Female = {$: 'Female'};
 var author$project$CustomTypes$Flying = {$: 'Flying'};
@@ -4458,14 +4452,14 @@ var author$project$CustomTypes$Job = function (id) {
 	return function (name) {
 		return function (jobCategoryId) {
 			return function (proficiencyList) {
-				return function (certificationList) {
+				return function (studyIdList) {
 					return function (masteryIdList) {
 						return function (gender) {
 							return function (magicUsage) {
 								return function (note) {
 									return function (customExperience) {
 										return function (customLevel) {
-											return {certificationList: certificationList, customExperience: customExperience, customLevel: customLevel, gender: gender, id: id, jobCategoryId: jobCategoryId, magicUsage: magicUsage, masteryIdList: masteryIdList, name: name, note: note, proficiencyList: proficiencyList};
+											return {customExperience: customExperience, customLevel: customLevel, gender: gender, id: id, jobCategoryId: jobCategoryId, magicUsage: magicUsage, masteryIdList: masteryIdList, name: name, note: note, proficiencyList: proficiencyList, studyIdList: studyIdList};
 										};
 									};
 								};
@@ -4485,10 +4479,6 @@ var author$project$CustomTypes$Proficiency = F2(
 	});
 var author$project$CustomTypes$Reason = {$: 'Reason'};
 var author$project$CustomTypes$Riding = {$: 'Riding'};
-var author$project$CustomTypes$Study = F2(
-	function (subject, rank) {
-		return {rank: rank, subject: subject};
-	});
 var author$project$CustomTypes$Sword = {$: 'Sword'};
 var author$project$DataBuilder$getJobs = _List_fromArray(
 	[
@@ -4502,18 +4492,14 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 1)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Sword, author$project$CustomTypes$D)
-			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+			[2]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(3)('Soldier')(1)(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 1)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Lance, author$project$CustomTypes$D)
-			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+			[14]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(4)('Fighter')(1)(
 		_List_fromArray(
 			[
@@ -4522,11 +4508,7 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Brawling, 1)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Axe, author$project$CustomTypes$D),
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Bow, author$project$CustomTypes$D),
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Brawling, author$project$CustomTypes$D)
-			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+			[26, 38, 50]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(5)('Monk')(1)(
 		_List_fromArray(
 			[
@@ -4534,10 +4516,7 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Faith, 1)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Reason, author$project$CustomTypes$D),
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Faith, author$project$CustomTypes$D)
-			]))(_List_Nil)(elm$core$Maybe$Nothing)(
+			[62, 74]))(_List_Nil)(elm$core$Maybe$Nothing)(
 		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(6)('Lord')(2)(
 		_List_fromArray(
@@ -4547,10 +4526,7 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Authority, 2)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Sword, author$project$CustomTypes$Dplus),
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Authority, author$project$CustomTypes$C)
-			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(
+			[3, 89]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(
 		elm$core$Maybe$Just('Edelgard, Dimitri and Claude only'))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(7)('Mercenary')(2)(
 		_List_fromArray(
@@ -4559,9 +4535,7 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 1)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Sword, author$project$CustomTypes$C)
-			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+			[4]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(8)('Thief')(2)(
 		_List_fromArray(
 			[
@@ -4569,9 +4543,7 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Bow, 1)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Sword, author$project$CustomTypes$C)
-			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+			[4]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(9)('Cavalier')(2)(
 		_List_fromArray(
 			[
@@ -4580,10 +4552,7 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Riding, 2)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Lance, author$project$CustomTypes$C),
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Riding, author$project$CustomTypes$D)
-			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+			[16, 111]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(10)('Pegasus Knight')(12)(
 		_List_fromArray(
 			[
@@ -4592,10 +4561,7 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Flying, 2)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Lance, author$project$CustomTypes$C),
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Flying, author$project$CustomTypes$D)
-			]))(_List_Nil)(
+			[16, 123]))(_List_Nil)(
 		elm$core$Maybe$Just(author$project$CustomTypes$Female))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(11)('Brigand')(2)(
 		_List_fromArray(
@@ -4604,9 +4570,7 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Brawling, 1)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Axe, author$project$CustomTypes$C)
-			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+			[28]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(12)('Armored Knight')(12)(
 		_List_fromArray(
 			[
@@ -4615,10 +4579,7 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$HeavyArmor, 1)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Axe, author$project$CustomTypes$C),
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$HeavyArmor, author$project$CustomTypes$D)
-			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+			[28, 99]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(13)('Archer')(2)(
 		_List_fromArray(
 			[
@@ -4626,9 +4587,7 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Bow, 2)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Bow, author$project$CustomTypes$C)
-			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+			[40]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(14)('Brawler')(2)(
 		_List_fromArray(
 			[
@@ -4636,9 +4595,7 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Brawling, 1)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Brawling, author$project$CustomTypes$C)
-			]))(_List_Nil)(
+			[52]))(_List_Nil)(
 		elm$core$Maybe$Just(author$project$CustomTypes$Male))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(15)('Mage')(2)(
 		_List_fromArray(
@@ -4647,9 +4604,7 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Faith, 1)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Reason, author$project$CustomTypes$C)
-			]))(_List_Nil)(elm$core$Maybe$Nothing)(
+			[64]))(_List_Nil)(elm$core$Maybe$Nothing)(
 		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(16)('Dark Mage')(12)(
 		_List_fromArray(
@@ -4658,9 +4613,7 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Faith, 1)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Reason, author$project$CustomTypes$C)
-			]))(_List_Nil)(
+			[64]))(_List_Nil)(
 		elm$core$Maybe$Just(author$project$CustomTypes$Male))(
 		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(17)('Priest')(2)(
@@ -4670,9 +4623,7 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Faith, 2)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Faith, author$project$CustomTypes$C)
-			]))(_List_Nil)(elm$core$Maybe$Nothing)(
+			[76]))(_List_Nil)(elm$core$Maybe$Nothing)(
 		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(18)('Swordmaster')(3)(
 		_List_fromArray(
@@ -4680,9 +4631,7 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 3)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Sword, author$project$CustomTypes$A)
-			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+			[8]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(19)('Hero')(3)(
 		_List_fromArray(
 			[
@@ -4690,10 +4639,7 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 2)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Sword, author$project$CustomTypes$B),
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Axe, author$project$CustomTypes$C)
-			]))(_List_Nil)(
+			[6, 28]))(_List_Nil)(
 		elm$core$Maybe$Just(author$project$CustomTypes$Male))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(20)('Assassin')(3)(
 		_List_fromArray(
@@ -4702,10 +4648,7 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Bow, 2)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Sword, author$project$CustomTypes$B),
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Bow, author$project$CustomTypes$C)
-			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+			[6, 40]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(21)('Paladin')(3)(
 		_List_fromArray(
 			[
@@ -4714,19 +4657,14 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Riding, 3)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Lance, author$project$CustomTypes$B),
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Riding, author$project$CustomTypes$B)
-			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+			[18, 115]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(22)('Warrior')(3)(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 3)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Axe, author$project$CustomTypes$A)
-			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+			[32]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(23)('Fortress Knight')(3)(
 		_List_fromArray(
 			[
@@ -4735,10 +4673,7 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$HeavyArmor, 3)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Axe, author$project$CustomTypes$B),
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$HeavyArmor, author$project$CustomTypes$B)
-			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+			[30, 103]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(24)('Wyvern Rider')(3)(
 		_List_fromArray(
 			[
@@ -4747,28 +4682,21 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Flying, 2)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Axe, author$project$CustomTypes$B),
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Flying, author$project$CustomTypes$C)
-			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+			[30, 125]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(25)('Sniper')(3)(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Bow, 3)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Bow, author$project$CustomTypes$A)
-			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+			[44]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(26)('Grappler')(3)(
 		_List_fromArray(
 			[
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Brawling, 3)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Brawling, author$project$CustomTypes$A)
-			]))(_List_Nil)(
+			[56]))(_List_Nil)(
 		elm$core$Maybe$Just(author$project$CustomTypes$Male))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(27)('Warlock')(3)(
 		_List_fromArray(
@@ -4777,9 +4705,7 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Faith, 2)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Reason, author$project$CustomTypes$A)
-			]))(_List_Nil)(elm$core$Maybe$Nothing)(
+			[68]))(_List_Nil)(elm$core$Maybe$Nothing)(
 		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(28)('Dark Bishop')(3)(
 		_List_fromArray(
@@ -4788,9 +4714,7 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Faith, 2)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Reason, author$project$CustomTypes$A)
-			]))(_List_Nil)(
+			[68]))(_List_Nil)(
 		elm$core$Maybe$Just(author$project$CustomTypes$Male))(
 		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(29)('Bishop')(3)(
@@ -4800,9 +4724,7 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Faith, 3)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Faith, author$project$CustomTypes$A)
-			]))(_List_Nil)(elm$core$Maybe$Nothing)(
+			[80]))(_List_Nil)(elm$core$Maybe$Nothing)(
 		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(30)('Mortal Savant')(4)(
 		_List_fromArray(
@@ -4811,10 +4733,7 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Reason, 3)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Sword, author$project$CustomTypes$A),
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Reason, author$project$CustomTypes$Bplus)
-			]))(_List_Nil)(elm$core$Maybe$Nothing)(
+			[8, 67]))(_List_Nil)(elm$core$Maybe$Nothing)(
 		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(31)('Falcon Knight')(4)(
 		_List_fromArray(
@@ -4824,11 +4743,7 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Flying, 3)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Sword, author$project$CustomTypes$C),
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Lance, author$project$CustomTypes$A),
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Flying, author$project$CustomTypes$Bplus)
-			]))(_List_Nil)(
+			[4, 20, 128]))(_List_Nil)(
 		elm$core$Maybe$Just(author$project$CustomTypes$Female))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(32)('War Master')(4)(
 		_List_fromArray(
@@ -4837,10 +4752,7 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Brawling, 3)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Axe, author$project$CustomTypes$A),
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Brawling, author$project$CustomTypes$B)
-			]))(_List_Nil)(
+			[32, 54]))(_List_Nil)(
 		elm$core$Maybe$Just(author$project$CustomTypes$Male))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(33)('Wyvern Lord')(4)(
 		_List_fromArray(
@@ -4850,11 +4762,7 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Flying, 3)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Lance, author$project$CustomTypes$C),
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Axe, author$project$CustomTypes$A),
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Flying, author$project$CustomTypes$A)
-			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+			[16, 32, 129]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(34)('Great Knight')(4)(
 		_List_fromArray(
 			[
@@ -4863,11 +4771,7 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$HeavyArmor, 3)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Axe, author$project$CustomTypes$Bplus),
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$HeavyArmor, author$project$CustomTypes$A),
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Riding, author$project$CustomTypes$Bplus)
-			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+			[31, 105, 116]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(35)('Bow Knight')(4)(
 		_List_fromArray(
 			[
@@ -4876,11 +4780,7 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Riding, 3)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Lance, author$project$CustomTypes$C),
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Bow, author$project$CustomTypes$A),
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Riding, author$project$CustomTypes$A)
-			]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+			[16, 44, 117]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(36)('Gremory')(4)(
 		_List_fromArray(
 			[
@@ -4888,10 +4788,7 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Faith, 3)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Reason, author$project$CustomTypes$A),
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Faith, author$project$CustomTypes$A)
-			]))(_List_Nil)(
+			[68, 80]))(_List_Nil)(
 		elm$core$Maybe$Just(author$project$CustomTypes$Female))(
 		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(37)('Dark Knight')(4)(
@@ -4902,11 +4799,7 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Riding, 3)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Lance, author$project$CustomTypes$C),
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Reason, author$project$CustomTypes$Bplus),
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Riding, author$project$CustomTypes$A)
-			]))(_List_Nil)(elm$core$Maybe$Nothing)(
+			[16, 67, 117]))(_List_Nil)(elm$core$Maybe$Nothing)(
 		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(38)('Holy Knight')(4)(
 		_List_fromArray(
@@ -4916,11 +4809,7 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Riding, 3)
 			]))(
 		_List_fromArray(
-			[
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Lance, author$project$CustomTypes$C),
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Faith, author$project$CustomTypes$Bplus),
-				A2(author$project$CustomTypes$Study, author$project$CustomTypes$Riding, author$project$CustomTypes$A)
-			]))(_List_Nil)(elm$core$Maybe$Nothing)(
+			[16, 79, 117]))(_List_Nil)(elm$core$Maybe$Nothing)(
 		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
 		author$project$CustomTypes$Job(39)('Dancer')(5)(
 		_List_fromArray(
@@ -5634,34 +5523,6 @@ var author$project$Stringable$magicUsageToString = function (magicUsage) {
 		return 'Can use some magic';
 	}
 };
-var author$project$Stringable$rankToString = function (rank) {
-	switch (rank.$) {
-		case 'E':
-			return 'E';
-		case 'Eplus':
-			return 'E+';
-		case 'D':
-			return 'D';
-		case 'Dplus':
-			return 'D+';
-		case 'C':
-			return 'C';
-		case 'Cplus':
-			return 'C+';
-		case 'B':
-			return 'B';
-		case 'Bplus':
-			return 'B+';
-		case 'A':
-			return 'A';
-		case 'Aplus':
-			return 'A+';
-		case 'S':
-			return 'S';
-		default:
-			return 'S+';
-	}
-};
 var author$project$Stringable$subjectToString = function (subject) {
 	switch (subject.$) {
 		case 'Sword':
@@ -5694,7 +5555,7 @@ var author$project$Stringable$jobToStringable = {
 		var name = _n0.name;
 		var jobCategoryId = _n0.jobCategoryId;
 		var proficiencyList = _n0.proficiencyList;
-		var certificationList = _n0.certificationList;
+		var studyIdList = _n0.studyIdList;
 		var masteryIdList = _n0.masteryIdList;
 		var gender = _n0.gender;
 		var magicUsage = _n0.magicUsage;
@@ -5713,19 +5574,7 @@ var author$project$Stringable$jobToStringable = {
 				function (e) {
 					return '{ subject: ' + (author$project$Stringable$subjectToString(e.subject) + (', bonus ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, e.bonus) + ' }')));
 				},
-				proficiencyList)) + (']' + (', certificationList: [' + (A3(
-			elm$core$List$foldl,
-			F2(
-				function (a, b) {
-					return a + (', ' + b);
-				}),
-			'',
-			A2(
-				elm$core$List$map,
-				function (e) {
-					return '{ subject: ' + (author$project$Stringable$subjectToString(e.subject) + (', rank: ' + (author$project$Stringable$rankToString(e.rank) + ' }')));
-				},
-				certificationList)) + (']' + (', masteryIdList: ' + (A2(
+				proficiencyList)) + (']' + (', studyIdList: [' + ('TODO' + (']' + (', masteryIdList: ' + (A2(
 			author$project$Stringable$toString,
 			author$project$Stringable$list(author$project$Stringable$int),
 			masteryIdList) + (A2(

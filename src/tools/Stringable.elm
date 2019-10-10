@@ -1,6 +1,7 @@
 module Stringable exposing (..)
 
 import CustomTypes exposing (..)
+import DataBuilder exposing (..)
 import Html exposing (br, div, text)
 
 
@@ -213,7 +214,7 @@ subjectToString subject =
 jobToStringable : Stringable Job
 jobToStringable =
     { stringable =
-        \{ id, name, jobCategoryId, proficiencyList, certificationList, masteryIdList, gender, magicUsage, note, customExperience, customLevel } ->
+        \{ id, name, jobCategoryId, proficiencyList, studyIdList, masteryIdList, gender, magicUsage, note, customExperience, customLevel } ->
             "Job { "
                 ++ "id: "
                 ++ toString int id
@@ -227,11 +228,13 @@ jobToStringable =
                         |> List.foldl (\a b -> a ++ ", " ++ b) ""
                    )
                 ++ "]"
-                ++ ", certificationList: ["
-                ++ (certificationList
-                        |> List.map (\e -> "{ subject: " ++ subjectToString e.subject ++ ", rank: " ++ rankToString e.rank ++ " }")
-                        |> List.foldl (\a b -> a ++ ", " ++ b) ""
-                   )
+                ++ ", studyIdList: ["
+                -- ++ (studyIdList
+                --         |> List.map (\e -> getStudyById e)
+                --         |>
+                --         |> List.foldl (\a b -> a ++ ", " ++ b) ""
+                --    )
+                ++ "TODO"
                 ++ "]"
                 ++ ", masteryIdList: "
                 ++ (masteryIdList |> toString (list int))
