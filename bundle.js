@@ -5389,6 +5389,60 @@ var author$project$Stringable$magicUsageToString = function (magicUsage) {
 		return 'Can use some magic';
 	}
 };
+var author$project$Stringable$rankToString = function (rank) {
+	switch (rank.$) {
+		case 'E':
+			return 'E';
+		case 'Eplus':
+			return 'E+';
+		case 'D':
+			return 'D';
+		case 'Dplus':
+			return 'D+';
+		case 'C':
+			return 'C';
+		case 'Cplus':
+			return 'C+';
+		case 'B':
+			return 'B';
+		case 'Bplus':
+			return 'B+';
+		case 'A':
+			return 'A';
+		case 'Aplus':
+			return 'A+';
+		case 'S':
+			return 'S';
+		default:
+			return 'S+';
+	}
+};
+var author$project$Stringable$subjectToString = function (subject) {
+	switch (subject.$) {
+		case 'Sword':
+			return 'Sword';
+		case 'Lance':
+			return 'Lance';
+		case 'Axe':
+			return 'Axe';
+		case 'Bow':
+			return 'Bow';
+		case 'Brawling':
+			return 'Brawling';
+		case 'Reason':
+			return 'Reason';
+		case 'Faith':
+			return 'Faith';
+		case 'Authority':
+			return 'Authority';
+		case 'HeavyArmor':
+			return 'HeavyArmor';
+		case 'Riding':
+			return 'Riding';
+		default:
+			return 'Flying';
+	}
+};
 var author$project$Stringable$jobToStringable = {
 	stringable: function (_n0) {
 		var id = _n0.id;
@@ -5405,7 +5459,19 @@ var author$project$Stringable$jobToStringable = {
 		return 'Job { ' + ('id: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, id) + (', name: ' + (name + (', jobCategoryId: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, jobCategoryId) + (', proficiencyIdList: ' + (A2(
 			author$project$Stringable$toString,
 			author$project$Stringable$list(author$project$Stringable$int),
-			proficiencyIdList) + (', certificationList: ' + ('TODO' + (', masteryIdList: ' + (A2(
+			proficiencyIdList) + (', certificationList: ' + (A3(
+			elm$core$List$foldl,
+			F2(
+				function (a, b) {
+					return a + (', ' + b);
+				}),
+			'',
+			A2(
+				elm$core$List$map,
+				function (e) {
+					return '{ subject: ' + (author$project$Stringable$subjectToString(e.subject) + (', rank: ' + (author$project$Stringable$rankToString(e.rank) + ' }')));
+				},
+				certificationList)) + (', masteryIdList: ' + (A2(
 			author$project$Stringable$toString,
 			author$project$Stringable$list(author$project$Stringable$int),
 			masteryIdList) + (A2(
