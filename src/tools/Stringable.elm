@@ -1,6 +1,13 @@
 module Stringable exposing (..)
 
+import CustomTypes exposing (..)
+import DataBuilder exposing (..)
 import Html exposing (br, div, text)
+import Job exposing (..)
+import JobCategory exposing (..)
+import JobSkill exposing (..)
+import Maybe.Extra exposing (..)
+import Study exposing (..)
 
 
 type alias Stringable a =
@@ -88,3 +95,173 @@ foobar =
 bazqux : Stringable BazQux
 bazqux =
     { stringable = \(BazQux x) -> "BazQux " ++ toString int x }
+
+
+genderToString : GenderUnionType -> String
+genderToString gender =
+    case gender of
+        Male ->
+            "Male"
+
+        Female ->
+            "Female"
+
+
+magicUsageToString : MagicUsage -> String
+magicUsageToString magicUsage =
+    case magicUsage of
+        CanUseMagic ->
+            "Can use magic"
+
+        CanUseSomeMagic ->
+            "Can use some magic"
+
+
+categoryToString : CategoryUnionType -> String
+categoryToString category =
+    case category of
+        Starting ->
+            "Starting"
+
+        Beginner ->
+            "Beginner"
+
+        Intermediate ->
+            "Intermediate"
+
+        Advanced ->
+            "Advanced"
+
+        Master ->
+            "Master"
+
+        Unique ->
+            "Unique"
+
+
+rankToString : Rank -> String
+rankToString rank =
+    case rank of
+        E ->
+            "E"
+
+        Eplus ->
+            "E+"
+
+        D ->
+            "D"
+
+        Dplus ->
+            "D+"
+
+        C ->
+            "C"
+
+        Cplus ->
+            "C+"
+
+        B ->
+            "B"
+
+        Bplus ->
+            "B+"
+
+        A ->
+            "A"
+
+        Aplus ->
+            "A+"
+
+        S ->
+            "S"
+
+        Splus ->
+            "S+"
+
+
+subjectToString : Subject -> String
+subjectToString subject =
+    case subject of
+        Sword ->
+            "Sword"
+
+        Lance ->
+            "Lance"
+
+        Axe ->
+            "Axe"
+
+        Bow ->
+            "Bow"
+
+        Brawling ->
+            "Brawling"
+
+        Reason ->
+            "Reason"
+
+        Faith ->
+            "Faith"
+
+        Authority ->
+            "Authority"
+
+        HeavyArmor ->
+            "HeavyArmor"
+
+        Riding ->
+            "Riding"
+
+        Flying ->
+            "Flying"
+
+
+jobToStringable : Stringable Job
+jobToStringable =
+    { stringable =
+        \{ id, name, jobCategoryId, proficiencyList, studyIdList, masteryIdList, gender, magicUsage, note, customExperience, customLevel } ->
+            "Job { "
+                ++ "id: "
+                ++ toString int id
+                ++ ", name: "
+                ++ name
+                ++ ", jobCategoryId: "
+                ++ toString int jobCategoryId
+                ++ ", proficiencyList: ["
+                ++ (proficiencyList
+                        |> List.map (\e -> "{ subject: " ++ subjectToString e.subject ++ ", bonus: " ++ toString int e.bonus ++ " }")
+                        |> List.foldl (\a b -> a ++ ", " ++ b) ""
+                   )
+                ++ "]"
+                ++ ", studyIdList: ["
+                ++ (studyIdList
+                        |> List.map (\e -> getStudyById e)
+                        |> Maybe.Extra.values
+                        |> List.map (\e -> "{ subject: " ++ subjectToString e.subject ++ ", rank: " ++ rankToString e.rank ++ " }")
+                        |> List.foldl (\a b -> a ++ ", " ++ b) ""
+                   )
+                ++ "]"
+                ++ ", masteryIdList: "
+                ++ (masteryIdList |> toString (list int))
+                ++ (gender |> Maybe.map (\a -> genderToString a) |> Maybe.map (\a -> ", gender: " ++ a) |> Maybe.withDefault "")
+                ++ (magicUsage |> Maybe.map (\a -> magicUsageToString a) |> Maybe.map (\a -> ", magicUsage: " ++ a) |> Maybe.withDefault "")
+                ++ (note |> Maybe.map (\a -> ", note: " ++ a) |> Maybe.withDefault "")
+                ++ (customExperience |> Maybe.map (\a -> toString int a) |> Maybe.map (\a -> ", customExperience: " ++ a) |> Maybe.withDefault "")
+                ++ (customLevel |> Maybe.map (\a -> toString int a) |> Maybe.map (\a -> ", customLevel: " ++ a) |> Maybe.withDefault "")
+                ++ " }"
+    }
+
+
+jobCategoryToStringable : Stringable JobCategory
+jobCategoryToStringable =
+    { stringable =
+        \{ id, category, experience, level } ->
+            "JobCategory { "
+                ++ "id: "
+                ++ toString int id
+                ++ ", category: "
+                ++ categoryToString category
+                ++ (experience |> Maybe.map (\a -> toString int a) |> Maybe.map (\a -> ", experience: " ++ a) |> Maybe.withDefault "")
+                ++ (level |> Maybe.map (\a -> toString int a) |> Maybe.map (\a -> ", level: " ++ a) |> Maybe.withDefault "")
+                ++ " }"
+    }

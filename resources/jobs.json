@@ -19,7 +19,7 @@
         "id": 666,
         "name": "Mortal Savant",
         "jobCategoryId": 4,
-        "proficiencyIdList": [
+        "proficiencyList": [
             0
         ],
         "certificationIdList": [

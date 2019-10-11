@@ -1,12 +1,25 @@
-module Example exposing (..)
+module Example exposing (dataBuilderTest)
 
+import CustomTypes exposing (..)
+import DataBuilder exposing (..)
 import Expect exposing (Expectation)
 import Fuzz exposing (Fuzzer, int, list, string)
+import GlobalModel exposing (..)
 import Test exposing (..)
 
 
-suite : Test
-suite =
-    -- todo "Implement our first test. See https://package.elm-lang.org/packages/elm-explorations/test/latest for how to do this!"
-    test "two plus two equals four"
-        (\_ -> Expect.equal 4 (2 + 2))
+dataBuilderTest =
+    describe "Test the data builder"
+        [ test "Expect model contains 6 jobsCategories"
+            (\_ ->
+                loadAllStaticData
+                    |> (\m -> List.length m.jobCategories)
+                    |> Expect.equal 6
+            )
+        , test "Expect model contains 47 jobs"
+            (\_ ->
+                loadAllStaticData
+                    |> (\m -> List.length m.jobs)
+                    |> Expect.equal 47
+            )
+        ]

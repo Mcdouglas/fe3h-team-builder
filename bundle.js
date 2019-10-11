@@ -80,271 +80,6 @@ function A9(fun, a, b, c, d, e, f, g, h, i) {
 console.warn('Compiled in DEV mode. Follow the advice at https://elm-lang.org/0.19.0/optimize for better performance and smaller assets.');
 
 
-var _List_Nil_UNUSED = { $: 0 };
-var _List_Nil = { $: '[]' };
-
-function _List_Cons_UNUSED(hd, tl) { return { $: 1, a: hd, b: tl }; }
-function _List_Cons(hd, tl) { return { $: '::', a: hd, b: tl }; }
-
-
-var _List_cons = F2(_List_Cons);
-
-function _List_fromArray(arr)
-{
-	var out = _List_Nil;
-	for (var i = arr.length; i--; )
-	{
-		out = _List_Cons(arr[i], out);
-	}
-	return out;
-}
-
-function _List_toArray(xs)
-{
-	for (var out = []; xs.b; xs = xs.b) // WHILE_CONS
-	{
-		out.push(xs.a);
-	}
-	return out;
-}
-
-var _List_map2 = F3(function(f, xs, ys)
-{
-	for (var arr = []; xs.b && ys.b; xs = xs.b, ys = ys.b) // WHILE_CONSES
-	{
-		arr.push(A2(f, xs.a, ys.a));
-	}
-	return _List_fromArray(arr);
-});
-
-var _List_map3 = F4(function(f, xs, ys, zs)
-{
-	for (var arr = []; xs.b && ys.b && zs.b; xs = xs.b, ys = ys.b, zs = zs.b) // WHILE_CONSES
-	{
-		arr.push(A3(f, xs.a, ys.a, zs.a));
-	}
-	return _List_fromArray(arr);
-});
-
-var _List_map4 = F5(function(f, ws, xs, ys, zs)
-{
-	for (var arr = []; ws.b && xs.b && ys.b && zs.b; ws = ws.b, xs = xs.b, ys = ys.b, zs = zs.b) // WHILE_CONSES
-	{
-		arr.push(A4(f, ws.a, xs.a, ys.a, zs.a));
-	}
-	return _List_fromArray(arr);
-});
-
-var _List_map5 = F6(function(f, vs, ws, xs, ys, zs)
-{
-	for (var arr = []; vs.b && ws.b && xs.b && ys.b && zs.b; vs = vs.b, ws = ws.b, xs = xs.b, ys = ys.b, zs = zs.b) // WHILE_CONSES
-	{
-		arr.push(A5(f, vs.a, ws.a, xs.a, ys.a, zs.a));
-	}
-	return _List_fromArray(arr);
-});
-
-var _List_sortBy = F2(function(f, xs)
-{
-	return _List_fromArray(_List_toArray(xs).sort(function(a, b) {
-		return _Utils_cmp(f(a), f(b));
-	}));
-});
-
-var _List_sortWith = F2(function(f, xs)
-{
-	return _List_fromArray(_List_toArray(xs).sort(function(a, b) {
-		var ord = A2(f, a, b);
-		return ord === elm$core$Basics$EQ ? 0 : ord === elm$core$Basics$LT ? -1 : 1;
-	}));
-});
-
-
-
-// EQUALITY
-
-function _Utils_eq(x, y)
-{
-	for (
-		var pair, stack = [], isEqual = _Utils_eqHelp(x, y, 0, stack);
-		isEqual && (pair = stack.pop());
-		isEqual = _Utils_eqHelp(pair.a, pair.b, 0, stack)
-		)
-	{}
-
-	return isEqual;
-}
-
-function _Utils_eqHelp(x, y, depth, stack)
-{
-	if (depth > 100)
-	{
-		stack.push(_Utils_Tuple2(x,y));
-		return true;
-	}
-
-	if (x === y)
-	{
-		return true;
-	}
-
-	if (typeof x !== 'object' || x === null || y === null)
-	{
-		typeof x === 'function' && _Debug_crash(5);
-		return false;
-	}
-
-	/**/
-	if (x.$ === 'Set_elm_builtin')
-	{
-		x = elm$core$Set$toList(x);
-		y = elm$core$Set$toList(y);
-	}
-	if (x.$ === 'RBNode_elm_builtin' || x.$ === 'RBEmpty_elm_builtin')
-	{
-		x = elm$core$Dict$toList(x);
-		y = elm$core$Dict$toList(y);
-	}
-	//*/
-
-	/**_UNUSED/
-	if (x.$ < 0)
-	{
-		x = elm$core$Dict$toList(x);
-		y = elm$core$Dict$toList(y);
-	}
-	//*/
-
-	for (var key in x)
-	{
-		if (!_Utils_eqHelp(x[key], y[key], depth + 1, stack))
-		{
-			return false;
-		}
-	}
-	return true;
-}
-
-var _Utils_equal = F2(_Utils_eq);
-var _Utils_notEqual = F2(function(a, b) { return !_Utils_eq(a,b); });
-
-
-
-// COMPARISONS
-
-// Code in Generate/JavaScript.hs, Basics.js, and List.js depends on
-// the particular integer values assigned to LT, EQ, and GT.
-
-function _Utils_cmp(x, y, ord)
-{
-	if (typeof x !== 'object')
-	{
-		return x === y ? /*EQ*/ 0 : x < y ? /*LT*/ -1 : /*GT*/ 1;
-	}
-
-	/**/
-	if (x instanceof String)
-	{
-		var a = x.valueOf();
-		var b = y.valueOf();
-		return a === b ? 0 : a < b ? -1 : 1;
-	}
-	//*/
-
-	/**_UNUSED/
-	if (typeof x.$ === 'undefined')
-	//*/
-	/**/
-	if (x.$[0] === '#')
-	//*/
-	{
-		return (ord = _Utils_cmp(x.a, y.a))
-			? ord
-			: (ord = _Utils_cmp(x.b, y.b))
-				? ord
-				: _Utils_cmp(x.c, y.c);
-	}
-
-	// traverse conses until end of a list or a mismatch
-	for (; x.b && y.b && !(ord = _Utils_cmp(x.a, y.a)); x = x.b, y = y.b) {} // WHILE_CONSES
-	return ord || (x.b ? /*GT*/ 1 : y.b ? /*LT*/ -1 : /*EQ*/ 0);
-}
-
-var _Utils_lt = F2(function(a, b) { return _Utils_cmp(a, b) < 0; });
-var _Utils_le = F2(function(a, b) { return _Utils_cmp(a, b) < 1; });
-var _Utils_gt = F2(function(a, b) { return _Utils_cmp(a, b) > 0; });
-var _Utils_ge = F2(function(a, b) { return _Utils_cmp(a, b) >= 0; });
-
-var _Utils_compare = F2(function(x, y)
-{
-	var n = _Utils_cmp(x, y);
-	return n < 0 ? elm$core$Basics$LT : n ? elm$core$Basics$GT : elm$core$Basics$EQ;
-});
-
-
-// COMMON VALUES
-
-var _Utils_Tuple0_UNUSED = 0;
-var _Utils_Tuple0 = { $: '#0' };
-
-function _Utils_Tuple2_UNUSED(a, b) { return { a: a, b: b }; }
-function _Utils_Tuple2(a, b) { return { $: '#2', a: a, b: b }; }
-
-function _Utils_Tuple3_UNUSED(a, b, c) { return { a: a, b: b, c: c }; }
-function _Utils_Tuple3(a, b, c) { return { $: '#3', a: a, b: b, c: c }; }
-
-function _Utils_chr_UNUSED(c) { return c; }
-function _Utils_chr(c) { return new String(c); }
-
-
-// RECORDS
-
-function _Utils_update(oldRecord, updatedFields)
-{
-	var newRecord = {};
-
-	for (var key in oldRecord)
-	{
-		newRecord[key] = oldRecord[key];
-	}
-
-	for (var key in updatedFields)
-	{
-		newRecord[key] = updatedFields[key];
-	}
-
-	return newRecord;
-}
-
-
-// APPEND
-
-var _Utils_append = F2(_Utils_ap);
-
-function _Utils_ap(xs, ys)
-{
-	// append Strings
-	if (typeof xs === 'string')
-	{
-		return xs + ys;
-	}
-
-	// append Lists
-	if (!xs.b)
-	{
-		return ys;
-	}
-	var root = _List_Cons(xs.a, ys);
-	xs = xs.b
-	for (var curr = root; xs.b; xs = xs.b) // WHILE_CONS
-	{
-		curr = curr.b = _List_Cons(xs.a, ys);
-	}
-	return root;
-}
-
-
-
 var _JsArray_empty = [];
 
 function _JsArray_singleton(value)
@@ -793,110 +528,268 @@ function _Debug_regionToString(region)
 
 
 
-// MATH
+// EQUALITY
 
-var _Basics_add = F2(function(a, b) { return a + b; });
-var _Basics_sub = F2(function(a, b) { return a - b; });
-var _Basics_mul = F2(function(a, b) { return a * b; });
-var _Basics_fdiv = F2(function(a, b) { return a / b; });
-var _Basics_idiv = F2(function(a, b) { return (a / b) | 0; });
-var _Basics_pow = F2(Math.pow);
-
-var _Basics_remainderBy = F2(function(b, a) { return a % b; });
-
-// https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/divmodnote-letter.pdf
-var _Basics_modBy = F2(function(modulus, x)
+function _Utils_eq(x, y)
 {
-	var answer = x % modulus;
-	return modulus === 0
-		? _Debug_crash(11)
-		:
-	((answer > 0 && modulus < 0) || (answer < 0 && modulus > 0))
-		? answer + modulus
-		: answer;
+	for (
+		var pair, stack = [], isEqual = _Utils_eqHelp(x, y, 0, stack);
+		isEqual && (pair = stack.pop());
+		isEqual = _Utils_eqHelp(pair.a, pair.b, 0, stack)
+		)
+	{}
+
+	return isEqual;
+}
+
+function _Utils_eqHelp(x, y, depth, stack)
+{
+	if (depth > 100)
+	{
+		stack.push(_Utils_Tuple2(x,y));
+		return true;
+	}
+
+	if (x === y)
+	{
+		return true;
+	}
+
+	if (typeof x !== 'object' || x === null || y === null)
+	{
+		typeof x === 'function' && _Debug_crash(5);
+		return false;
+	}
+
+	/**/
+	if (x.$ === 'Set_elm_builtin')
+	{
+		x = elm$core$Set$toList(x);
+		y = elm$core$Set$toList(y);
+	}
+	if (x.$ === 'RBNode_elm_builtin' || x.$ === 'RBEmpty_elm_builtin')
+	{
+		x = elm$core$Dict$toList(x);
+		y = elm$core$Dict$toList(y);
+	}
+	//*/
+
+	/**_UNUSED/
+	if (x.$ < 0)
+	{
+		x = elm$core$Dict$toList(x);
+		y = elm$core$Dict$toList(y);
+	}
+	//*/
+
+	for (var key in x)
+	{
+		if (!_Utils_eqHelp(x[key], y[key], depth + 1, stack))
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+var _Utils_equal = F2(_Utils_eq);
+var _Utils_notEqual = F2(function(a, b) { return !_Utils_eq(a,b); });
+
+
+
+// COMPARISONS
+
+// Code in Generate/JavaScript.hs, Basics.js, and List.js depends on
+// the particular integer values assigned to LT, EQ, and GT.
+
+function _Utils_cmp(x, y, ord)
+{
+	if (typeof x !== 'object')
+	{
+		return x === y ? /*EQ*/ 0 : x < y ? /*LT*/ -1 : /*GT*/ 1;
+	}
+
+	/**/
+	if (x instanceof String)
+	{
+		var a = x.valueOf();
+		var b = y.valueOf();
+		return a === b ? 0 : a < b ? -1 : 1;
+	}
+	//*/
+
+	/**_UNUSED/
+	if (typeof x.$ === 'undefined')
+	//*/
+	/**/
+	if (x.$[0] === '#')
+	//*/
+	{
+		return (ord = _Utils_cmp(x.a, y.a))
+			? ord
+			: (ord = _Utils_cmp(x.b, y.b))
+				? ord
+				: _Utils_cmp(x.c, y.c);
+	}
+
+	// traverse conses until end of a list or a mismatch
+	for (; x.b && y.b && !(ord = _Utils_cmp(x.a, y.a)); x = x.b, y = y.b) {} // WHILE_CONSES
+	return ord || (x.b ? /*GT*/ 1 : y.b ? /*LT*/ -1 : /*EQ*/ 0);
+}
+
+var _Utils_lt = F2(function(a, b) { return _Utils_cmp(a, b) < 0; });
+var _Utils_le = F2(function(a, b) { return _Utils_cmp(a, b) < 1; });
+var _Utils_gt = F2(function(a, b) { return _Utils_cmp(a, b) > 0; });
+var _Utils_ge = F2(function(a, b) { return _Utils_cmp(a, b) >= 0; });
+
+var _Utils_compare = F2(function(x, y)
+{
+	var n = _Utils_cmp(x, y);
+	return n < 0 ? elm$core$Basics$LT : n ? elm$core$Basics$GT : elm$core$Basics$EQ;
 });
 
 
-// TRIGONOMETRY
+// COMMON VALUES
 
-var _Basics_pi = Math.PI;
-var _Basics_e = Math.E;
-var _Basics_cos = Math.cos;
-var _Basics_sin = Math.sin;
-var _Basics_tan = Math.tan;
-var _Basics_acos = Math.acos;
-var _Basics_asin = Math.asin;
-var _Basics_atan = Math.atan;
-var _Basics_atan2 = F2(Math.atan2);
+var _Utils_Tuple0_UNUSED = 0;
+var _Utils_Tuple0 = { $: '#0' };
 
+function _Utils_Tuple2_UNUSED(a, b) { return { a: a, b: b }; }
+function _Utils_Tuple2(a, b) { return { $: '#2', a: a, b: b }; }
 
-// MORE MATH
+function _Utils_Tuple3_UNUSED(a, b, c) { return { a: a, b: b, c: c }; }
+function _Utils_Tuple3(a, b, c) { return { $: '#3', a: a, b: b, c: c }; }
 
-function _Basics_toFloat(x) { return x; }
-function _Basics_truncate(n) { return n | 0; }
-function _Basics_isInfinite(n) { return n === Infinity || n === -Infinity; }
-
-var _Basics_ceiling = Math.ceil;
-var _Basics_floor = Math.floor;
-var _Basics_round = Math.round;
-var _Basics_sqrt = Math.sqrt;
-var _Basics_log = Math.log;
-var _Basics_isNaN = isNaN;
+function _Utils_chr_UNUSED(c) { return c; }
+function _Utils_chr(c) { return new String(c); }
 
 
-// BOOLEANS
+// RECORDS
 
-function _Basics_not(bool) { return !bool; }
-var _Basics_and = F2(function(a, b) { return a && b; });
-var _Basics_or  = F2(function(a, b) { return a || b; });
-var _Basics_xor = F2(function(a, b) { return a !== b; });
-
-
-
-function _Char_toCode(char)
+function _Utils_update(oldRecord, updatedFields)
 {
-	var code = char.charCodeAt(0);
-	if (0xD800 <= code && code <= 0xDBFF)
+	var newRecord = {};
+
+	for (var key in oldRecord)
 	{
-		return (code - 0xD800) * 0x400 + char.charCodeAt(1) - 0xDC00 + 0x10000
+		newRecord[key] = oldRecord[key];
 	}
-	return code;
+
+	for (var key in updatedFields)
+	{
+		newRecord[key] = updatedFields[key];
+	}
+
+	return newRecord;
 }
 
-function _Char_fromCode(code)
+
+// APPEND
+
+var _Utils_append = F2(_Utils_ap);
+
+function _Utils_ap(xs, ys)
 {
-	return _Utils_chr(
-		(code < 0 || 0x10FFFF < code)
-			? '\uFFFD'
-			:
-		(code <= 0xFFFF)
-			? String.fromCharCode(code)
-			:
-		(code -= 0x10000,
-			String.fromCharCode(Math.floor(code / 0x400) + 0xD800, code % 0x400 + 0xDC00)
-		)
-	);
+	// append Strings
+	if (typeof xs === 'string')
+	{
+		return xs + ys;
+	}
+
+	// append Lists
+	if (!xs.b)
+	{
+		return ys;
+	}
+	var root = _List_Cons(xs.a, ys);
+	xs = xs.b
+	for (var curr = root; xs.b; xs = xs.b) // WHILE_CONS
+	{
+		curr = curr.b = _List_Cons(xs.a, ys);
+	}
+	return root;
 }
 
-function _Char_toUpper(char)
+
+
+var _List_Nil_UNUSED = { $: 0 };
+var _List_Nil = { $: '[]' };
+
+function _List_Cons_UNUSED(hd, tl) { return { $: 1, a: hd, b: tl }; }
+function _List_Cons(hd, tl) { return { $: '::', a: hd, b: tl }; }
+
+
+var _List_cons = F2(_List_Cons);
+
+function _List_fromArray(arr)
 {
-	return _Utils_chr(char.toUpperCase());
+	var out = _List_Nil;
+	for (var i = arr.length; i--; )
+	{
+		out = _List_Cons(arr[i], out);
+	}
+	return out;
 }
 
-function _Char_toLower(char)
+function _List_toArray(xs)
 {
-	return _Utils_chr(char.toLowerCase());
+	for (var out = []; xs.b; xs = xs.b) // WHILE_CONS
+	{
+		out.push(xs.a);
+	}
+	return out;
 }
 
-function _Char_toLocaleUpper(char)
+var _List_map2 = F3(function(f, xs, ys)
 {
-	return _Utils_chr(char.toLocaleUpperCase());
-}
+	for (var arr = []; xs.b && ys.b; xs = xs.b, ys = ys.b) // WHILE_CONSES
+	{
+		arr.push(A2(f, xs.a, ys.a));
+	}
+	return _List_fromArray(arr);
+});
 
-function _Char_toLocaleLower(char)
+var _List_map3 = F4(function(f, xs, ys, zs)
 {
-	return _Utils_chr(char.toLocaleLowerCase());
-}
+	for (var arr = []; xs.b && ys.b && zs.b; xs = xs.b, ys = ys.b, zs = zs.b) // WHILE_CONSES
+	{
+		arr.push(A3(f, xs.a, ys.a, zs.a));
+	}
+	return _List_fromArray(arr);
+});
+
+var _List_map4 = F5(function(f, ws, xs, ys, zs)
+{
+	for (var arr = []; ws.b && xs.b && ys.b && zs.b; ws = ws.b, xs = xs.b, ys = ys.b, zs = zs.b) // WHILE_CONSES
+	{
+		arr.push(A4(f, ws.a, xs.a, ys.a, zs.a));
+	}
+	return _List_fromArray(arr);
+});
+
+var _List_map5 = F6(function(f, vs, ws, xs, ys, zs)
+{
+	for (var arr = []; vs.b && ws.b && xs.b && ys.b && zs.b; vs = vs.b, ws = ws.b, xs = xs.b, ys = ys.b, zs = zs.b) // WHILE_CONSES
+	{
+		arr.push(A5(f, vs.a, ws.a, xs.a, ys.a, zs.a));
+	}
+	return _List_fromArray(arr);
+});
+
+var _List_sortBy = F2(function(f, xs)
+{
+	return _List_fromArray(_List_toArray(xs).sort(function(a, b) {
+		return _Utils_cmp(f(a), f(b));
+	}));
+});
+
+var _List_sortWith = F2(function(f, xs)
+{
+	return _List_fromArray(_List_toArray(xs).sort(function(a, b) {
+		var ord = A2(f, a, b);
+		return ord === elm$core$Basics$EQ ? 0 : ord === elm$core$Basics$LT ? -1 : 1;
+	}));
+});
 
 
 
@@ -1209,6 +1102,113 @@ function _String_fromList(chars)
 	return _List_toArray(chars).join('');
 }
 
+
+
+
+// MATH
+
+var _Basics_add = F2(function(a, b) { return a + b; });
+var _Basics_sub = F2(function(a, b) { return a - b; });
+var _Basics_mul = F2(function(a, b) { return a * b; });
+var _Basics_fdiv = F2(function(a, b) { return a / b; });
+var _Basics_idiv = F2(function(a, b) { return (a / b) | 0; });
+var _Basics_pow = F2(Math.pow);
+
+var _Basics_remainderBy = F2(function(b, a) { return a % b; });
+
+// https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/divmodnote-letter.pdf
+var _Basics_modBy = F2(function(modulus, x)
+{
+	var answer = x % modulus;
+	return modulus === 0
+		? _Debug_crash(11)
+		:
+	((answer > 0 && modulus < 0) || (answer < 0 && modulus > 0))
+		? answer + modulus
+		: answer;
+});
+
+
+// TRIGONOMETRY
+
+var _Basics_pi = Math.PI;
+var _Basics_e = Math.E;
+var _Basics_cos = Math.cos;
+var _Basics_sin = Math.sin;
+var _Basics_tan = Math.tan;
+var _Basics_acos = Math.acos;
+var _Basics_asin = Math.asin;
+var _Basics_atan = Math.atan;
+var _Basics_atan2 = F2(Math.atan2);
+
+
+// MORE MATH
+
+function _Basics_toFloat(x) { return x; }
+function _Basics_truncate(n) { return n | 0; }
+function _Basics_isInfinite(n) { return n === Infinity || n === -Infinity; }
+
+var _Basics_ceiling = Math.ceil;
+var _Basics_floor = Math.floor;
+var _Basics_round = Math.round;
+var _Basics_sqrt = Math.sqrt;
+var _Basics_log = Math.log;
+var _Basics_isNaN = isNaN;
+
+
+// BOOLEANS
+
+function _Basics_not(bool) { return !bool; }
+var _Basics_and = F2(function(a, b) { return a && b; });
+var _Basics_or  = F2(function(a, b) { return a || b; });
+var _Basics_xor = F2(function(a, b) { return a !== b; });
+
+
+
+function _Char_toCode(char)
+{
+	var code = char.charCodeAt(0);
+	if (0xD800 <= code && code <= 0xDBFF)
+	{
+		return (code - 0xD800) * 0x400 + char.charCodeAt(1) - 0xDC00 + 0x10000
+	}
+	return code;
+}
+
+function _Char_fromCode(code)
+{
+	return _Utils_chr(
+		(code < 0 || 0x10FFFF < code)
+			? '\uFFFD'
+			:
+		(code <= 0xFFFF)
+			? String.fromCharCode(code)
+			:
+		(code -= 0x10000,
+			String.fromCharCode(Math.floor(code / 0x400) + 0xD800, code % 0x400 + 0xDC00)
+		)
+	);
+}
+
+function _Char_toUpper(char)
+{
+	return _Utils_chr(char.toUpperCase());
+}
+
+function _Char_toLower(char)
+{
+	return _Utils_chr(char.toLowerCase());
+}
+
+function _Char_toLocaleUpper(char)
+{
+	return _Utils_chr(char.toLocaleUpperCase());
+}
+
+function _Char_toLocaleLower(char)
+{
+	return _Utils_chr(char.toLocaleLowerCase());
+}
 
 
 
@@ -2312,181 +2312,6 @@ function _Platform_mergeExportsDebug(moduleName, obj, exports)
 	}
 }
 
-
-
-// SEND REQUEST
-
-var _Http_toTask = F3(function(router, toTask, request)
-{
-	return _Scheduler_binding(function(callback)
-	{
-		function done(response) {
-			callback(toTask(request.expect.a(response)));
-		}
-
-		var xhr = new XMLHttpRequest();
-		xhr.addEventListener('error', function() { done(elm$http$Http$NetworkError_); });
-		xhr.addEventListener('timeout', function() { done(elm$http$Http$Timeout_); });
-		xhr.addEventListener('load', function() { done(_Http_toResponse(request.expect.b, xhr)); });
-		elm$core$Maybe$isJust(request.tracker) && _Http_track(router, xhr, request.tracker.a);
-
-		try {
-			xhr.open(request.method, request.url, true);
-		} catch (e) {
-			return done(elm$http$Http$BadUrl_(request.url));
-		}
-
-		_Http_configureRequest(xhr, request);
-
-		request.body.a && xhr.setRequestHeader('Content-Type', request.body.a);
-		xhr.send(request.body.b);
-
-		return function() { xhr.c = true; xhr.abort(); };
-	});
-});
-
-
-// CONFIGURE
-
-function _Http_configureRequest(xhr, request)
-{
-	for (var headers = request.headers; headers.b; headers = headers.b) // WHILE_CONS
-	{
-		xhr.setRequestHeader(headers.a.a, headers.a.b);
-	}
-	xhr.timeout = request.timeout.a || 0;
-	xhr.responseType = request.expect.d;
-	xhr.withCredentials = request.allowCookiesFromOtherDomains;
-}
-
-
-// RESPONSES
-
-function _Http_toResponse(toBody, xhr)
-{
-	return A2(
-		200 <= xhr.status && xhr.status < 300 ? elm$http$Http$GoodStatus_ : elm$http$Http$BadStatus_,
-		_Http_toMetadata(xhr),
-		toBody(xhr.response)
-	);
-}
-
-
-// METADATA
-
-function _Http_toMetadata(xhr)
-{
-	return {
-		url: xhr.responseURL,
-		statusCode: xhr.status,
-		statusText: xhr.statusText,
-		headers: _Http_parseHeaders(xhr.getAllResponseHeaders())
-	};
-}
-
-
-// HEADERS
-
-function _Http_parseHeaders(rawHeaders)
-{
-	if (!rawHeaders)
-	{
-		return elm$core$Dict$empty;
-	}
-
-	var headers = elm$core$Dict$empty;
-	var headerPairs = rawHeaders.split('\r\n');
-	for (var i = headerPairs.length; i--; )
-	{
-		var headerPair = headerPairs[i];
-		var index = headerPair.indexOf(': ');
-		if (index > 0)
-		{
-			var key = headerPair.substring(0, index);
-			var value = headerPair.substring(index + 2);
-
-			headers = A3(elm$core$Dict$update, key, function(oldValue) {
-				return elm$core$Maybe$Just(elm$core$Maybe$isJust(oldValue)
-					? value + ', ' + oldValue.a
-					: value
-				);
-			}, headers);
-		}
-	}
-	return headers;
-}
-
-
-// EXPECT
-
-var _Http_expect = F3(function(type, toBody, toValue)
-{
-	return {
-		$: 0,
-		d: type,
-		b: toBody,
-		a: toValue
-	};
-});
-
-var _Http_mapExpect = F2(function(func, expect)
-{
-	return {
-		$: 0,
-		d: expect.d,
-		b: expect.b,
-		a: function(x) { return func(expect.a(x)); }
-	};
-});
-
-function _Http_toDataView(arrayBuffer)
-{
-	return new DataView(arrayBuffer);
-}
-
-
-// BODY and PARTS
-
-var _Http_emptyBody = { $: 0 };
-var _Http_pair = F2(function(a, b) { return { $: 0, a: a, b: b }; });
-
-function _Http_toFormData(parts)
-{
-	for (var formData = new FormData(); parts.b; parts = parts.b) // WHILE_CONS
-	{
-		var part = parts.a;
-		formData.append(part.a, part.b);
-	}
-	return formData;
-}
-
-var _Http_bytesToBlob = F2(function(mime, bytes)
-{
-	return new Blob([bytes], { type: mime });
-});
-
-
-// PROGRESS
-
-function _Http_track(router, xhr, tracker)
-{
-	// TODO check out lengthComputable on loadstart event
-
-	xhr.upload.addEventListener('progress', function(event) {
-		if (xhr.c) { return; }
-		_Scheduler_rawSpawn(A2(elm$core$Platform$sendToSelf, router, _Utils_Tuple2(tracker, elm$http$Http$Sending({
-			sent: event.loaded,
-			size: event.total
-		}))));
-	});
-	xhr.addEventListener('progress', function(event) {
-		if (xhr.c) { return; }
-		_Scheduler_rawSpawn(A2(elm$core$Platform$sendToSelf, router, _Utils_Tuple2(tracker, elm$http$Http$Receiving({
-			received: event.loaded,
-			size: event.lengthComputable ? elm$core$Maybe$Just(event.total) : elm$core$Maybe$Nothing
-		}))));
-	});
-}
 
 
 
@@ -4485,22 +4310,84 @@ function _Browser_load(url)
 		}
 	}));
 }
-var author$project$HttpCommands$JobCategoriesReceived = function (a) {
-	return {$: 'JobCategoriesReceived', a: a};
+var author$project$GlobalModel$Model = F3(
+	function (jobCategories, jobs, errorMessage) {
+		return {errorMessage: errorMessage, jobCategories: jobCategories, jobs: jobs};
+	});
+var author$project$CustomTypes$Authority = {$: 'Authority'};
+var author$project$CustomTypes$Axe = {$: 'Axe'};
+var author$project$CustomTypes$Bow = {$: 'Bow'};
+var author$project$CustomTypes$Brawling = {$: 'Brawling'};
+var author$project$CustomTypes$CanUseMagic = {$: 'CanUseMagic'};
+var author$project$CustomTypes$CanUseSomeMagic = {$: 'CanUseSomeMagic'};
+var author$project$CustomTypes$Faith = {$: 'Faith'};
+var author$project$CustomTypes$Female = {$: 'Female'};
+var author$project$CustomTypes$Flying = {$: 'Flying'};
+var author$project$CustomTypes$HeavyArmor = {$: 'HeavyArmor'};
+var author$project$CustomTypes$Job = function (id) {
+	return function (name) {
+		return function (jobCategoryId) {
+			return function (proficiencyList) {
+				return function (studyIdList) {
+					return function (masteryIdList) {
+						return function (gender) {
+							return function (magicUsage) {
+								return function (note) {
+									return function (customExperience) {
+										return function (customLevel) {
+											return {customExperience: customExperience, customLevel: customLevel, gender: gender, id: id, jobCategoryId: jobCategoryId, magicUsage: magicUsage, masteryIdList: masteryIdList, name: name, note: note, proficiencyList: proficiencyList, studyIdList: studyIdList};
+										};
+									};
+								};
+							};
+						};
+					};
+				};
+			};
+		};
+	};
 };
-var author$project$HttpCommands$resourcesDirLocation = '../../resources/';
-var elm$core$Basics$apR = F2(
-	function (x, f) {
-		return f(x);
+var author$project$CustomTypes$Lance = {$: 'Lance'};
+var author$project$CustomTypes$Male = {$: 'Male'};
+var author$project$CustomTypes$Proficiency = F2(
+	function (subject, bonus) {
+		return {bonus: bonus, subject: subject};
 	});
-var elm$core$Array$branchFactor = 32;
-var elm$core$Array$Array_elm_builtin = F4(
-	function (a, b, c, d) {
-		return {$: 'Array_elm_builtin', a: a, b: b, c: c, d: d};
-	});
+var author$project$CustomTypes$Reason = {$: 'Reason'};
+var author$project$CustomTypes$Riding = {$: 'Riding'};
+var author$project$CustomTypes$Sword = {$: 'Sword'};
+var elm$core$Maybe$Just = function (a) {
+	return {$: 'Just', a: a};
+};
+var elm$core$Maybe$Nothing = {$: 'Nothing'};
 var elm$core$Basics$EQ = {$: 'EQ'};
-var elm$core$Basics$GT = {$: 'GT'};
 var elm$core$Basics$LT = {$: 'LT'};
+var elm$core$Elm$JsArray$foldr = _JsArray_foldr;
+var elm$core$Array$foldr = F3(
+	function (func, baseCase, _n0) {
+		var tree = _n0.c;
+		var tail = _n0.d;
+		var helper = F2(
+			function (node, acc) {
+				if (node.$ === 'SubTree') {
+					var subTree = node.a;
+					return A3(elm$core$Elm$JsArray$foldr, helper, acc, subTree);
+				} else {
+					var values = node.a;
+					return A3(elm$core$Elm$JsArray$foldr, func, acc, values);
+				}
+			});
+		return A3(
+			elm$core$Elm$JsArray$foldr,
+			helper,
+			A3(elm$core$Elm$JsArray$foldr, func, baseCase, tail),
+			tree);
+	});
+var elm$core$List$cons = _List_cons;
+var elm$core$Array$toList = function (array) {
+	return A3(elm$core$Array$foldr, elm$core$List$cons, _List_Nil, array);
+};
+var elm$core$Basics$GT = {$: 'GT'};
 var elm$core$Dict$foldr = F3(
 	function (func, acc, t) {
 		foldr:
@@ -4526,7 +4413,6 @@ var elm$core$Dict$foldr = F3(
 			}
 		}
 	});
-var elm$core$List$cons = _List_cons;
 var elm$core$Dict$toList = function (dict) {
 	return A3(
 		elm$core$Dict$foldr,
@@ -4554,30 +4440,564 @@ var elm$core$Set$toList = function (_n0) {
 	var dict = _n0.a;
 	return elm$core$Dict$keys(dict);
 };
-var elm$core$Elm$JsArray$foldr = _JsArray_foldr;
-var elm$core$Array$foldr = F3(
-	function (func, baseCase, _n0) {
-		var tree = _n0.c;
-		var tail = _n0.d;
-		var helper = F2(
-			function (node, acc) {
-				if (node.$ === 'SubTree') {
-					var subTree = node.a;
-					return A3(elm$core$Elm$JsArray$foldr, helper, acc, subTree);
-				} else {
-					var values = node.a;
-					return A3(elm$core$Elm$JsArray$foldr, func, acc, values);
-				}
-			});
-		return A3(
-			elm$core$Elm$JsArray$foldr,
-			helper,
-			A3(elm$core$Elm$JsArray$foldr, func, baseCase, tail),
-			tree);
+var author$project$Job$initJobs = _List_fromArray(
+	[
+		author$project$CustomTypes$Job(0)('Commoner')(0)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just(author$project$CustomTypes$CanUseSomeMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(1)('Noble')(0)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just(author$project$CustomTypes$CanUseSomeMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(2)('Myrmidon')(1)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 1)
+			]))(
+		_List_fromArray(
+			[2]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(3)('Soldier')(1)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 1)
+			]))(
+		_List_fromArray(
+			[14]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(4)('Fighter')(1)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 1),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Bow, 1),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Brawling, 1)
+			]))(
+		_List_fromArray(
+			[26, 38, 50]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(5)('Monk')(1)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Reason, 1),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Faith, 1)
+			]))(
+		_List_fromArray(
+			[62, 74]))(_List_Nil)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(6)('Lord')(2)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 1),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Authority, 2)
+			]))(
+		_List_fromArray(
+			[3, 89]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just('Edelgard, Dimitri and Claude only'))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(7)('Mercenary')(2)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 1)
+			]))(
+		_List_fromArray(
+			[4]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(8)('Thief')(2)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Bow, 1)
+			]))(
+		_List_fromArray(
+			[4]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(9)('Cavalier')(2)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 1),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Riding, 2)
+			]))(
+		_List_fromArray(
+			[16, 111]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(10)('Pegasus Knight')(12)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 1),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Flying, 2)
+			]))(
+		_List_fromArray(
+			[16, 123]))(_List_Nil)(
+		elm$core$Maybe$Just(author$project$CustomTypes$Female))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(11)('Brigand')(2)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Brawling, 1)
+			]))(
+		_List_fromArray(
+			[28]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(12)('Armored Knight')(12)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 1),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$HeavyArmor, 1)
+			]))(
+		_List_fromArray(
+			[28, 99]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(13)('Archer')(2)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 1),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Bow, 2)
+			]))(
+		_List_fromArray(
+			[40]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(14)('Brawler')(2)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 1),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Brawling, 1)
+			]))(
+		_List_fromArray(
+			[52]))(_List_Nil)(
+		elm$core$Maybe$Just(author$project$CustomTypes$Male))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(15)('Mage')(2)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Reason, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Faith, 1)
+			]))(
+		_List_fromArray(
+			[64]))(_List_Nil)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(16)('Dark Mage')(12)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Reason, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Faith, 1)
+			]))(
+		_List_fromArray(
+			[64]))(_List_Nil)(
+		elm$core$Maybe$Just(author$project$CustomTypes$Male))(
+		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(17)('Priest')(2)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Reason, 1),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Faith, 2)
+			]))(
+		_List_fromArray(
+			[76]))(_List_Nil)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(18)('Swordmaster')(3)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 3)
+			]))(
+		_List_fromArray(
+			[8]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(19)('Hero')(3)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 2)
+			]))(
+		_List_fromArray(
+			[6, 28]))(_List_Nil)(
+		elm$core$Maybe$Just(author$project$CustomTypes$Male))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(20)('Assassin')(3)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Bow, 2)
+			]))(
+		_List_fromArray(
+			[6, 40]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(21)('Paladin')(3)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Riding, 3)
+			]))(
+		_List_fromArray(
+			[18, 115]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(22)('Warrior')(3)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 3)
+			]))(
+		_List_fromArray(
+			[32]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(23)('Fortress Knight')(3)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$HeavyArmor, 3)
+			]))(
+		_List_fromArray(
+			[30, 103]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(24)('Wyvern Rider')(3)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Flying, 2)
+			]))(
+		_List_fromArray(
+			[30, 125]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(25)('Sniper')(3)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Bow, 3)
+			]))(
+		_List_fromArray(
+			[44]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(26)('Grappler')(3)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Brawling, 3)
+			]))(
+		_List_fromArray(
+			[56]))(_List_Nil)(
+		elm$core$Maybe$Just(author$project$CustomTypes$Male))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(27)('Warlock')(3)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Reason, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Faith, 2)
+			]))(
+		_List_fromArray(
+			[68]))(_List_Nil)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(28)('Dark Bishop')(3)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Reason, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Faith, 2)
+			]))(
+		_List_fromArray(
+			[68]))(_List_Nil)(
+		elm$core$Maybe$Just(author$project$CustomTypes$Male))(
+		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(29)('Bishop')(3)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Reason, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Faith, 3)
+			]))(
+		_List_fromArray(
+			[80]))(_List_Nil)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(30)('Mortal Savant')(4)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Reason, 3)
+			]))(
+		_List_fromArray(
+			[8, 67]))(_List_Nil)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(31)('Falcon Knight')(4)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Flying, 3)
+			]))(
+		_List_fromArray(
+			[4, 20, 128]))(_List_Nil)(
+		elm$core$Maybe$Just(author$project$CustomTypes$Female))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(32)('War Master')(4)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Brawling, 3)
+			]))(
+		_List_fromArray(
+			[32, 54]))(_List_Nil)(
+		elm$core$Maybe$Just(author$project$CustomTypes$Male))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(33)('Wyvern Lord')(4)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Flying, 3)
+			]))(
+		_List_fromArray(
+			[16, 32, 129]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(34)('Great Knight')(4)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$HeavyArmor, 3)
+			]))(
+		_List_fromArray(
+			[31, 105, 116]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(35)('Bow Knight')(4)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Bow, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Riding, 3)
+			]))(
+		_List_fromArray(
+			[16, 44, 117]))(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(36)('Gremory')(4)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Reason, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Faith, 3)
+			]))(
+		_List_fromArray(
+			[68, 80]))(_List_Nil)(
+		elm$core$Maybe$Just(author$project$CustomTypes$Female))(
+		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(37)('Dark Knight')(4)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Reason, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Riding, 3)
+			]))(
+		_List_fromArray(
+			[16, 67, 117]))(_List_Nil)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(38)('Holy Knight')(4)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Faith, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Riding, 3)
+			]))(
+		_List_fromArray(
+			[16, 79, 117]))(_List_Nil)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(39)('Dancer')(5)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Authority, 3)
+			]))(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just(100))(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(40)('Enlightened One')(5)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Brawling, 2),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Faith, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Authority, 3)
+			]))(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just(author$project$CustomTypes$CanUseMagic))(
+		elm$core$Maybe$Just('Byleth only'))(
+		elm$core$Maybe$Just(100))(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(41)('Armored Lord')(5)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Authority, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$HeavyArmor, 3)
+			]))(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just('Edelgard only'))(
+		elm$core$Maybe$Just(150))(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(42)('Emperor')(5)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Axe, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Authority, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$HeavyArmor, 3)
+			]))(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just('Edelgard only'))(
+		elm$core$Maybe$Just(200))(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(43)('High Lord')(5)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Authority, 3)
+			]))(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just('Dimitri only'))(
+		elm$core$Maybe$Just(150))(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(44)('Great Lord')(5)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Sword, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Lance, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Authority, 3)
+			]))(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just('Dimitri only'))(
+		elm$core$Maybe$Just(200))(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(45)('Wyvern Master')(5)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Bow, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Authority, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Flying, 3)
+			]))(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just('Claude only'))(
+		elm$core$Maybe$Just(150))(elm$core$Maybe$Nothing),
+		author$project$CustomTypes$Job(46)('Barbarossa')(5)(
+		_List_fromArray(
+			[
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Bow, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Authority, 3),
+				A2(author$project$CustomTypes$Proficiency, author$project$CustomTypes$Flying, 3)
+			]))(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(
+		elm$core$Maybe$Just('Claude only'))(
+		elm$core$Maybe$Just(200))(elm$core$Maybe$Nothing)
+	]);
+var author$project$CustomTypes$Advanced = {$: 'Advanced'};
+var author$project$CustomTypes$Beginner = {$: 'Beginner'};
+var author$project$CustomTypes$Intermediate = {$: 'Intermediate'};
+var author$project$CustomTypes$JobCategory = F4(
+	function (id, category, experience, level) {
+		return {category: category, experience: experience, id: id, level: level};
 	});
-var elm$core$Array$toList = function (array) {
-	return A3(elm$core$Array$foldr, elm$core$List$cons, _List_Nil, array);
+var author$project$CustomTypes$Master = {$: 'Master'};
+var author$project$CustomTypes$Starting = {$: 'Starting'};
+var author$project$CustomTypes$Unique = {$: 'Unique'};
+var author$project$JobCategory$initJobCategories = _List_fromArray(
+	[
+		A4(
+		author$project$CustomTypes$JobCategory,
+		0,
+		author$project$CustomTypes$Starting,
+		elm$core$Maybe$Just(20),
+		elm$core$Maybe$Just(0)),
+		A4(
+		author$project$CustomTypes$JobCategory,
+		1,
+		author$project$CustomTypes$Beginner,
+		elm$core$Maybe$Just(60),
+		elm$core$Maybe$Just(5)),
+		A4(
+		author$project$CustomTypes$JobCategory,
+		2,
+		author$project$CustomTypes$Intermediate,
+		elm$core$Maybe$Just(100),
+		elm$core$Maybe$Just(10)),
+		A4(
+		author$project$CustomTypes$JobCategory,
+		3,
+		author$project$CustomTypes$Advanced,
+		elm$core$Maybe$Just(150),
+		elm$core$Maybe$Just(20)),
+		A4(
+		author$project$CustomTypes$JobCategory,
+		4,
+		author$project$CustomTypes$Master,
+		elm$core$Maybe$Just(200),
+		elm$core$Maybe$Just(30)),
+		A4(author$project$CustomTypes$JobCategory, 5, author$project$CustomTypes$Unique, elm$core$Maybe$Nothing, elm$core$Maybe$Nothing)
+	]);
+var author$project$DataBuilder$loadAllStaticData = A3(author$project$GlobalModel$Model, author$project$JobCategory$initJobCategories, author$project$Job$initJobs, elm$core$Maybe$Nothing);
+var author$project$HomePage$init = author$project$DataBuilder$loadAllStaticData;
+var author$project$HomePage$update = F2(
+	function (msg, model) {
+		return model;
+	});
+var author$project$Stringable$categoryToString = function (category) {
+	switch (category.$) {
+		case 'Starting':
+			return 'Starting';
+		case 'Beginner':
+			return 'Beginner';
+		case 'Intermediate':
+			return 'Intermediate';
+		case 'Advanced':
+			return 'Advanced';
+		case 'Master':
+			return 'Master';
+		default:
+			return 'Unique';
+	}
 };
+var elm$core$String$fromInt = _String_fromNumber;
+var author$project$Stringable$int = {
+	stringable: function (x) {
+		return elm$core$String$fromInt(x);
+	}
+};
+var author$project$Stringable$toString = F2(
+	function (_n0, x) {
+		var stringable = _n0.stringable;
+		return stringable(x);
+	});
+var elm$core$Basics$apR = F2(
+	function (x, f) {
+		return f(x);
+	});
+var elm$core$Basics$append = _Utils_append;
+var elm$core$Maybe$map = F2(
+	function (f, maybe) {
+		if (maybe.$ === 'Just') {
+			var value = maybe.a;
+			return elm$core$Maybe$Just(
+				f(value));
+		} else {
+			return elm$core$Maybe$Nothing;
+		}
+	});
+var elm$core$Maybe$withDefault = F2(
+	function (_default, maybe) {
+		if (maybe.$ === 'Just') {
+			var value = maybe.a;
+			return value;
+		} else {
+			return _default;
+		}
+	});
+var author$project$Stringable$jobCategoryToStringable = {
+	stringable: function (_n0) {
+		var id = _n0.id;
+		var category = _n0.category;
+		var experience = _n0.experience;
+		var level = _n0.level;
+		return 'JobCategory { ' + ('id: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, id) + (', category: ' + (author$project$Stringable$categoryToString(category) + (A2(
+			elm$core$Maybe$withDefault,
+			'',
+			A2(
+				elm$core$Maybe$map,
+				function (a) {
+					return ', experience: ' + a;
+				},
+				A2(
+					elm$core$Maybe$map,
+					function (a) {
+						return A2(author$project$Stringable$toString, author$project$Stringable$int, a);
+					},
+					experience))) + (A2(
+			elm$core$Maybe$withDefault,
+			'',
+			A2(
+				elm$core$Maybe$map,
+				function (a) {
+					return ', level: ' + a;
+				},
+				A2(
+					elm$core$Maybe$map,
+					function (a) {
+						return A2(author$project$Stringable$toString, author$project$Stringable$int, a);
+					},
+					level))) + ' }'))))));
+	}
+};
+var elm$core$Basics$identity = function (x) {
+	return x;
+};
+var elm$core$Basics$False = {$: 'False'};
+var elm$core$Basics$True = {$: 'True'};
+var elm$core$Result$isOk = function (result) {
+	if (result.$ === 'Ok') {
+		return true;
+	} else {
+		return false;
+	}
+};
+var elm$core$Array$branchFactor = 32;
+var elm$core$Array$Array_elm_builtin = F4(
+	function (a, b, c, d) {
+		return {$: 'Array_elm_builtin', a: a, b: b, c: c, d: d};
+	});
 var elm$core$Basics$ceiling = _Basics_ceiling;
 var elm$core$Basics$fdiv = _Basics_fdiv;
 var elm$core$Basics$logBase = F2(
@@ -4698,7 +5118,6 @@ var elm$core$Array$builderToArray = F2(
 				builder.tail);
 		}
 	});
-var elm$core$Basics$False = {$: 'False'};
 var elm$core$Basics$idiv = _Basics_idiv;
 var elm$core$Basics$lt = _Utils_lt;
 var elm$core$Elm$JsArray$initialize = _JsArray_initialize;
@@ -4741,23 +5160,11 @@ var elm$core$Array$initialize = F2(
 			return A5(elm$core$Array$initializeHelp, fn, initialFromIndex, len, _List_Nil, tail);
 		}
 	});
-var elm$core$Maybe$Just = function (a) {
-	return {$: 'Just', a: a};
-};
-var elm$core$Maybe$Nothing = {$: 'Nothing'};
 var elm$core$Result$Err = function (a) {
 	return {$: 'Err', a: a};
 };
 var elm$core$Result$Ok = function (a) {
 	return {$: 'Ok', a: a};
-};
-var elm$core$Basics$True = {$: 'True'};
-var elm$core$Result$isOk = function (result) {
-	if (result.$ === 'Ok') {
-		return true;
-	} else {
-		return false;
-	}
 };
 var elm$json$Json$Decode$Failure = F2(
 	function (a, b) {
@@ -4775,7 +5182,6 @@ var elm$json$Json$Decode$OneOf = function (a) {
 	return {$: 'OneOf', a: a};
 };
 var elm$core$Basics$and = _Basics_and;
-var elm$core$Basics$append = _Utils_append;
 var elm$core$Basics$or = _Basics_or;
 var elm$core$Char$toCode = _Char_toCode;
 var elm$core$Char$isLower = function (_char) {
@@ -4840,7 +5246,6 @@ var elm$core$List$indexedMap = F2(
 			xs);
 	});
 var elm$core$String$all = _String_all;
-var elm$core$String$fromInt = _String_fromNumber;
 var elm$core$String$join = F2(
 	function (sep, chunks) {
 		return A2(
@@ -4964,849 +5369,34 @@ var elm$json$Json$Decode$errorToStringHelp = F2(
 			}
 		}
 	});
+var elm$json$Json$Decode$map = _Json_map1;
 var elm$json$Json$Decode$map2 = _Json_map2;
-var NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom = elm$json$Json$Decode$map2(elm$core$Basics$apR);
-var elm$json$Json$Decode$andThen = _Json_andThen;
-var elm$json$Json$Decode$decodeValue = _Json_run;
-var elm$json$Json$Decode$fail = _Json_fail;
-var elm$json$Json$Decode$null = _Json_decodeNull;
-var elm$json$Json$Decode$oneOf = _Json_oneOf;
 var elm$json$Json$Decode$succeed = _Json_succeed;
-var elm$json$Json$Decode$value = _Json_decodeValue;
-var NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optionalDecoder = F3(
-	function (pathDecoder, valDecoder, fallback) {
-		var nullOr = function (decoder) {
-			return elm$json$Json$Decode$oneOf(
-				_List_fromArray(
-					[
-						decoder,
-						elm$json$Json$Decode$null(fallback)
-					]));
-		};
-		var handleResult = function (input) {
-			var _n0 = A2(elm$json$Json$Decode$decodeValue, pathDecoder, input);
-			if (_n0.$ === 'Ok') {
-				var rawValue = _n0.a;
-				var _n1 = A2(
-					elm$json$Json$Decode$decodeValue,
-					nullOr(valDecoder),
-					rawValue);
-				if (_n1.$ === 'Ok') {
-					var finalResult = _n1.a;
-					return elm$json$Json$Decode$succeed(finalResult);
-				} else {
-					var finalErr = _n1.a;
-					return elm$json$Json$Decode$fail(
-						elm$json$Json$Decode$errorToString(finalErr));
-				}
-			} else {
-				return elm$json$Json$Decode$succeed(fallback);
-			}
-		};
-		return A2(elm$json$Json$Decode$andThen, handleResult, elm$json$Json$Decode$value);
-	});
-var elm$json$Json$Decode$field = _Json_decodeField;
-var NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional = F4(
-	function (key, valDecoder, fallback, decoder) {
-		return A2(
-			NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom,
-			A3(
-				NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optionalDecoder,
-				A2(elm$json$Json$Decode$field, key, elm$json$Json$Decode$value),
-				valDecoder,
-				fallback),
-			decoder);
-	});
-var NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required = F3(
-	function (key, valDecoder, decoder) {
-		return A2(
-			NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom,
-			A2(elm$json$Json$Decode$field, key, valDecoder),
-			decoder);
-	});
-var author$project$JobCategory$JobCategory = F4(
-	function (id, category, experience, level) {
-		return {category: category, experience: experience, id: id, level: level};
-	});
-var author$project$Category$Advanced = function (a) {
-	return {$: 'Advanced', a: a};
-};
-var author$project$Category$Beginner = function (a) {
-	return {$: 'Beginner', a: a};
-};
-var author$project$Category$Intermediate = function (a) {
-	return {$: 'Intermediate', a: a};
-};
-var author$project$Category$Master = function (a) {
-	return {$: 'Master', a: a};
-};
-var author$project$Category$Starting = function (a) {
-	return {$: 'Starting', a: a};
-};
-var author$project$Category$Unique = function (a) {
-	return {$: 'Unique', a: a};
-};
-var author$project$JsonDecoders$categoryDecoder = function (category) {
-	switch (category) {
-		case 'Starting':
-			return elm$json$Json$Decode$succeed(
-				author$project$Category$Starting(category));
-		case 'Beginner':
-			return elm$json$Json$Decode$succeed(
-				author$project$Category$Beginner(category));
-		case 'Intermediate':
-			return elm$json$Json$Decode$succeed(
-				author$project$Category$Intermediate(category));
-		case 'Advanced':
-			return elm$json$Json$Decode$succeed(
-				author$project$Category$Advanced(category));
-		case 'Master':
-			return elm$json$Json$Decode$succeed(
-				author$project$Category$Master(category));
-		case 'Unique':
-			return elm$json$Json$Decode$succeed(
-				author$project$Category$Unique(category));
+var elm$virtual_dom$VirtualDom$toHandlerInt = function (handler) {
+	switch (handler.$) {
+		case 'Normal':
+			return 0;
+		case 'MayStopPropagation':
+			return 1;
+		case 'MayPreventDefault':
+			return 2;
 		default:
-			return elm$json$Json$Decode$succeed(
-				author$project$Category$Starting(category));
+			return 3;
 	}
 };
-var elm$json$Json$Decode$int = _Json_decodeInt;
-var elm$json$Json$Decode$string = _Json_decodeString;
-var author$project$JsonDecoders$jobCategoriesDecoder = A4(
-	NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional,
-	'level',
-	elm$json$Json$Decode$int,
-	0,
-	A4(
-		NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional,
-		'experience',
-		elm$json$Json$Decode$int,
-		0,
-		A2(
-			NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom,
-			A2(
-				elm$json$Json$Decode$andThen,
-				author$project$JsonDecoders$categoryDecoder,
-				A2(elm$json$Json$Decode$field, 'category', elm$json$Json$Decode$string)),
-			A3(
-				NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-				'id',
-				elm$json$Json$Decode$int,
-				elm$json$Json$Decode$succeed(author$project$JobCategory$JobCategory)))));
-var elm$core$Result$mapError = F2(
-	function (f, result) {
-		if (result.$ === 'Ok') {
-			var v = result.a;
-			return elm$core$Result$Ok(v);
-		} else {
-			var e = result.a;
-			return elm$core$Result$Err(
-				f(e));
-		}
-	});
-var elm$core$Basics$composeR = F3(
-	function (f, g, x) {
-		return g(
-			f(x));
-	});
-var elm$core$Basics$identity = function (x) {
-	return x;
+var elm$html$Html$div = _VirtualDom_node('div');
+var elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
+var elm$html$Html$text = elm$virtual_dom$VirtualDom$text;
+var author$project$DebugView$viewJobCategoryJson = function (element) {
+	var str = A2(author$project$Stringable$toString, author$project$Stringable$jobCategoryToStringable, element);
+	return A2(
+		elm$html$Html$div,
+		_List_Nil,
+		_List_fromArray(
+			[
+				elm$html$Html$text(str)
+			]));
 };
-var elm$core$Dict$RBEmpty_elm_builtin = {$: 'RBEmpty_elm_builtin'};
-var elm$core$Dict$empty = elm$core$Dict$RBEmpty_elm_builtin;
-var elm$core$Basics$compare = _Utils_compare;
-var elm$core$Dict$get = F2(
-	function (targetKey, dict) {
-		get:
-		while (true) {
-			if (dict.$ === 'RBEmpty_elm_builtin') {
-				return elm$core$Maybe$Nothing;
-			} else {
-				var key = dict.b;
-				var value = dict.c;
-				var left = dict.d;
-				var right = dict.e;
-				var _n1 = A2(elm$core$Basics$compare, targetKey, key);
-				switch (_n1.$) {
-					case 'LT':
-						var $temp$targetKey = targetKey,
-							$temp$dict = left;
-						targetKey = $temp$targetKey;
-						dict = $temp$dict;
-						continue get;
-					case 'EQ':
-						return elm$core$Maybe$Just(value);
-					default:
-						var $temp$targetKey = targetKey,
-							$temp$dict = right;
-						targetKey = $temp$targetKey;
-						dict = $temp$dict;
-						continue get;
-				}
-			}
-		}
-	});
-var elm$core$Dict$Black = {$: 'Black'};
-var elm$core$Dict$RBNode_elm_builtin = F5(
-	function (a, b, c, d, e) {
-		return {$: 'RBNode_elm_builtin', a: a, b: b, c: c, d: d, e: e};
-	});
-var elm$core$Dict$Red = {$: 'Red'};
-var elm$core$Dict$balance = F5(
-	function (color, key, value, left, right) {
-		if ((right.$ === 'RBNode_elm_builtin') && (right.a.$ === 'Red')) {
-			var _n1 = right.a;
-			var rK = right.b;
-			var rV = right.c;
-			var rLeft = right.d;
-			var rRight = right.e;
-			if ((left.$ === 'RBNode_elm_builtin') && (left.a.$ === 'Red')) {
-				var _n3 = left.a;
-				var lK = left.b;
-				var lV = left.c;
-				var lLeft = left.d;
-				var lRight = left.e;
-				return A5(
-					elm$core$Dict$RBNode_elm_builtin,
-					elm$core$Dict$Red,
-					key,
-					value,
-					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Black, lK, lV, lLeft, lRight),
-					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Black, rK, rV, rLeft, rRight));
-			} else {
-				return A5(
-					elm$core$Dict$RBNode_elm_builtin,
-					color,
-					rK,
-					rV,
-					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Red, key, value, left, rLeft),
-					rRight);
-			}
-		} else {
-			if ((((left.$ === 'RBNode_elm_builtin') && (left.a.$ === 'Red')) && (left.d.$ === 'RBNode_elm_builtin')) && (left.d.a.$ === 'Red')) {
-				var _n5 = left.a;
-				var lK = left.b;
-				var lV = left.c;
-				var _n6 = left.d;
-				var _n7 = _n6.a;
-				var llK = _n6.b;
-				var llV = _n6.c;
-				var llLeft = _n6.d;
-				var llRight = _n6.e;
-				var lRight = left.e;
-				return A5(
-					elm$core$Dict$RBNode_elm_builtin,
-					elm$core$Dict$Red,
-					lK,
-					lV,
-					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Black, llK, llV, llLeft, llRight),
-					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Black, key, value, lRight, right));
-			} else {
-				return A5(elm$core$Dict$RBNode_elm_builtin, color, key, value, left, right);
-			}
-		}
-	});
-var elm$core$Dict$insertHelp = F3(
-	function (key, value, dict) {
-		if (dict.$ === 'RBEmpty_elm_builtin') {
-			return A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Red, key, value, elm$core$Dict$RBEmpty_elm_builtin, elm$core$Dict$RBEmpty_elm_builtin);
-		} else {
-			var nColor = dict.a;
-			var nKey = dict.b;
-			var nValue = dict.c;
-			var nLeft = dict.d;
-			var nRight = dict.e;
-			var _n1 = A2(elm$core$Basics$compare, key, nKey);
-			switch (_n1.$) {
-				case 'LT':
-					return A5(
-						elm$core$Dict$balance,
-						nColor,
-						nKey,
-						nValue,
-						A3(elm$core$Dict$insertHelp, key, value, nLeft),
-						nRight);
-				case 'EQ':
-					return A5(elm$core$Dict$RBNode_elm_builtin, nColor, nKey, value, nLeft, nRight);
-				default:
-					return A5(
-						elm$core$Dict$balance,
-						nColor,
-						nKey,
-						nValue,
-						nLeft,
-						A3(elm$core$Dict$insertHelp, key, value, nRight));
-			}
-		}
-	});
-var elm$core$Dict$insert = F3(
-	function (key, value, dict) {
-		var _n0 = A3(elm$core$Dict$insertHelp, key, value, dict);
-		if ((_n0.$ === 'RBNode_elm_builtin') && (_n0.a.$ === 'Red')) {
-			var _n1 = _n0.a;
-			var k = _n0.b;
-			var v = _n0.c;
-			var l = _n0.d;
-			var r = _n0.e;
-			return A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Black, k, v, l, r);
-		} else {
-			var x = _n0;
-			return x;
-		}
-	});
-var elm$core$Dict$getMin = function (dict) {
-	getMin:
-	while (true) {
-		if ((dict.$ === 'RBNode_elm_builtin') && (dict.d.$ === 'RBNode_elm_builtin')) {
-			var left = dict.d;
-			var $temp$dict = left;
-			dict = $temp$dict;
-			continue getMin;
-		} else {
-			return dict;
-		}
-	}
-};
-var elm$core$Dict$moveRedLeft = function (dict) {
-	if (((dict.$ === 'RBNode_elm_builtin') && (dict.d.$ === 'RBNode_elm_builtin')) && (dict.e.$ === 'RBNode_elm_builtin')) {
-		if ((dict.e.d.$ === 'RBNode_elm_builtin') && (dict.e.d.a.$ === 'Red')) {
-			var clr = dict.a;
-			var k = dict.b;
-			var v = dict.c;
-			var _n1 = dict.d;
-			var lClr = _n1.a;
-			var lK = _n1.b;
-			var lV = _n1.c;
-			var lLeft = _n1.d;
-			var lRight = _n1.e;
-			var _n2 = dict.e;
-			var rClr = _n2.a;
-			var rK = _n2.b;
-			var rV = _n2.c;
-			var rLeft = _n2.d;
-			var _n3 = rLeft.a;
-			var rlK = rLeft.b;
-			var rlV = rLeft.c;
-			var rlL = rLeft.d;
-			var rlR = rLeft.e;
-			var rRight = _n2.e;
-			return A5(
-				elm$core$Dict$RBNode_elm_builtin,
-				elm$core$Dict$Red,
-				rlK,
-				rlV,
-				A5(
-					elm$core$Dict$RBNode_elm_builtin,
-					elm$core$Dict$Black,
-					k,
-					v,
-					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Red, lK, lV, lLeft, lRight),
-					rlL),
-				A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Black, rK, rV, rlR, rRight));
-		} else {
-			var clr = dict.a;
-			var k = dict.b;
-			var v = dict.c;
-			var _n4 = dict.d;
-			var lClr = _n4.a;
-			var lK = _n4.b;
-			var lV = _n4.c;
-			var lLeft = _n4.d;
-			var lRight = _n4.e;
-			var _n5 = dict.e;
-			var rClr = _n5.a;
-			var rK = _n5.b;
-			var rV = _n5.c;
-			var rLeft = _n5.d;
-			var rRight = _n5.e;
-			if (clr.$ === 'Black') {
-				return A5(
-					elm$core$Dict$RBNode_elm_builtin,
-					elm$core$Dict$Black,
-					k,
-					v,
-					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Red, lK, lV, lLeft, lRight),
-					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Red, rK, rV, rLeft, rRight));
-			} else {
-				return A5(
-					elm$core$Dict$RBNode_elm_builtin,
-					elm$core$Dict$Black,
-					k,
-					v,
-					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Red, lK, lV, lLeft, lRight),
-					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Red, rK, rV, rLeft, rRight));
-			}
-		}
-	} else {
-		return dict;
-	}
-};
-var elm$core$Dict$moveRedRight = function (dict) {
-	if (((dict.$ === 'RBNode_elm_builtin') && (dict.d.$ === 'RBNode_elm_builtin')) && (dict.e.$ === 'RBNode_elm_builtin')) {
-		if ((dict.d.d.$ === 'RBNode_elm_builtin') && (dict.d.d.a.$ === 'Red')) {
-			var clr = dict.a;
-			var k = dict.b;
-			var v = dict.c;
-			var _n1 = dict.d;
-			var lClr = _n1.a;
-			var lK = _n1.b;
-			var lV = _n1.c;
-			var _n2 = _n1.d;
-			var _n3 = _n2.a;
-			var llK = _n2.b;
-			var llV = _n2.c;
-			var llLeft = _n2.d;
-			var llRight = _n2.e;
-			var lRight = _n1.e;
-			var _n4 = dict.e;
-			var rClr = _n4.a;
-			var rK = _n4.b;
-			var rV = _n4.c;
-			var rLeft = _n4.d;
-			var rRight = _n4.e;
-			return A5(
-				elm$core$Dict$RBNode_elm_builtin,
-				elm$core$Dict$Red,
-				lK,
-				lV,
-				A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Black, llK, llV, llLeft, llRight),
-				A5(
-					elm$core$Dict$RBNode_elm_builtin,
-					elm$core$Dict$Black,
-					k,
-					v,
-					lRight,
-					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Red, rK, rV, rLeft, rRight)));
-		} else {
-			var clr = dict.a;
-			var k = dict.b;
-			var v = dict.c;
-			var _n5 = dict.d;
-			var lClr = _n5.a;
-			var lK = _n5.b;
-			var lV = _n5.c;
-			var lLeft = _n5.d;
-			var lRight = _n5.e;
-			var _n6 = dict.e;
-			var rClr = _n6.a;
-			var rK = _n6.b;
-			var rV = _n6.c;
-			var rLeft = _n6.d;
-			var rRight = _n6.e;
-			if (clr.$ === 'Black') {
-				return A5(
-					elm$core$Dict$RBNode_elm_builtin,
-					elm$core$Dict$Black,
-					k,
-					v,
-					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Red, lK, lV, lLeft, lRight),
-					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Red, rK, rV, rLeft, rRight));
-			} else {
-				return A5(
-					elm$core$Dict$RBNode_elm_builtin,
-					elm$core$Dict$Black,
-					k,
-					v,
-					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Red, lK, lV, lLeft, lRight),
-					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Red, rK, rV, rLeft, rRight));
-			}
-		}
-	} else {
-		return dict;
-	}
-};
-var elm$core$Dict$removeHelpPrepEQGT = F7(
-	function (targetKey, dict, color, key, value, left, right) {
-		if ((left.$ === 'RBNode_elm_builtin') && (left.a.$ === 'Red')) {
-			var _n1 = left.a;
-			var lK = left.b;
-			var lV = left.c;
-			var lLeft = left.d;
-			var lRight = left.e;
-			return A5(
-				elm$core$Dict$RBNode_elm_builtin,
-				color,
-				lK,
-				lV,
-				lLeft,
-				A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Red, key, value, lRight, right));
-		} else {
-			_n2$2:
-			while (true) {
-				if ((right.$ === 'RBNode_elm_builtin') && (right.a.$ === 'Black')) {
-					if (right.d.$ === 'RBNode_elm_builtin') {
-						if (right.d.a.$ === 'Black') {
-							var _n3 = right.a;
-							var _n4 = right.d;
-							var _n5 = _n4.a;
-							return elm$core$Dict$moveRedRight(dict);
-						} else {
-							break _n2$2;
-						}
-					} else {
-						var _n6 = right.a;
-						var _n7 = right.d;
-						return elm$core$Dict$moveRedRight(dict);
-					}
-				} else {
-					break _n2$2;
-				}
-			}
-			return dict;
-		}
-	});
-var elm$core$Dict$removeMin = function (dict) {
-	if ((dict.$ === 'RBNode_elm_builtin') && (dict.d.$ === 'RBNode_elm_builtin')) {
-		var color = dict.a;
-		var key = dict.b;
-		var value = dict.c;
-		var left = dict.d;
-		var lColor = left.a;
-		var lLeft = left.d;
-		var right = dict.e;
-		if (lColor.$ === 'Black') {
-			if ((lLeft.$ === 'RBNode_elm_builtin') && (lLeft.a.$ === 'Red')) {
-				var _n3 = lLeft.a;
-				return A5(
-					elm$core$Dict$RBNode_elm_builtin,
-					color,
-					key,
-					value,
-					elm$core$Dict$removeMin(left),
-					right);
-			} else {
-				var _n4 = elm$core$Dict$moveRedLeft(dict);
-				if (_n4.$ === 'RBNode_elm_builtin') {
-					var nColor = _n4.a;
-					var nKey = _n4.b;
-					var nValue = _n4.c;
-					var nLeft = _n4.d;
-					var nRight = _n4.e;
-					return A5(
-						elm$core$Dict$balance,
-						nColor,
-						nKey,
-						nValue,
-						elm$core$Dict$removeMin(nLeft),
-						nRight);
-				} else {
-					return elm$core$Dict$RBEmpty_elm_builtin;
-				}
-			}
-		} else {
-			return A5(
-				elm$core$Dict$RBNode_elm_builtin,
-				color,
-				key,
-				value,
-				elm$core$Dict$removeMin(left),
-				right);
-		}
-	} else {
-		return elm$core$Dict$RBEmpty_elm_builtin;
-	}
-};
-var elm$core$Dict$removeHelp = F2(
-	function (targetKey, dict) {
-		if (dict.$ === 'RBEmpty_elm_builtin') {
-			return elm$core$Dict$RBEmpty_elm_builtin;
-		} else {
-			var color = dict.a;
-			var key = dict.b;
-			var value = dict.c;
-			var left = dict.d;
-			var right = dict.e;
-			if (_Utils_cmp(targetKey, key) < 0) {
-				if ((left.$ === 'RBNode_elm_builtin') && (left.a.$ === 'Black')) {
-					var _n4 = left.a;
-					var lLeft = left.d;
-					if ((lLeft.$ === 'RBNode_elm_builtin') && (lLeft.a.$ === 'Red')) {
-						var _n6 = lLeft.a;
-						return A5(
-							elm$core$Dict$RBNode_elm_builtin,
-							color,
-							key,
-							value,
-							A2(elm$core$Dict$removeHelp, targetKey, left),
-							right);
-					} else {
-						var _n7 = elm$core$Dict$moveRedLeft(dict);
-						if (_n7.$ === 'RBNode_elm_builtin') {
-							var nColor = _n7.a;
-							var nKey = _n7.b;
-							var nValue = _n7.c;
-							var nLeft = _n7.d;
-							var nRight = _n7.e;
-							return A5(
-								elm$core$Dict$balance,
-								nColor,
-								nKey,
-								nValue,
-								A2(elm$core$Dict$removeHelp, targetKey, nLeft),
-								nRight);
-						} else {
-							return elm$core$Dict$RBEmpty_elm_builtin;
-						}
-					}
-				} else {
-					return A5(
-						elm$core$Dict$RBNode_elm_builtin,
-						color,
-						key,
-						value,
-						A2(elm$core$Dict$removeHelp, targetKey, left),
-						right);
-				}
-			} else {
-				return A2(
-					elm$core$Dict$removeHelpEQGT,
-					targetKey,
-					A7(elm$core$Dict$removeHelpPrepEQGT, targetKey, dict, color, key, value, left, right));
-			}
-		}
-	});
-var elm$core$Dict$removeHelpEQGT = F2(
-	function (targetKey, dict) {
-		if (dict.$ === 'RBNode_elm_builtin') {
-			var color = dict.a;
-			var key = dict.b;
-			var value = dict.c;
-			var left = dict.d;
-			var right = dict.e;
-			if (_Utils_eq(targetKey, key)) {
-				var _n1 = elm$core$Dict$getMin(right);
-				if (_n1.$ === 'RBNode_elm_builtin') {
-					var minKey = _n1.b;
-					var minValue = _n1.c;
-					return A5(
-						elm$core$Dict$balance,
-						color,
-						minKey,
-						minValue,
-						left,
-						elm$core$Dict$removeMin(right));
-				} else {
-					return elm$core$Dict$RBEmpty_elm_builtin;
-				}
-			} else {
-				return A5(
-					elm$core$Dict$balance,
-					color,
-					key,
-					value,
-					left,
-					A2(elm$core$Dict$removeHelp, targetKey, right));
-			}
-		} else {
-			return elm$core$Dict$RBEmpty_elm_builtin;
-		}
-	});
-var elm$core$Dict$remove = F2(
-	function (key, dict) {
-		var _n0 = A2(elm$core$Dict$removeHelp, key, dict);
-		if ((_n0.$ === 'RBNode_elm_builtin') && (_n0.a.$ === 'Red')) {
-			var _n1 = _n0.a;
-			var k = _n0.b;
-			var v = _n0.c;
-			var l = _n0.d;
-			var r = _n0.e;
-			return A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Black, k, v, l, r);
-		} else {
-			var x = _n0;
-			return x;
-		}
-	});
-var elm$core$Dict$update = F3(
-	function (targetKey, alter, dictionary) {
-		var _n0 = alter(
-			A2(elm$core$Dict$get, targetKey, dictionary));
-		if (_n0.$ === 'Just') {
-			var value = _n0.a;
-			return A3(elm$core$Dict$insert, targetKey, value, dictionary);
-		} else {
-			return A2(elm$core$Dict$remove, targetKey, dictionary);
-		}
-	});
-var elm$core$Maybe$isJust = function (maybe) {
-	if (maybe.$ === 'Just') {
-		return true;
-	} else {
-		return false;
-	}
-};
-var elm$core$Platform$sendToApp = _Platform_sendToApp;
-var elm$core$Platform$sendToSelf = _Platform_sendToSelf;
-var elm$core$Result$map = F2(
-	function (func, ra) {
-		if (ra.$ === 'Ok') {
-			var a = ra.a;
-			return elm$core$Result$Ok(
-				func(a));
-		} else {
-			var e = ra.a;
-			return elm$core$Result$Err(e);
-		}
-	});
-var elm$http$Http$BadStatus_ = F2(
-	function (a, b) {
-		return {$: 'BadStatus_', a: a, b: b};
-	});
-var elm$http$Http$BadUrl_ = function (a) {
-	return {$: 'BadUrl_', a: a};
-};
-var elm$http$Http$GoodStatus_ = F2(
-	function (a, b) {
-		return {$: 'GoodStatus_', a: a, b: b};
-	});
-var elm$http$Http$NetworkError_ = {$: 'NetworkError_'};
-var elm$http$Http$Receiving = function (a) {
-	return {$: 'Receiving', a: a};
-};
-var elm$http$Http$Sending = function (a) {
-	return {$: 'Sending', a: a};
-};
-var elm$http$Http$Timeout_ = {$: 'Timeout_'};
-var elm$http$Http$expectStringResponse = F2(
-	function (toMsg, toResult) {
-		return A3(
-			_Http_expect,
-			'',
-			elm$core$Basics$identity,
-			A2(elm$core$Basics$composeR, toResult, toMsg));
-	});
-var elm$http$Http$BadBody = function (a) {
-	return {$: 'BadBody', a: a};
-};
-var elm$http$Http$BadStatus = function (a) {
-	return {$: 'BadStatus', a: a};
-};
-var elm$http$Http$BadUrl = function (a) {
-	return {$: 'BadUrl', a: a};
-};
-var elm$http$Http$NetworkError = {$: 'NetworkError'};
-var elm$http$Http$Timeout = {$: 'Timeout'};
-var elm$http$Http$resolve = F2(
-	function (toResult, response) {
-		switch (response.$) {
-			case 'BadUrl_':
-				var url = response.a;
-				return elm$core$Result$Err(
-					elm$http$Http$BadUrl(url));
-			case 'Timeout_':
-				return elm$core$Result$Err(elm$http$Http$Timeout);
-			case 'NetworkError_':
-				return elm$core$Result$Err(elm$http$Http$NetworkError);
-			case 'BadStatus_':
-				var metadata = response.a;
-				return elm$core$Result$Err(
-					elm$http$Http$BadStatus(metadata.statusCode));
-			default:
-				var body = response.b;
-				return A2(
-					elm$core$Result$mapError,
-					elm$http$Http$BadBody,
-					toResult(body));
-		}
-	});
-var elm$json$Json$Decode$decodeString = _Json_runOnString;
-var elm$http$Http$expectJson = F2(
-	function (toMsg, decoder) {
-		return A2(
-			elm$http$Http$expectStringResponse,
-			toMsg,
-			elm$http$Http$resolve(
-				function (string) {
-					return A2(
-						elm$core$Result$mapError,
-						elm$json$Json$Decode$errorToString,
-						A2(elm$json$Json$Decode$decodeString, decoder, string));
-				}));
-	});
-var elm$http$Http$emptyBody = _Http_emptyBody;
-var elm$http$Http$Request = function (a) {
-	return {$: 'Request', a: a};
-};
-var elm$core$Task$succeed = _Scheduler_succeed;
-var elm$http$Http$State = F2(
-	function (reqs, subs) {
-		return {reqs: reqs, subs: subs};
-	});
-var elm$http$Http$init = elm$core$Task$succeed(
-	A2(elm$http$Http$State, elm$core$Dict$empty, _List_Nil));
-var elm$core$Task$andThen = _Scheduler_andThen;
-var elm$core$Process$kill = _Scheduler_kill;
-var elm$core$Process$spawn = _Scheduler_spawn;
-var elm$http$Http$updateReqs = F3(
-	function (router, cmds, reqs) {
-		updateReqs:
-		while (true) {
-			if (!cmds.b) {
-				return elm$core$Task$succeed(reqs);
-			} else {
-				var cmd = cmds.a;
-				var otherCmds = cmds.b;
-				if (cmd.$ === 'Cancel') {
-					var tracker = cmd.a;
-					var _n2 = A2(elm$core$Dict$get, tracker, reqs);
-					if (_n2.$ === 'Nothing') {
-						var $temp$router = router,
-							$temp$cmds = otherCmds,
-							$temp$reqs = reqs;
-						router = $temp$router;
-						cmds = $temp$cmds;
-						reqs = $temp$reqs;
-						continue updateReqs;
-					} else {
-						var pid = _n2.a;
-						return A2(
-							elm$core$Task$andThen,
-							function (_n3) {
-								return A3(
-									elm$http$Http$updateReqs,
-									router,
-									otherCmds,
-									A2(elm$core$Dict$remove, tracker, reqs));
-							},
-							elm$core$Process$kill(pid));
-					}
-				} else {
-					var req = cmd.a;
-					return A2(
-						elm$core$Task$andThen,
-						function (pid) {
-							var _n4 = req.tracker;
-							if (_n4.$ === 'Nothing') {
-								return A3(elm$http$Http$updateReqs, router, otherCmds, reqs);
-							} else {
-								var tracker = _n4.a;
-								return A3(
-									elm$http$Http$updateReqs,
-									router,
-									otherCmds,
-									A3(elm$core$Dict$insert, tracker, pid, reqs));
-							}
-						},
-						elm$core$Process$spawn(
-							A3(
-								_Http_toTask,
-								router,
-								elm$core$Platform$sendToApp(router),
-								req)));
-				}
-			}
-		}
-	});
-var elm$http$Http$onEffects = F4(
-	function (router, cmds, subs, state) {
-		return A2(
-			elm$core$Task$andThen,
-			function (reqs) {
-				return elm$core$Task$succeed(
-					A2(elm$http$Http$State, reqs, subs));
-			},
-			A3(elm$http$Http$updateReqs, router, cmds, state.reqs));
-	});
 var elm$core$List$foldrHelper = F4(
 	function (fn, acc, ctr, ls) {
 		if (!ls.b) {
@@ -5862,347 +5452,6 @@ var elm$core$List$foldr = F3(
 	function (fn, acc, ls) {
 		return A4(elm$core$List$foldrHelper, fn, acc, 0, ls);
 	});
-var elm$core$List$maybeCons = F3(
-	function (f, mx, xs) {
-		var _n0 = f(mx);
-		if (_n0.$ === 'Just') {
-			var x = _n0.a;
-			return A2(elm$core$List$cons, x, xs);
-		} else {
-			return xs;
-		}
-	});
-var elm$core$List$filterMap = F2(
-	function (f, xs) {
-		return A3(
-			elm$core$List$foldr,
-			elm$core$List$maybeCons(f),
-			_List_Nil,
-			xs);
-	});
-var elm$core$Task$map2 = F3(
-	function (func, taskA, taskB) {
-		return A2(
-			elm$core$Task$andThen,
-			function (a) {
-				return A2(
-					elm$core$Task$andThen,
-					function (b) {
-						return elm$core$Task$succeed(
-							A2(func, a, b));
-					},
-					taskB);
-			},
-			taskA);
-	});
-var elm$core$Task$sequence = function (tasks) {
-	return A3(
-		elm$core$List$foldr,
-		elm$core$Task$map2(elm$core$List$cons),
-		elm$core$Task$succeed(_List_Nil),
-		tasks);
-};
-var elm$http$Http$maybeSend = F4(
-	function (router, desiredTracker, progress, _n0) {
-		var actualTracker = _n0.a;
-		var toMsg = _n0.b;
-		return _Utils_eq(desiredTracker, actualTracker) ? elm$core$Maybe$Just(
-			A2(
-				elm$core$Platform$sendToApp,
-				router,
-				toMsg(progress))) : elm$core$Maybe$Nothing;
-	});
-var elm$http$Http$onSelfMsg = F3(
-	function (router, _n0, state) {
-		var tracker = _n0.a;
-		var progress = _n0.b;
-		return A2(
-			elm$core$Task$andThen,
-			function (_n1) {
-				return elm$core$Task$succeed(state);
-			},
-			elm$core$Task$sequence(
-				A2(
-					elm$core$List$filterMap,
-					A3(elm$http$Http$maybeSend, router, tracker, progress),
-					state.subs)));
-	});
-var elm$http$Http$Cancel = function (a) {
-	return {$: 'Cancel', a: a};
-};
-var elm$http$Http$cmdMap = F2(
-	function (func, cmd) {
-		if (cmd.$ === 'Cancel') {
-			var tracker = cmd.a;
-			return elm$http$Http$Cancel(tracker);
-		} else {
-			var r = cmd.a;
-			return elm$http$Http$Request(
-				{
-					allowCookiesFromOtherDomains: r.allowCookiesFromOtherDomains,
-					body: r.body,
-					expect: A2(_Http_mapExpect, func, r.expect),
-					headers: r.headers,
-					method: r.method,
-					timeout: r.timeout,
-					tracker: r.tracker,
-					url: r.url
-				});
-		}
-	});
-var elm$http$Http$MySub = F2(
-	function (a, b) {
-		return {$: 'MySub', a: a, b: b};
-	});
-var elm$http$Http$subMap = F2(
-	function (func, _n0) {
-		var tracker = _n0.a;
-		var toMsg = _n0.b;
-		return A2(
-			elm$http$Http$MySub,
-			tracker,
-			A2(elm$core$Basics$composeR, toMsg, func));
-	});
-_Platform_effectManagers['Http'] = _Platform_createManager(elm$http$Http$init, elm$http$Http$onEffects, elm$http$Http$onSelfMsg, elm$http$Http$cmdMap, elm$http$Http$subMap);
-var elm$http$Http$command = _Platform_leaf('Http');
-var elm$http$Http$subscription = _Platform_leaf('Http');
-var elm$http$Http$request = function (r) {
-	return elm$http$Http$command(
-		elm$http$Http$Request(
-			{allowCookiesFromOtherDomains: false, body: r.body, expect: r.expect, headers: r.headers, method: r.method, timeout: r.timeout, tracker: r.tracker, url: r.url}));
-};
-var elm$http$Http$get = function (r) {
-	return elm$http$Http$request(
-		{body: elm$http$Http$emptyBody, expect: r.expect, headers: _List_Nil, method: 'GET', timeout: elm$core$Maybe$Nothing, tracker: elm$core$Maybe$Nothing, url: r.url});
-};
-var elm$json$Json$Decode$list = _Json_decodeList;
-var author$project$HttpCommands$getJobCategories = elm$http$Http$get(
-	{
-		expect: A2(
-			elm$http$Http$expectJson,
-			author$project$HttpCommands$JobCategoriesReceived,
-			elm$json$Json$Decode$list(author$project$JsonDecoders$jobCategoriesDecoder)),
-		url: author$project$HttpCommands$resourcesDirLocation + 'job-categories.json'
-	});
-var author$project$JsonDao$JsonModel = F3(
-	function (jobCategories, jobs, errorMessage) {
-		return {errorMessage: errorMessage, jobCategories: jobCategories, jobs: jobs};
-	});
-var author$project$JsonDao$setup = _Utils_Tuple2(
-	A3(author$project$JsonDao$JsonModel, _List_Nil, _List_Nil, elm$core$Maybe$Nothing),
-	author$project$HttpCommands$getJobCategories);
-var author$project$HomePage$init = function (_n0) {
-	return author$project$JsonDao$setup;
-};
-var author$project$HttpCommands$JobsReceived = function (a) {
-	return {$: 'JobsReceived', a: a};
-};
-var author$project$Job$Job = F8(
-	function (id, name, jobCategoryId, proficiencyIdList, certificationIdList, masteryIdList, gender, note) {
-		return {certificationIdList: certificationIdList, gender: gender, id: id, jobCategoryId: jobCategoryId, masteryIdList: masteryIdList, name: name, note: note, proficiencyIdList: proficiencyIdList};
-	});
-var author$project$Gender$Female = function (a) {
-	return {$: 'Female', a: a};
-};
-var author$project$Gender$Male = function (a) {
-	return {$: 'Male', a: a};
-};
-var author$project$Gender$None = {$: 'None'};
-var author$project$JsonDecoders$genderDecoder = function (gender) {
-	switch (gender) {
-		case 'Male':
-			return elm$json$Json$Decode$succeed(
-				author$project$Gender$Male(gender));
-		case 'Female':
-			return elm$json$Json$Decode$succeed(
-				author$project$Gender$Female(gender));
-		default:
-			return elm$json$Json$Decode$succeed(author$project$Gender$None);
-	}
-};
-var author$project$JsonDecoders$jobsDecoder = A4(
-	NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional,
-	'note',
-	elm$json$Json$Decode$string,
-	'',
-	A2(
-		NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom,
-		A2(
-			elm$json$Json$Decode$andThen,
-			author$project$JsonDecoders$genderDecoder,
-			A2(elm$json$Json$Decode$field, 'gender', elm$json$Json$Decode$string)),
-		A4(
-			NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional,
-			'masteryIdList',
-			elm$json$Json$Decode$list(elm$json$Json$Decode$int),
-			_List_Nil,
-			A4(
-				NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional,
-				'certificationIdList',
-				elm$json$Json$Decode$list(elm$json$Json$Decode$int),
-				_List_Nil,
-				A4(
-					NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional,
-					'proficiencyIdList',
-					elm$json$Json$Decode$list(elm$json$Json$Decode$int),
-					_List_Nil,
-					A3(
-						NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-						'jobCategoryId',
-						elm$json$Json$Decode$int,
-						A3(
-							NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-							'name',
-							elm$json$Json$Decode$string,
-							A3(
-								NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-								'id',
-								elm$json$Json$Decode$int,
-								elm$json$Json$Decode$succeed(author$project$Job$Job)))))))));
-var author$project$HttpCommands$getJobs = elm$http$Http$get(
-	{
-		expect: A2(
-			elm$http$Http$expectJson,
-			author$project$HttpCommands$JobsReceived,
-			elm$json$Json$Decode$list(author$project$JsonDecoders$jobsDecoder)),
-		url: author$project$HttpCommands$resourcesDirLocation + 'jobs.json'
-	});
-var author$project$JsonDao$buildErrorMessage = function (httpError) {
-	switch (httpError.$) {
-		case 'BadUrl':
-			var message = httpError.a;
-			return message;
-		case 'Timeout':
-			return 'Server is taking too long to respond. Please try again later.';
-		case 'NetworkError':
-			return 'Unable to reach server.';
-		case 'BadStatus':
-			var statusCode = httpError.a;
-			return 'Request failed with status code: ' + elm$core$String$fromInt(statusCode);
-		default:
-			var message = httpError.a;
-			return message;
-	}
-};
-var elm$core$Platform$Cmd$batch = _Platform_batch;
-var elm$core$Platform$Cmd$none = elm$core$Platform$Cmd$batch(_List_Nil);
-var author$project$JsonDao$handleHttpResponse = F2(
-	function (msg, model) {
-		switch (msg.$) {
-			case 'SendHttpRequest':
-				return _Utils_Tuple2(model, author$project$HttpCommands$getJobCategories);
-			case 'JobCategoriesReceived':
-				if (msg.a.$ === 'Ok') {
-					var elements = msg.a.a;
-					return _Utils_Tuple2(
-						_Utils_update(
-							model,
-							{jobCategories: elements}),
-						author$project$HttpCommands$getJobs);
-				} else {
-					var httpError = msg.a.a;
-					return _Utils_Tuple2(
-						_Utils_update(
-							model,
-							{
-								errorMessage: elm$core$Maybe$Just(
-									author$project$JsonDao$buildErrorMessage(httpError))
-							}),
-						elm$core$Platform$Cmd$none);
-				}
-			default:
-				if (msg.a.$ === 'Ok') {
-					var elements = msg.a.a;
-					return _Utils_Tuple2(
-						_Utils_update(
-							model,
-							{jobs: elements}),
-						elm$core$Platform$Cmd$none);
-				} else {
-					var httpError = msg.a.a;
-					return _Utils_Tuple2(
-						_Utils_update(
-							model,
-							{
-								errorMessage: elm$core$Maybe$Just(
-									author$project$JsonDao$buildErrorMessage(httpError))
-							}),
-						elm$core$Platform$Cmd$none);
-				}
-		}
-	});
-var author$project$HomePage$update = F2(
-	function (msg, model) {
-		return A2(author$project$JsonDao$handleHttpResponse, msg, model);
-	});
-var author$project$Category$categoryToString = function (category) {
-	switch (category.$) {
-		case 'Starting':
-			var value = category.a;
-			return value;
-		case 'Beginner':
-			var value = category.a;
-			return value;
-		case 'Intermediate':
-			var value = category.a;
-			return value;
-		case 'Advanced':
-			var value = category.a;
-			return value;
-		case 'Master':
-			var value = category.a;
-			return value;
-		default:
-			var value = category.a;
-			return value;
-	}
-};
-var author$project$Stringable$int = {
-	stringable: function (x) {
-		return elm$core$String$fromInt(x);
-	}
-};
-var author$project$Stringable$toString = F2(
-	function (_n0, x) {
-		var stringable = _n0.stringable;
-		return stringable(x);
-	});
-var author$project$JobCategory$jobCategoryToStringable = {
-	stringable: function (_n0) {
-		var id = _n0.id;
-		var category = _n0.category;
-		var experience = _n0.experience;
-		var level = _n0.level;
-		var str = author$project$Category$categoryToString(category);
-		return 'Job { ' + ('id: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, id) + (', category: ' + (str + (', experience: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, experience) + (', level: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, level) + ' }'))))))));
-	}
-};
-var elm$json$Json$Decode$map = _Json_map1;
-var elm$virtual_dom$VirtualDom$toHandlerInt = function (handler) {
-	switch (handler.$) {
-		case 'Normal':
-			return 0;
-		case 'MayStopPropagation':
-			return 1;
-		case 'MayPreventDefault':
-			return 2;
-		default:
-			return 3;
-	}
-};
-var elm$html$Html$div = _VirtualDom_node('div');
-var elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
-var elm$html$Html$text = elm$virtual_dom$VirtualDom$text;
-var author$project$DebugView$viewJobCategoryJson = function (element) {
-	var str = A2(author$project$Stringable$toString, author$project$JobCategory$jobCategoryToStringable, element);
-	return A2(
-		elm$html$Html$div,
-		_List_Nil,
-		_List_fromArray(
-			[
-				elm$html$Html$text(str)
-			]));
-};
 var elm$core$List$map = F2(
 	function (f, xs) {
 		return A3(
@@ -6230,16 +5479,11 @@ var author$project$DebugView$viewJobCategoriesJson = function (model) {
 				A2(elm$core$List$map, author$project$DebugView$viewJobCategoryJson, model.jobCategories))
 			]));
 };
-var author$project$Gender$genderToString = function (gender) {
-	switch (gender.$) {
-		case 'Male':
-			var value = gender.a;
-			return value;
-		case 'Female':
-			var value = gender.a;
-			return value;
-		default:
-			return '';
+var author$project$Stringable$genderToString = function (gender) {
+	if (gender.$ === 'Male') {
+		return 'Male';
+	} else {
+		return 'Female';
 	}
 };
 var elm$core$Basics$negate = function (n) {
@@ -6272,33 +5516,368 @@ var author$project$Stringable$list = function (nestedStringable) {
 		}
 	};
 };
-var author$project$Job$jobToStringable = {
+var author$project$Stringable$magicUsageToString = function (magicUsage) {
+	if (magicUsage.$ === 'CanUseMagic') {
+		return 'Can use magic';
+	} else {
+		return 'Can use some magic';
+	}
+};
+var author$project$Stringable$rankToString = function (rank) {
+	switch (rank.$) {
+		case 'E':
+			return 'E';
+		case 'Eplus':
+			return 'E+';
+		case 'D':
+			return 'D';
+		case 'Dplus':
+			return 'D+';
+		case 'C':
+			return 'C';
+		case 'Cplus':
+			return 'C+';
+		case 'B':
+			return 'B';
+		case 'Bplus':
+			return 'B+';
+		case 'A':
+			return 'A';
+		case 'Aplus':
+			return 'A+';
+		case 'S':
+			return 'S';
+		default:
+			return 'S+';
+	}
+};
+var author$project$Stringable$subjectToString = function (subject) {
+	switch (subject.$) {
+		case 'Sword':
+			return 'Sword';
+		case 'Lance':
+			return 'Lance';
+		case 'Axe':
+			return 'Axe';
+		case 'Bow':
+			return 'Bow';
+		case 'Brawling':
+			return 'Brawling';
+		case 'Reason':
+			return 'Reason';
+		case 'Faith':
+			return 'Faith';
+		case 'Authority':
+			return 'Authority';
+		case 'HeavyArmor':
+			return 'HeavyArmor';
+		case 'Riding':
+			return 'Riding';
+		default:
+			return 'Flying';
+	}
+};
+var author$project$CustomTypes$A = {$: 'A'};
+var author$project$CustomTypes$Aplus = {$: 'Aplus'};
+var author$project$CustomTypes$B = {$: 'B'};
+var author$project$CustomTypes$Bplus = {$: 'Bplus'};
+var author$project$CustomTypes$C = {$: 'C'};
+var author$project$CustomTypes$Cplus = {$: 'Cplus'};
+var author$project$CustomTypes$D = {$: 'D'};
+var author$project$CustomTypes$Dplus = {$: 'Dplus'};
+var author$project$CustomTypes$E = {$: 'E'};
+var author$project$CustomTypes$Eplus = {$: 'Eplus'};
+var author$project$CustomTypes$S = {$: 'S'};
+var author$project$CustomTypes$Splus = {$: 'Splus'};
+var author$project$CustomTypes$Study = F3(
+	function (id, subject, rank) {
+		return {id: id, rank: rank, subject: subject};
+	});
+var author$project$Study$initStudies = _List_fromArray(
+	[
+		A3(author$project$CustomTypes$Study, 0, author$project$CustomTypes$Sword, author$project$CustomTypes$E),
+		A3(author$project$CustomTypes$Study, 1, author$project$CustomTypes$Sword, author$project$CustomTypes$Eplus),
+		A3(author$project$CustomTypes$Study, 2, author$project$CustomTypes$Sword, author$project$CustomTypes$D),
+		A3(author$project$CustomTypes$Study, 3, author$project$CustomTypes$Sword, author$project$CustomTypes$Dplus),
+		A3(author$project$CustomTypes$Study, 4, author$project$CustomTypes$Sword, author$project$CustomTypes$C),
+		A3(author$project$CustomTypes$Study, 5, author$project$CustomTypes$Sword, author$project$CustomTypes$Cplus),
+		A3(author$project$CustomTypes$Study, 6, author$project$CustomTypes$Sword, author$project$CustomTypes$B),
+		A3(author$project$CustomTypes$Study, 7, author$project$CustomTypes$Sword, author$project$CustomTypes$Bplus),
+		A3(author$project$CustomTypes$Study, 8, author$project$CustomTypes$Sword, author$project$CustomTypes$A),
+		A3(author$project$CustomTypes$Study, 9, author$project$CustomTypes$Sword, author$project$CustomTypes$Aplus),
+		A3(author$project$CustomTypes$Study, 10, author$project$CustomTypes$Sword, author$project$CustomTypes$S),
+		A3(author$project$CustomTypes$Study, 11, author$project$CustomTypes$Sword, author$project$CustomTypes$Splus),
+		A3(author$project$CustomTypes$Study, 12, author$project$CustomTypes$Lance, author$project$CustomTypes$E),
+		A3(author$project$CustomTypes$Study, 13, author$project$CustomTypes$Lance, author$project$CustomTypes$Eplus),
+		A3(author$project$CustomTypes$Study, 14, author$project$CustomTypes$Lance, author$project$CustomTypes$D),
+		A3(author$project$CustomTypes$Study, 15, author$project$CustomTypes$Lance, author$project$CustomTypes$Dplus),
+		A3(author$project$CustomTypes$Study, 16, author$project$CustomTypes$Lance, author$project$CustomTypes$C),
+		A3(author$project$CustomTypes$Study, 17, author$project$CustomTypes$Lance, author$project$CustomTypes$Cplus),
+		A3(author$project$CustomTypes$Study, 18, author$project$CustomTypes$Lance, author$project$CustomTypes$B),
+		A3(author$project$CustomTypes$Study, 19, author$project$CustomTypes$Lance, author$project$CustomTypes$Bplus),
+		A3(author$project$CustomTypes$Study, 20, author$project$CustomTypes$Lance, author$project$CustomTypes$A),
+		A3(author$project$CustomTypes$Study, 21, author$project$CustomTypes$Lance, author$project$CustomTypes$Aplus),
+		A3(author$project$CustomTypes$Study, 22, author$project$CustomTypes$Lance, author$project$CustomTypes$S),
+		A3(author$project$CustomTypes$Study, 23, author$project$CustomTypes$Lance, author$project$CustomTypes$Splus),
+		A3(author$project$CustomTypes$Study, 24, author$project$CustomTypes$Axe, author$project$CustomTypes$E),
+		A3(author$project$CustomTypes$Study, 25, author$project$CustomTypes$Axe, author$project$CustomTypes$Eplus),
+		A3(author$project$CustomTypes$Study, 26, author$project$CustomTypes$Axe, author$project$CustomTypes$D),
+		A3(author$project$CustomTypes$Study, 27, author$project$CustomTypes$Axe, author$project$CustomTypes$Dplus),
+		A3(author$project$CustomTypes$Study, 28, author$project$CustomTypes$Axe, author$project$CustomTypes$C),
+		A3(author$project$CustomTypes$Study, 29, author$project$CustomTypes$Axe, author$project$CustomTypes$Cplus),
+		A3(author$project$CustomTypes$Study, 30, author$project$CustomTypes$Axe, author$project$CustomTypes$B),
+		A3(author$project$CustomTypes$Study, 31, author$project$CustomTypes$Axe, author$project$CustomTypes$Bplus),
+		A3(author$project$CustomTypes$Study, 32, author$project$CustomTypes$Axe, author$project$CustomTypes$A),
+		A3(author$project$CustomTypes$Study, 33, author$project$CustomTypes$Axe, author$project$CustomTypes$Aplus),
+		A3(author$project$CustomTypes$Study, 34, author$project$CustomTypes$Axe, author$project$CustomTypes$S),
+		A3(author$project$CustomTypes$Study, 35, author$project$CustomTypes$Axe, author$project$CustomTypes$Splus),
+		A3(author$project$CustomTypes$Study, 36, author$project$CustomTypes$Bow, author$project$CustomTypes$E),
+		A3(author$project$CustomTypes$Study, 37, author$project$CustomTypes$Bow, author$project$CustomTypes$Eplus),
+		A3(author$project$CustomTypes$Study, 38, author$project$CustomTypes$Bow, author$project$CustomTypes$D),
+		A3(author$project$CustomTypes$Study, 39, author$project$CustomTypes$Bow, author$project$CustomTypes$Dplus),
+		A3(author$project$CustomTypes$Study, 40, author$project$CustomTypes$Bow, author$project$CustomTypes$C),
+		A3(author$project$CustomTypes$Study, 41, author$project$CustomTypes$Bow, author$project$CustomTypes$Cplus),
+		A3(author$project$CustomTypes$Study, 42, author$project$CustomTypes$Bow, author$project$CustomTypes$B),
+		A3(author$project$CustomTypes$Study, 43, author$project$CustomTypes$Bow, author$project$CustomTypes$Bplus),
+		A3(author$project$CustomTypes$Study, 44, author$project$CustomTypes$Bow, author$project$CustomTypes$A),
+		A3(author$project$CustomTypes$Study, 45, author$project$CustomTypes$Bow, author$project$CustomTypes$Aplus),
+		A3(author$project$CustomTypes$Study, 46, author$project$CustomTypes$Bow, author$project$CustomTypes$S),
+		A3(author$project$CustomTypes$Study, 47, author$project$CustomTypes$Bow, author$project$CustomTypes$Splus),
+		A3(author$project$CustomTypes$Study, 48, author$project$CustomTypes$Brawling, author$project$CustomTypes$E),
+		A3(author$project$CustomTypes$Study, 49, author$project$CustomTypes$Brawling, author$project$CustomTypes$Eplus),
+		A3(author$project$CustomTypes$Study, 50, author$project$CustomTypes$Brawling, author$project$CustomTypes$D),
+		A3(author$project$CustomTypes$Study, 51, author$project$CustomTypes$Brawling, author$project$CustomTypes$Dplus),
+		A3(author$project$CustomTypes$Study, 52, author$project$CustomTypes$Brawling, author$project$CustomTypes$C),
+		A3(author$project$CustomTypes$Study, 53, author$project$CustomTypes$Brawling, author$project$CustomTypes$Cplus),
+		A3(author$project$CustomTypes$Study, 54, author$project$CustomTypes$Brawling, author$project$CustomTypes$B),
+		A3(author$project$CustomTypes$Study, 55, author$project$CustomTypes$Brawling, author$project$CustomTypes$Bplus),
+		A3(author$project$CustomTypes$Study, 56, author$project$CustomTypes$Brawling, author$project$CustomTypes$A),
+		A3(author$project$CustomTypes$Study, 57, author$project$CustomTypes$Brawling, author$project$CustomTypes$Aplus),
+		A3(author$project$CustomTypes$Study, 58, author$project$CustomTypes$Brawling, author$project$CustomTypes$S),
+		A3(author$project$CustomTypes$Study, 59, author$project$CustomTypes$Brawling, author$project$CustomTypes$Splus),
+		A3(author$project$CustomTypes$Study, 60, author$project$CustomTypes$Reason, author$project$CustomTypes$E),
+		A3(author$project$CustomTypes$Study, 61, author$project$CustomTypes$Reason, author$project$CustomTypes$Eplus),
+		A3(author$project$CustomTypes$Study, 62, author$project$CustomTypes$Reason, author$project$CustomTypes$D),
+		A3(author$project$CustomTypes$Study, 63, author$project$CustomTypes$Reason, author$project$CustomTypes$Dplus),
+		A3(author$project$CustomTypes$Study, 64, author$project$CustomTypes$Reason, author$project$CustomTypes$C),
+		A3(author$project$CustomTypes$Study, 65, author$project$CustomTypes$Reason, author$project$CustomTypes$Cplus),
+		A3(author$project$CustomTypes$Study, 66, author$project$CustomTypes$Reason, author$project$CustomTypes$B),
+		A3(author$project$CustomTypes$Study, 67, author$project$CustomTypes$Reason, author$project$CustomTypes$Bplus),
+		A3(author$project$CustomTypes$Study, 68, author$project$CustomTypes$Reason, author$project$CustomTypes$A),
+		A3(author$project$CustomTypes$Study, 69, author$project$CustomTypes$Reason, author$project$CustomTypes$Aplus),
+		A3(author$project$CustomTypes$Study, 70, author$project$CustomTypes$Reason, author$project$CustomTypes$S),
+		A3(author$project$CustomTypes$Study, 71, author$project$CustomTypes$Reason, author$project$CustomTypes$Splus),
+		A3(author$project$CustomTypes$Study, 72, author$project$CustomTypes$Faith, author$project$CustomTypes$E),
+		A3(author$project$CustomTypes$Study, 73, author$project$CustomTypes$Faith, author$project$CustomTypes$Eplus),
+		A3(author$project$CustomTypes$Study, 74, author$project$CustomTypes$Faith, author$project$CustomTypes$D),
+		A3(author$project$CustomTypes$Study, 75, author$project$CustomTypes$Faith, author$project$CustomTypes$Dplus),
+		A3(author$project$CustomTypes$Study, 76, author$project$CustomTypes$Faith, author$project$CustomTypes$C),
+		A3(author$project$CustomTypes$Study, 77, author$project$CustomTypes$Faith, author$project$CustomTypes$Cplus),
+		A3(author$project$CustomTypes$Study, 78, author$project$CustomTypes$Faith, author$project$CustomTypes$B),
+		A3(author$project$CustomTypes$Study, 79, author$project$CustomTypes$Faith, author$project$CustomTypes$Bplus),
+		A3(author$project$CustomTypes$Study, 80, author$project$CustomTypes$Faith, author$project$CustomTypes$A),
+		A3(author$project$CustomTypes$Study, 81, author$project$CustomTypes$Faith, author$project$CustomTypes$Aplus),
+		A3(author$project$CustomTypes$Study, 82, author$project$CustomTypes$Faith, author$project$CustomTypes$S),
+		A3(author$project$CustomTypes$Study, 83, author$project$CustomTypes$Faith, author$project$CustomTypes$Splus),
+		A3(author$project$CustomTypes$Study, 85, author$project$CustomTypes$Authority, author$project$CustomTypes$E),
+		A3(author$project$CustomTypes$Study, 86, author$project$CustomTypes$Authority, author$project$CustomTypes$Eplus),
+		A3(author$project$CustomTypes$Study, 87, author$project$CustomTypes$Authority, author$project$CustomTypes$D),
+		A3(author$project$CustomTypes$Study, 88, author$project$CustomTypes$Authority, author$project$CustomTypes$Dplus),
+		A3(author$project$CustomTypes$Study, 89, author$project$CustomTypes$Authority, author$project$CustomTypes$C),
+		A3(author$project$CustomTypes$Study, 90, author$project$CustomTypes$Authority, author$project$CustomTypes$Cplus),
+		A3(author$project$CustomTypes$Study, 91, author$project$CustomTypes$Authority, author$project$CustomTypes$B),
+		A3(author$project$CustomTypes$Study, 92, author$project$CustomTypes$Authority, author$project$CustomTypes$Bplus),
+		A3(author$project$CustomTypes$Study, 93, author$project$CustomTypes$Authority, author$project$CustomTypes$A),
+		A3(author$project$CustomTypes$Study, 94, author$project$CustomTypes$Authority, author$project$CustomTypes$Aplus),
+		A3(author$project$CustomTypes$Study, 95, author$project$CustomTypes$Authority, author$project$CustomTypes$S),
+		A3(author$project$CustomTypes$Study, 96, author$project$CustomTypes$Authority, author$project$CustomTypes$Splus),
+		A3(author$project$CustomTypes$Study, 97, author$project$CustomTypes$HeavyArmor, author$project$CustomTypes$E),
+		A3(author$project$CustomTypes$Study, 98, author$project$CustomTypes$HeavyArmor, author$project$CustomTypes$Eplus),
+		A3(author$project$CustomTypes$Study, 99, author$project$CustomTypes$HeavyArmor, author$project$CustomTypes$D),
+		A3(author$project$CustomTypes$Study, 100, author$project$CustomTypes$HeavyArmor, author$project$CustomTypes$Dplus),
+		A3(author$project$CustomTypes$Study, 101, author$project$CustomTypes$HeavyArmor, author$project$CustomTypes$C),
+		A3(author$project$CustomTypes$Study, 102, author$project$CustomTypes$HeavyArmor, author$project$CustomTypes$Cplus),
+		A3(author$project$CustomTypes$Study, 103, author$project$CustomTypes$HeavyArmor, author$project$CustomTypes$B),
+		A3(author$project$CustomTypes$Study, 104, author$project$CustomTypes$HeavyArmor, author$project$CustomTypes$Bplus),
+		A3(author$project$CustomTypes$Study, 105, author$project$CustomTypes$HeavyArmor, author$project$CustomTypes$A),
+		A3(author$project$CustomTypes$Study, 106, author$project$CustomTypes$HeavyArmor, author$project$CustomTypes$Aplus),
+		A3(author$project$CustomTypes$Study, 107, author$project$CustomTypes$HeavyArmor, author$project$CustomTypes$S),
+		A3(author$project$CustomTypes$Study, 108, author$project$CustomTypes$HeavyArmor, author$project$CustomTypes$Splus),
+		A3(author$project$CustomTypes$Study, 109, author$project$CustomTypes$Riding, author$project$CustomTypes$E),
+		A3(author$project$CustomTypes$Study, 110, author$project$CustomTypes$Riding, author$project$CustomTypes$Eplus),
+		A3(author$project$CustomTypes$Study, 111, author$project$CustomTypes$Riding, author$project$CustomTypes$D),
+		A3(author$project$CustomTypes$Study, 112, author$project$CustomTypes$Riding, author$project$CustomTypes$Dplus),
+		A3(author$project$CustomTypes$Study, 113, author$project$CustomTypes$Riding, author$project$CustomTypes$C),
+		A3(author$project$CustomTypes$Study, 114, author$project$CustomTypes$Riding, author$project$CustomTypes$Cplus),
+		A3(author$project$CustomTypes$Study, 115, author$project$CustomTypes$Riding, author$project$CustomTypes$B),
+		A3(author$project$CustomTypes$Study, 116, author$project$CustomTypes$Riding, author$project$CustomTypes$Bplus),
+		A3(author$project$CustomTypes$Study, 117, author$project$CustomTypes$Riding, author$project$CustomTypes$A),
+		A3(author$project$CustomTypes$Study, 118, author$project$CustomTypes$Riding, author$project$CustomTypes$Aplus),
+		A3(author$project$CustomTypes$Study, 119, author$project$CustomTypes$Riding, author$project$CustomTypes$S),
+		A3(author$project$CustomTypes$Study, 120, author$project$CustomTypes$Riding, author$project$CustomTypes$Splus),
+		A3(author$project$CustomTypes$Study, 121, author$project$CustomTypes$Flying, author$project$CustomTypes$E),
+		A3(author$project$CustomTypes$Study, 122, author$project$CustomTypes$Flying, author$project$CustomTypes$Eplus),
+		A3(author$project$CustomTypes$Study, 123, author$project$CustomTypes$Flying, author$project$CustomTypes$D),
+		A3(author$project$CustomTypes$Study, 124, author$project$CustomTypes$Flying, author$project$CustomTypes$Dplus),
+		A3(author$project$CustomTypes$Study, 125, author$project$CustomTypes$Flying, author$project$CustomTypes$C),
+		A3(author$project$CustomTypes$Study, 126, author$project$CustomTypes$Flying, author$project$CustomTypes$Cplus),
+		A3(author$project$CustomTypes$Study, 127, author$project$CustomTypes$Flying, author$project$CustomTypes$B),
+		A3(author$project$CustomTypes$Study, 128, author$project$CustomTypes$Flying, author$project$CustomTypes$Bplus),
+		A3(author$project$CustomTypes$Study, 129, author$project$CustomTypes$Flying, author$project$CustomTypes$A),
+		A3(author$project$CustomTypes$Study, 130, author$project$CustomTypes$Flying, author$project$CustomTypes$Aplus),
+		A3(author$project$CustomTypes$Study, 131, author$project$CustomTypes$Flying, author$project$CustomTypes$S),
+		A3(author$project$CustomTypes$Study, 132, author$project$CustomTypes$Flying, author$project$CustomTypes$Splus)
+	]);
+var elm$core$List$filter = F2(
+	function (isGood, list) {
+		return A3(
+			elm$core$List$foldr,
+			F2(
+				function (x, xs) {
+					return isGood(x) ? A2(elm$core$List$cons, x, xs) : xs;
+				}),
+			_List_Nil,
+			list);
+	});
+var elm$core$List$head = function (list) {
+	if (list.b) {
+		var x = list.a;
+		var xs = list.b;
+		return elm$core$Maybe$Just(x);
+	} else {
+		return elm$core$Maybe$Nothing;
+	}
+};
+var author$project$Study$getStudyById = function (val) {
+	return elm$core$List$head(
+		A2(
+			elm$core$List$filter,
+			function (e) {
+				return _Utils_eq(e.id, val);
+			},
+			author$project$Study$initStudies));
+};
+var elm_community$maybe_extra$Maybe$Extra$foldrValues = F2(
+	function (item, list) {
+		if (item.$ === 'Nothing') {
+			return list;
+		} else {
+			var v = item.a;
+			return A2(elm$core$List$cons, v, list);
+		}
+	});
+var elm_community$maybe_extra$Maybe$Extra$values = A2(elm$core$List$foldr, elm_community$maybe_extra$Maybe$Extra$foldrValues, _List_Nil);
+var author$project$Stringable$jobToStringable = {
 	stringable: function (_n0) {
 		var id = _n0.id;
 		var name = _n0.name;
 		var jobCategoryId = _n0.jobCategoryId;
-		var proficiencyIdList = _n0.proficiencyIdList;
-		var certificationIdList = _n0.certificationIdList;
+		var proficiencyList = _n0.proficiencyList;
+		var studyIdList = _n0.studyIdList;
 		var masteryIdList = _n0.masteryIdList;
 		var gender = _n0.gender;
+		var magicUsage = _n0.magicUsage;
 		var note = _n0.note;
-		var pil = A2(
+		var customExperience = _n0.customExperience;
+		var customLevel = _n0.customLevel;
+		return 'Job { ' + ('id: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, id) + (', name: ' + (name + (', jobCategoryId: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, jobCategoryId) + (', proficiencyList: [' + (A3(
+			elm$core$List$foldl,
+			F2(
+				function (a, b) {
+					return a + (', ' + b);
+				}),
+			'',
+			A2(
+				elm$core$List$map,
+				function (e) {
+					return '{ subject: ' + (author$project$Stringable$subjectToString(e.subject) + (', bonus: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, e.bonus) + ' }')));
+				},
+				proficiencyList)) + (']' + (', studyIdList: [' + (A3(
+			elm$core$List$foldl,
+			F2(
+				function (a, b) {
+					return a + (', ' + b);
+				}),
+			'',
+			A2(
+				elm$core$List$map,
+				function (e) {
+					return '{ subject: ' + (author$project$Stringable$subjectToString(e.subject) + (', rank: ' + (author$project$Stringable$rankToString(e.rank) + ' }')));
+				},
+				elm_community$maybe_extra$Maybe$Extra$values(
+					A2(
+						elm$core$List$map,
+						function (e) {
+							return author$project$Study$getStudyById(e);
+						},
+						studyIdList)))) + (']' + (', masteryIdList: ' + (A2(
 			author$project$Stringable$toString,
 			author$project$Stringable$list(author$project$Stringable$int),
-			proficiencyIdList);
-		var mil = A2(
-			author$project$Stringable$toString,
-			author$project$Stringable$list(author$project$Stringable$int),
-			masteryIdList);
-		var cil = A2(
-			author$project$Stringable$toString,
-			author$project$Stringable$list(author$project$Stringable$int),
-			certificationIdList);
-		return 'Job { ' + ('id: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, id) + (', name: ' + (name + (', jobCategoryId: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, jobCategoryId) + (', proficiencyIdList: ' + (pil + (', certificationIdList: ' + (cil + (', masteryIdList: ' + (mil + (', gender: ' + (author$project$Gender$genderToString(gender) + (', note: ' + (note + ' }'))))))))))))))));
+			masteryIdList) + (A2(
+			elm$core$Maybe$withDefault,
+			'',
+			A2(
+				elm$core$Maybe$map,
+				function (a) {
+					return ', gender: ' + a;
+				},
+				A2(
+					elm$core$Maybe$map,
+					function (a) {
+						return author$project$Stringable$genderToString(a);
+					},
+					gender))) + (A2(
+			elm$core$Maybe$withDefault,
+			'',
+			A2(
+				elm$core$Maybe$map,
+				function (a) {
+					return ', magicUsage: ' + a;
+				},
+				A2(
+					elm$core$Maybe$map,
+					function (a) {
+						return author$project$Stringable$magicUsageToString(a);
+					},
+					magicUsage))) + (A2(
+			elm$core$Maybe$withDefault,
+			'',
+			A2(
+				elm$core$Maybe$map,
+				function (a) {
+					return ', note: ' + a;
+				},
+				note)) + (A2(
+			elm$core$Maybe$withDefault,
+			'',
+			A2(
+				elm$core$Maybe$map,
+				function (a) {
+					return ', customExperience: ' + a;
+				},
+				A2(
+					elm$core$Maybe$map,
+					function (a) {
+						return A2(author$project$Stringable$toString, author$project$Stringable$int, a);
+					},
+					customExperience))) + (A2(
+			elm$core$Maybe$withDefault,
+			'',
+			A2(
+				elm$core$Maybe$map,
+				function (a) {
+					return ', customLevel: ' + a;
+				},
+				A2(
+					elm$core$Maybe$map,
+					function (a) {
+						return A2(author$project$Stringable$toString, author$project$Stringable$int, a);
+					},
+					customLevel))) + ' }')))))))))))))))))));
 	}
 };
 var author$project$DebugView$viewJobJson = function (job) {
-	var str = A2(author$project$Stringable$toString, author$project$Job$jobToStringable, job);
+	var str = A2(author$project$Stringable$toString, author$project$Stringable$jobToStringable, job);
 	return A2(
 		elm$html$Html$div,
 		_List_Nil,
@@ -6347,7 +5926,7 @@ var author$project$DebugView$viewError = function (errorMessage) {
 				elm$html$Html$text('Error: ' + errorMessage)
 			]));
 };
-var author$project$DebugView$viewJsonFileOrError = function (model) {
+var author$project$DebugView$viewModelOrError = function (model) {
 	var _n0 = model.errorMessage;
 	if (_n0.$ === 'Just') {
 		var message = _n0.a;
@@ -6387,10 +5966,14 @@ var author$project$HomePage$view = function (model) {
 				_List_Nil,
 				_List_fromArray(
 					[
-						author$project$DebugView$viewJsonFileOrError(model)
+						author$project$DebugView$viewModelOrError(model)
 					]))
 			]));
 };
+var elm$core$Platform$Cmd$batch = _Platform_batch;
+var elm$core$Platform$Cmd$none = elm$core$Platform$Cmd$batch(_List_Nil);
+var elm$core$Platform$Sub$batch = _Platform_batch;
+var elm$core$Platform$Sub$none = elm$core$Platform$Sub$batch(_List_Nil);
 var elm$browser$Browser$External = function (a) {
 	return {$: 'External', a: a};
 };
@@ -6412,7 +5995,9 @@ var elm$core$Basics$never = function (_n0) {
 var elm$core$Task$Perform = function (a) {
 	return {$: 'Perform', a: a};
 };
+var elm$core$Task$succeed = _Scheduler_succeed;
 var elm$core$Task$init = elm$core$Task$succeed(_Utils_Tuple0);
+var elm$core$Task$andThen = _Scheduler_andThen;
 var elm$core$Task$map = F2(
 	function (func, taskA) {
 		return A2(
@@ -6423,6 +6008,29 @@ var elm$core$Task$map = F2(
 			},
 			taskA);
 	});
+var elm$core$Task$map2 = F3(
+	function (func, taskA, taskB) {
+		return A2(
+			elm$core$Task$andThen,
+			function (a) {
+				return A2(
+					elm$core$Task$andThen,
+					function (b) {
+						return elm$core$Task$succeed(
+							A2(func, a, b));
+					},
+					taskB);
+			},
+			taskA);
+	});
+var elm$core$Task$sequence = function (tasks) {
+	return A3(
+		elm$core$List$foldr,
+		elm$core$Task$map2(elm$core$List$cons),
+		elm$core$Task$succeed(_List_Nil),
+		tasks);
+};
+var elm$core$Platform$sendToApp = _Platform_sendToApp;
 var elm$core$Task$spawnCmd = F2(
 	function (router, _n0) {
 		var task = _n0.a;
@@ -6591,17 +6199,25 @@ var elm$url$Url$fromString = function (str) {
 		elm$url$Url$Https,
 		A2(elm$core$String$dropLeft, 8, str)) : elm$core$Maybe$Nothing);
 };
-var elm$browser$Browser$element = _Browser_element;
-var elm$core$Platform$Sub$batch = _Platform_batch;
-var elm$core$Platform$Sub$none = elm$core$Platform$Sub$batch(_List_Nil);
-var author$project$HomePage$main = elm$browser$Browser$element(
-	{
-		init: author$project$HomePage$init,
-		subscriptions: function (_n0) {
-			return elm$core$Platform$Sub$none;
-		},
-		update: author$project$HomePage$update,
-		view: author$project$HomePage$view
-	});
+var elm$browser$Browser$sandbox = function (impl) {
+	return _Browser_element(
+		{
+			init: function (_n0) {
+				return _Utils_Tuple2(impl.init, elm$core$Platform$Cmd$none);
+			},
+			subscriptions: function (_n1) {
+				return elm$core$Platform$Sub$none;
+			},
+			update: F2(
+				function (msg, model) {
+					return _Utils_Tuple2(
+						A2(impl.update, msg, model),
+						elm$core$Platform$Cmd$none);
+				}),
+			view: impl.view
+		});
+};
+var author$project$HomePage$main = elm$browser$Browser$sandbox(
+	{init: author$project$HomePage$init, update: author$project$HomePage$update, view: author$project$HomePage$view});
 _Platform_export({'HomePage':{'init':author$project$HomePage$main(
 	elm$json$Json$Decode$succeed(_Utils_Tuple0))(0)}});}(this));

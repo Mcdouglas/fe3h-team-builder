@@ -1,9 +1,5 @@
 module CustomTypes exposing (..)
 
-import Category exposing (..)
-import Job exposing (..)
-import Stringable exposing (..)
-
 
 type Subject
     = Sword
@@ -34,20 +30,55 @@ type Rank
     | Splus
 
 
+type CategoryUnionType
+    = Starting
+    | Beginner
+    | Intermediate
+    | Advanced
+    | Master
+    | Unique
+
+
+type GenderUnionType
+    = Male
+    | Female
+
+
+type MagicUsage
+    = CanUseMagic
+    | CanUseSomeMagic
+
+
 type alias Study =
     { id : Int, subject : Subject, rank : Rank }
 
 
 type alias Proficiency =
-    { id : Int, subject : Subject, bonus : Int }
+    { subject : Subject, bonus : Int }
+
+
+type alias JobCategory =
+    { id : Int, category : CategoryUnionType, experience : Maybe Int, level : Maybe Int }
+
+
+type alias Job =
+    { id : Int, name : String, jobCategoryId : Int, proficiencyList : List Proficiency, studyIdList : List Int, masteryIdList : List Int, gender : Maybe GenderUnionType, magicUsage : Maybe MagicUsage, note : Maybe String, customExperience : Maybe Int, customLevel : Maybe Int }
 
 
 type alias JobSkill =
-    { id : Int, name : String, learningJob : Job }
+    { id : Int, name : String }
 
 
-type alias StudySkill =
-    { id : Int, name : String, study : Study }
+type alias StandardSkill =
+    { id : Int, name : String, studyId : Int }
+
+
+type alias JobSKill =
+    { id : Int, name : String }
+
+
+type alias MasterySkill =
+    { id : Int, name : String, jobIdList : List Int }
 
 
 type alias PassiveSkill =

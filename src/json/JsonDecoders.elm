@@ -1,3 +1,6 @@
+-- Deprecated
+
+
 module JsonDecoders exposing (..)
 
 import Category exposing (CategoryUnionType(..))
@@ -61,8 +64,8 @@ jobsDecoder =
         |> required "id" int
         |> required "name" string
         |> required "jobCategoryId" int
-        |> optional "proficiencyIdList" (list int) []
-        |> optional "certificationIdList" (list int) []
+        |> optional "proficiencyList" (list int) []
+        |> optional "certificationList" (list int) []
         |> optional "masteryIdList" (list int) []
         |> custom (field "gender" string |> andThen genderDecoder)
         |> optional "note" string ""
