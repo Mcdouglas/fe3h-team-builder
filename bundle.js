@@ -4310,16 +4310,52 @@ function _Browser_load(url)
 		}
 	}));
 }
-var author$project$CustomTypes$Advanced = {$: 'Advanced'};
-var author$project$CustomTypes$Beginner = {$: 'Beginner'};
-var author$project$CustomTypes$Intermediate = {$: 'Intermediate'};
-var author$project$CustomTypes$JobCategory = F4(
-	function (id, category, experience, level) {
-		return {category: category, experience: experience, id: id, level: level};
+var author$project$GlobalModel$Model = F3(
+	function (jobCategories, jobs, errorMessage) {
+		return {errorMessage: errorMessage, jobCategories: jobCategories, jobs: jobs};
 	});
-var author$project$CustomTypes$Master = {$: 'Master'};
-var author$project$CustomTypes$Starting = {$: 'Starting'};
-var author$project$CustomTypes$Unique = {$: 'Unique'};
+var author$project$CustomTypes$Authority = {$: 'Authority'};
+var author$project$CustomTypes$Axe = {$: 'Axe'};
+var author$project$CustomTypes$Bow = {$: 'Bow'};
+var author$project$CustomTypes$Brawling = {$: 'Brawling'};
+var author$project$CustomTypes$CanUseMagic = {$: 'CanUseMagic'};
+var author$project$CustomTypes$CanUseSomeMagic = {$: 'CanUseSomeMagic'};
+var author$project$CustomTypes$Faith = {$: 'Faith'};
+var author$project$CustomTypes$Female = {$: 'Female'};
+var author$project$CustomTypes$Flying = {$: 'Flying'};
+var author$project$CustomTypes$HeavyArmor = {$: 'HeavyArmor'};
+var author$project$CustomTypes$Job = function (id) {
+	return function (name) {
+		return function (jobCategoryId) {
+			return function (proficiencyList) {
+				return function (studyIdList) {
+					return function (masteryIdList) {
+						return function (gender) {
+							return function (magicUsage) {
+								return function (note) {
+									return function (customExperience) {
+										return function (customLevel) {
+											return {customExperience: customExperience, customLevel: customLevel, gender: gender, id: id, jobCategoryId: jobCategoryId, magicUsage: magicUsage, masteryIdList: masteryIdList, name: name, note: note, proficiencyList: proficiencyList, studyIdList: studyIdList};
+										};
+									};
+								};
+							};
+						};
+					};
+				};
+			};
+		};
+	};
+};
+var author$project$CustomTypes$Lance = {$: 'Lance'};
+var author$project$CustomTypes$Male = {$: 'Male'};
+var author$project$CustomTypes$Proficiency = F2(
+	function (subject, bonus) {
+		return {bonus: bonus, subject: subject};
+	});
+var author$project$CustomTypes$Reason = {$: 'Reason'};
+var author$project$CustomTypes$Riding = {$: 'Riding'};
+var author$project$CustomTypes$Sword = {$: 'Sword'};
 var elm$core$Maybe$Just = function (a) {
 	return {$: 'Just', a: a};
 };
@@ -4404,83 +4440,7 @@ var elm$core$Set$toList = function (_n0) {
 	var dict = _n0.a;
 	return elm$core$Dict$keys(dict);
 };
-var author$project$DataBuilder$getJobCategories = _List_fromArray(
-	[
-		A4(
-		author$project$CustomTypes$JobCategory,
-		0,
-		author$project$CustomTypes$Starting,
-		elm$core$Maybe$Just(20),
-		elm$core$Maybe$Just(0)),
-		A4(
-		author$project$CustomTypes$JobCategory,
-		1,
-		author$project$CustomTypes$Beginner,
-		elm$core$Maybe$Just(60),
-		elm$core$Maybe$Just(5)),
-		A4(
-		author$project$CustomTypes$JobCategory,
-		2,
-		author$project$CustomTypes$Intermediate,
-		elm$core$Maybe$Just(100),
-		elm$core$Maybe$Just(10)),
-		A4(
-		author$project$CustomTypes$JobCategory,
-		3,
-		author$project$CustomTypes$Advanced,
-		elm$core$Maybe$Just(150),
-		elm$core$Maybe$Just(20)),
-		A4(
-		author$project$CustomTypes$JobCategory,
-		4,
-		author$project$CustomTypes$Master,
-		elm$core$Maybe$Just(200),
-		elm$core$Maybe$Just(30)),
-		A4(author$project$CustomTypes$JobCategory, 5, author$project$CustomTypes$Unique, elm$core$Maybe$Nothing, elm$core$Maybe$Nothing)
-	]);
-var author$project$CustomTypes$Authority = {$: 'Authority'};
-var author$project$CustomTypes$Axe = {$: 'Axe'};
-var author$project$CustomTypes$Bow = {$: 'Bow'};
-var author$project$CustomTypes$Brawling = {$: 'Brawling'};
-var author$project$CustomTypes$CanUseMagic = {$: 'CanUseMagic'};
-var author$project$CustomTypes$CanUseSomeMagic = {$: 'CanUseSomeMagic'};
-var author$project$CustomTypes$Faith = {$: 'Faith'};
-var author$project$CustomTypes$Female = {$: 'Female'};
-var author$project$CustomTypes$Flying = {$: 'Flying'};
-var author$project$CustomTypes$HeavyArmor = {$: 'HeavyArmor'};
-var author$project$CustomTypes$Job = function (id) {
-	return function (name) {
-		return function (jobCategoryId) {
-			return function (proficiencyList) {
-				return function (studyIdList) {
-					return function (masteryIdList) {
-						return function (gender) {
-							return function (magicUsage) {
-								return function (note) {
-									return function (customExperience) {
-										return function (customLevel) {
-											return {customExperience: customExperience, customLevel: customLevel, gender: gender, id: id, jobCategoryId: jobCategoryId, magicUsage: magicUsage, masteryIdList: masteryIdList, name: name, note: note, proficiencyList: proficiencyList, studyIdList: studyIdList};
-										};
-									};
-								};
-							};
-						};
-					};
-				};
-			};
-		};
-	};
-};
-var author$project$CustomTypes$Lance = {$: 'Lance'};
-var author$project$CustomTypes$Male = {$: 'Male'};
-var author$project$CustomTypes$Proficiency = F2(
-	function (subject, bonus) {
-		return {bonus: bonus, subject: subject};
-	});
-var author$project$CustomTypes$Reason = {$: 'Reason'};
-var author$project$CustomTypes$Riding = {$: 'Riding'};
-var author$project$CustomTypes$Sword = {$: 'Sword'};
-var author$project$DataBuilder$getJobs = _List_fromArray(
+var author$project$Job$initJobs = _List_fromArray(
 	[
 		author$project$CustomTypes$Job(0)('Commoner')(0)(_List_Nil)(_List_Nil)(_List_Nil)(elm$core$Maybe$Nothing)(
 		elm$core$Maybe$Just(author$project$CustomTypes$CanUseSomeMagic))(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing)(elm$core$Maybe$Nothing),
@@ -4885,11 +4845,51 @@ var author$project$DataBuilder$getJobs = _List_fromArray(
 		elm$core$Maybe$Just('Claude only'))(
 		elm$core$Maybe$Just(200))(elm$core$Maybe$Nothing)
 	]);
-var author$project$GlobalModel$Model = F3(
-	function (jobCategories, jobs, errorMessage) {
-		return {errorMessage: errorMessage, jobCategories: jobCategories, jobs: jobs};
+var author$project$CustomTypes$Advanced = {$: 'Advanced'};
+var author$project$CustomTypes$Beginner = {$: 'Beginner'};
+var author$project$CustomTypes$Intermediate = {$: 'Intermediate'};
+var author$project$CustomTypes$JobCategory = F4(
+	function (id, category, experience, level) {
+		return {category: category, experience: experience, id: id, level: level};
 	});
-var author$project$DataBuilder$loadAllStaticData = A3(author$project$GlobalModel$Model, author$project$DataBuilder$getJobCategories, author$project$DataBuilder$getJobs, elm$core$Maybe$Nothing);
+var author$project$CustomTypes$Master = {$: 'Master'};
+var author$project$CustomTypes$Starting = {$: 'Starting'};
+var author$project$CustomTypes$Unique = {$: 'Unique'};
+var author$project$JobCategory$initJobCategories = _List_fromArray(
+	[
+		A4(
+		author$project$CustomTypes$JobCategory,
+		0,
+		author$project$CustomTypes$Starting,
+		elm$core$Maybe$Just(20),
+		elm$core$Maybe$Just(0)),
+		A4(
+		author$project$CustomTypes$JobCategory,
+		1,
+		author$project$CustomTypes$Beginner,
+		elm$core$Maybe$Just(60),
+		elm$core$Maybe$Just(5)),
+		A4(
+		author$project$CustomTypes$JobCategory,
+		2,
+		author$project$CustomTypes$Intermediate,
+		elm$core$Maybe$Just(100),
+		elm$core$Maybe$Just(10)),
+		A4(
+		author$project$CustomTypes$JobCategory,
+		3,
+		author$project$CustomTypes$Advanced,
+		elm$core$Maybe$Just(150),
+		elm$core$Maybe$Just(20)),
+		A4(
+		author$project$CustomTypes$JobCategory,
+		4,
+		author$project$CustomTypes$Master,
+		elm$core$Maybe$Just(200),
+		elm$core$Maybe$Just(30)),
+		A4(author$project$CustomTypes$JobCategory, 5, author$project$CustomTypes$Unique, elm$core$Maybe$Nothing, elm$core$Maybe$Nothing)
+	]);
+var author$project$DataBuilder$loadAllStaticData = A3(author$project$GlobalModel$Model, author$project$JobCategory$initJobCategories, author$project$Job$initJobs, elm$core$Maybe$Nothing);
 var author$project$HomePage$init = author$project$DataBuilder$loadAllStaticData;
 var author$project$HomePage$update = F2(
 	function (msg, model) {
@@ -5479,6 +5479,104 @@ var author$project$DebugView$viewJobCategoriesJson = function (model) {
 				A2(elm$core$List$map, author$project$DebugView$viewJobCategoryJson, model.jobCategories))
 			]));
 };
+var author$project$Stringable$genderToString = function (gender) {
+	if (gender.$ === 'Male') {
+		return 'Male';
+	} else {
+		return 'Female';
+	}
+};
+var elm$core$Basics$negate = function (n) {
+	return -n;
+};
+var elm$core$String$slice = _String_slice;
+var elm$core$String$dropRight = F2(
+	function (n, string) {
+		return (n < 1) ? string : A3(elm$core$String$slice, 0, -n, string);
+	});
+var author$project$Stringable$list = function (nestedStringable) {
+	return {
+		stringable: function (xs) {
+			var str = A2(
+				elm$core$String$dropRight,
+				2,
+				A3(
+					elm$core$List$foldl,
+					F2(
+						function (a, b) {
+							return a + (', ' + b);
+						}),
+					'',
+					elm$core$List$reverse(
+						A2(
+							elm$core$List$map,
+							author$project$Stringable$toString(nestedStringable),
+							xs))));
+			return '[ ' + (str + ' ]');
+		}
+	};
+};
+var author$project$Stringable$magicUsageToString = function (magicUsage) {
+	if (magicUsage.$ === 'CanUseMagic') {
+		return 'Can use magic';
+	} else {
+		return 'Can use some magic';
+	}
+};
+var author$project$Stringable$rankToString = function (rank) {
+	switch (rank.$) {
+		case 'E':
+			return 'E';
+		case 'Eplus':
+			return 'E+';
+		case 'D':
+			return 'D';
+		case 'Dplus':
+			return 'D+';
+		case 'C':
+			return 'C';
+		case 'Cplus':
+			return 'C+';
+		case 'B':
+			return 'B';
+		case 'Bplus':
+			return 'B+';
+		case 'A':
+			return 'A';
+		case 'Aplus':
+			return 'A+';
+		case 'S':
+			return 'S';
+		default:
+			return 'S+';
+	}
+};
+var author$project$Stringable$subjectToString = function (subject) {
+	switch (subject.$) {
+		case 'Sword':
+			return 'Sword';
+		case 'Lance':
+			return 'Lance';
+		case 'Axe':
+			return 'Axe';
+		case 'Bow':
+			return 'Bow';
+		case 'Brawling':
+			return 'Brawling';
+		case 'Reason':
+			return 'Reason';
+		case 'Faith':
+			return 'Faith';
+		case 'Authority':
+			return 'Authority';
+		case 'HeavyArmor':
+			return 'HeavyArmor';
+		case 'Riding':
+			return 'Riding';
+		default:
+			return 'Flying';
+	}
+};
 var author$project$CustomTypes$A = {$: 'A'};
 var author$project$CustomTypes$Aplus = {$: 'Aplus'};
 var author$project$CustomTypes$B = {$: 'B'};
@@ -5495,7 +5593,7 @@ var author$project$CustomTypes$Study = F3(
 	function (id, subject, rank) {
 		return {id: id, rank: rank, subject: subject};
 	});
-var author$project$DataBuilder$getStudies = _List_fromArray(
+var author$project$Study$initStudies = _List_fromArray(
 	[
 		A3(author$project$CustomTypes$Study, 0, author$project$CustomTypes$Sword, author$project$CustomTypes$E),
 		A3(author$project$CustomTypes$Study, 1, author$project$CustomTypes$Sword, author$project$CustomTypes$Eplus),
@@ -5650,112 +5748,14 @@ var elm$core$List$head = function (list) {
 		return elm$core$Maybe$Nothing;
 	}
 };
-var author$project$DataBuilder$getStudyById = function (val) {
+var author$project$Study$getStudyById = function (val) {
 	return elm$core$List$head(
 		A2(
 			elm$core$List$filter,
 			function (e) {
 				return _Utils_eq(e.id, val);
 			},
-			author$project$DataBuilder$getStudies));
-};
-var author$project$Stringable$genderToString = function (gender) {
-	if (gender.$ === 'Male') {
-		return 'Male';
-	} else {
-		return 'Female';
-	}
-};
-var elm$core$Basics$negate = function (n) {
-	return -n;
-};
-var elm$core$String$slice = _String_slice;
-var elm$core$String$dropRight = F2(
-	function (n, string) {
-		return (n < 1) ? string : A3(elm$core$String$slice, 0, -n, string);
-	});
-var author$project$Stringable$list = function (nestedStringable) {
-	return {
-		stringable: function (xs) {
-			var str = A2(
-				elm$core$String$dropRight,
-				2,
-				A3(
-					elm$core$List$foldl,
-					F2(
-						function (a, b) {
-							return a + (', ' + b);
-						}),
-					'',
-					elm$core$List$reverse(
-						A2(
-							elm$core$List$map,
-							author$project$Stringable$toString(nestedStringable),
-							xs))));
-			return '[ ' + (str + ' ]');
-		}
-	};
-};
-var author$project$Stringable$magicUsageToString = function (magicUsage) {
-	if (magicUsage.$ === 'CanUseMagic') {
-		return 'Can use magic';
-	} else {
-		return 'Can use some magic';
-	}
-};
-var author$project$Stringable$rankToString = function (rank) {
-	switch (rank.$) {
-		case 'E':
-			return 'E';
-		case 'Eplus':
-			return 'E+';
-		case 'D':
-			return 'D';
-		case 'Dplus':
-			return 'D+';
-		case 'C':
-			return 'C';
-		case 'Cplus':
-			return 'C+';
-		case 'B':
-			return 'B';
-		case 'Bplus':
-			return 'B+';
-		case 'A':
-			return 'A';
-		case 'Aplus':
-			return 'A+';
-		case 'S':
-			return 'S';
-		default:
-			return 'S+';
-	}
-};
-var author$project$Stringable$subjectToString = function (subject) {
-	switch (subject.$) {
-		case 'Sword':
-			return 'Sword';
-		case 'Lance':
-			return 'Lance';
-		case 'Axe':
-			return 'Axe';
-		case 'Bow':
-			return 'Bow';
-		case 'Brawling':
-			return 'Brawling';
-		case 'Reason':
-			return 'Reason';
-		case 'Faith':
-			return 'Faith';
-		case 'Authority':
-			return 'Authority';
-		case 'HeavyArmor':
-			return 'HeavyArmor';
-		case 'Riding':
-			return 'Riding';
-		default:
-			return 'Flying';
-	}
+			author$project$Study$initStudies));
 };
 var elm_community$maybe_extra$Maybe$Extra$foldrValues = F2(
 	function (item, list) {
@@ -5808,7 +5808,7 @@ var author$project$Stringable$jobToStringable = {
 					A2(
 						elm$core$List$map,
 						function (e) {
-							return author$project$DataBuilder$getStudyById(e);
+							return author$project$Study$getStudyById(e);
 						},
 						studyIdList)))) + (']' + (', masteryIdList: ' + (A2(
 			author$project$Stringable$toString,

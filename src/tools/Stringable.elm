@@ -3,7 +3,11 @@ module Stringable exposing (..)
 import CustomTypes exposing (..)
 import DataBuilder exposing (..)
 import Html exposing (br, div, text)
+import Job exposing (..)
+import JobCategory exposing (..)
+import JobSkill exposing (..)
 import Maybe.Extra exposing (..)
+import Study exposing (..)
 
 
 type alias Stringable a =
