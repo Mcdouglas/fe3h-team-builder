@@ -13,10 +13,10 @@ cache:
     - node_modules
  
 install:
-  - npm install
-
-after_script : 
-  - sed -i "s/\"..\/..\/resources/\"https:\/\/raw.githubusercontent.com\/Mcdouglas\/fe3h-team-builder\/master\/resources/g" bundle.js
+  - rm -rf ./dist
+  - mkdir dist
+  - cp ./index.html ./dist/index.html
+  - elm make src/HomePage.elm --output=./dist/bundle.js
 
 script:
   - elm-format --validate . && elm-test
@@ -25,6 +25,6 @@ deploy:
   provider: pages
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
-  local_dir: .
+  local_dir: dist
   on:
     branch: master
