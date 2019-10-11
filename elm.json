@@ -3,6 +3,8 @@
     "source-directories": [
         "src",
         "src/model",
+        "src/model/job",
+        "src/model/skill",
         "src/tools",
         "src/view"
     ],

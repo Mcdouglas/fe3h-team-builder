@@ -61,33 +61,12 @@ type alias JobCategory =
     { id : Int, category : CategoryUnionType, experience : Maybe Int, level : Maybe Int }
 
 
-getJobCategory : ( List JobCategory, Int ) -> Maybe JobCategory
-getJobCategory ( jobCategories, val ) =
-    jobCategories
-        |> List.filter (\x -> x.id == val)
-        |> List.head
-
-
 type alias Job =
     { id : Int, name : String, jobCategoryId : Int, proficiencyList : List Proficiency, studyIdList : List Int, masteryIdList : List Int, gender : Maybe GenderUnionType, magicUsage : Maybe MagicUsage, note : Maybe String, customExperience : Maybe Int, customLevel : Maybe Int }
 
 
-getJob : ( List Job, Int ) -> Maybe Job
-getJob ( jobs, val ) =
-    jobs
-        |> List.filter (\x -> x.id == val)
-        |> List.head
-
-
 type alias JobSkill =
     { id : Int, name : String }
-
-
-getJobByJobSkillId : ( List Job, Int ) -> Maybe Job
-getJobByJobSkillId ( jobs, val ) =
-    jobs
-        |> List.filter (\x -> List.member val x.masteryIdList)
-        |> List.head
 
 
 type alias StandardSkill =
@@ -98,8 +77,8 @@ type alias JobSKill =
     { id : Int, name : String }
 
 
-type alias MasteringSkill =
-    { id : Int, name : String }
+type alias MasterySkill =
+    { id : Int, name : String, jobIdList : List Int }
 
 
 type alias PassiveSkill =
