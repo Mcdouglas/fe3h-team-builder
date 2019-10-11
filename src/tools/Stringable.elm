@@ -236,7 +236,6 @@ jobToStringable =
                         |> List.map (\e -> "{ subject: " ++ subjectToString e.subject ++ ", rank: " ++ rankToString e.rank ++ " }")
                         |> List.foldl (\a b -> a ++ ", " ++ b) ""
                    )
-                ++ "TODO"
                 ++ "]"
                 ++ ", masteryIdList: "
                 ++ (masteryIdList |> toString (list int))

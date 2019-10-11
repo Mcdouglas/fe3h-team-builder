@@ -5810,7 +5810,7 @@ var author$project$Stringable$jobToStringable = {
 						function (e) {
 							return author$project$DataBuilder$getStudyById(e);
 						},
-						studyIdList)))) + ('TODO' + (']' + (', masteryIdList: ' + (A2(
+						studyIdList)))) + (']' + (', masteryIdList: ' + (A2(
 			author$project$Stringable$toString,
 			author$project$Stringable$list(author$project$Stringable$int),
 			masteryIdList) + (A2(
@@ -5873,7 +5873,7 @@ var author$project$Stringable$jobToStringable = {
 					function (a) {
 						return A2(author$project$Stringable$toString, author$project$Stringable$int, a);
 					},
-					customLevel))) + ' }'))))))))))))))))))));
+					customLevel))) + ' }')))))))))))))))))));
 	}
 };
 var author$project$DebugView$viewJobJson = function (job) {

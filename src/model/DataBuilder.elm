@@ -292,4 +292,16 @@ getStudies =
 
 getStandardSkills : List StandardSkill
 getStandardSkills =
-    [ StandardSkill 0 "Coucou" 0 ]
+    [ -- Sword
+      StandardSkill 0 "Sword Prowess Lv. 1" 1
+    , StandardSkill 1 "Sword Prowess Lv. 2" 3
+    , StandardSkill 2 "Sword Prowess Lv. 3" 5
+    , StandardSkill 3 "Axebreaker" 6
+    , StandardSkill 4 "Sword Prowess Lv. 4" 7
+    , StandardSkill 5 "Sword Prowess Lv. 5" 9
+    , StandardSkill 6 "Sword Critical +10" 10
+    , StandardSkill 7 "Swordfaire" 11
+
+    -- Lance
+    , StandardSkill 8 "Lance Prowess Lv. 1" 13
+    ]
