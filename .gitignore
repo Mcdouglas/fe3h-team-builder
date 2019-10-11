@@ -2,4 +2,9 @@
 elm-stuff
 # elm-repl generated files
 repl-temp-*
+
+# files handle by elm-make + travis
+bundle.js
+
+# local documentation
 .tips_and_trics
