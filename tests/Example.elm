@@ -14,7 +14,13 @@ dataBuilderTest =
             loadAllStaticData
     in
     describe "Test the data builder"
-        [ test "Expect model contains 6 jobsCategories"
+        [ test "Expect model contains 133 Studies"
+            (\_ ->
+                datas
+                    |> (\m -> List.length m.studies)
+                    |> Expect.equal 132
+            )
+        , test "Expect model contains 6 jobsCategories"
             (\_ ->
                 datas
                     |> (\m -> List.length m.jobCategories)

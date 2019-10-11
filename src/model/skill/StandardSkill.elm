@@ -137,43 +137,43 @@ initStandardSkills =
     , StandardSkill 111 "Dark Tomefaire" 83 False
 
     -- Authority
-    , StandardSkill 112 "Authority Prowess Lv.1" 86 False
-    , StandardSkill 113 "Rally Magic" 87 False
-    , StandardSkill 114 "Rally Charm" 87 False
-    , StandardSkill 115 "Rally Dexterity" 87 False
-    , StandardSkill 116 "Rally Resistance" 87 False
-    , StandardSkill 117 "Rally Strength" 87 False
-    , StandardSkill 118 "Rally Speed" 87 False
-    , StandardSkill 119 "Rally Defense" 87 False
-    , StandardSkill 120 "Rally Luck" 87 False
-    , StandardSkill 121 "Authority Prowess Lv.2" 88 False
-    , StandardSkill 122 "Battalion Vantage" 89 False
-    , StandardSkill 123 "Battalion Wrath" 89 False
-    , StandardSkill 124 "Battalion Desperation" 89 False
-    , StandardSkill 125 "Battalion Renewal" 89 False
-    , StandardSkill 126 "Authority Prowess Lv.3" 90 False
-    , StandardSkill 127 "Rally Dexterity" 90 False
-    , StandardSkill 128 "Rally Resistance" 90 False
-    , StandardSkill 129 "Rally Speed" 90 False
-    , StandardSkill 130 "Model Leader" 90 False
-    , StandardSkill 131 "Defense Tactics" 91 False
-    , StandardSkill 132 "Authority Prowess Lv.4" 92 False
-    , StandardSkill 133 "Authority Prowess Lv.5" 94 False
-    , StandardSkill 134 "Rally Movement" 95 False
-    , StandardSkill 135 "Offensive Tactics" 96 False
+    , StandardSkill 112 "Authority Prowess Lv.1" 85 False
+    , StandardSkill 113 "Rally Magic" 86 False
+    , StandardSkill 114 "Rally Charm" 86 False
+    , StandardSkill 115 "Rally Dexterity" 86 False
+    , StandardSkill 116 "Rally Resistance" 86 False
+    , StandardSkill 117 "Rally Strength" 86 False
+    , StandardSkill 118 "Rally Speed" 86 False
+    , StandardSkill 119 "Rally Defense" 86 False
+    , StandardSkill 120 "Rally Luck" 86 False
+    , StandardSkill 121 "Authority Prowess Lv.2" 87 False
+    , StandardSkill 122 "Battalion Vantage" 88 False
+    , StandardSkill 123 "Battalion Wrath" 88 False
+    , StandardSkill 124 "Battalion Desperation" 88 False
+    , StandardSkill 125 "Battalion Renewal" 88 False
+    , StandardSkill 126 "Authority Prowess Lv.3" 89 False
+    , StandardSkill 127 "Rally Dexterity" 89 False
+    , StandardSkill 128 "Rally Resistance" 89 False
+    , StandardSkill 129 "Rally Speed" 89 False
+    , StandardSkill 130 "Model Leader" 89 False
+    , StandardSkill 131 "Defense Tactics" 90 False
+    , StandardSkill 132 "Authority Prowess Lv.4" 91 False
+    , StandardSkill 133 "Authority Prowess Lv.5" 93 False
+    , StandardSkill 134 "Rally Movement" 94 False
+    , StandardSkill 135 "Offensive Tactics" 95 False
 
     -- Heavy Armor
-    , StandardSkill 136 "Weight -3" 101 False
-    , StandardSkill 137 "Weight -5" 106 False
-    , StandardSkill 138 "Armored Effect Null" 108 False
+    , StandardSkill 136 "Weight -3" 100 False
+    , StandardSkill 137 "Weight -5" 105 False
+    , StandardSkill 138 "Armored Effect Null" 107 False
 
     -- Riding
-    , StandardSkill 140 "Dexterity +4" 113 False
-    , StandardSkill 141 "Movement +1" 118 False
-    , StandardSkill 142 "Cavalry Effect Null" 120 False
+    , StandardSkill 140 "Dexterity +4" 112 False
+    , StandardSkill 141 "Movement +1" 117 False
+    , StandardSkill 142 "Cavalry Effect Null" 119 False
 
     -- Flying
-    , StandardSkill 143 "Alert Stance+" 127 False
-    , StandardSkill 144 "Alert Stance+" 130 False
-    , StandardSkill 145 "Flying Effect Null" 132 False
+    , StandardSkill 143 "Alert Stance+" 126 False
+    , StandardSkill 144 "Alert Stance+" 129 False
+    , StandardSkill 145 "Flying Effect Null" 131 False
     ]
