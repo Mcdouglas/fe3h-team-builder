@@ -97,83 +97,83 @@ initStandardSkills =
     , StandardSkill 75 "Bowfaire" 47 False
 
     -- Brawling
-    , StandardSkill 78 "Brawling Prowess Lv.1" 49 False
-    , StandardSkill 79 "Fading Blow" 50 True
-    , StandardSkill 80 "Brawling Prowess Lv.2" 51 False
-    , StandardSkill 81 "Rushing Blow" 52 True
-    , StandardSkill 82 "Brawling Prowess Lv.3" 53 False
-    , StandardSkill 83 "Draining Blow" 53 True
-    , StandardSkill 84 "Bombard" 53 True
-    , StandardSkill 85 "One-Two Punch" 53 True
-    , StandardSkill 86 "Nimble Combo" 53 True
-    , StandardSkill 87 "Monster Crusher" 53 True
-    , StandardSkill 88 "Brawling Prowess Lv.4" 55 False
-    , StandardSkill 89 "Draining Blow" 56 True
-    , StandardSkill 90 "Bombard" 56 True
-    , StandardSkill 91 "Mystic Blow" 56 True
-    , StandardSkill 92 "Mystic Blow" 56 True
-    , StandardSkill 93 "Brawling Prowess Lv.5" 57 False
-    , StandardSkill 94 "Brawl Critical +10" 58 False
-    , StandardSkill 95 "Fistfaire" 59 False
+    , StandardSkill 76 "Brawling Prowess Lv.1" 49 False
+    , StandardSkill 77 "Fading Blow" 50 True
+    , StandardSkill 78 "Brawling Prowess Lv.2" 51 False
+    , StandardSkill 79 "Rushing Blow" 52 True
+    , StandardSkill 80 "Brawling Prowess Lv.3" 53 False
+    , StandardSkill 81 "Draining Blow" 53 True
+    , StandardSkill 82 "Bombard" 53 True
+    , StandardSkill 83 "One-Two Punch" 53 True
+    , StandardSkill 84 "Nimble Combo" 53 True
+    , StandardSkill 85 "Monster Crusher" 53 True
+    , StandardSkill 86 "Brawling Prowess Lv.4" 55 False
+    , StandardSkill 87 "Draining Blow" 56 True
+    , StandardSkill 88 "Bombard" 56 True
+    , StandardSkill 89 "Mystic Blow" 56 True
+    , StandardSkill 90 "Mystic Blow" 56 True
+    , StandardSkill 91 "Brawling Prowess Lv.5" 57 False
+    , StandardSkill 92 "Brawl Critical +10" 58 False
+    , StandardSkill 93 "Fistfaire" 59 False
 
     -- Reason
-    , StandardSkill 96 "Reason Prowess Lv.1" 61 False
-    , StandardSkill 97 "Reason Prowess Lv.2" 63 False
-    , StandardSkill 98 "Reason Prowess Lv.3" 65 False
-    , StandardSkill 99 "Reason Prowess Lv.4" 67 False
-    , StandardSkill 100 "Reason Prowess Lv.5" 69 False
-    , StandardSkill 101 "Black Magic Range +1" 70 False
-    , StandardSkill 102 "Black Magic Range +1" 70 False
-    , StandardSkill 103 "Black Tomefaire" 71 False
-    , StandardSkill 104 "Dark Tomefaire" 71 False
+    , StandardSkill 94 "Reason Prowess Lv.1" 61 False
+    , StandardSkill 95 "Reason Prowess Lv.2" 63 False
+    , StandardSkill 96 "Reason Prowess Lv.3" 65 False
+    , StandardSkill 97 "Reason Prowess Lv.4" 67 False
+    , StandardSkill 98 "Reason Prowess Lv.5" 69 False
+    , StandardSkill 99 "Black Magic Range +1" 70 False
+    , StandardSkill 100 "Black Magic Range +1" 70 False
+    , StandardSkill 101 "Black Tomefaire" 71 False
+    , StandardSkill 102 "Dark Tomefaire" 71 False
 
     -- Faith
-    , StandardSkill 105 "Faith Prowess Lv.1" 73 False
-    , StandardSkill 106 "Faith Prowess Lv.2" 75 False
-    , StandardSkill 107 "Faith Prowess Lv.3" 77 False
-    , StandardSkill 108 "Faith Prowess Lv.4" 79 False
-    , StandardSkill 109 "Faith Prowess Lv.5" 81 False
-    , StandardSkill 110 "Black Magic Range +1" 82 False
-    , StandardSkill 111 "Dark Tomefaire" 83 False
+    , StandardSkill 103 "Faith Prowess Lv.1" 73 False
+    , StandardSkill 104 "Faith Prowess Lv.2" 75 False
+    , StandardSkill 105 "Faith Prowess Lv.3" 77 False
+    , StandardSkill 106 "Faith Prowess Lv.4" 79 False
+    , StandardSkill 107 "Faith Prowess Lv.5" 81 False
+    , StandardSkill 108 "Black Magic Range +1" 82 False
+    , StandardSkill 109 "Dark Tomefaire" 83 False
 
     -- Authority
-    , StandardSkill 112 "Authority Prowess Lv.1" 85 False
-    , StandardSkill 113 "Rally Magic" 86 False
-    , StandardSkill 114 "Rally Charm" 86 False
-    , StandardSkill 115 "Rally Dexterity" 86 False
-    , StandardSkill 116 "Rally Resistance" 86 False
-    , StandardSkill 117 "Rally Strength" 86 False
-    , StandardSkill 118 "Rally Speed" 86 False
-    , StandardSkill 119 "Rally Defense" 86 False
-    , StandardSkill 120 "Rally Luck" 86 False
-    , StandardSkill 121 "Authority Prowess Lv.2" 87 False
-    , StandardSkill 122 "Battalion Vantage" 88 False
-    , StandardSkill 123 "Battalion Wrath" 88 False
-    , StandardSkill 124 "Battalion Desperation" 88 False
-    , StandardSkill 125 "Battalion Renewal" 88 False
-    , StandardSkill 126 "Authority Prowess Lv.3" 89 False
-    , StandardSkill 127 "Rally Dexterity" 89 False
-    , StandardSkill 128 "Rally Resistance" 89 False
-    , StandardSkill 129 "Rally Speed" 89 False
-    , StandardSkill 130 "Model Leader" 89 False
-    , StandardSkill 131 "Defense Tactics" 90 False
-    , StandardSkill 132 "Authority Prowess Lv.4" 91 False
-    , StandardSkill 133 "Authority Prowess Lv.5" 93 False
-    , StandardSkill 134 "Rally Movement" 94 False
-    , StandardSkill 135 "Offensive Tactics" 95 False
+    , StandardSkill 110 "Authority Prowess Lv.1" 85 False
+    , StandardSkill 111 "Rally Magic" 86 False
+    , StandardSkill 112 "Rally Charm" 86 False
+    , StandardSkill 113 "Rally Dexterity" 86 False
+    , StandardSkill 114 "Rally Resistance" 86 False
+    , StandardSkill 115 "Rally Strength" 86 False
+    , StandardSkill 116 "Rally Speed" 86 False
+    , StandardSkill 117 "Rally Defense" 86 False
+    , StandardSkill 118 "Rally Luck" 86 False
+    , StandardSkill 119 "Authority Prowess Lv.2" 87 False
+    , StandardSkill 120 "Battalion Vantage" 88 False
+    , StandardSkill 121 "Battalion Wrath" 88 False
+    , StandardSkill 122 "Battalion Desperation" 88 False
+    , StandardSkill 123 "Battalion Renewal" 88 False
+    , StandardSkill 124 "Authority Prowess Lv.3" 89 False
+    , StandardSkill 125 "Rally Dexterity" 89 False
+    , StandardSkill 126 "Rally Resistance" 89 False
+    , StandardSkill 127 "Rally Speed" 89 False
+    , StandardSkill 128 "Model Leader" 89 False
+    , StandardSkill 129 "Defense Tactics" 90 False
+    , StandardSkill 130 "Authority Prowess Lv.4" 91 False
+    , StandardSkill 131 "Authority Prowess Lv.5" 93 False
+    , StandardSkill 132 "Rally Movement" 94 False
+    , StandardSkill 133 "Offensive Tactics" 95 False
 
     -- Heavy Armor
-    , StandardSkill 136 "Weight -3" 100 False
-    , StandardSkill 137 "Weight -5" 105 False
-    , StandardSkill 138 "Armored Effect Null" 107 False
+    , StandardSkill 134 "Weight -3" 100 False
+    , StandardSkill 135 "Weight -5" 105 False
+    , StandardSkill 136 "Armored Effect Null" 107 False
 
     -- Riding
-    , StandardSkill 140 "Dexterity +4" 112 False
-    , StandardSkill 141 "Movement +1" 117 False
-    , StandardSkill 142 "Cavalry Effect Null" 119 False
+    , StandardSkill 137 "Dexterity +4" 112 False
+    , StandardSkill 138 "Movement +1" 117 False
+    , StandardSkill 139 "Cavalry Effect Null" 119 False
 
     -- Flying
-    , StandardSkill 143 "Alert Stance+" 126 False
-    , StandardSkill 144 "Alert Stance+" 129 False
-    , StandardSkill 145 "Flying Effect Null" 131 False
+    , StandardSkill 140 "Alert Stance+" 126 False
+    , StandardSkill 141 "Alert Stance+" 129 False
+    , StandardSkill 142 "Flying Effect Null" 131 False
     ]
