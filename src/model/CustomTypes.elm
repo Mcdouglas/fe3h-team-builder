@@ -62,11 +62,7 @@ type alias JobCategory =
 
 
 type alias Job =
-    { id : Int, name : String, jobCategoryId : Int, proficiencyList : List Proficiency, studyIdList : List Int, masteryIdList : List Int, gender : Maybe GenderUnionType, magicUsage : Maybe MagicUsage, note : Maybe String, customExperience : Maybe Int, customLevel : Maybe Int }
-
-
-type alias StandardSkill =
-    { id : Int, name : String, studyId : Int, combatArt : Bool }
+    { id : Int, name : String, jobCategoryId : Int, proficiencyList : List Proficiency, studyIdList : List Int, gender : Maybe GenderUnionType, magicUsage : Maybe MagicUsage, note : Maybe String, customExperience : Maybe Int, customLevel : Maybe Int }
 
 
 type alias JobSkill =
@@ -75,6 +71,10 @@ type alias JobSkill =
 
 type alias MasterySkill =
     { id : Int, name : String, jobIdList : List Int, combatArt : Bool }
+
+
+type alias StandardSkill =
+    { id : Int, name : String, studyId : Int, combatArt : Bool }
 
 
 type alias Character =

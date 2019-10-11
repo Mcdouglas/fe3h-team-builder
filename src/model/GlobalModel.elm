@@ -4,7 +4,11 @@ import CustomTypes exposing (..)
 
 
 type alias Model =
-    { jobCategories : List JobCategory
+    { studies : List Study
+    , jobCategories : List JobCategory
     , jobs : List Job
+    , jobSkills : List JobSkill
+    , masterySkills : List MasterySkill
+    , standardSkills : List StandardSkill
     , errorMessage : Maybe String
     }

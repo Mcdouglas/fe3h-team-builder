@@ -9,16 +9,20 @@ import Test exposing (..)
 
 
 dataBuilderTest =
+    let
+        datas =
+            loadAllStaticData
+    in
     describe "Test the data builder"
         [ test "Expect model contains 6 jobsCategories"
             (\_ ->
-                loadAllStaticData
+                datas
                     |> (\m -> List.length m.jobCategories)
                     |> Expect.equal 6
             )
         , test "Expect model contains 47 jobs"
             (\_ ->
-                loadAllStaticData
+                datas
                     |> (\m -> List.length m.jobs)
                     |> Expect.equal 47
             )
