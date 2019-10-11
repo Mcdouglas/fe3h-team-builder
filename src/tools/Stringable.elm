@@ -3,6 +3,7 @@ module Stringable exposing (..)
 import CustomTypes exposing (..)
 import DataBuilder exposing (..)
 import Html exposing (br, div, text)
+import Maybe.Extra exposing (..)
 
 
 type alias Stringable a =
@@ -224,16 +225,17 @@ jobToStringable =
                 ++ toString int jobCategoryId
                 ++ ", proficiencyList: ["
                 ++ (proficiencyList
-                        |> List.map (\e -> "{ subject: " ++ subjectToString e.subject ++ ", bonus " ++ toString int e.bonus ++ " }")
+                        |> List.map (\e -> "{ subject: " ++ subjectToString e.subject ++ ", bonus: " ++ toString int e.bonus ++ " }")
                         |> List.foldl (\a b -> a ++ ", " ++ b) ""
                    )
                 ++ "]"
                 ++ ", studyIdList: ["
-                -- ++ (studyIdList
-                --         |> List.map (\e -> getStudyById e)
-                --         |>
-                --         |> List.foldl (\a b -> a ++ ", " ++ b) ""
-                --    )
+                ++ (studyIdList
+                        |> List.map (\e -> getStudyById e)
+                        |> Maybe.Extra.values
+                        |> List.map (\e -> "{ subject: " ++ subjectToString e.subject ++ ", rank: " ++ rankToString e.rank ++ " }")
+                        |> List.foldl (\a b -> a ++ ", " ++ b) ""
+                   )
                 ++ "TODO"
                 ++ "]"
                 ++ ", masteryIdList: "
