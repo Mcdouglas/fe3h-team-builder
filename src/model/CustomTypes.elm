@@ -66,7 +66,7 @@ type alias Job =
 
 
 type alias JobSkill =
-    { id : Int, name : String, combatArt : Bool }
+    { id : Int, name : String, jobIdList : List Int, combatArt : Bool }
 
 
 type alias MasterySkill =

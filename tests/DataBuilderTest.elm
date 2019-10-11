@@ -1,4 +1,4 @@
-module Example exposing (dataBuilderTest)
+module DataBuilderTest exposing (dataBuilderTest)
 
 import CustomTypes exposing (..)
 import DataBuilder exposing (..)
