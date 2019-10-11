@@ -5479,6 +5479,186 @@ var author$project$DebugView$viewJobCategoriesJson = function (model) {
 				A2(elm$core$List$map, author$project$DebugView$viewJobCategoryJson, model.jobCategories))
 			]));
 };
+var author$project$CustomTypes$A = {$: 'A'};
+var author$project$CustomTypes$Aplus = {$: 'Aplus'};
+var author$project$CustomTypes$B = {$: 'B'};
+var author$project$CustomTypes$Bplus = {$: 'Bplus'};
+var author$project$CustomTypes$C = {$: 'C'};
+var author$project$CustomTypes$Cplus = {$: 'Cplus'};
+var author$project$CustomTypes$D = {$: 'D'};
+var author$project$CustomTypes$Dplus = {$: 'Dplus'};
+var author$project$CustomTypes$E = {$: 'E'};
+var author$project$CustomTypes$Eplus = {$: 'Eplus'};
+var author$project$CustomTypes$S = {$: 'S'};
+var author$project$CustomTypes$Splus = {$: 'Splus'};
+var author$project$CustomTypes$Study = F3(
+	function (id, subject, rank) {
+		return {id: id, rank: rank, subject: subject};
+	});
+var author$project$DataBuilder$getStudies = _List_fromArray(
+	[
+		A3(author$project$CustomTypes$Study, 0, author$project$CustomTypes$Sword, author$project$CustomTypes$E),
+		A3(author$project$CustomTypes$Study, 1, author$project$CustomTypes$Sword, author$project$CustomTypes$Eplus),
+		A3(author$project$CustomTypes$Study, 2, author$project$CustomTypes$Sword, author$project$CustomTypes$D),
+		A3(author$project$CustomTypes$Study, 3, author$project$CustomTypes$Sword, author$project$CustomTypes$Dplus),
+		A3(author$project$CustomTypes$Study, 4, author$project$CustomTypes$Sword, author$project$CustomTypes$C),
+		A3(author$project$CustomTypes$Study, 5, author$project$CustomTypes$Sword, author$project$CustomTypes$Cplus),
+		A3(author$project$CustomTypes$Study, 6, author$project$CustomTypes$Sword, author$project$CustomTypes$B),
+		A3(author$project$CustomTypes$Study, 7, author$project$CustomTypes$Sword, author$project$CustomTypes$Bplus),
+		A3(author$project$CustomTypes$Study, 8, author$project$CustomTypes$Sword, author$project$CustomTypes$A),
+		A3(author$project$CustomTypes$Study, 9, author$project$CustomTypes$Sword, author$project$CustomTypes$Aplus),
+		A3(author$project$CustomTypes$Study, 10, author$project$CustomTypes$Sword, author$project$CustomTypes$S),
+		A3(author$project$CustomTypes$Study, 11, author$project$CustomTypes$Sword, author$project$CustomTypes$Splus),
+		A3(author$project$CustomTypes$Study, 12, author$project$CustomTypes$Lance, author$project$CustomTypes$E),
+		A3(author$project$CustomTypes$Study, 13, author$project$CustomTypes$Lance, author$project$CustomTypes$Eplus),
+		A3(author$project$CustomTypes$Study, 14, author$project$CustomTypes$Lance, author$project$CustomTypes$D),
+		A3(author$project$CustomTypes$Study, 15, author$project$CustomTypes$Lance, author$project$CustomTypes$Dplus),
+		A3(author$project$CustomTypes$Study, 16, author$project$CustomTypes$Lance, author$project$CustomTypes$C),
+		A3(author$project$CustomTypes$Study, 17, author$project$CustomTypes$Lance, author$project$CustomTypes$Cplus),
+		A3(author$project$CustomTypes$Study, 18, author$project$CustomTypes$Lance, author$project$CustomTypes$B),
+		A3(author$project$CustomTypes$Study, 19, author$project$CustomTypes$Lance, author$project$CustomTypes$Bplus),
+		A3(author$project$CustomTypes$Study, 20, author$project$CustomTypes$Lance, author$project$CustomTypes$A),
+		A3(author$project$CustomTypes$Study, 21, author$project$CustomTypes$Lance, author$project$CustomTypes$Aplus),
+		A3(author$project$CustomTypes$Study, 22, author$project$CustomTypes$Lance, author$project$CustomTypes$S),
+		A3(author$project$CustomTypes$Study, 23, author$project$CustomTypes$Lance, author$project$CustomTypes$Splus),
+		A3(author$project$CustomTypes$Study, 24, author$project$CustomTypes$Axe, author$project$CustomTypes$E),
+		A3(author$project$CustomTypes$Study, 25, author$project$CustomTypes$Axe, author$project$CustomTypes$Eplus),
+		A3(author$project$CustomTypes$Study, 26, author$project$CustomTypes$Axe, author$project$CustomTypes$D),
+		A3(author$project$CustomTypes$Study, 27, author$project$CustomTypes$Axe, author$project$CustomTypes$Dplus),
+		A3(author$project$CustomTypes$Study, 28, author$project$CustomTypes$Axe, author$project$CustomTypes$C),
+		A3(author$project$CustomTypes$Study, 29, author$project$CustomTypes$Axe, author$project$CustomTypes$Cplus),
+		A3(author$project$CustomTypes$Study, 30, author$project$CustomTypes$Axe, author$project$CustomTypes$B),
+		A3(author$project$CustomTypes$Study, 31, author$project$CustomTypes$Axe, author$project$CustomTypes$Bplus),
+		A3(author$project$CustomTypes$Study, 32, author$project$CustomTypes$Axe, author$project$CustomTypes$A),
+		A3(author$project$CustomTypes$Study, 33, author$project$CustomTypes$Axe, author$project$CustomTypes$Aplus),
+		A3(author$project$CustomTypes$Study, 34, author$project$CustomTypes$Axe, author$project$CustomTypes$S),
+		A3(author$project$CustomTypes$Study, 35, author$project$CustomTypes$Axe, author$project$CustomTypes$Splus),
+		A3(author$project$CustomTypes$Study, 36, author$project$CustomTypes$Bow, author$project$CustomTypes$E),
+		A3(author$project$CustomTypes$Study, 37, author$project$CustomTypes$Bow, author$project$CustomTypes$Eplus),
+		A3(author$project$CustomTypes$Study, 38, author$project$CustomTypes$Bow, author$project$CustomTypes$D),
+		A3(author$project$CustomTypes$Study, 39, author$project$CustomTypes$Bow, author$project$CustomTypes$Dplus),
+		A3(author$project$CustomTypes$Study, 40, author$project$CustomTypes$Bow, author$project$CustomTypes$C),
+		A3(author$project$CustomTypes$Study, 41, author$project$CustomTypes$Bow, author$project$CustomTypes$Cplus),
+		A3(author$project$CustomTypes$Study, 42, author$project$CustomTypes$Bow, author$project$CustomTypes$B),
+		A3(author$project$CustomTypes$Study, 43, author$project$CustomTypes$Bow, author$project$CustomTypes$Bplus),
+		A3(author$project$CustomTypes$Study, 44, author$project$CustomTypes$Bow, author$project$CustomTypes$A),
+		A3(author$project$CustomTypes$Study, 45, author$project$CustomTypes$Bow, author$project$CustomTypes$Aplus),
+		A3(author$project$CustomTypes$Study, 46, author$project$CustomTypes$Bow, author$project$CustomTypes$S),
+		A3(author$project$CustomTypes$Study, 47, author$project$CustomTypes$Bow, author$project$CustomTypes$Splus),
+		A3(author$project$CustomTypes$Study, 48, author$project$CustomTypes$Brawling, author$project$CustomTypes$E),
+		A3(author$project$CustomTypes$Study, 49, author$project$CustomTypes$Brawling, author$project$CustomTypes$Eplus),
+		A3(author$project$CustomTypes$Study, 50, author$project$CustomTypes$Brawling, author$project$CustomTypes$D),
+		A3(author$project$CustomTypes$Study, 51, author$project$CustomTypes$Brawling, author$project$CustomTypes$Dplus),
+		A3(author$project$CustomTypes$Study, 52, author$project$CustomTypes$Brawling, author$project$CustomTypes$C),
+		A3(author$project$CustomTypes$Study, 53, author$project$CustomTypes$Brawling, author$project$CustomTypes$Cplus),
+		A3(author$project$CustomTypes$Study, 54, author$project$CustomTypes$Brawling, author$project$CustomTypes$B),
+		A3(author$project$CustomTypes$Study, 55, author$project$CustomTypes$Brawling, author$project$CustomTypes$Bplus),
+		A3(author$project$CustomTypes$Study, 56, author$project$CustomTypes$Brawling, author$project$CustomTypes$A),
+		A3(author$project$CustomTypes$Study, 57, author$project$CustomTypes$Brawling, author$project$CustomTypes$Aplus),
+		A3(author$project$CustomTypes$Study, 58, author$project$CustomTypes$Brawling, author$project$CustomTypes$S),
+		A3(author$project$CustomTypes$Study, 59, author$project$CustomTypes$Brawling, author$project$CustomTypes$Splus),
+		A3(author$project$CustomTypes$Study, 60, author$project$CustomTypes$Reason, author$project$CustomTypes$E),
+		A3(author$project$CustomTypes$Study, 61, author$project$CustomTypes$Reason, author$project$CustomTypes$Eplus),
+		A3(author$project$CustomTypes$Study, 62, author$project$CustomTypes$Reason, author$project$CustomTypes$D),
+		A3(author$project$CustomTypes$Study, 63, author$project$CustomTypes$Reason, author$project$CustomTypes$Dplus),
+		A3(author$project$CustomTypes$Study, 64, author$project$CustomTypes$Reason, author$project$CustomTypes$C),
+		A3(author$project$CustomTypes$Study, 65, author$project$CustomTypes$Reason, author$project$CustomTypes$Cplus),
+		A3(author$project$CustomTypes$Study, 66, author$project$CustomTypes$Reason, author$project$CustomTypes$B),
+		A3(author$project$CustomTypes$Study, 67, author$project$CustomTypes$Reason, author$project$CustomTypes$Bplus),
+		A3(author$project$CustomTypes$Study, 68, author$project$CustomTypes$Reason, author$project$CustomTypes$A),
+		A3(author$project$CustomTypes$Study, 69, author$project$CustomTypes$Reason, author$project$CustomTypes$Aplus),
+		A3(author$project$CustomTypes$Study, 70, author$project$CustomTypes$Reason, author$project$CustomTypes$S),
+		A3(author$project$CustomTypes$Study, 71, author$project$CustomTypes$Reason, author$project$CustomTypes$Splus),
+		A3(author$project$CustomTypes$Study, 72, author$project$CustomTypes$Faith, author$project$CustomTypes$E),
+		A3(author$project$CustomTypes$Study, 73, author$project$CustomTypes$Faith, author$project$CustomTypes$Eplus),
+		A3(author$project$CustomTypes$Study, 74, author$project$CustomTypes$Faith, author$project$CustomTypes$D),
+		A3(author$project$CustomTypes$Study, 75, author$project$CustomTypes$Faith, author$project$CustomTypes$Dplus),
+		A3(author$project$CustomTypes$Study, 76, author$project$CustomTypes$Faith, author$project$CustomTypes$C),
+		A3(author$project$CustomTypes$Study, 77, author$project$CustomTypes$Faith, author$project$CustomTypes$Cplus),
+		A3(author$project$CustomTypes$Study, 78, author$project$CustomTypes$Faith, author$project$CustomTypes$B),
+		A3(author$project$CustomTypes$Study, 79, author$project$CustomTypes$Faith, author$project$CustomTypes$Bplus),
+		A3(author$project$CustomTypes$Study, 80, author$project$CustomTypes$Faith, author$project$CustomTypes$A),
+		A3(author$project$CustomTypes$Study, 81, author$project$CustomTypes$Faith, author$project$CustomTypes$Aplus),
+		A3(author$project$CustomTypes$Study, 82, author$project$CustomTypes$Faith, author$project$CustomTypes$S),
+		A3(author$project$CustomTypes$Study, 83, author$project$CustomTypes$Faith, author$project$CustomTypes$Splus),
+		A3(author$project$CustomTypes$Study, 85, author$project$CustomTypes$Authority, author$project$CustomTypes$E),
+		A3(author$project$CustomTypes$Study, 86, author$project$CustomTypes$Authority, author$project$CustomTypes$Eplus),
+		A3(author$project$CustomTypes$Study, 87, author$project$CustomTypes$Authority, author$project$CustomTypes$D),
+		A3(author$project$CustomTypes$Study, 88, author$project$CustomTypes$Authority, author$project$CustomTypes$Dplus),
+		A3(author$project$CustomTypes$Study, 89, author$project$CustomTypes$Authority, author$project$CustomTypes$C),
+		A3(author$project$CustomTypes$Study, 90, author$project$CustomTypes$Authority, author$project$CustomTypes$Cplus),
+		A3(author$project$CustomTypes$Study, 91, author$project$CustomTypes$Authority, author$project$CustomTypes$B),
+		A3(author$project$CustomTypes$Study, 92, author$project$CustomTypes$Authority, author$project$CustomTypes$Bplus),
+		A3(author$project$CustomTypes$Study, 93, author$project$CustomTypes$Authority, author$project$CustomTypes$A),
+		A3(author$project$CustomTypes$Study, 94, author$project$CustomTypes$Authority, author$project$CustomTypes$Aplus),
+		A3(author$project$CustomTypes$Study, 95, author$project$CustomTypes$Authority, author$project$CustomTypes$S),
+		A3(author$project$CustomTypes$Study, 96, author$project$CustomTypes$Authority, author$project$CustomTypes$Splus),
+		A3(author$project$CustomTypes$Study, 97, author$project$CustomTypes$HeavyArmor, author$project$CustomTypes$E),
+		A3(author$project$CustomTypes$Study, 98, author$project$CustomTypes$HeavyArmor, author$project$CustomTypes$Eplus),
+		A3(author$project$CustomTypes$Study, 99, author$project$CustomTypes$HeavyArmor, author$project$CustomTypes$D),
+		A3(author$project$CustomTypes$Study, 100, author$project$CustomTypes$HeavyArmor, author$project$CustomTypes$Dplus),
+		A3(author$project$CustomTypes$Study, 101, author$project$CustomTypes$HeavyArmor, author$project$CustomTypes$C),
+		A3(author$project$CustomTypes$Study, 102, author$project$CustomTypes$HeavyArmor, author$project$CustomTypes$Cplus),
+		A3(author$project$CustomTypes$Study, 103, author$project$CustomTypes$HeavyArmor, author$project$CustomTypes$B),
+		A3(author$project$CustomTypes$Study, 104, author$project$CustomTypes$HeavyArmor, author$project$CustomTypes$Bplus),
+		A3(author$project$CustomTypes$Study, 105, author$project$CustomTypes$HeavyArmor, author$project$CustomTypes$A),
+		A3(author$project$CustomTypes$Study, 106, author$project$CustomTypes$HeavyArmor, author$project$CustomTypes$Aplus),
+		A3(author$project$CustomTypes$Study, 107, author$project$CustomTypes$HeavyArmor, author$project$CustomTypes$S),
+		A3(author$project$CustomTypes$Study, 108, author$project$CustomTypes$HeavyArmor, author$project$CustomTypes$Splus),
+		A3(author$project$CustomTypes$Study, 109, author$project$CustomTypes$Riding, author$project$CustomTypes$E),
+		A3(author$project$CustomTypes$Study, 110, author$project$CustomTypes$Riding, author$project$CustomTypes$Eplus),
+		A3(author$project$CustomTypes$Study, 111, author$project$CustomTypes$Riding, author$project$CustomTypes$D),
+		A3(author$project$CustomTypes$Study, 112, author$project$CustomTypes$Riding, author$project$CustomTypes$Dplus),
+		A3(author$project$CustomTypes$Study, 113, author$project$CustomTypes$Riding, author$project$CustomTypes$C),
+		A3(author$project$CustomTypes$Study, 114, author$project$CustomTypes$Riding, author$project$CustomTypes$Cplus),
+		A3(author$project$CustomTypes$Study, 115, author$project$CustomTypes$Riding, author$project$CustomTypes$B),
+		A3(author$project$CustomTypes$Study, 116, author$project$CustomTypes$Riding, author$project$CustomTypes$Bplus),
+		A3(author$project$CustomTypes$Study, 117, author$project$CustomTypes$Riding, author$project$CustomTypes$A),
+		A3(author$project$CustomTypes$Study, 118, author$project$CustomTypes$Riding, author$project$CustomTypes$Aplus),
+		A3(author$project$CustomTypes$Study, 119, author$project$CustomTypes$Riding, author$project$CustomTypes$S),
+		A3(author$project$CustomTypes$Study, 120, author$project$CustomTypes$Riding, author$project$CustomTypes$Splus),
+		A3(author$project$CustomTypes$Study, 121, author$project$CustomTypes$Flying, author$project$CustomTypes$E),
+		A3(author$project$CustomTypes$Study, 122, author$project$CustomTypes$Flying, author$project$CustomTypes$Eplus),
+		A3(author$project$CustomTypes$Study, 123, author$project$CustomTypes$Flying, author$project$CustomTypes$D),
+		A3(author$project$CustomTypes$Study, 124, author$project$CustomTypes$Flying, author$project$CustomTypes$Dplus),
+		A3(author$project$CustomTypes$Study, 125, author$project$CustomTypes$Flying, author$project$CustomTypes$C),
+		A3(author$project$CustomTypes$Study, 126, author$project$CustomTypes$Flying, author$project$CustomTypes$Cplus),
+		A3(author$project$CustomTypes$Study, 127, author$project$CustomTypes$Flying, author$project$CustomTypes$B),
+		A3(author$project$CustomTypes$Study, 128, author$project$CustomTypes$Flying, author$project$CustomTypes$Bplus),
+		A3(author$project$CustomTypes$Study, 129, author$project$CustomTypes$Flying, author$project$CustomTypes$A),
+		A3(author$project$CustomTypes$Study, 130, author$project$CustomTypes$Flying, author$project$CustomTypes$Aplus),
+		A3(author$project$CustomTypes$Study, 131, author$project$CustomTypes$Flying, author$project$CustomTypes$S),
+		A3(author$project$CustomTypes$Study, 132, author$project$CustomTypes$Flying, author$project$CustomTypes$Splus)
+	]);
+var elm$core$List$filter = F2(
+	function (isGood, list) {
+		return A3(
+			elm$core$List$foldr,
+			F2(
+				function (x, xs) {
+					return isGood(x) ? A2(elm$core$List$cons, x, xs) : xs;
+				}),
+			_List_Nil,
+			list);
+	});
+var elm$core$List$head = function (list) {
+	if (list.b) {
+		var x = list.a;
+		var xs = list.b;
+		return elm$core$Maybe$Just(x);
+	} else {
+		return elm$core$Maybe$Nothing;
+	}
+};
+var author$project$DataBuilder$getStudyById = function (val) {
+	return elm$core$List$head(
+		A2(
+			elm$core$List$filter,
+			function (e) {
+				return _Utils_eq(e.id, val);
+			},
+			author$project$DataBuilder$getStudies));
+};
 var author$project$Stringable$genderToString = function (gender) {
 	if (gender.$ === 'Male') {
 		return 'Male';
@@ -5523,6 +5703,34 @@ var author$project$Stringable$magicUsageToString = function (magicUsage) {
 		return 'Can use some magic';
 	}
 };
+var author$project$Stringable$rankToString = function (rank) {
+	switch (rank.$) {
+		case 'E':
+			return 'E';
+		case 'Eplus':
+			return 'E+';
+		case 'D':
+			return 'D';
+		case 'Dplus':
+			return 'D+';
+		case 'C':
+			return 'C';
+		case 'Cplus':
+			return 'C+';
+		case 'B':
+			return 'B';
+		case 'Bplus':
+			return 'B+';
+		case 'A':
+			return 'A';
+		case 'Aplus':
+			return 'A+';
+		case 'S':
+			return 'S';
+		default:
+			return 'S+';
+	}
+};
 var author$project$Stringable$subjectToString = function (subject) {
 	switch (subject.$) {
 		case 'Sword':
@@ -5549,6 +5757,16 @@ var author$project$Stringable$subjectToString = function (subject) {
 			return 'Flying';
 	}
 };
+var elm_community$maybe_extra$Maybe$Extra$foldrValues = F2(
+	function (item, list) {
+		if (item.$ === 'Nothing') {
+			return list;
+		} else {
+			var v = item.a;
+			return A2(elm$core$List$cons, v, list);
+		}
+	});
+var elm_community$maybe_extra$Maybe$Extra$values = A2(elm$core$List$foldr, elm_community$maybe_extra$Maybe$Extra$foldrValues, _List_Nil);
 var author$project$Stringable$jobToStringable = {
 	stringable: function (_n0) {
 		var id = _n0.id;
@@ -5572,9 +5790,27 @@ var author$project$Stringable$jobToStringable = {
 			A2(
 				elm$core$List$map,
 				function (e) {
-					return '{ subject: ' + (author$project$Stringable$subjectToString(e.subject) + (', bonus ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, e.bonus) + ' }')));
+					return '{ subject: ' + (author$project$Stringable$subjectToString(e.subject) + (', bonus: ' + (A2(author$project$Stringable$toString, author$project$Stringable$int, e.bonus) + ' }')));
 				},
-				proficiencyList)) + (']' + (', studyIdList: [' + ('TODO' + (']' + (', masteryIdList: ' + (A2(
+				proficiencyList)) + (']' + (', studyIdList: [' + (A3(
+			elm$core$List$foldl,
+			F2(
+				function (a, b) {
+					return a + (', ' + b);
+				}),
+			'',
+			A2(
+				elm$core$List$map,
+				function (e) {
+					return '{ subject: ' + (author$project$Stringable$subjectToString(e.subject) + (', rank: ' + (author$project$Stringable$rankToString(e.rank) + ' }')));
+				},
+				elm_community$maybe_extra$Maybe$Extra$values(
+					A2(
+						elm$core$List$map,
+						function (e) {
+							return author$project$DataBuilder$getStudyById(e);
+						},
+						studyIdList)))) + ('TODO' + (']' + (', masteryIdList: ' + (A2(
 			author$project$Stringable$toString,
 			author$project$Stringable$list(author$project$Stringable$int),
 			masteryIdList) + (A2(
@@ -5637,7 +5873,7 @@ var author$project$Stringable$jobToStringable = {
 					function (a) {
 						return A2(author$project$Stringable$toString, author$project$Stringable$int, a);
 					},
-					customLevel))) + ' }')))))))))))))))))));
+					customLevel))) + ' }'))))))))))))))))))));
 	}
 };
 var author$project$DebugView$viewJobJson = function (job) {
