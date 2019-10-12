@@ -219,7 +219,7 @@ subjectToString subject =
 jobToStringable : Stringable Job
 jobToStringable =
     { stringable =
-        \{ id, name, jobCategoryId, proficiencyList, studyIdList, gender, magicUsage, note, customExperience, customLevel } ->
+        \{ id, name, jobCategoryId, proficiencyList, studyIdList, gender, magicUsage, note, customExperience } ->
             "Job { "
                 ++ "id: "
                 ++ toString int id
@@ -245,7 +245,6 @@ jobToStringable =
                 ++ (magicUsage |> Maybe.map (\a -> magicUsageToString a) |> Maybe.map (\a -> ", magicUsage: " ++ a) |> Maybe.withDefault "")
                 ++ (note |> Maybe.map (\a -> ", note: " ++ a) |> Maybe.withDefault "")
                 ++ (customExperience |> Maybe.map (\a -> toString int a) |> Maybe.map (\a -> ", customExperience: " ++ a) |> Maybe.withDefault "")
-                ++ (customLevel |> Maybe.map (\a -> toString int a) |> Maybe.map (\a -> ", customLevel: " ++ a) |> Maybe.withDefault "")
                 ++ " }"
     }
 
