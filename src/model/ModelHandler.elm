@@ -4,8 +4,7 @@ import CustomTypes exposing (..)
 import Job exposing (..)
 
 
-getJobByJobSkill : JobSkill -> Maybe Job
-getJobByJobSkill jobSkill =
+getJobsByJobSkill : JobSkill -> List Job
+getJobsByJobSkill jobSkill =
     initJobs
         |> List.filter (\e -> List.member e.id jobSkill.jobIdList)
-        |> List.head

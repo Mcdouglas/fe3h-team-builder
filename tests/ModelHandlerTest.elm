@@ -6,6 +6,8 @@ import Fuzz exposing (Fuzzer, int, list, string)
 import GlobalModel exposing (..)
 import Job exposing (..)
 import JobCategory exposing (..)
+import JobSkill exposing (..)
+import ModelHandler exposing (..)
 import Test exposing (..)
 
 
@@ -18,15 +20,21 @@ modelHandlerTest =
         wrongJobCategory =
             JobCategory -1 Beginner Nothing Nothing
 
+        wrongJobSkill =
+            JobSkill -1 "" [] False
+
         -- jobs
         commoner =
             getJobById 0
+                |> Maybe.withDefault wrongJob
 
         hero =
             getJobById 19
+                |> Maybe.withDefault wrongJob
 
         gremory =
             getJobById 36
+                |> Maybe.withDefault wrongJob
 
         enlightenedOne =
             getJobById 40
@@ -34,16 +42,26 @@ modelHandlerTest =
         -- jobCategories
         intermerdiate =
             getJobCategoryById 2
+                |> Maybe.withDefault wrongJobCategory
 
         unique =
             getJobCategoryById 5
+                |> Maybe.withDefault wrongJobCategory
+
+        -- jobSkills
+        canto =
+            getJobSkillById 1
+                |> Maybe.withDefault wrongJobSkill
+
+        blackMagicUsesx2 =
+            getJobSkillById 25
+                |> Maybe.withDefault wrongJobSkill
     in
     describe "Test the data builder"
         [ describe "Test getJobById"
             [ test "Expect job is Commoner"
                 (\_ ->
                     commoner
-                        |> Maybe.withDefault wrongJob
                         |> Expect.equal
                             { id = 0
                             , name = "Commoner"
@@ -59,7 +77,6 @@ modelHandlerTest =
             , test "Expect job is Hero"
                 (\_ ->
                     hero
-                        |> Maybe.withDefault wrongJob
                         |> Expect.equal
                             { id = 19
                             , name = "Hero"
@@ -75,7 +92,6 @@ modelHandlerTest =
             , test "Expect job is Gremory"
                 (\_ ->
                     gremory
-                        |> Maybe.withDefault wrongJob
                         |> Expect.equal
                             { id = 36
                             , name = "Gremory"
@@ -109,7 +125,6 @@ modelHandlerTest =
             [ test "Expect jobCategory is Intermerdiate"
                 (\_ ->
                     intermerdiate
-                        |> Maybe.withDefault wrongJobCategory
                         |> Expect.equal
                             { id = 2
                             , category = Intermediate
@@ -120,13 +135,26 @@ modelHandlerTest =
             , test "Expect jobCategory is Unique"
                 (\_ ->
                     unique
-                        |> Maybe.withDefault wrongJobCategory
                         |> Expect.equal
                             { id = 5
                             , category = Unique
                             , experience = Nothing
                             , level = Nothing
                             }
+                )
+            ]
+        , describe "Test getJobByJobSkill"
+            [ test "Expect List Job equals 12"
+                (\_ ->
+                    getJobsByJobSkill canto
+                        |> List.length
+                        |> Expect.equal 12
+                )
+            , test "Expect contains explicit list of job"
+                (\_ ->
+                    getJobsByJobSkill blackMagicUsesx2
+                        |> List.member gremory
+                        |> Expect.equal True
                 )
             ]
         ]
