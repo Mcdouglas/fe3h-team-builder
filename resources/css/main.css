@@ -1,4 +1,30 @@
-.jumbotron {
+.planner {
     background-color: #e6ffe6;
     text-align: center;
+    height: auto;
+}
+
+.container {
+    display: grid;
+    background-color: aquamarine;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 7% 20% auto 20% 10%;
+    background-color: bisque;
+    border: solid 1px black;
+}
+
+.item-a {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    display: block;
+    background-color: lightslategray
+}
+
+.item-b {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    background-color: darkviolet;
 }

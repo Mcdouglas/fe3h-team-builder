@@ -12,13 +12,13 @@ getCharacterById val =
 
 initCharacters : List Character
 initCharacters =
-    [ Character 0 "Byleth ♂" Male 1
-    , Character 1 "Byleth ♀" Female 1
+    [ Character 0 "Byleth" Male 1
+    , Character 1 "Byleth" Female 1
 
     -- Black Eagles
     , Character 2 "Edelgard" Female 3
     , Character 3 "Hubert" Male 8
-    , Character 4 "Ferdinant" Male 10
+    , Character 4 "Ferdinand" Male 10
     , Character 5 "Linhardt" Male 13
     , Character 6 "Caspar" Male 12
     , Character 7 "Bernadetta" Female 11
