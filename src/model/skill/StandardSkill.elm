@@ -12,7 +12,8 @@ getStandardSkill val =
 
 initStandardSkills : List StandardSkill
 initStandardSkills =
-    [ StandardSkill 0 "Sword Prowess Lv.1" 1 False [] False "Grants Hit +5, Avoid +7 and Critical Evade +5 when equipped with Sword "
+    [ -- Sword
+      StandardSkill 0 "Sword Prowess Lv.1" 1 False [] False "Grants Hit +5, Avoid +7 and Critical Evade +5 when equipped with Sword "
     , StandardSkill 1 "Wrath Strike" 2 True [] False ""
     , StandardSkill 2 "Sword Prowess Lv.2" 3 False [] False "Grants Hit +6, Avoid +10 and Critical Evade +6 when equipped with Sword "
     , StandardSkill 3 "Grounder" 4 True [] False "Effective against Flying enemies"
@@ -30,6 +31,8 @@ initStandardSkills =
     , StandardSkill 15 "Sword Prowess Lv.5" 9 False [] False "Grants Hit +10, Avoid +20 and Critical Evade +10 when equipped with Sword "
     , StandardSkill 16 "Sword Critical +10" 10 False [] False "Grants Crit +10 when using a sword. "
     , StandardSkill 17 "Swordfaire" 11 False [] False "Might +5 when a sword is equipped. "
+
+    -- Lance
     , StandardSkill 18 "Lance Prowess Lv.1" 13 False [] False "Grants Hit +6, Avoid +6 and Critical Evade +5 when equipped with Lance "
     , StandardSkill 19 "Tempest Lance" 14 True [] False ""
     , StandardSkill 20 "Lance Prowess Lv.2" 15 False [] False "Grants Hit +8, Avoid +8 and Critical Evade +6 when equipped with Lance "
@@ -49,6 +52,8 @@ initStandardSkills =
     , StandardSkill 34 "Lance Prowess Lv.5" 21 False [] False "Grants Hit +15, Avoid +15 and Critical Evade +10 when equipped with Lance "
     , StandardSkill 35 "Lance Critical +10" 22 False [] False "Grants Crit +10 when using a lance. "
     , StandardSkill 36 "Lancefaire" 23 False [] False "Might +5 when a lance is equipped. "
+
+    -- Axe
     , StandardSkill 37 "Axe Prowess Lv.1" 25 False [] False "Grants Hit +7, Avoid +5 and Critical Evade +5 when equipped with Axe "
     , StandardSkill 38 "Smash" 26 True [] False ""
     , StandardSkill 39 "Axe Prowess Lv.2" 27 False [] False "Grants Hit +10, Avoid +6 and Critical Evade +6 when equipped with Axe "
@@ -68,6 +73,8 @@ initStandardSkills =
     , StandardSkill 53 "Axe Prowess Lv.5" 33 False [] False "Grants Hit +20, Avoid +10 and Critical Evade +10 when equipped with Axe "
     , StandardSkill 54 "Axe Critical +10" 34 False [] False "Grants Crit +10 when using an axe. "
     , StandardSkill 55 "Axefaire" 35 False [] False "Might +5 when an axe is equipped. "
+
+    -- Bow
     , StandardSkill 56 "Bow Prowess Lv.1" 37 False [] False "Grants Hit +6, Avoid +6 and Critical Evade +5 when equipped with Bow "
     , StandardSkill 57 "Curved Shot" 38 True [] False ""
     , StandardSkill 58 "Bow Prowess Lv.2" 39 False [] False "Grants Hit +8, Avoid +8 and Critical Evade +6 when equipped with Bow "
@@ -89,6 +96,8 @@ initStandardSkills =
     , StandardSkill 74 "Bow Prowess Lv.5" 45 False [] False "Grants Hit +15, Avoid +15 and Critical Evade +10 when equipped with Bow "
     , StandardSkill 75 "Bow Critical +10" 46 False [] False "Grants Crit +10 when using a bow. "
     , StandardSkill 76 "Bowfaire" 47 False [] False "Might +5 when a bow is equipped. "
+
+    -- Brawl
     , StandardSkill 77 "Brawling Prowess Lv.1" 49 False [] False "Grants Hit +5, Avoid +7 and Critical Evade +5 when brawling. "
     , StandardSkill 78 "Fading Blow" 50 True [] False "After combat, user moves 1 space backwards. "
     , StandardSkill 79 "Brawling Prowess Lv.2" 51 False [] False "Grants Hit +6, Avoid +10 and Critical Evade +6 when brawling "
@@ -108,6 +117,8 @@ initStandardSkills =
     , StandardSkill 93 "Brawling Prowess Lv.5" 57 False [] False "Grants Hit +10, Avoid +20 and Critical Evade +10 when brawling "
     , StandardSkill 94 "Brawl Critical +10" 58 False [] False "Grants Crit +10 when brawling. "
     , StandardSkill 95 "Fistfaire" 59 False [] False "Might +5 when a gauntlet is equipped. "
+
+    -- Reason
     , StandardSkill 96 "Reason Prowess Lv.1" 61 False [] False "Grants Hit +5, Avoid +7 and Critical Evade +5 when equipped with Reason Magic "
     , StandardSkill 97 "Reason Prowess Lv.2" 63 False [] False "Grants Hit +6, Avoid +10 and Critical Evade +6 when equipped with Reason Magic "
     , StandardSkill 98 "Reason Prowess Lv.3" 65 False [] False "Grants Hit +7, Avoid +13 and Critical Evade +7 when equipped with Reason Magic "
@@ -117,6 +128,8 @@ initStandardSkills =
     , StandardSkill 102 "Black Magic Range +1" 70 False [ 2, 3, 22 ] False "Increases dark magic range by 1. "
     , StandardSkill 103 "Black Tomefaire" 71 False [ 2, 3, 22 ] True "Might +5 when Black Magic is equipped. "
     , StandardSkill 104 "Dark Tomefaire" 71 False [ 2, 3, 22 ] False "Might +5 when Dark Magic is equipped. "
+
+    -- Faith
     , StandardSkill 105 "Faith Prowess Lv.1" 73 False [] False "Grants Hit +5, Avoid +7 and Critical Evade +5 when equipped with Faith Magic "
     , StandardSkill 106 "Faith Prowess Lv.2" 75 False [] False "Grants Hit +6, Avoid +10 and Critical Evade +6 when equipped with Faith Magic "
     , StandardSkill 107 "Faith Prowess Lv.3" 77 False [] False "Grants Hit +7, Avoid +13 and Critical Evade +7 when equipped with Faith Magic "
@@ -124,6 +137,8 @@ initStandardSkills =
     , StandardSkill 109 "Faith Prowess Lv.5" 81 False [] False "Grants Hit +10, Avoid +20 and Critical Evade +10 when equipped with Faith Magic "
     , StandardSkill 110 "Black Magic Range +1" 82 False [] False "Increases White Magic range by 1 for attacks that damage foes. "
     , StandardSkill 111 "Dark Tomefaire" 83 False [] False "Might +5 when White Magic is equipped. "
+
+    -- Authority
     , StandardSkill 112 "Authority Prowess Lv.1" 85 False [] False "Grants Mt +2 with gambits. "
     , StandardSkill 113 "Rally Magic" 86 False [ 3, 17 ] False "Use Rally to grant Mag +4 to an ally. "
     , StandardSkill 114 "Rally Charm" 86 False [ 8, 28 ] False "Use Rally to grant Cha +8 to an ally. "
@@ -156,13 +171,19 @@ initStandardSkills =
     , StandardSkill 141 "Rally Speed" 94 False [ 3 ] False "Use Rally to grant Spd +4 to an ally. "
     , StandardSkill 142 "Rally Movement" 94 False [ 0, 1, 16 ] False "Use Rally to grant Mv +1 to an ally. "
     , StandardSkill 143 "Offensive Tactics" 95 False [] False "Grants Mt +5 and Hit +20 with gambits. "
+
+    -- Heavy Armor
     , StandardSkill 144 "Weight -3" 100 False [] False "The combined weight of equipment is reduced by 3. "
     , StandardSkill 145 "Smite" 102 True [] False "User pushes ally foward 2 spaces"
     , StandardSkill 146 "Weight -5" 105 False [] False "The combined weight of equipment is reduced by 5. "
     , StandardSkill 147 "Armored Effect Null" 107 False [] False "Nullifies any extra effectiveness against armored units. "
+
+    -- Riding
     , StandardSkill 148 "Dexterity +4" 112 False [] False "Increases Dex by 4. "
     , StandardSkill 149 "Movement +1" 117 False [] False "Increases Mv by 1. "
     , StandardSkill 150 "Cavalry Effect Null" 119 False [] False "Nullifies any extra effectiveness against cavalry units. "
+
+    -- Flying
     , StandardSkill 151 "Alert Stance+" 126 False [] False "If unit takes no action except Wait, grants Avo +15 for 1 turn. "
     , StandardSkill 152 "Alert Stance+" 129 False [] False "If unit takes no action except Wait, grants Avo +30 for 1 turn. "
     , StandardSkill 153 "Flying Effect Null" 131 False [] False "Nullifies any extra effectiveness against flying units."
