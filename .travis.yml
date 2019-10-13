@@ -16,7 +16,7 @@ install:
   - rm -rf ./dist
   - mkdir dist
   - cp ./index.html ./dist/index.html
-  - elm make src/HomePage.elm --output=./dist/bundle.js
+  - elm make src/Main.elm --output=./dist/bundle.js
 
 script:
   - elm-format --validate . && elm-test
