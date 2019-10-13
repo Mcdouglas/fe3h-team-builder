@@ -16,7 +16,7 @@ install:
   - rm -rf ./dist
   - mkdir dist
   - cp ./index.html ./dist/index.html
-  - cp ./resources ./dist/resources
+  - cp -ar ./resources ./dist/resources
   - elm make src/Main.elm --output=./dist/bundle.js
 
 script:
