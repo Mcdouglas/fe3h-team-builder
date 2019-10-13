@@ -74,11 +74,15 @@ type alias MasterySkill =
 
 
 type alias StandardSkill =
-    { id : Int, name : String, studyId : Int, combatArt : Bool }
+    { id : Int, name : String, studyId : Int, combatArt : Bool, charactersOnly : List Int, allExcept : Bool }
+
+
+type alias CharacterSkill =
+    { id : Int, name : String, description : String }
 
 
 type alias Character =
-    { id : Int, name : String }
+    { id : Int, name : String, gender : GenderUnionType, characterSkillId : Int }
 
 
 type alias CharacterBuild =
