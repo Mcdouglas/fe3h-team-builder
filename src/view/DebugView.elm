@@ -1,5 +1,6 @@
 module DebugView exposing (..)
 
+import BuildPlanner exposing (..)
 import CustomTypes exposing (..)
 import DataBuilder exposing (Msg(..))
 import GlobalModel exposing (Model)
@@ -14,7 +15,7 @@ viewModelOrError model =
             viewError message
 
         Nothing ->
-            viewEntirePage model
+            viewPlanner model
 
 
 viewError : String -> Html Msg
