@@ -1,4 +1,4 @@
-module HomePage exposing (main)
+module Main exposing (main)
 
 import Browser exposing (sandbox)
 import DataBuilder exposing (Msg(..), loadAllStaticData)
