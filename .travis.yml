@@ -18,7 +18,7 @@ before_script:
   - elm-test
   - mkdir dist
   - cp ./index.html ./dist/index.html
-  - cp ./resources ./dist/resources
+  - cp -ar ./resources ./dist/resources
 
 script:
   - elm make src/Main.elm --output=./dist/bundle.js
