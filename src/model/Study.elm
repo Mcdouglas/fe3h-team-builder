@@ -111,58 +111,58 @@ initStudies =
     , Study 83 Faith Splus
 
     -- Authority
-    , Study 85 Authority E
-    , Study 86 Authority Eplus
-    , Study 87 Authority D
-    , Study 88 Authority Dplus
-    , Study 89 Authority C
-    , Study 90 Authority Cplus
-    , Study 91 Authority B
-    , Study 92 Authority Bplus
-    , Study 93 Authority A
-    , Study 94 Authority Aplus
-    , Study 95 Authority S
-    , Study 96 Authority Splus
+    , Study 84 Authority E
+    , Study 85 Authority Eplus
+    , Study 86 Authority D
+    , Study 87 Authority Dplus
+    , Study 88 Authority C
+    , Study 89 Authority Cplus
+    , Study 90 Authority B
+    , Study 91 Authority Bplus
+    , Study 92 Authority A
+    , Study 93 Authority Aplus
+    , Study 94 Authority S
+    , Study 95 Authority Splus
 
     -- Heavy Armor
-    , Study 97 HeavyArmor E
-    , Study 98 HeavyArmor Eplus
-    , Study 99 HeavyArmor D
-    , Study 100 HeavyArmor Dplus
-    , Study 101 HeavyArmor C
-    , Study 102 HeavyArmor Cplus
-    , Study 103 HeavyArmor B
-    , Study 104 HeavyArmor Bplus
-    , Study 105 HeavyArmor A
-    , Study 106 HeavyArmor Aplus
-    , Study 107 HeavyArmor S
-    , Study 108 HeavyArmor Splus
+    , Study 96 HeavyArmor E
+    , Study 97 HeavyArmor Eplus
+    , Study 98 HeavyArmor D
+    , Study 99 HeavyArmor Dplus
+    , Study 100 HeavyArmor C
+    , Study 101 HeavyArmor Cplus
+    , Study 102 HeavyArmor B
+    , Study 103 HeavyArmor Bplus
+    , Study 104 HeavyArmor A
+    , Study 105 HeavyArmor Aplus
+    , Study 106 HeavyArmor S
+    , Study 107 HeavyArmor Splus
 
     -- Riding
-    , Study 109 Riding E
-    , Study 110 Riding Eplus
-    , Study 111 Riding D
-    , Study 112 Riding Dplus
-    , Study 113 Riding C
-    , Study 114 Riding Cplus
-    , Study 115 Riding B
-    , Study 116 Riding Bplus
-    , Study 117 Riding A
-    , Study 118 Riding Aplus
-    , Study 119 Riding S
-    , Study 120 Riding Splus
+    , Study 108 Riding E
+    , Study 109 Riding Eplus
+    , Study 110 Riding D
+    , Study 111 Riding Dplus
+    , Study 112 Riding C
+    , Study 113 Riding Cplus
+    , Study 114 Riding B
+    , Study 115 Riding Bplus
+    , Study 116 Riding A
+    , Study 117 Riding Aplus
+    , Study 118 Riding S
+    , Study 119 Riding Splus
 
     -- Flying
-    , Study 121 Flying E
-    , Study 122 Flying Eplus
-    , Study 123 Flying D
-    , Study 124 Flying Dplus
-    , Study 125 Flying C
-    , Study 126 Flying Cplus
-    , Study 127 Flying B
-    , Study 128 Flying Bplus
-    , Study 129 Flying A
-    , Study 130 Flying Aplus
-    , Study 131 Flying S
-    , Study 132 Flying Splus
+    , Study 120 Flying E
+    , Study 121 Flying Eplus
+    , Study 122 Flying D
+    , Study 123 Flying Dplus
+    , Study 124 Flying C
+    , Study 125 Flying Cplus
+    , Study 126 Flying B
+    , Study 127 Flying Bplus
+    , Study 128 Flying A
+    , Study 129 Flying Aplus
+    , Study 130 Flying S
+    , Study 131 Flying Splus
     ]

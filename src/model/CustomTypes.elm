@@ -62,39 +62,31 @@ type alias JobCategory =
 
 
 type alias Job =
-    { id : Int, name : String, jobCategoryId : Int, proficiencyList : List Proficiency, studyIdList : List Int, masteryIdList : List Int, gender : Maybe GenderUnionType, magicUsage : Maybe MagicUsage, note : Maybe String, customExperience : Maybe Int, customLevel : Maybe Int }
+    { id : Int, name : String, jobCategoryId : Int, proficiencyList : List Proficiency, studyIdList : List Int, gender : Maybe GenderUnionType, magicUsage : Maybe MagicUsage, note : Maybe String, customExperience : Maybe Int }
 
 
 type alias JobSkill =
-    { id : Int, name : String }
-
-
-type alias StandardSkill =
-    { id : Int, name : String, studyId : Int }
-
-
-type alias JobSKill =
-    { id : Int, name : String }
+    { id : Int, name : String, jobIdList : List Int, combatArt : Bool, description : String }
 
 
 type alias MasterySkill =
-    { id : Int, name : String, jobIdList : List Int }
+    { id : Int, name : String, jobIdList : List Int, combatArt : Bool, description : String }
 
 
-type alias PassiveSkill =
-    { id : Int }
+type alias StandardSkill =
+    { id : Int, name : String, studyId : Int, combatArt : Bool, charactersOnly : List Int, allExcept : Bool, description : String }
 
 
-type alias ActiveSkill =
-    { id : Int }
+type alias CharacterSkill =
+    { id : Int, name : String, description : String }
 
 
 type alias Character =
-    { id : Int, name : String }
+    { id : Int, name : String, gender : GenderUnionType, characterSkillId : Int }
 
 
 type alias CharacterBuild =
-    { idCharacter : Int, listPassiveSkill : List PassiveSkill, listActiveSkill : List ActiveSkill }
+    { idCharacter : Int, listJobSkillId : List Int, listMasterySkillId : List Int, listStandardSkillId : List Int }
 
 
 type alias TeamBuilder =
