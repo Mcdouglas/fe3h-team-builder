@@ -5,21 +5,17 @@ import DataBuilder exposing (Msg(..), loadAllStaticData)
 import DebugView exposing (..)
 import GlobalModel exposing (Model)
 import Html exposing (..)
-import Html.Attributes exposing (class)
-import Html.Events exposing (onClick)
+import ModelHandler exposing (..)
 
 
 init : Model
 init =
-    loadAllStaticData
+    Model initBuilder loadAllStaticData Nothing
 
 
 view model =
-    div [ class "jumbotron" ]
-        [ h1 [] [ text "Fire Emblem Three Houses - Team Builder!" ]
-        , div []
-            [ viewModelOrError model ]
-        ]
+    div []
+        [ viewModelOrError model ]
 
 
 update : Msg -> Model -> Model

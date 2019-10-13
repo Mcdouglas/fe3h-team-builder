@@ -1,6 +1,6 @@
 module DebugView exposing (..)
 
-import BuildPlanner exposing (..)
+import ViewBuilder exposing (..)
 import CustomTypes exposing (..)
 import DataBuilder exposing (Msg(..))
 import GlobalModel exposing (Model)
@@ -41,7 +41,7 @@ viewEntirePage model =
 viewJobCategoriesJson : Model -> Html Msg
 viewJobCategoriesJson model =
     div []
-        [ ul [] (List.map viewJobCategoryJson model.jobCategories) ]
+        [ ul [] (List.map viewJobCategoryJson model.dataModel.jobCategories) ]
 
 
 viewJobCategoryJson : JobCategory -> Html Msg
@@ -57,7 +57,7 @@ viewJobCategoryJson element =
 viewJobsJson : Model -> Html Msg
 viewJobsJson model =
     div []
-        [ ul [] (List.map viewJobJson model.jobs) ]
+        [ ul [] (List.map viewJobJson model.dataModel.jobs) ]
 
 
 viewJobJson : Job -> Html Msg
