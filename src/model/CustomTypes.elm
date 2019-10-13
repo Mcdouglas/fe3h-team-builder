@@ -66,15 +66,15 @@ type alias Job =
 
 
 type alias JobSkill =
-    { id : Int, name : String, jobIdList : List Int, combatArt : Bool }
+    { id : Int, name : String, jobIdList : List Int, combatArt : Bool, description : String }
 
 
 type alias MasterySkill =
-    { id : Int, name : String, jobIdList : List Int, combatArt : Bool }
+    { id : Int, name : String, jobIdList : List Int, combatArt : Bool, description : String }
 
 
 type alias StandardSkill =
-    { id : Int, name : String, studyId : Int, combatArt : Bool, charactersOnly : List Int, allExcept : Bool }
+    { id : Int, name : String, studyId : Int, combatArt : Bool, charactersOnly : List Int, allExcept : Bool, description : String }
 
 
 type alias CharacterSkill =

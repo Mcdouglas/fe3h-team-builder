@@ -48,6 +48,6 @@ dataBuilderTest =
             (\_ ->
                 datas
                     |> (\m -> List.length m.standardSkills)
-                    |> Expect.equal 143
+                    |> Expect.equal 154
             )
         ]

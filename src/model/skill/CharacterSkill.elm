@@ -3,6 +3,13 @@ module CharacterSkill exposing (..)
 import CustomTypes exposing (..)
 
 
+getCharacterSkillById : Int -> Maybe CharacterSkill
+getCharacterSkillById val =
+    initCharacterSkills
+        |> List.filter (\e -> e.id == val)
+        |> List.head
+
+
 initCharacterSkills : List CharacterSkill
 initCharacterSkills =
     [ CharacterSkill 0 "Professor's Guidance" "+20% Experience Gained to user and adjacent ally"
