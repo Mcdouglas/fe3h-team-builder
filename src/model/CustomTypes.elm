@@ -1,9 +1,5 @@
 module CustomTypes exposing (..)
 
-import Category exposing (..)
-import Job exposing (..)
-import Stringable exposing (..)
-
 
 type Subject
     = Sword
@@ -34,36 +30,63 @@ type Rank
     | Splus
 
 
+type CategoryUnionType
+    = Starting
+    | Beginner
+    | Intermediate
+    | Advanced
+    | Master
+    | Unique
+
+
+type GenderUnionType
+    = Male
+    | Female
+
+
+type MagicUsage
+    = CanUseMagic
+    | CanUseSomeMagic
+
+
 type alias Study =
     { id : Int, subject : Subject, rank : Rank }
 
 
 type alias Proficiency =
-    { id : Int, subject : Subject, bonus : Int }
+    { subject : Subject, bonus : Int }
+
+
+type alias JobCategory =
+    { id : Int, category : CategoryUnionType, experience : Maybe Int, level : Maybe Int }
+
+
+type alias Job =
+    { id : Int, name : String, jobCategoryId : Int, proficiencyList : List Proficiency, studyIdList : List Int, gender : Maybe GenderUnionType, magicUsage : Maybe MagicUsage, note : Maybe String, customExperience : Maybe Int }
 
 
 type alias JobSkill =
-    { id : Int, name : String, learningJob : Job }
+    { id : Int, name : String, jobIdList : List Int, combatArt : Bool, description : String }
 
 
-type alias StudySkill =
-    { id : Int, name : String, study : Study }
+type alias MasterySkill =
+    { id : Int, name : String, jobIdList : List Int, combatArt : Bool, description : String }
 
 
-type alias PassiveSkill =
-    { id : Int }
+type alias StandardSkill =
+    { id : Int, name : String, studyId : Int, combatArt : Bool, charactersOnly : List Int, allExcept : Bool, description : String }
 
 
-type alias ActiveSkill =
-    { id : Int }
+type alias CharacterSkill =
+    { id : Int, name : String, description : String }
 
 
 type alias Character =
-    { id : Int, name : String }
+    { id : Int, name : String, gender : GenderUnionType, characterSkillId : Int }
 
 
 type alias CharacterBuild =
-    { idCharacter : Int, listPassiveSkill : List PassiveSkill, listActiveSkill : List ActiveSkill }
+    { idCharacter : Int, listJobSkillId : List Int, listMasterySkillId : List Int, listStandardSkillId : List Int }
 
 
 type alias TeamBuilder =

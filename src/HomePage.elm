@@ -1,38 +1,36 @@
 module HomePage exposing (main)
 
-import Browser
-import DebugView exposing (viewJsonFileOrError)
+import Browser exposing (sandbox)
+import DataBuilder exposing (Msg(..), loadAllStaticData)
+import DebugView exposing (..)
+import GlobalModel exposing (Model)
 import Html exposing (..)
-import Html.Attributes exposing (..)
+import Html.Attributes exposing (class)
 import Html.Events exposing (onClick)
-import Http
-import HttpCommands exposing (Msg(..))
-import JsonDao exposing (JsonModel, handleHttpResponse, setup)
+
+
+init : Model
+init =
+    loadAllStaticData
 
 
 view model =
     div [ class "jumbotron" ]
         [ h1 [] [ text "Fire Emblem Three Houses - Team Builder!" ]
         , div []
-            [ viewJsonFileOrError model ]
+            [ viewModelOrError model ]
         ]
 
 
-update : Msg -> JsonModel -> ( JsonModel, Cmd Msg )
+update : Msg -> Model -> Model
 update msg model =
-    handleHttpResponse msg model
+    model
 
 
-init : () -> ( JsonModel, Cmd Msg )
-init _ =
-    setup
-
-
-main : Program () JsonModel Msg
+main : Program () Model Msg
 main =
-    Browser.element
+    sandbox
         { init = init
         , view = view
         , update = update
-        , subscriptions = \_ -> Sub.none
         }
