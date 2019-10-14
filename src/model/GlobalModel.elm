@@ -11,7 +11,7 @@ type alias Model =
 
 
 type alias BuilderModel =
-    { team : List CharacterBuild }
+    { team : List (Maybe CharacterBuild) }
 
 
 type alias DataModel =
