@@ -20,8 +20,6 @@ before_script:
 
 script:
   - elm make src/HomePage.elm --output=./dist/bundle.js
-
-after_script:
   - cp ./index.html ./dist/index.html
 
 deploy:
