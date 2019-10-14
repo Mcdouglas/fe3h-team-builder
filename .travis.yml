@@ -11,7 +11,7 @@ branches:
 cache:
   directories:	
     - node_modules
-
+ 
 before_script:
   - rm -rf ./dist
   - elm-format --validate .
