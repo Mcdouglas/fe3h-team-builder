@@ -15,20 +15,20 @@ initBuilder =
 -- TEST
 
 
-initCharacterBuilds : List CharacterBuild
+initCharacterBuilds : List (Maybe CharacterBuild)
 initCharacterBuilds =
-    [ CharacterBuild 0 [] [] [] 0
-    , CharacterBuild 1 [] [] [] 0
-    , CharacterBuild 2 [] [] [] 0
-    , CharacterBuild 10 [] [] [] 0
-    , CharacterBuild 18 [] [] [] 0
-    , CharacterBuild 3 [] [] [] 0
-    , CharacterBuild 11 [] [] [] 0
-    , CharacterBuild 19 [] [] [] 0
-    , CharacterBuild 4 [] [] [] 0
-    , CharacterBuild 12 [] [] [] 0
-    , CharacterBuild 20 [] [] [] 0
-    , CharacterBuild 34 [] [] [] 0
+    [ Just (CharacterBuild 0 [] [] [] 0)
+    , Just (CharacterBuild 1 [] [] [] 0)
+    , Just (CharacterBuild 2 [] [] [] 0)
+    , Just (CharacterBuild 10 [] [] [] 0)
+    , Just (CharacterBuild 18 [] [] [] 0)
+    , Just (CharacterBuild 3 [] [] [] 0)
+    , Just (CharacterBuild 11 [] [] [] 0)
+    , Just (CharacterBuild 19 [] [] [] 0)
+    , Just (CharacterBuild 4 [] [] [] 0)
+    , Nothing
+    , Just (CharacterBuild 20 [] [] [] 0)
+    , Just (CharacterBuild 34 [] [] [] 0)
     ]
 
 

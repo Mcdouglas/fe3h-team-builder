@@ -22,7 +22,17 @@ viewPlanner model =
 viewTable : BuilderModel -> Html Msg
 viewTable model =
     div [ class "container" ]
-        (List.map viewRow model.team)
+        (List.map (\e -> selectView ( model, e )) model.team)
+
+
+selectView : ( BuilderModel, Maybe CharacterBuild ) -> Html Msg
+selectView ( model, element ) =
+    case element of
+        Just value ->
+            viewRow value
+
+        Nothing ->
+            div [] [ text "TODO" ]
 
 
 viewRow : CharacterBuild -> Html Msg
@@ -33,7 +43,7 @@ viewRow element =
 
         character =
             getCharacterById element.idCharacter
-                |> Maybe.withDefault (Character 0 "" Male 0)
+                |> Maybe.withDefault (Character -1 "" Male 0)
     in
     div [ class "row" ]
         [ viewPortrait character

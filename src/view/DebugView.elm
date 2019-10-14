@@ -1,11 +1,11 @@
 module DebugView exposing (..)
 
-import ViewBuilder exposing (..)
 import CustomTypes exposing (..)
 import DataBuilder exposing (Msg(..))
 import GlobalModel exposing (Model)
 import Html exposing (..)
 import Stringable exposing (..)
+import ViewBuilder exposing (..)
 
 
 viewModelOrError : Model -> Html Msg
