@@ -7,20 +7,20 @@ elm-format: 0.8.0
 branches:
   only:
     - master
- 
-cache:
-  directories:
-    - node_modules
- 
-install:
+
+before_script:
   - rm -rf ./dist
+  - elm-format --validate
+  - elm-test
   - mkdir dist
-  - cp ./index.html ./dist/index.html
+  
+script:
   - elm make src/HomePage.elm --output=./dist/bundle.js
 
-script:
-  - elm-format --validate . && elm-test
- 
+after_success:
+  - cp ./index.html ./dist/index.html
+  - cp -ar ./resources ./dist/resources
+
 deploy:
   provider: pages
   skip_cleanup: true
