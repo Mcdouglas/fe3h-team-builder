@@ -12,7 +12,7 @@ cache:
   directories:
     - node_modules
  
-install:
+before_script:
   - rm -rf ./dist
   - mkdir dist
   - cp ./index.html ./dist/index.html
