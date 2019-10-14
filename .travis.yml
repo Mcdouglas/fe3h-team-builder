@@ -17,10 +17,10 @@ before_script:
   - elm-format --validate .
   - elm-test
   - mkdir dist
+  - cp ./index.html ./dist/index.html
 
 script:
   - elm make src/HomePage.elm --output=./dist/bundle.js
-  - cp ./index.html ./dist/index.html
 
 deploy:
   provider: pages
