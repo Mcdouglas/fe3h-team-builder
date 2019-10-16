@@ -3,25 +3,26 @@ elm:
   - elm0.19.0
 elm-test: 0.19.0-rev3
 elm-format: 0.8.0
- 
+
 branches:
   only:
     - master
- 
+
 cache:
-  directories:
+  directories:	
     - node_modules
- 
+
 before_script:
   - rm -rf ./dist
+  - elm-format --validate .
+  - elm-test
   - mkdir dist
   - cp ./index.html ./dist/index.html
   - cp -ar ./resources ./dist/resources
-  - elm make src/Main.elm --output=./dist/bundle.js
 
 script:
-  - elm-format --validate . && elm-test
- 
+  - elm make src/HomePage.elm --output=./dist/bundle.js
+
 deploy:
   provider: pages
   skip_cleanup: true
