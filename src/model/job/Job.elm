@@ -10,6 +10,12 @@ getJobById val =
         |> List.head
 
 
+getJobsByJobSkill : JobSkill -> List Job
+getJobsByJobSkill jobSkill =
+    initJobs
+        |> List.filter (\e -> List.member e.id jobSkill.jobIdList)
+
+
 initJobs : List Job
 initJobs =
     [ -- Starting

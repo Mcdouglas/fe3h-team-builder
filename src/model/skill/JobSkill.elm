@@ -10,6 +10,12 @@ getJobSkillById val =
         |> List.head
 
 
+getJobSkillsByJob : Int -> List JobSkill
+getJobSkillsByJob id =
+    initJobSkills
+        |> List.filter (\e -> List.member id e.jobIdList)
+
+
 initJobSkills : List JobSkill
 initJobSkills =
     [ JobSkill 0 "Charm" [ 6, 41, 42, 43, 44, 45, 46 ] False "When allies adjacent to unit enter combat, allies gain +3 Damage."

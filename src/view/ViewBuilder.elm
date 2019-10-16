@@ -7,9 +7,9 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 import Stringable exposing (..)
+import ViewJob exposing (..)
 import ViewPortrait exposing (..)
 import ViewSkill exposing (..)
-import ViewJob exposing (..)
 
 
 viewPlanner : Model -> Html Msg
@@ -38,9 +38,9 @@ selectView ( model, element ) =
 
 viewRow : CharacterBuild -> Html Msg
 viewRow element =
-    div [ class "row" ] 
+    div [ class "row" ]
         [ viewPortrait element
         , viewPassiveSkills element
         , viewActiveSkills element
-        , viewJobSkill element
+        , viewJobSkills element
         ]
