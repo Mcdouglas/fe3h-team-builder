@@ -1,6 +1,5 @@
 module ViewBuilder exposing (..)
 
-import Character exposing (..)
 import CustomTypes exposing (..)
 import DataBuilder exposing (Msg(..))
 import GlobalModel exposing (..)
@@ -9,6 +8,8 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 import Stringable exposing (..)
 import ViewPortrait exposing (..)
+import ViewSkill exposing (..)
+import ViewJob exposing (..)
 
 
 viewPlanner : Model -> Html Msg
@@ -37,16 +38,9 @@ selectView ( model, element ) =
 
 viewRow : CharacterBuild -> Html Msg
 viewRow element =
-    let
-        id =
-            String.fromInt element.idCharacter
-
-        character =
-            getCharacterById element.idCharacter
-                |> Maybe.withDefault (Character -1 "" Male 0)
-    in
-    div [ class "row" ]
-        [ viewPortrait character
-        , div [] [ text character.name ]
-        , div [] [ text (genderToString character.gender) ]
+    div [ class "row" ] 
+        [ viewPortrait element
+        , viewPassiveSkills element
+        , viewActiveSkills element
+        , viewJobSkill element
         ]
