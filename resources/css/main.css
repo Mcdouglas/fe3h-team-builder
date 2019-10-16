@@ -11,7 +11,7 @@
 
 .row {
     display: grid;
-    grid-template-columns: 7% 20% auto 20% 10%;
+    grid-template-columns: 10% 20% auto 20% 10%;
     background-color: bisque;
     border: solid 1px black;
 }
@@ -20,7 +20,8 @@
     grid-column-start: 1;
     grid-column-end: 2;
     display: block;
-    background-color: lightslategray
+    background-color: lightslategray;
+    overflow-wrap: break-word;
 }
 
 .item-b {
