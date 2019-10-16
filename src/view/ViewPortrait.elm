@@ -1,11 +1,11 @@
 module ViewPortrait exposing (..)
 
+import Character exposing (..)
+import CharacterSkill exposing (..)
 import CustomTypes exposing (..)
 import DataBuilder exposing (Msg(..))
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import CharacterSkill exposing (..)
-import Character exposing (..)
 
 
 viewPortrait : CharacterBuild -> Html Msg
@@ -22,16 +22,18 @@ viewPortrait element =
         ]
 
 
-viewCharacterSkillImg: Int -> Html Msg
+viewCharacterSkillImg : Int -> Html Msg
 viewCharacterSkillImg id =
     let
-        characterSkill = getCharacterSkillById id
+        characterSkill =
+            getCharacterSkillById id
     in
     case characterSkill of
         Just value ->
-            div [] 
+            div []
                 [ getSkillCharacterPicture value.pictureId
-                , text value.name ]
+                , div [] [ text value.name ]
+                ]
 
         Nothing ->
             div []
@@ -41,6 +43,7 @@ viewCharacterSkillImg id =
 getPortrait : Int -> Html Msg
 getPortrait id =
     img [ src ("resources/img/portraits/" ++ String.fromInt id ++ ".png"), width 50, height 50 ] []
+
 
 getSkillCharacterPicture : Int -> Html Msg
 getSkillCharacterPicture id =
