@@ -78,7 +78,7 @@ type alias StandardSkill =
 
 
 type alias CharacterSkill =
-    { id : Int, name : String, description : String }
+    { id : Int, pictureId : Int, name : String, description : String }
 
 
 type alias Character =

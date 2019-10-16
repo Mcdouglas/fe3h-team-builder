@@ -16,7 +16,7 @@ viewPortrait element =
                 |> Maybe.withDefault (Character -1 "" Male 0)
     in
     div [ class "item-a" ]
-        [ getPictureById character.id
+        [ getPortrait character.id
         , div [] [ text character.name ]
         , viewCharacterSkillImg character.characterSkillId
         ]
@@ -29,14 +29,19 @@ viewCharacterSkillImg id =
     in
     case characterSkill of
         Just value ->
-            div []
-                [ text value.name ]
+            div [] 
+                [ getSkillCharacterPicture value.pictureId
+                , text value.name ]
 
         Nothing ->
             div []
                 [ text (String.fromInt id) ]
 
 
-getPictureById : Int -> Html Msg
-getPictureById id =
+getPortrait : Int -> Html Msg
+getPortrait id =
     img [ src ("resources/img/portraits/" ++ String.fromInt id ++ ".png"), width 50, height 50 ] []
+
+getSkillCharacterPicture : Int -> Html Msg
+getSkillCharacterPicture id =
+    img [ src ("resources/img/skill_character/" ++ String.fromInt id ++ ".png"), width 50, height 50 ] []
