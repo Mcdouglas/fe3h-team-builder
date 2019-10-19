@@ -1,4 +1,4 @@
-module ViewPortrait exposing (..)
+module PortraitView exposing (..)
 
 import Character exposing (..)
 import CharacterSkill exposing (..)

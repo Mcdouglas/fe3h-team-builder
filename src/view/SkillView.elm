@@ -1,4 +1,4 @@
-module ViewSkill exposing (..)
+module SkillView exposing (..)
 
 import CustomTypes exposing (..)
 import GlobalMessage exposing (Msg(..))

@@ -1,4 +1,4 @@
-module ViewJob exposing (..)
+module JobView exposing (..)
 
 import CustomTypes exposing (..)
 import GlobalMessage exposing (Msg(..))
