@@ -30,6 +30,7 @@ toggleBuildInfo element =
 
               else
                 src "resources/lib/octicons/chevron-up.svg"
+            , style "vertical-align" "baseline"
             ]
             []
         ]
