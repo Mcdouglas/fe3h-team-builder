@@ -1,26 +1,22 @@
 <!DOCTYPE html>	
 <html>
   <head>
+    <link rel="stylesheet" 
+          href="resources/lib/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">	 
+          href="resources/css/main.css">
+  </head>
 
-    <style>	
-      .jumbotron {
-        background-color: #e6ffe6;
-        text-align: center;
-      }	
-    </style>
-  </head>	
-
-
-  <body>	
-    <div id="elm-app-is-loaded-here"></div>	
-
-
+  <body>
+    <div id="elm-app"></div>
+    <script src="resources/lib/popper-1.12.9.min.js" ></script>
+    <script src="resources/lib/jquery-3.2.1.slim.min.js" ></script>
+    <script src="resources/lib/bootstrap/js/bootstrap.bundle.min.js" ></script>
     <script src="bundle.js"></script>
-    <script>	
-      var app = Elm.HomePage.init({	
-        node: document.getElementById("elm-app-is-loaded-here")	 
-      });
-	</script>	
+    <script>
+      var app = Elm.Main.init({
+        node: document.getElementById("elm-app")
+      });      
+    </script>
   </body>
+</html>

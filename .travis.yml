@@ -18,9 +18,10 @@ before_script:
   - elm-test
   - mkdir dist
   - cp ./index.html ./dist/index.html
+  - cp -ar ./resources ./dist/resources
 
 script:
-  - elm make src/HomePage.elm --output=./dist/bundle.js
+  - elm make src/Main.elm --output=./dist/bundle.js
 
 deploy:
   provider: pages

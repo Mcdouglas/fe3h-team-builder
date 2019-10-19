@@ -1,7 +1,8 @@
 module DebugView exposing (..)
 
+import BuilderView exposing (..)
 import CustomTypes exposing (..)
-import DataBuilder exposing (Msg(..))
+import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (Model)
 import Html exposing (..)
 import Stringable exposing (..)
@@ -14,7 +15,7 @@ viewModelOrError model =
             viewError message
 
         Nothing ->
-            viewEntirePage model
+            viewPlanner model
 
 
 viewError : String -> Html Msg
@@ -27,43 +28,3 @@ viewError errorMessage =
         [ h3 [] [ text errorHeading ]
         , text ("Error: " ++ errorMessage)
         ]
-
-
-viewEntirePage : Model -> Html Msg
-viewEntirePage model =
-    div []
-        [ viewJobCategoriesJson model
-        , viewJobsJson model
-        ]
-
-
-viewJobCategoriesJson : Model -> Html Msg
-viewJobCategoriesJson model =
-    div []
-        [ ul [] (List.map viewJobCategoryJson model.jobCategories) ]
-
-
-viewJobCategoryJson : JobCategory -> Html Msg
-viewJobCategoryJson element =
-    let
-        str =
-            toString jobCategoryToStringable element
-    in
-    div []
-        [ text str ]
-
-
-viewJobsJson : Model -> Html Msg
-viewJobsJson model =
-    div []
-        [ ul [] (List.map viewJobJson model.jobs) ]
-
-
-viewJobJson : Job -> Html Msg
-viewJobJson job =
-    let
-        str =
-            toString jobToStringable job
-    in
-    div []
-        [ text str ]

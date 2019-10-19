@@ -157,4 +157,12 @@ modelHandlerTest =
                         |> Expect.equal True
                 )
             ]
+        , describe "Test getJobSkillsByJob"
+            [ test "Expect List Job equals 12"
+                (\_ ->
+                    getJobSkillsByJob 38
+                        |> List.map (\e -> e.id)
+                        |> Expect.equal [ 1, 21, 24 ]
+                )
+            ]
         ]

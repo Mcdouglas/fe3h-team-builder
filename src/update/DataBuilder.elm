@@ -10,10 +10,6 @@ import StandardSkill exposing (initStandardSkills)
 import Study exposing (initStudies)
 
 
-type Msg
-    = InitStaticData
-
-
-loadAllStaticData : Model
+loadAllStaticData : DataModel
 loadAllStaticData =
-    Model initStudies initJobCategories initJobs initJobSkills initMasterySkills initStandardSkills Nothing
+    DataModel initStudies initJobCategories initJobs initJobSkills initMasterySkills initStandardSkills

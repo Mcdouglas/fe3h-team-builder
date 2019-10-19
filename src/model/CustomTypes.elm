@@ -78,7 +78,7 @@ type alias StandardSkill =
 
 
 type alias CharacterSkill =
-    { id : Int, name : String, description : String }
+    { id : Int, pictureId : Int, name : String, description : String }
 
 
 type alias Character =
@@ -86,7 +86,11 @@ type alias Character =
 
 
 type alias CharacterBuild =
-    { idCharacter : Int, listJobSkillId : List Int, listMasterySkillId : List Int, listStandardSkillId : List Int }
+    { idCharacter : Int, listMasterySkillId : List Int, listStandardSkillId : List Int, jobId : Int, hiddenInfo : Bool }
+
+
+type alias Skill =
+    { id : Int, name : String, description : String, combatArt : Bool }
 
 
 type alias TeamBuilder =
