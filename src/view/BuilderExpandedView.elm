@@ -19,9 +19,8 @@ toggleBuildInfo element =
         , style "height" "20px"
         , style "width" "40px"
         , class "bg-light rounded border"
-        , style "position" "relative"
-        , style "bottom" "0.5rem"
-        , style "left" "calc(50% - 40px)"
+        , style "position" "absolute"
+        , style "left" "calc(50% - 20px)"
         , style "z-index" "1"
         , style "outline" "none"
         ]
@@ -48,8 +47,6 @@ viewBuildInfo element =
     in
     div
         [ class "list-group-item list-group-item-secondary"
-        , style "position" "relative"
-        , style "top" "-1.2rem"
         , id ("info-" ++ String.fromInt element.idCharacter)
         , hidden element.hiddenInfo
         ]

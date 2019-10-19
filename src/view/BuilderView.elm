@@ -47,7 +47,7 @@ viewRow element =
                 , viewActiveSkills element
                 , viewJobSkills element
                 ]
+            , toggleBuildInfo element
             ]
-        , toggleBuildInfo element
         , viewBuildInfo element
         ]
