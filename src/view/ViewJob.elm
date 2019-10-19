@@ -1,7 +1,7 @@
 module ViewJob exposing (..)
 
 import CustomTypes exposing (..)
-import DataBuilder exposing (Msg(..))
+import GlobalMessage exposing (Msg(..))
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Job exposing (..)

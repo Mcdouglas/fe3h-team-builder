@@ -4,14 +4,10 @@ import CustomTypes exposing (..)
 
 
 type alias Model =
-    { builderModel : BuilderModel
+    { team : List (Maybe CharacterBuild)
     , dataModel : DataModel
     , errorMessage : Maybe String
     }
-
-
-type alias BuilderModel =
-    { team : List (Maybe CharacterBuild) }
 
 
 type alias DataModel =

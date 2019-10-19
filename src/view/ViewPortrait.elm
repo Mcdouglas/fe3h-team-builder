@@ -3,7 +3,7 @@ module ViewPortrait exposing (..)
 import Character exposing (..)
 import CharacterSkill exposing (..)
 import CustomTypes exposing (..)
-import DataBuilder exposing (Msg(..))
+import GlobalMessage exposing (Msg(..))
 import Html exposing (..)
 import Html.Attributes exposing (..)
 
@@ -15,24 +15,36 @@ viewPortrait element =
             getCharacterById element.idCharacter
                 |> Maybe.withDefault (Character -1 "" Male 0)
     in
-    div [ class "item-a" ]
-        [ getPortrait character.id
-        , div [] [ text character.name ]
-        , viewCharacterSkillImg character.characterSkillId
+    div []
+        [ viewPortraitTile character
+        , viewCharacterSkill character.characterSkillId
         ]
 
 
-viewCharacterSkillImg : Int -> Html Msg
-viewCharacterSkillImg id =
+viewPortraitTile : Character -> Html Msg
+viewPortraitTile element =
+    div [ class "card", style "width" "4rem" ]
+        [ getPortrait element.id
+        , div [ style "text-align" "center" ] [ text element.name ]
+        ]
+
+
+getPortrait : Int -> Html Msg
+getPortrait id =
+    img [ class "card-img-top", src ("resources/img/portraits/" ++ String.fromInt id ++ ".png"), width 60, height 60 ] []
+
+
+viewCharacterSkill : Int -> Html Msg
+viewCharacterSkill id =
     let
         characterSkill =
             getCharacterSkillById id
     in
     case characterSkill of
         Just value ->
-            div []
+            div [ class "card", style "width" "4rem" ]
                 [ getSkillCharacterPicture value.pictureId
-                , div [] [ text value.name ]
+                , div [ class "card-title" ] [ text value.name ]
                 ]
 
         Nothing ->
@@ -40,11 +52,6 @@ viewCharacterSkillImg id =
                 [ text (String.fromInt id) ]
 
 
-getPortrait : Int -> Html Msg
-getPortrait id =
-    img [ src ("resources/img/portraits/" ++ String.fromInt id ++ ".png"), width 50, height 50 ] []
-
-
 getSkillCharacterPicture : Int -> Html Msg
 getSkillCharacterPicture id =
-    img [ src ("resources/img/skill_character/" ++ String.fromInt id ++ ".png"), width 50, height 50 ] []
+    img [ class "card-img-top", src ("resources/img/skill_character/" ++ String.fromInt id ++ ".png"), width 50, height 50 ] []
