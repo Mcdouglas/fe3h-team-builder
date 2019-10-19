@@ -33,18 +33,20 @@ viewSelector ( model, element ) =
             viewRow value
 
         Nothing ->
-            li [ class "list-group-item list-group-item-secondary" ] [ text "TODO" ]
+            li [ class "list-group-item mt-3 list-group-item-secondary" ] [ text "TODO" ]
 
 
 viewRow : CharacterBuild -> Html Msg
 viewRow element =
-    div []
-        [ li [ class "list-group-item mt-3" ]
-            [ viewPortrait element
-            , viewPassiveSkills element
-            , viewActiveSkills element
-            , viewJobSkills element
-            , toggleBuildInfo element
+    div [ class "container mt-3" ]
+        [ div [ class "list-group-item" ]
+            [ li [ class "row" ]
+                [ viewPortrait element
+                , viewPassiveSkills element
+                , viewActiveSkills element
+                , viewJobSkills element
+                ]
             ]
+        , toggleBuildInfo element
         , viewBuildInfo element
         ]

@@ -3,6 +3,7 @@ module SkillView exposing (..)
 import CustomTypes exposing (..)
 import GlobalMessage exposing (Msg(..))
 import Html exposing (..)
+import Html.Attributes exposing (..)
 import ModelHandler exposing (..)
 
 
@@ -12,7 +13,7 @@ viewPassiveSkills element =
         listPassiveSkill =
             getPassiveSkills element
     in
-    div []
+    div [ class "col-sm" ]
         (List.map (\e -> div [] [ text (e.name ++ ", ") ]) listPassiveSkill)
 
 
@@ -22,5 +23,5 @@ viewActiveSkills element =
         listActiveSkill =
             getActiveSkills element
     in
-    div []
+    div [ class "col-sm" ]
         (List.map (\e -> div [] [ text (e.name ++ ", ") ]) listActiveSkill)

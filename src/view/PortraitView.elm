@@ -15,7 +15,10 @@ viewPortrait element =
             getCharacterById element.idCharacter
                 |> Maybe.withDefault (Character -1 "" Male 0)
     in
-    div []
+    div
+        [ class "col-sm"
+        , style "background-color" "red"
+        ]
         [ viewPortraitTile character
         , viewCharacterSkill character.characterSkillId
         ]
@@ -23,15 +26,24 @@ viewPortrait element =
 
 viewPortraitTile : Character -> Html Msg
 viewPortraitTile element =
-    div [ class "card", style "width" "4rem" ]
+    div [ class "card" ]
         [ getPortrait element.id
-        , div [ style "text-align" "center" ] [ text element.name ]
+        , div [ class "card-title", style "text-align" "center" ] [ text element.name ]
         ]
 
 
 getPortrait : Int -> Html Msg
 getPortrait id =
-    img [ class "card-img-top", src ("resources/img/portraits/" ++ String.fromInt id ++ ".png"), width 60, height 60 ] []
+    img
+        [ class "card-img-top"
+        , style "width" "4rem"
+        , style "height" "4rem"
+        , style "margin" "0 auto"
+        , src ("resources/img/portraits/" ++ String.fromInt id ++ ".png")
+        , width 100
+        , height 100
+        ]
+        []
 
 
 viewCharacterSkill : Int -> Html Msg
@@ -42,16 +54,32 @@ viewCharacterSkill id =
     in
     case characterSkill of
         Just value ->
-            div [ class "card", style "width" "4rem" ]
-                [ getSkillCharacterPicture value.pictureId
-                , div [ class "card-title" ] [ text value.name ]
+            div [ class "card" ]
+                [ getSkillCharacterPicture ( value.description, value.pictureId )
+                , div
+                    [ class "card-title"
+                    , style "text-align" "center"
+                    , style "font-size" "10px"
+                    ]
+                    [ text value.name ]
                 ]
 
         Nothing ->
-            div []
-                [ text (String.fromInt id) ]
+            div [] []
 
 
-getSkillCharacterPicture : Int -> Html Msg
-getSkillCharacterPicture id =
-    img [ class "card-img-top", src ("resources/img/skill_character/" ++ String.fromInt id ++ ".png"), width 50, height 50 ] []
+getSkillCharacterPicture : ( String, Int ) -> Html Msg
+getSkillCharacterPicture ( description, id ) =
+    img
+        [ class "card-img-top"
+        , style "width" "2rem"
+        , style "height" "2rem"
+        , style "margin" "0 auto"
+        , attribute "data-toggle" "popover"
+        , attribute "title" "Popover title"
+        , attribute "data-content" description
+        , src ("resources/img/skill_character/" ++ String.fromInt id ++ ".png")
+        , width 75
+        , height 75
+        ]
+        []

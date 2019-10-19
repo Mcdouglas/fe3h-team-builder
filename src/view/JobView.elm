@@ -17,7 +17,7 @@ viewJobSkills element =
         listJobSkill =
             job |> Maybe.map (\e -> getJobSkillsByJob e.id) |> Maybe.withDefault []
     in
-    div []
+    div [ class "col-sm" ]
         [ text (job |> Maybe.map (\e -> e.name) |> Maybe.withDefault "No data")
         , div [] (listJobSkill |> List.map (\e -> viewJobSkill e))
         ]
