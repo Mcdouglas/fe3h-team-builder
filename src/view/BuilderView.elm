@@ -33,7 +33,8 @@ viewSelector ( model, element ) =
             viewRow value
 
         Nothing ->
-            li [ class "list-group-item mt-3 list-group-item-secondary" ] [ text "TODO" ]
+            div [ class "container mt-3" ]
+                [ li [ class "list-group-item list-group-item-secondary" ] [ text "TODO" ] ]
 
 
 viewRow : CharacterBuild -> Html Msg

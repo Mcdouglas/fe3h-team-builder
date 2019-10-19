@@ -16,9 +16,7 @@ viewPortrait element =
                 |> Maybe.withDefault (Character -1 "" Male 0)
     in
     div
-        [ class "col-sm"
-        , style "background-color" "red"
-        ]
+        [ class "col-sm" ]
         [ viewPortraitTile character
         , viewCharacterSkill character.characterSkillId
         ]
