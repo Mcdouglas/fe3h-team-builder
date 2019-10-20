@@ -2,14 +2,15 @@ module JobView exposing (..)
 
 import CustomTypes exposing (..)
 import GlobalMessage exposing (Msg(..))
+import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Job exposing (..)
 import JobSkill exposing (..)
 
 
-viewJobSkills : CharacterBuild -> Html Msg
-viewJobSkills element =
+viewJobSkills : ( Model, CharacterBuild ) -> Html Msg
+viewJobSkills ( model, element ) =
     let
         job =
             getJobById element.jobId

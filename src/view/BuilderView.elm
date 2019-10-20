@@ -15,37 +15,37 @@ import Stringable exposing (..)
 viewPlanner : Model -> Html Msg
 viewPlanner model =
     div [ class "planner" ]
-        [ h3 [] [ text "Fire Emblem Three Houses - Team Builder!" ]
-        , viewTable model.team
+        [ h3 [ class "text-light" ] [ text "Fire Emblem Three Houses - Team Builder!" ]
+        , viewTable model
         ]
 
 
-viewTable : List ( Int, Maybe CharacterBuild ) -> Html Msg
-viewTable team =
+viewTable : Model -> Html Msg
+viewTable model =
     ul [ class "list-group mx-2" ]
-        (List.map (\( id, e ) -> viewSelector e) team)
+        (List.map (\( id, e ) -> viewSelector ( model, e )) model.team)
 
 
-viewSelector : Maybe CharacterBuild -> Html Msg
-viewSelector element =
+viewSelector : ( Model, Maybe CharacterBuild ) -> Html Msg
+viewSelector ( model, element ) =
     case element of
         Just value ->
-            viewRow value
+            viewRow ( model, value )
 
         Nothing ->
             div [ class "container mt-3" ]
                 [ li [ class "list-group-item list-group-item-secondary" ] [ text "TODO Add new player" ] ]
 
 
-viewRow : CharacterBuild -> Html Msg
-viewRow element =
+viewRow : ( Model, CharacterBuild ) -> Html Msg
+viewRow ( model, element ) =
     div [ class "container mt-3" ]
         [ div [ class "list-group-item" ]
             [ li [ class "row" ]
-                [ viewPortrait element
-                , viewPassiveSkills element
-                , viewActiveSkills element
-                , viewJobSkills element
+                [ viewPortrait ( model, element )
+                , viewPassiveSkills ( model, element )
+                , viewActiveSkills ( model, element )
+                , viewJobSkills ( model, element )
                 ]
             , toggleBuildInfo element
             ]

@@ -10,12 +10,6 @@ import StandardSkill exposing (..)
 
 
 mockCharacterBuilds : List ( Int, Maybe CharacterBuild )
-
-
-
--- TEST
-
-
 mockCharacterBuilds =
     [ ( 0, Just (CharacterBuild 0 [ 13, 14, 20 ] [ 17, 12, 13 ] 0 False) )
     , ( 1, Just (CharacterBuild 1 [] [] 1 True) )
