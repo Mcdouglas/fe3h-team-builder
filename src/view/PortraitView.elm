@@ -61,32 +61,38 @@ viewCharacterSkill ( model, id ) =
     in
     case characterSkill of
         Just value ->
-            div [ class "card" ]
-                [ getSkillCharacterPicture ( model, value.description, value.pictureId )
+            div [ class "card qs" ]
+                [ getSkillCharacterPicture ( model, value.pictureId )
                 , div
                     [ class "card-title"
                     , style "text-align" "center"
                     , style "font-size" "10px"
-                    , style "word-break" "break-all"
+                    , style "overflow-wrap" "anywhere"
                     ]
                     [ text value.name ]
+                , div [ class "custom-popover above" ] [ text value.description ]
                 ]
 
         Nothing ->
             div [] []
 
 
-getSkillCharacterPicture : ( Model, String, Int ) -> Html Msg
-getSkillCharacterPicture ( model, description, id ) =
-    img [ class "card-img-top"
+getSkillCharacterPicture : ( Model, Int ) -> Html Msg
+getSkillCharacterPicture ( model, id ) =
+    div
+        [ class "card-img-top"
         , style "width" "2rem"
         , style "height" "2rem"
         , style "margin" "0 auto"
-        , src ("resources/img/skill_character/" ++ String.fromInt id ++ ".png")
-        , width 75
-        , height 75
-        ] []
-        
+        , style "border-radius" "16px"
+        , style "content" ("url(\"resources/img/skill_character/" ++ String.fromInt id ++ ".png\")")
+        ]
+        []
+
+
+viewCharacterSkillTooltip : ( Model, Int ) -> Html Msg
+viewCharacterSkillTooltip ( model, id ) =
+    div [] [ text "info" ]
 
 
 viewCrest : Int -> Html Msg
