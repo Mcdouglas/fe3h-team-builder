@@ -91,7 +91,3 @@ type alias CharacterBuild =
 
 type alias Skill =
     { id : Int, name : String, description : String, combatArt : Bool }
-
-
-type alias TeamBuilder =
-    { builds : List CharacterBuild, link : String }

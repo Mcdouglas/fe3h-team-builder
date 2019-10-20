@@ -20,21 +20,21 @@ viewPlanner model =
         ]
 
 
-viewTable : List (Maybe CharacterBuild) -> Html Msg
+viewTable : List ( Int, Maybe CharacterBuild ) -> Html Msg
 viewTable team =
     ul [ class "list-group mx-2" ]
-        (List.map (\e -> viewSelector ( team, e )) team)
+        (List.map (\( id, e ) -> viewSelector e) team)
 
 
-viewSelector : ( List (Maybe CharacterBuild), Maybe CharacterBuild ) -> Html Msg
-viewSelector ( model, element ) =
+viewSelector : Maybe CharacterBuild -> Html Msg
+viewSelector element =
     case element of
         Just value ->
             viewRow value
 
         Nothing ->
             div [ class "container mt-3" ]
-                [ li [ class "list-group-item list-group-item-secondary" ] [ text "TODO" ] ]
+                [ li [ class "list-group-item list-group-item-secondary" ] [ text "TODO Add new player" ] ]
 
 
 viewRow : CharacterBuild -> Html Msg

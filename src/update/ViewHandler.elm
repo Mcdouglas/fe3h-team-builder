@@ -9,17 +9,17 @@ import Maybe.Extra exposing (..)
 toggleBuildInfo : ( Int, Model ) -> Model
 toggleBuildInfo ( characterId, model ) =
     let
-        toggleInfo maybeItem =
+        toggleInfo ( id, maybeItem ) =
             case maybeItem of
                 Just item ->
                     if item.idCharacter == characterId then
-                        Just { item | hiddenInfo = not item.hiddenInfo }
+                        ( id, Just { item | hiddenInfo = not item.hiddenInfo } )
 
                     else
-                        Just item
+                        ( id, Just item )
 
                 Nothing ->
-                    maybeItem
+                    ( id, maybeItem )
 
         newTeam =
             model.team

@@ -4,7 +4,7 @@ import CustomTypes exposing (..)
 
 
 type alias Model =
-    { team : List (Maybe CharacterBuild)
+    { team : List ( Int, Maybe CharacterBuild )
     , dataModel : DataModel
     , errorMessage : Maybe String
     }

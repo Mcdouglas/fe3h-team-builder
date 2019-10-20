@@ -9,7 +9,7 @@ import Maybe.Extra exposing (..)
 import StandardSkill exposing (..)
 
 
-mockCharacterBuilds : List (Maybe CharacterBuild)
+mockCharacterBuilds : List ( Int, Maybe CharacterBuild )
 
 
 
@@ -17,18 +17,18 @@ mockCharacterBuilds : List (Maybe CharacterBuild)
 
 
 mockCharacterBuilds =
-    [ Just (CharacterBuild 0 [ 13, 14, 20 ] [ 17, 12, 13 ] 0 False)
-    , Just (CharacterBuild 1 [] [] 1 True)
-    , Just (CharacterBuild 2 [] [] 42 False)
-    , Just (CharacterBuild 10 [] [] 3 True)
-    , Just (CharacterBuild 18 [] [] 5 False)
-    , Just (CharacterBuild 3 [] [] 6 True)
-    , Just (CharacterBuild 11 [] [] 9 False)
-    , Just (CharacterBuild 19 [] [] 3 True)
-    , Just (CharacterBuild 4 [] [] 15 False)
-    , Nothing
-    , Just (CharacterBuild 20 [] [] 2 False)
-    , Just (CharacterBuild 34 [] [] 4 True)
+    [ ( 0, Just (CharacterBuild 0 [ 13, 14, 20 ] [ 17, 12, 13 ] 0 False) )
+    , ( 1, Just (CharacterBuild 1 [] [] 1 True) )
+    , ( 2, Just (CharacterBuild 2 [] [] 42 False) )
+    , ( 3, Just (CharacterBuild 10 [] [] 3 True) )
+    , ( 4, Just (CharacterBuild 18 [] [] 5 False) )
+    , ( 5, Just (CharacterBuild 3 [] [] 6 True) )
+    , ( 6, Just (CharacterBuild 11 [] [] 9 False) )
+    , ( 7, Just (CharacterBuild 19 [] [] 3 True) )
+    , ( 8, Just (CharacterBuild 4 [] [] 15 False) )
+    , ( 9, Nothing )
+    , ( 10, Just (CharacterBuild 20 [] [] 2 False) )
+    , ( 11, Just (CharacterBuild 34 [] [] 4 True) )
     ]
 
 
