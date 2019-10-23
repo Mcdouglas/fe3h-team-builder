@@ -6,8 +6,12 @@ body {
     background-size: cover;
     height: 100vh;
 
-$height-qs: 4rem;
-$width-qs: 5rem;
+    .card {
+      // border: none; // TO UNCOMMENT -- DEBUG
+    }
+
+    $height-qs: 4rem;
+    $width-qs: 5rem;
 
 /* The element to hover over */
 .qs {
