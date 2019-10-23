@@ -64,7 +64,7 @@ viewCharacterSkill ( model, id ) =
             div [ class "card qs" ]
                 [ getSkillCharacterPicture ( model, value.pictureId )
                 , div
-                    [ class "card-title"
+                    [ class "card-text"
                     , style "text-align" "center"
                     , style "font-size" "10px"
                     , style "overflow-wrap" "anywhere"
