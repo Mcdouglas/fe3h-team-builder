@@ -14,8 +14,8 @@ viewPassiveSkills ( model, element ) =
         listPassiveSkill =
             getPassiveSkills element
     in
-    div [ class "col-sm border-right" ]
-        (List.map (\e -> div [] [ text (e.name ++ ", ") ]) listPassiveSkill)
+    div [ class "col-sm-5 row border-right" ]
+        (List.map (\e -> viewSkill ( model, e )) listPassiveSkill)
 
 
 viewActiveSkills : ( Model, CharacterBuild ) -> Html Msg
@@ -24,5 +24,34 @@ viewActiveSkills ( model, element ) =
         listActiveSkill =
             getActiveSkills element
     in
-    div [ class "col-sm border-right" ]
-        (List.map (\e -> div [] [ text (e.name ++ ", ") ]) listActiveSkill)
+    div [ class "col-sm-3 border-right" ]
+        [ div [ class "row" ] (List.map (\e -> viewSkill ( model, e )) listActiveSkill)
+        ]
+
+
+viewSkill : ( Model, Skill ) -> Html Msg
+viewSkill ( model, element ) =
+    div [ class "col-sm-3 card qs" ]
+        [ getSkillPicture ( model, element.id ) -- FIXME id -> idPicture
+        , div
+            [ class "card-text"
+            , style "text-align" "center"
+            , style "font-size" "10px"
+            , style "overflow-wrap" "anywhere"
+            ]
+            [ text element.name ]
+        , div [ class "custom-popover above" ] [ text element.description ]
+        ]
+
+
+getSkillPicture : ( Model, Int ) -> Html Msg
+getSkillPicture ( model, id ) =
+    div
+        [ class "card-img-top"
+        , style "width" "2rem"
+        , style "height" "2rem"
+        , style "margin" "0 auto"
+        , style "border-radius" "16px"
+        , style "content" ("url(\"resources/img/skill_character/" ++ String.fromInt id ++ ".png\")") -- FIXME skill_character -> skill
+        ]
+        []

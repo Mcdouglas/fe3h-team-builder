@@ -18,7 +18,10 @@ viewPortrait ( model, element ) =
                 |> Maybe.withDefault (Character -1 "" Male 0)
     in
     div
-        [ class "border-right" ]
+        [ class "col-sm-2 border-right"
+        , style "padding-right" "0"
+        , style "padding-left" "0"
+        ]
         [ viewPortraitTile character
         , div
             [ class "row"
@@ -36,7 +39,11 @@ viewPortraitTile element =
     div
         [ class "card" ]
         [ getPortrait element.id
-        , div [ class "card-title", style "text-align" "center" ] [ text element.name ]
+        , div
+            [ class "card-text"
+            , style "text-align" "center"
+            ]
+            [ text element.name ]
         ]
 
 
