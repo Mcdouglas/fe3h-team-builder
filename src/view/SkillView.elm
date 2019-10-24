@@ -14,7 +14,7 @@ viewPassiveSkills ( model, element ) =
         listPassiveSkill =
             getPassiveSkills element
     in
-    div []
+    div [ class "item-a2" ]
         (List.map (\e -> viewSkill ( model, e )) listPassiveSkill)
 
 
@@ -24,7 +24,7 @@ viewActiveSkills ( model, element ) =
         listActiveSkill =
             getActiveSkills element
     in
-    div []
+    div [ class "item-a3" ]
         (List.map (\e -> viewSkill ( model, e )) listActiveSkill)
 
 
