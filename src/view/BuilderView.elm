@@ -42,7 +42,7 @@ viewSelector ( model, element ) =
 
 viewRow : ( Model, CharacterBuild ) -> Html Msg
 viewRow ( model, element ) =
-    div []
+    div [ style "margin-bottom" "-1.5rem" ]
         [ div [ class "item-a" ]
             [ viewPortrait ( model, element )
             , viewPassiveSkills ( model, element )
