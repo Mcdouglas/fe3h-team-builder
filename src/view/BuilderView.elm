@@ -22,7 +22,7 @@ viewPlanner model =
 
 viewTable : Model -> Html Msg
 viewTable model =
-    div []
+    div [ style "margin-top" "5rem" ]
         (List.map (\( id, e ) -> viewSelector ( model, e )) model.team)
 
 
@@ -30,8 +30,11 @@ viewSelector : ( Model, Maybe CharacterBuild ) -> Html Msg
 viewSelector ( model, element ) =
     case element of
         Just value ->
-            div [ class "c-container" ] [ viewRow ( model, value )
-                , div [ class "item-b" ] [text "TODO" ]]
+            div [ class "super-container" ]
+                [ viewRow ( model, value )
+                , viewBuildInfo value
+                , div [ class "item-c" ] [ text "TODO" ]
+                ]
 
         Nothing ->
             div [ class "item-a" ] [ text "TODO Add new player" ]
@@ -39,15 +42,12 @@ viewSelector ( model, element ) =
 
 viewRow : ( Model, CharacterBuild ) -> Html Msg
 viewRow ( model, element ) =
-    div [ class "item-a" ]
-        [ div []
-            [ div []
-                [ viewPortrait ( model, element )
-                , viewPassiveSkills ( model, element )
-                , viewActiveSkills ( model, element )
-                , viewJobSkills ( model, element )
-                ]
-            , toggleBuildInfo element
+    div []
+        [ div [ class "item-a" ]
+            [ viewPortrait ( model, element )
+            , viewPassiveSkills ( model, element )
+            , viewActiveSkills ( model, element )
+            , viewJobSkills ( model, element )
             ]
-        , viewBuildInfo element
+        , toggleBuildInfo element
         ]

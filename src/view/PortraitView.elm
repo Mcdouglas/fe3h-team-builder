@@ -18,7 +18,7 @@ viewPortrait ( model, element ) =
                 |> Maybe.withDefault (Character -1 "" Male 0)
     in
     div
-        [ class "border-right" ]
+        [ class "item-a1" ]
         [ viewPortraitTile character
         , div []
             [ viewCharacterSkill ( model, character.characterSkillId )
