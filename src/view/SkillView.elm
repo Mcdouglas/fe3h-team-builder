@@ -14,7 +14,7 @@ viewPassiveSkills ( model, element ) =
         listPassiveSkill =
             getPassiveSkills element
     in
-    div [ class "col-sm-5 row border-right" ]
+    div []
         (List.map (\e -> viewSkill ( model, e )) listPassiveSkill)
 
 
@@ -24,14 +24,13 @@ viewActiveSkills ( model, element ) =
         listActiveSkill =
             getActiveSkills element
     in
-    div [ class "col-sm-3 border-right" ]
-        [ div [ class "row" ] (List.map (\e -> viewSkill ( model, e )) listActiveSkill)
-        ]
+    div []
+        (List.map (\e -> viewSkill ( model, e )) listActiveSkill)
 
 
 viewSkill : ( Model, Skill ) -> Html Msg
 viewSkill ( model, element ) =
-    div [ class "col-sm-3 card qs" ]
+    div [ class "card qs" ]
         [ getSkillPicture ( model, element.id ) -- FIXME id -> idPicture
         , div
             [ class "card-text"
