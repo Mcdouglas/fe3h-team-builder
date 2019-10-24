@@ -75,6 +75,10 @@ body {
         display: grid;
         grid-template-columns: 20% 30% 30% 20%;
         border-top: 1px solid #dee2e6 !important;
+        padding: 1rem;
+        background-color: lightgray;
+        border-bottom-left-radius: 1rem;
+        border-bottom-right-radius: 1rem;
       }
 
       .item-c {
