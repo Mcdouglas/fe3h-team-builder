@@ -18,16 +18,9 @@ viewPortrait ( model, element ) =
                 |> Maybe.withDefault (Character -1 "" Male 0)
     in
     div
-        [ class "col-sm-2 border-right"
-        , style "padding-right" "0"
-        , style "padding-left" "0"
-        ]
+        [ class "border-right" ]
         [ viewPortraitTile character
-        , div
-            [ class "row"
-            , style "margin-right" "0"
-            , style "margin-left" "0"
-            ]
+        , div []
             [ viewCharacterSkill ( model, character.characterSkillId )
             , viewCrest character.characterSkillId
             ]
@@ -70,7 +63,7 @@ viewCharacterSkill ( model, id ) =
     in
     case characterSkill of
         Just value ->
-            div [ class "card col-sm qs" ]
+            div [ class "card qs" ]
                 [ getSkillCharacterPicture ( model, value.pictureId )
                 , div
                     [ class "card-text"
@@ -106,4 +99,4 @@ viewCharacterSkillTooltip ( model, id ) =
 
 viewCrest : Int -> Html Msg
 viewCrest id =
-    div [ class "card col-sm" ] [ text "TODO Crest" ]
+    div [ class "card" ] [ text "TODO Crest" ]
