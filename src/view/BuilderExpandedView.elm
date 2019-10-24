@@ -21,7 +21,7 @@ toggleBuildInfo element =
         , class "bg-light rounded border"
         , style "position" "relative"
         , style "left" "calc(50% - (40px/2))"
-        , style "top" "1rem"
+        , style "top" "-0.5rem"
         , style "z-index" "1"
         , style "outline" "none"
         ]
