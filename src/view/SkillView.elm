@@ -28,24 +28,38 @@ viewActiveSkills ( model, element ) =
         (List.map (\e -> viewSkill ( model, e )) listActiveSkill)
 
 
-viewSkill : ( Model, Skill ) -> Html Msg
+viewSkill : ( Model, Maybe Skill ) -> Html Msg
 viewSkill ( model, element ) =
-    div [ class "card qs" ]
-        [ getSkillPicture ( model, element.id ) -- FIXME id -> idPicture
-        , div
-            [ class "card-text"
-            , style "text-align" "center"
-            , style "font-size" "10px"
-            , style "hyphens" "auto"
-            ]
-            [ text element.name ]
-        , div
-            [ class "custom-popover above" ]
-            [ div [ class "popover-title" ] [ text ("[" ++ element.name ++ "]") ]
-            , div [ class "popover-text" ] [ text element.description ]
-            , div [ class "popover-instruction" ] [ text "Cliquez pour modifier" ]
-            ]
-        ]
+    case element of
+        Just value ->
+            div [ class "card qs" ]
+                [ getSkillPicture ( model, value.id ) -- FIXME id -> idPicture
+                , div
+                    [ class "card-text"
+                    , style "text-align" "center"
+                    , style "font-size" "10px"
+                    , style "hyphens" "auto"
+                    ]
+                    [ text value.name ]
+                , div
+                    [ class "custom-popover above" ]
+                    [ div [ class "popover-title" ] [ text ("[" ++ value.name ++ "]") ]
+                    , div [ class "popover-text" ] [ text value.description ]
+                    , div [ class "popover-instruction" ] [ text "Cliquez pour modifier" ]
+                    ]
+                ]
+
+        _ ->
+            div [ class "card qs" ]
+                [ div
+                    [ class "skill-picture no-data card-img-top"
+                    , style "content" "url(\"resources/lib/octicons/plus.svg\")"
+                    ]
+                    []
+                , div
+                    [ class "custom-popover above" ]
+                    [ div [ class "popover-instruction" ] [ text "Ajouter" ] ]
+                ]
 
 
 getSkillPicture : ( Model, Int ) -> Html Msg

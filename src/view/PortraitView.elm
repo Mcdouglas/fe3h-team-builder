@@ -20,10 +20,8 @@ viewPortrait ( model, element ) =
     div
         [ class "item-a1" ]
         [ viewPortraitTile character
-        , div []
-            [ viewCharacterSkill ( model, character.characterSkillId )
-            , viewCrest character.characterSkillId
-            ]
+        , viewCharacterSkill ( model, character.characterSkillId )
+        , viewCrest character.characterSkillId
         ]
 
 
@@ -72,6 +70,7 @@ viewCharacterSkill ( model, id ) =
                     [ class "custom-popover above" ]
                     [ div [ class "popover-title" ] [ text ("[" ++ value.name ++ "]") ]
                     , div [ class "popover-text" ] [ text value.description ]
+                    , div [ class "popover-instruction" ] [ text "Cliquez pour modifier" ]
                     ]
                 ]
 
@@ -86,11 +85,6 @@ getSkillCharacterPicture ( model, id ) =
         , style "content" ("url(\"resources/img/skill_character/" ++ String.fromInt id ++ ".png\")")
         ]
         []
-
-
-viewCharacterSkillTooltip : ( Model, Int ) -> Html Msg
-viewCharacterSkillTooltip ( model, id ) =
-    div [] [ text "info" ]
 
 
 viewCrest : Int -> Html Msg
