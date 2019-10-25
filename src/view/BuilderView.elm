@@ -42,12 +42,10 @@ viewSelector ( model, element ) =
 
 viewRow : ( Model, CharacterBuild ) -> Html Msg
 viewRow ( model, element ) =
-    div [ style "margin-bottom" "-1.5rem" ]
-        [ div [ class "item-a" ]
-            [ viewPortrait ( model, element )
-            , viewPassiveSkills ( model, element )
-            , viewActiveSkills ( model, element )
-            , viewJobSkills ( model, element )
-            ]
+    div [ class "item-a" ]
+        [ viewPortrait ( model, element )
+        , viewPassiveSkills ( model, element )
+        , viewActiveSkills ( model, element )
+        , viewJobSkills ( model, element )
         , toggleBuildInfo element
         ]

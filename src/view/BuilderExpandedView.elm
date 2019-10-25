@@ -16,14 +16,7 @@ toggleBuildInfo element =
     button
         [ onClick (ShowBuildInfo element.idCharacter)
         , type_ "button"
-        , style "height" "20px"
-        , style "width" "40px"
-        , class "bg-light rounded border"
-        , style "position" "relative"
-        , style "left" "calc(50% - (40px/2))"
-        , style "top" "-0.5rem"
-        , style "z-index" "1"
-        , style "outline" "none"
+        , class "item-b1 bg-light rounded border"
         ]
         [ img
             [ if element.hiddenInfo == True then
@@ -39,17 +32,9 @@ toggleBuildInfo element =
 
 viewBuildInfo : CharacterBuild -> Html Msg
 viewBuildInfo element =
-    let
-        cssClassHidden =
-            if element.hiddenInfo == True then
-                "invisible"
-
-            else
-                "visible"
-    in
     div
-        [ class "item-b"
-        , id ("info-" ++ String.fromInt element.idCharacter)
+        [ class ("item-b2")
         , hidden element.hiddenInfo
+        , id ("info-" ++ String.fromInt element.idCharacter)
         ]
         [ text "Hidden infos" ]
