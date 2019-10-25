@@ -43,11 +43,7 @@ viewPortraitTile element =
 getPortrait : Int -> Html Msg
 getPortrait id =
     img
-        [ class "card-img-top border border-dark"
-        , style "width" "4rem"
-        , style "height" "4rem"
-        , style "margin" "0 auto"
-        , style "background" "white"
+        [ class "portrait-picture card-img-top"
         , src ("resources/img/portraits/" ++ String.fromInt id ++ ".png")
         , width 100
         , height 100
@@ -69,10 +65,14 @@ viewCharacterSkill ( model, id ) =
                     [ class "card-text"
                     , style "text-align" "center"
                     , style "font-size" "10px"
-                    , style "overflow-wrap" "anywhere"
+                    , style "hyphens" "auto"
                     ]
                     [ text value.name ]
-                , div [ class "custom-popover above" ] [ text value.description ]
+                , div
+                    [ class "custom-popover above" ]
+                    [ div [ class "popover-title" ] [ text ("[" ++ value.name ++ "]") ]
+                    , div [ class "popover-text" ] [ text value.description ]
+                    ]
                 ]
 
         Nothing ->
@@ -82,11 +82,7 @@ viewCharacterSkill ( model, id ) =
 getSkillCharacterPicture : ( Model, Int ) -> Html Msg
 getSkillCharacterPicture ( model, id ) =
     div
-        [ class "card-img-top"
-        , style "width" "2rem"
-        , style "height" "2rem"
-        , style "margin" "0 auto"
-        , style "border-radius" "16px"
+        [ class "skill-picture card-img-top"
         , style "content" ("url(\"resources/img/skill_character/" ++ String.fromInt id ++ ".png\")")
         ]
         []

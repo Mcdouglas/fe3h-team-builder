@@ -1,0 +1,86 @@
+/* The element to hover over */
+.qs {
+
+    height: 4rem;
+    width: 5rem;
+
+    position: relative;
+
+    .custom-popover {
+
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translate(-50%,-10%);
+        box-sizing: unset;
+        
+        display: none;
+        height: auto;
+        line-height: 1.3rem;
+        max-height: 12rem;
+        width: 12rem;
+        max-width: 15rem;
+        padding: 0.5rem;
+
+        color: #fff;
+        font-size: 12px;
+        font-family: 'Helvetica',sans-serif;
+        
+        background-color: rgba(0,0,20,0.75);
+        box-shadow: 0 0 0.25rem rgba(0,0,0,0.4);
+        border: 1px solid #dee2e6;
+        border-radius: 0.25rem;
+        
+        z-index: 4;
+        
+        &:before {
+            content: '';
+            
+            display: block;
+            margin-left: -7px;
+            
+            position: absolute;
+            bottom: -7px;
+            left: 50%;
+            
+            border-top: 7px solid rgba(0,0,0,0.85);
+            border-right: 7px solid transparent;
+            border-left: 7px solid transparent;
+        }
+
+        &>.popover-title {
+
+        }
+
+        &>.popover-text {
+            color: #FFD100;
+        }
+    }
+
+    &:hover {
+        .custom-popover {
+            display: block;
+            animation: fade-in .3s linear 1;
+            -webkit-animation: fade-in .3s linear 1;
+            -moz-animation: fade-in .3s linear 1;
+            -ms-animation: fade-in .3s linear 1;
+        }
+    }
+}
+
+@keyframes fade-in {
+from   { opacity: 0; }
+to { opacity: 1; }
+}
+@-webkit-keyframes fade-in {
+    from   { opacity: 0; }
+    to { opacity: 1; }
+}
+@-moz-keyframes fade-in {
+    from   { opacity: 0; }
+    to { opacity: 1; }
+}
+@-ms-keyframes fade-in {
+    from   { opacity: 0; }
+    to { opacity: 1; }
+}
