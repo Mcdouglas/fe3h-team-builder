@@ -22,6 +22,7 @@ body {
       border: 1px solid rgba(0, 0, 0, 0.125);
 
       .item-a {
+        position: relative;
         grid-column-start: 1;
         grid-column-end: 2;
         grid-row-start: 1;
@@ -67,7 +68,18 @@ body {
         }
       }
 
-      .item-b {
+      .item-b1 {
+        height: 20px;
+        width: 40px;
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        transform: translate(-50%,50%);
+        outline: none;
+        z-index: 1;
+      }
+
+      .item-b2 {
         grid-column-start: 1;
         grid-column-end: 3;
         grid-row-start: 2;
@@ -75,12 +87,12 @@ body {
         display: grid;
         grid-template-columns: 20% 30% 30% 20%;
         border-top: 1px solid #dee2e6 !important;
-        padding: 1rem;
         background-color: lightgray;
         border-bottom-left-radius: 1rem;
         border-bottom-right-radius: 1rem;
+        padding: 1rem;
       }
-
+      
       .item-c {
         grid-column-start: 2;
         grid-column-end: 3;
