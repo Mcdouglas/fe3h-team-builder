@@ -13,10 +13,9 @@ toggleBuildInfo element =
         infoShown =
             not element.hiddenInfo
     in
-    button
+    div
         [ onClick (ShowBuildInfo element.idCharacter)
-        , type_ "button"
-        , class "item-b1 bg-light rounded border"
+        , class "item-b1"
         ]
         [ img
             [ if element.hiddenInfo == True then
@@ -24,7 +23,6 @@ toggleBuildInfo element =
 
               else
                 src "resources/lib/octicons/chevron-up.svg"
-            , style "vertical-align" "baseline"
             ]
             []
         ]
