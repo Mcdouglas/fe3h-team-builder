@@ -36,21 +36,22 @@ viewSkill ( model, element ) =
             [ class "card-text"
             , style "text-align" "center"
             , style "font-size" "10px"
-            , style "overflow-wrap" "anywhere"
+            , style "hyphens" "auto"
             ]
             [ text element.name ]
-        , div [ class "custom-popover above" ] [ text element.description ]
+        , div
+            [ class "custom-popover above" ]
+            [ div [ class "popover-title" ] [ text ("[" ++ element.name ++ "]") ]
+            , div [ class "popover-text" ] [ text element.description ]
+            , div [ class "popover-instruction" ] [ text "Cliquez pour modifier" ]
+            ]
         ]
 
 
 getSkillPicture : ( Model, Int ) -> Html Msg
 getSkillPicture ( model, id ) =
     div
-        [ class "card-img-top"
-        , style "width" "2rem"
-        , style "height" "2rem"
-        , style "margin" "0 auto"
-        , style "border-radius" "16px"
+        [ class "skill-picture card-img-top"
         , style "content" ("url(\"resources/img/skill_character/" ++ String.fromInt id ++ ".png\")") -- FIXME skill_character -> skill
         ]
         []

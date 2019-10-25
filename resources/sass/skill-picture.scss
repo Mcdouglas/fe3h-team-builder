@@ -1,0 +1,32 @@
+.card {
+    // border: none; // TO UNCOMMENT -- DEBUG
+}
+
+.portrait-picture {
+    width: 4rem;
+    height: 4rem;
+    margin: 0 auto;
+    background-color: rgba(128,128,128,0.85);
+
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 5px rgba(0,0,0,0.4);
+    cursor: pointer;
+
+    &:active {
+        transform: translate(0.1rem,0.1rem);
+    }
+}
+
+.skill-picture {
+    width: 2rem;
+    height: 2rem;
+    margin: 0 auto;
+
+    background-color: rgba(0, 0, 0, 0.65);
+    box-shadow: 0 0 5px rgba(0,0,0,0.4);
+    cursor: pointer;
+
+    &:active {
+        transform: translate(0.1rem,0.1rem);
+    }
+}
