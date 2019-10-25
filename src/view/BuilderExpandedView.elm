@@ -33,7 +33,7 @@ toggleBuildInfo element =
 viewBuildInfo : CharacterBuild -> Html Msg
 viewBuildInfo element =
     div
-        [ class ("item-b2")
+        [ class "item-b2"
         , hidden element.hiddenInfo
         , id ("info-" ++ String.fromInt element.idCharacter)
         ]
