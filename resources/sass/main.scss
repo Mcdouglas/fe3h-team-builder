@@ -68,14 +68,36 @@ body {
       }
 
       .item-b1 {
-        height: 20px;
-        width: 40px;
+        height: 1.5rem;
+        width: 3rem;
+
         position: absolute;
         left: 50%;
         bottom: 0;
         transform: translate(-50%,50%);
+        
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 0.25rem;
+        cursor: pointer;
+
         outline: none;
         z-index: 1;
+
+        &:hover {
+          background-color: #c8c9ca;
+        }
+
+        &:active {
+          transform: translate(-48%,52%);
+        }
+        
+        & > img{
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
       }
 
       .item-b2 {
