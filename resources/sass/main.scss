@@ -1,5 +1,5 @@
 @import 'popover';
-@import 'skill-picture';
+@import 'picture';
 
 body {
     background-image: url("../img/background.png");
@@ -30,11 +30,38 @@ body {
         grid-template-columns: 20% 30% 30% 20%;
 
         .item-a1 {
+          display: grid;
+          grid-template-columns: 50% 50%;
+          grid-template-rows: 65% 35%;
           grid-column-start: 1;
           grid-column-end: 2;
           border-right: 1px solid #dee2e6 !important;
           margin: 1rem 0;
           padding-right: 1rem;
+
+          .item-a1a {
+            grid-column-start: 1;
+            grid-column-end: 3;
+            grid-row-start: 1;
+            grid-row-end: 2;
+
+          }
+
+          .item-a1b {
+            grid-column-start: 1;
+            grid-column-end: 2;
+            grid-row-start: 2;
+            grid-row-end: 3;
+
+          }
+
+          .item-a1c {
+            grid-column-start: 2;
+            grid-column-end: 3;
+            grid-row-start: 2;
+            grid-row-end: 3;
+
+          }
         }
 
         .item-a2 {

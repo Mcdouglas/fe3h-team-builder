@@ -2,6 +2,7 @@ module PortraitView exposing (..)
 
 import Character exposing (..)
 import CharacterSkill exposing (..)
+import Crest exposing (..)
 import CustomTypes exposing (..)
 import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (..)
@@ -15,20 +16,20 @@ viewPortrait ( model, element ) =
     let
         character =
             getCharacterById element.idCharacter
-                |> Maybe.withDefault (Character -1 "" Male 0)
+                |> Maybe.withDefault (Character -1 "" Male 0 NonOwner 0)
     in
     div
         [ class "item-a1" ]
         [ viewPortraitTile character
         , viewCharacterSkill ( model, character.characterSkillId )
-        , viewCrest character.characterSkillId
+        , viewCrestTile ( model, character.crestId )
         ]
 
 
 viewPortraitTile : Character -> Html Msg
 viewPortraitTile element =
     div
-        [ class "card" ]
+        [ class "item-a1a card" ]
         [ getPortrait element.id
         , div
             [ class "card-text"
@@ -57,7 +58,7 @@ viewCharacterSkill ( model, id ) =
     in
     case characterSkill of
         Just value ->
-            div [ class "card qs" ]
+            div [ class "item-a1b card qs" ]
                 [ getSkillCharacterPicture ( model, value.pictureId )
                 , div
                     [ class "card-text"
@@ -70,23 +71,54 @@ viewCharacterSkill ( model, id ) =
                     [ class "custom-popover above" ]
                     [ div [ class "popover-title" ] [ text ("[" ++ value.name ++ "]") ]
                     , div [ class "popover-text" ] [ text value.description ]
-                    , div [ class "popover-instruction" ] [ text "Cliquez pour modifier" ]
                     ]
                 ]
 
         Nothing ->
-            div [] []
+            div [ class "item-a1b" ] [ text "Character not found" ]
 
 
 getSkillCharacterPicture : ( Model, Int ) -> Html Msg
 getSkillCharacterPicture ( model, id ) =
     div
-        [ class "skill-picture card-img-top"
+        [ class "cskill-picture card-img-top"
         , style "content" ("url(\"resources/img/skills/" ++ String.fromInt id ++ ".png\")")
         ]
         []
 
 
-viewCrest : Int -> Html Msg
-viewCrest id =
-    div [ class "card" ] [ text "TODO Crest" ]
+viewCrestTile : ( Model, Int ) -> Html Msg
+viewCrestTile ( model, id ) =
+    let
+        maybeCrest =
+            getCrest id
+    in
+    case maybeCrest of
+        Just value ->
+            div [ class "item-a1c card qs" ]
+                [ getCrestPicture ( model, value.pictureId )
+                , div
+                    [ class "card-text"
+                    , style "text-align" "center"
+                    , style "font-size" "10px"
+                    , style "hyphens" "auto"
+                    ]
+                    [ text value.name ]
+                , div
+                    [ class "custom-popover above" ]
+                    [ div [ class "popover-title" ] [ text ("[" ++ value.name ++ "]") ]
+                    , div [ class "popover-text" ] [ text value.description ]
+                    ]
+                ]
+
+        Nothing ->
+            div [ class "item-a1c" ] []
+
+
+getCrestPicture : ( Model, Int ) -> Html Msg
+getCrestPicture ( model, id ) =
+    div
+        [ class "crest-picture card-img-top"
+        , style "content" ("url(\"resources/img/crests/" ++ String.fromInt id ++ ".png\")")
+        ]
+        []
