@@ -33,7 +33,7 @@ viewSkill ( model, element ) =
     case element of
         Just value ->
             div [ class "card qs" ]
-                [ getSkillPicture ( model, value.id ) -- FIXME id -> idPicture
+                [ getSkillPicture ( model, value.pictureId, value.combatArt )
                 , div
                     [ class "card-text"
                     , style "text-align" "center"
@@ -53,7 +53,7 @@ viewSkill ( model, element ) =
             div [ class "card qs" ]
                 [ div
                     [ class "skill-picture no-data card-img-top"
-                    , style "content" "url(\"resources/lib/octicons/plus.svg\")"
+                    , style "content" "url(\"resources/lib/octicons/plus-small.svg\")"
                     ]
                     []
                 , div
@@ -62,10 +62,18 @@ viewSkill ( model, element ) =
                 ]
 
 
-getSkillPicture : ( Model, Int ) -> Html Msg
-getSkillPicture ( model, id ) =
+getSkillPicture : ( Model, Int, Bool ) -> Html Msg
+getSkillPicture ( model, id, combatArt ) =
+    let
+        cssClass =
+            if combatArt == True then
+                "art-picture"
+
+            else
+                "skill-picture"
+    in
     div
-        [ class "skill-picture card-img-top"
-        , style "content" ("url(\"resources/img/skill_character/" ++ String.fromInt id ++ ".png\")") -- FIXME skill_character -> skill
+        [ class ("card-img-top " ++ cssClass)
+        , style "content" ("url(\"resources/img/skills/" ++ String.fromInt id ++ ".png\")")
         ]
         []
