@@ -36,3 +36,22 @@
         background-color: rgba(0, 0, 0, 0.4);
     }
 }
+
+.art-picture {
+    width: 2rem;
+    height: 2rem;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.85);
+
+    box-shadow: 0 0 5px rgba(0,0,0,0.4);
+    border-radius: 1rem;
+    cursor: pointer;
+
+    &:active {
+        transform: translate(0.1rem,0.1rem);
+    }
+
+    &.no-data {
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+}

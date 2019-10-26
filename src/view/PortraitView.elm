@@ -82,7 +82,7 @@ getSkillCharacterPicture : ( Model, Int ) -> Html Msg
 getSkillCharacterPicture ( model, id ) =
     div
         [ class "skill-picture card-img-top"
-        , style "content" ("url(\"resources/img/skill_character/" ++ String.fromInt id ++ ".png\")")
+        , style "content" ("url(\"resources/img/skills/" ++ String.fromInt id ++ ".png\")")
         ]
         []
 
