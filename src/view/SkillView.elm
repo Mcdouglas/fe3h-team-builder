@@ -14,8 +14,8 @@ viewPassiveSkills ( model, element ) =
         listPassiveSkill =
             getPassiveSkills element
     in
-    div [ class "col-sm border-right" ]
-        (List.map (\e -> div [] [ text (e.name ++ ", ") ]) listPassiveSkill)
+    div [ class "item-a2" ]
+        (List.map (\e -> viewSkill ( model, e )) listPassiveSkill)
 
 
 viewActiveSkills : ( Model, CharacterBuild ) -> Html Msg
@@ -24,5 +24,49 @@ viewActiveSkills ( model, element ) =
         listActiveSkill =
             getActiveSkills element
     in
-    div [ class "col-sm border-right" ]
-        (List.map (\e -> div [] [ text (e.name ++ ", ") ]) listActiveSkill)
+    div [ class "item-a3" ]
+        (List.map (\e -> viewSkill ( model, e )) listActiveSkill)
+
+
+viewSkill : ( Model, Maybe Skill ) -> Html Msg
+viewSkill ( model, element ) =
+    case element of
+        Just value ->
+            div [ class "qs card" ]
+                [ getSkillPicture ( model, value.pictureId, value.combatArt )
+                , div
+                    [ class "card-text" ]
+                    [ text value.name ]
+                , div
+                    [ class "custom-popover above" ]
+                    [ div [ class "popover-title" ] [ text ("[" ++ value.name ++ "]") ]
+                    , div [ class "popover-text" ] [ text value.description ]
+                    , div [ class "popover-instruction" ] [ text "Click to change " ]
+                    ]
+                ]
+
+        _ ->
+            div [ class "add-skill qs card" ]
+                [ div
+                    [ class "card-img-top"
+                    , style "content" "url(\"resources/lib/octicons/plus-small.svg\")"
+                    ]
+                    []
+                ]
+
+
+getSkillPicture : ( Model, Int, Bool ) -> Html Msg
+getSkillPicture ( model, id, combatArt ) =
+    let
+        cssClass =
+            if combatArt == True then
+                "art-picture"
+
+            else
+                "skill-picture"
+    in
+    div
+        [ class ("card-img-top " ++ cssClass)
+        , style "content" ("url(\"resources/img/skills/" ++ String.fromInt id ++ ".png\")")
+        ]
+        []

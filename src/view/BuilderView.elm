@@ -14,7 +14,7 @@ import Stringable exposing (..)
 
 viewPlanner : Model -> Html Msg
 viewPlanner model =
-    div [ class "planner" ]
+    div []
         [ h3 [ class "text-light" ] [ text "Fire Emblem Three Houses - Team Builder!" ]
         , viewTable model
         ]
@@ -22,7 +22,7 @@ viewPlanner model =
 
 viewTable : Model -> Html Msg
 viewTable model =
-    ul [ class "list-group mx-2" ]
+    div [ class "c-table" ]
         (List.map (\( id, e ) -> viewSelector ( model, e )) model.team)
 
 
@@ -30,24 +30,22 @@ viewSelector : ( Model, Maybe CharacterBuild ) -> Html Msg
 viewSelector ( model, element ) =
     case element of
         Just value ->
-            viewRow ( model, value )
+            div [ class "c-container" ]
+                [ viewRow ( model, value )
+                , viewBuildInfo value
+                , div [ class "item-c" ] [ text "TODO" ]
+                ]
 
         Nothing ->
-            div [ class "container mt-3" ]
-                [ li [ class "list-group-item list-group-item-secondary" ] [ text "TODO Add new player" ] ]
+            div [ class "item-a" ] [ text "TODO Add new player" ]
 
 
 viewRow : ( Model, CharacterBuild ) -> Html Msg
 viewRow ( model, element ) =
-    div [ class "container mt-3" ]
-        [ div [ class "list-group-item" ]
-            [ li [ class "row" ]
-                [ viewPortrait ( model, element )
-                , viewPassiveSkills ( model, element )
-                , viewActiveSkills ( model, element )
-                , viewJobSkills ( model, element )
-                ]
-            , toggleBuildInfo element
-            ]
-        , viewBuildInfo element
+    div [ class "item-a" ]
+        [ viewPortrait ( model, element )
+        , viewPassiveSkills ( model, element )
+        , viewActiveSkills ( model, element )
+        , viewJobSkills ( model, element )
+        , toggleBuildInfo element
         ]

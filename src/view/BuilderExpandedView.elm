@@ -13,16 +13,9 @@ toggleBuildInfo element =
         infoShown =
             not element.hiddenInfo
     in
-    button
+    div
         [ onClick (ShowBuildInfo element.idCharacter)
-        , type_ "button"
-        , style "height" "20px"
-        , style "width" "40px"
-        , class "bg-light rounded border"
-        , style "position" "absolute"
-        , style "left" "calc(50% - 20px)"
-        , style "z-index" "1"
-        , style "outline" "none"
+        , class "item-b1"
         ]
         [ img
             [ if element.hiddenInfo == True then
@@ -30,7 +23,6 @@ toggleBuildInfo element =
 
               else
                 src "resources/lib/octicons/chevron-up.svg"
-            , style "vertical-align" "baseline"
             ]
             []
         ]
@@ -38,17 +30,9 @@ toggleBuildInfo element =
 
 viewBuildInfo : CharacterBuild -> Html Msg
 viewBuildInfo element =
-    let
-        cssClassHidden =
-            if element.hiddenInfo == True then
-                "invisible"
-
-            else
-                "visible"
-    in
     div
-        [ class "list-group-item list-group-item-secondary"
-        , id ("info-" ++ String.fromInt element.idCharacter)
+        [ class "item-b2"
         , hidden element.hiddenInfo
+        , id ("info-" ++ String.fromInt element.idCharacter)
         ]
         [ text "Hidden infos" ]

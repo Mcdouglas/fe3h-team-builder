@@ -26,7 +26,7 @@ mockCharacterBuilds =
     ]
 
 
-getPassiveSkills : CharacterBuild -> List Skill
+getPassiveSkills : CharacterBuild -> List (Maybe Skill)
 getPassiveSkills characterBuild =
     let
         listSkills =
@@ -34,17 +34,19 @@ getPassiveSkills characterBuild =
                 |> List.map (\id -> getMasterySkill id)
                 |> Maybe.Extra.values
                 |> List.filter (\e -> e.combatArt == False)
-                |> List.map (\e -> Skill e.id e.name e.description e.combatArt)
+                |> List.map (\e -> Just (Skill e.id e.pictureId e.name e.description e.combatArt True))
     in
     characterBuild.listStandardSkillId
         |> List.map (\id -> getStandardSkill id)
         |> Maybe.Extra.values
         |> List.filter (\e -> e.combatArt == False)
-        |> List.map (\e -> Skill e.id e.name e.description e.combatArt)
+        |> List.map (\e -> Just (Skill e.id e.pictureId e.name e.description e.combatArt False))
         |> List.append listSkills
+        |> List.foldr (::) [ Nothing, Nothing, Nothing, Nothing, Nothing ]
+        |> List.take 5
 
 
-getActiveSkills : CharacterBuild -> List Skill
+getActiveSkills : CharacterBuild -> List (Maybe Skill)
 getActiveSkills characterBuild =
     let
         listSkills =
@@ -52,11 +54,13 @@ getActiveSkills characterBuild =
                 |> List.map (\id -> getMasterySkill id)
                 |> Maybe.Extra.values
                 |> List.filter (\e -> e.combatArt == True)
-                |> List.map (\e -> Skill e.id e.name e.description e.combatArt)
+                |> List.map (\e -> Just (Skill e.id e.pictureId e.name e.description e.combatArt True))
     in
     characterBuild.listStandardSkillId
         |> List.map (\id -> getStandardSkill id)
         |> Maybe.Extra.values
         |> List.filter (\e -> e.combatArt == True)
-        |> List.map (\e -> Skill e.id e.name e.description e.combatArt)
+        |> List.map (\e -> Just (Skill e.id e.pictureId e.name e.description e.combatArt False))
         |> List.append listSkills
+        |> List.foldr (::) [ Nothing, Nothing, Nothing ]
+        |> List.take 3

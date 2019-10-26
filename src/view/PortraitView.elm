@@ -2,6 +2,7 @@ module PortraitView exposing (..)
 
 import Character exposing (..)
 import CharacterSkill exposing (..)
+import Crest exposing (..)
 import CustomTypes exposing (..)
 import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (..)
@@ -15,37 +16,29 @@ viewPortrait ( model, element ) =
     let
         character =
             getCharacterById element.idCharacter
-                |> Maybe.withDefault (Character -1 "" Male 0)
+                |> Maybe.withDefault (Character -1 "" Male 0 NonOwner 0)
     in
     div
-        [ class "col-sm border-right" ]
+        [ class "item-a1" ]
         [ viewPortraitTile character
-        , div [ class "row" ]
-            [ viewCharacterSkill ( model, character.characterSkillId )
-            , viewCrest character.characterSkillId
-            ]
+        , viewCharacterSkill ( model, character.characterSkillId )
+        , viewCrestTile ( model, character.crestId )
         ]
 
 
 viewPortraitTile : Character -> Html Msg
 viewPortraitTile element =
     div
-        [ class "card"
-        , style "background" "Gainsboro"
-        ]
+        [ class "item-a1a card" ]
         [ getPortrait element.id
-        , div [ class "card-title", style "text-align" "center" ] [ text element.name ]
+        , div [ class "card-text" ] [ text element.name ]
         ]
 
 
 getPortrait : Int -> Html Msg
 getPortrait id =
     img
-        [ class "card-img-top border border-dark"
-        , style "width" "4rem"
-        , style "height" "4rem"
-        , style "margin" "0 auto"
-        , style "background" "white"
+        [ class "portrait-picture card-img-top"
         , src ("resources/img/portraits/" ++ String.fromInt id ++ ".png")
         , width 100
         , height 100
@@ -61,40 +54,59 @@ viewCharacterSkill ( model, id ) =
     in
     case characterSkill of
         Just value ->
-            div [ class "card qs" ]
+            div [ class "item-a1b card qs" ]
                 [ getSkillCharacterPicture ( model, value.pictureId )
                 , div
-                    [ class "card-text"
-                    , style "text-align" "center"
-                    , style "font-size" "10px"
-                    , style "overflow-wrap" "anywhere"
-                    ]
+                    [ class "card-text" ]
                     [ text value.name ]
-                , div [ class "custom-popover above" ] [ text value.description ]
+                , div
+                    [ class "custom-popover above" ]
+                    [ div [ class "popover-title" ] [ text ("[" ++ value.name ++ "]") ]
+                    , div [ class "popover-text" ] [ text value.description ]
+                    ]
                 ]
 
         Nothing ->
-            div [] []
+            div [ class "item-a1b" ] [ text "Character not found" ]
 
 
 getSkillCharacterPicture : ( Model, Int ) -> Html Msg
 getSkillCharacterPicture ( model, id ) =
     div
-        [ class "card-img-top"
-        , style "width" "2rem"
-        , style "height" "2rem"
-        , style "margin" "0 auto"
-        , style "border-radius" "16px"
-        , style "content" ("url(\"resources/img/skill_character/" ++ String.fromInt id ++ ".png\")")
+        [ class "cskill-picture card-img-top"
+        , style "content" ("url(\"resources/img/skills/" ++ String.fromInt id ++ ".png\")")
         ]
         []
 
 
-viewCharacterSkillTooltip : ( Model, Int ) -> Html Msg
-viewCharacterSkillTooltip ( model, id ) =
-    div [] [ text "info" ]
+viewCrestTile : ( Model, Int ) -> Html Msg
+viewCrestTile ( model, id ) =
+    let
+        maybeCrest =
+            getCrest id
+    in
+    case maybeCrest of
+        Just value ->
+            div [ class "item-a1c card qs" ]
+                [ getCrestPicture ( model, value.pictureId )
+                , div
+                    [ class "card-text" ]
+                    [ text value.name ]
+                , div
+                    [ class "custom-popover above" ]
+                    [ div [ class "popover-title" ] [ text ("[" ++ value.name ++ "]") ]
+                    , div [ class "popover-text" ] [ text value.description ]
+                    ]
+                ]
+
+        Nothing ->
+            div [ class "item-a1c" ] []
 
 
-viewCrest : Int -> Html Msg
-viewCrest id =
-    div [ class "card" ] [ text "TODO Crest" ]
+getCrestPicture : ( Model, Int ) -> Html Msg
+getCrestPicture ( model, id ) =
+    div
+        [ class "crest-picture card-img-top"
+        , style "content" ("url(\"resources/img/crests/" ++ String.fromInt id ++ ".png\")")
+        ]
+        []
