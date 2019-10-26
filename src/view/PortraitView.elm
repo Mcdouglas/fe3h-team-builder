@@ -38,7 +38,7 @@ viewPortraitTile element =
 getPortrait : Int -> Html Msg
 getPortrait id =
     img
-        [ class "portrait-picture card-img-top"
+        [ class "portrait-picture tile-clickable card-img-top"
         , src ("resources/img/portraits/" ++ String.fromInt id ++ ".png")
         , width 100
         , height 100

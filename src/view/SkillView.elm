@@ -66,7 +66,7 @@ getSkillPicture ( model, id, combatArt ) =
                 "skill-picture"
     in
     div
-        [ class ("card-img-top " ++ cssClass)
+        [ class ("tile-clickable card-img-top " ++ cssClass)
         , style "content" ("url(\"resources/img/skills/" ++ String.fromInt id ++ ".png\")")
         ]
         []

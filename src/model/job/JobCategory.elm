@@ -12,7 +12,7 @@ getJobCategoryById val =
 
 initJobCategories : List JobCategory
 initJobCategories =
-    [ JobCategory 0 Starting (Just 20) (Just 0)
+    [ JobCategory 0 Starting (Just 20) Nothing
     , JobCategory 1 Beginner (Just 60) (Just 5)
     , JobCategory 2 Intermediate (Just 100) (Just 10)
     , JobCategory 3 Advanced (Just 150) (Just 20)

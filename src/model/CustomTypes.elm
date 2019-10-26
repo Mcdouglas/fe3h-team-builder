@@ -44,9 +44,29 @@ type GenderUnionType
     | Female
 
 
+genderToString : GenderUnionType -> String
+genderToString gender =
+    case gender of
+        Male ->
+            "Male"
+
+        Female ->
+            "Female"
+
+
 type MagicUsage
     = CanUseMagic
     | CanUseSomeMagic
+
+
+magicUsageToString : MagicUsage -> String
+magicUsageToString gender =
+    case gender of
+        CanUseMagic ->
+            "Can use magic"
+
+        CanUseSomeMagic ->
+            "Can use some magic"
 
 
 type alias Study =
@@ -62,7 +82,7 @@ type alias JobCategory =
 
 
 type alias Job =
-    { id : Int, name : String, jobCategoryId : Int, proficiencyList : List Proficiency, studyIdList : List Int, gender : Maybe GenderUnionType, magicUsage : Maybe MagicUsage, note : Maybe String, customExperience : Maybe Int }
+    { id : Int, idPicture : Int, name : String, jobCategoryId : Int, proficiencyList : List Proficiency, studyIdList : List Int, gender : Maybe GenderUnionType, magicUsage : Maybe MagicUsage, note : Maybe String, customExperience : Maybe Int }
 
 
 type alias JobSkill =
