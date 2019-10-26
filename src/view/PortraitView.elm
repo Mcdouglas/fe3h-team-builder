@@ -106,15 +106,7 @@ viewCrestTile ( model, id ) =
             div [ class "item-a1c card qs" ]
                 [ getCrestPicture ( model, value.pictureId )
                 , div
-<<<<<<< HEAD
                     [ class "card-text" ]
-=======
-                    [ class "card-text"
-                    , style "text-align" "center"
-                    , style "font-size" "10px"
-                    , style "hyphens" "auto"
-                    ]
->>>>>>> 00525376bbcf21ef03af5436a71c5d6f5e8363b8
                     [ text value.name ]
                 , div
                     [ class "custom-popover above" ]
