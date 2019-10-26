@@ -21,7 +21,7 @@ modelHandlerTest =
             JobCategory -1 Beginner Nothing Nothing
 
         wrongJobSkill =
-            JobSkill -1 "" [] False ""
+            JobSkill -1 -1 "" [] False ""
 
         -- jobs
         commoner =
