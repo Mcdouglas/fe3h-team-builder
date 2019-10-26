@@ -19,15 +19,21 @@
         padding: 0.5rem;
 
         color: #fff;
-        font-size: 12px;
-        font-family: 'Helvetica',sans-serif;
-        
+        font-size: 11px;
+        text-align: left;
+
         background-color: rgba(0,0,20,0.75);
         box-shadow: 0 0 0.25rem rgba(0,0,0,0.4);
         border: 1px solid #dee2e6;
         border-radius: 0.25rem;
         
         z-index: 4;
+
+        pointer-events:none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
         
         &:before {
             content: '';
@@ -45,7 +51,7 @@
         }
 
         &>.popover-title {
-
+            
         }
 
         &>.popover-text {

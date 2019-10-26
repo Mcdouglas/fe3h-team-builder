@@ -9,7 +9,12 @@ body {
     background-size: cover;
     height: 100vh;
 
-    .super-container {
+  .c-table {
+
+    margin-top: 5rem;
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif;;
+    
+    .c-container {
       display: grid;
       grid-template-columns: auto 5%;
       grid-template-rows: auto auto;
@@ -38,6 +43,7 @@ body {
           border-right: 1px solid #dee2e6 !important;
           margin: 1rem 0;
           padding-right: 1rem;
+          text-align: center;
 
           .item-a1a {
             grid-column-start: 1;
@@ -52,7 +58,8 @@ body {
             grid-column-end: 2;
             grid-row-start: 2;
             grid-row-end: 3;
-
+            
+            font-size: 10px;
           }
 
           .item-a1c {
@@ -61,29 +68,38 @@ body {
             grid-row-start: 2;
             grid-row-end: 3;
 
+            font-size: 10px;
           }
         }
 
         .item-a2 {
           grid-column-start: 2;
           grid-column-end: 3;
-          border-right: 1px solid #dee2e6 !important;
+          display: grid;
+          grid-template-columns: 20% 20% 20% 20% 20%;
+          
           margin: 1rem 0;
           margin-left: 1rem;
           padding-right: 1rem;
-          display: grid;
-          grid-template-columns: 20% 20% 20% 20% 20%;
+          
+          font-size: 10px;
+          text-align: center;
+          border-right: 1px solid #dee2e6 !important;
         }
 
         .item-a3 {
           grid-column-start: 3;
           grid-column-end: 4;
-          border-right: 1px solid #dee2e6 !important;
+          display: grid;
+          grid-template-columns: 33.33% 33.34% 33.33%;
+
           margin: 1rem 0;
           margin-left: 1rem;
           padding-right: 1rem;
-          display: grid;
-          grid-template-columns: 33.33% 33.34% 33.33%;
+          
+          font-size: 10px;
+          text-align: center;
+          border-right: 1px solid #dee2e6 !important;
         }
 
         .item-a4 {
@@ -149,4 +165,5 @@ body {
         border-left: 1px solid #dee2e6 !important;
       }
     }
+  }
 }

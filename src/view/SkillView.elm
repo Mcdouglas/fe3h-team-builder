@@ -32,33 +32,26 @@ viewSkill : ( Model, Maybe Skill ) -> Html Msg
 viewSkill ( model, element ) =
     case element of
         Just value ->
-            div [ class "card qs" ]
+            div [ class "qs card" ]
                 [ getSkillPicture ( model, value.pictureId, value.combatArt )
                 , div
-                    [ class "card-text"
-                    , style "text-align" "center"
-                    , style "font-size" "10px"
-                    , style "hyphens" "auto"
-                    ]
+                    [ class "card-text" ]
                     [ text value.name ]
                 , div
                     [ class "custom-popover above" ]
                     [ div [ class "popover-title" ] [ text ("[" ++ value.name ++ "]") ]
                     , div [ class "popover-text" ] [ text value.description ]
-                    , div [ class "popover-instruction" ] [ text "Cliquez pour modifier" ]
+                    , div [ class "popover-instruction" ] [ text "Click to change" ]
                     ]
                 ]
 
         _ ->
-            div [ class "card qs" ]
+            div [ class "add-skill qs card" ]
                 [ div
-                    [ class "add-skill card-img-top"
+                    [ class "card-img-top"
                     , style "content" "url(\"resources/lib/octicons/plus-small.svg\")"
                     ]
                     []
-                , div
-                    [ class "custom-popover above" ]
-                    [ div [ class "popover-instruction" ] [ text "Ajouter" ] ]
                 ]
 
 
