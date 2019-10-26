@@ -31,7 +31,15 @@ viewPortraitTile element =
     div
         [ class "item-a1a card" ]
         [ getPortrait element.id
+<<<<<<< HEAD
         , div [ class "card-text" ] [ text element.name ]
+=======
+        , div
+            [ class "card-text"
+            , style "text-align" "center"
+            ]
+            [ text element.name ]
+>>>>>>> 00525376bbcf21ef03af5436a71c5d6f5e8363b8
         ]
 
 
@@ -57,7 +65,15 @@ viewCharacterSkill ( model, id ) =
             div [ class "item-a1b card qs" ]
                 [ getSkillCharacterPicture ( model, value.pictureId )
                 , div
+<<<<<<< HEAD
                     [ class "card-text" ]
+=======
+                    [ class "card-text"
+                    , style "text-align" "center"
+                    , style "font-size" "10px"
+                    , style "hyphens" "auto"
+                    ]
+>>>>>>> 00525376bbcf21ef03af5436a71c5d6f5e8363b8
                     [ text value.name ]
                 , div
                     [ class "custom-popover above" ]
@@ -90,7 +106,15 @@ viewCrestTile ( model, id ) =
             div [ class "item-a1c card qs" ]
                 [ getCrestPicture ( model, value.pictureId )
                 , div
+<<<<<<< HEAD
                     [ class "card-text" ]
+=======
+                    [ class "card-text"
+                    , style "text-align" "center"
+                    , style "font-size" "10px"
+                    , style "hyphens" "auto"
+                    ]
+>>>>>>> 00525376bbcf21ef03af5436a71c5d6f5e8363b8
                     [ text value.name ]
                 , div
                     [ class "custom-popover above" ]

@@ -20,7 +20,11 @@ before_script:
   - cp ./index.html ./dist/index.html
   - cp -ar ./resources ./dist/resources
 
+install:
+  - npm install node-sass-chokidar@1.3.5
+
 script:
+  - node-sass-chokidar resources/sass/ -o dist/resources/css
   - elm make src/Main.elm --output=./dist/bundle.js
 
 deploy:
