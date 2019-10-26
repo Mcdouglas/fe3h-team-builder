@@ -41,7 +41,7 @@ viewSkill ( model, element ) =
                     [ class "custom-popover above" ]
                     [ div [ class "popover-title" ] [ text ("[" ++ value.name ++ "]") ]
                     , div [ class "popover-text" ] [ text value.description ]
-                    , div [ class "popover-instruction" ] [ text "Click to change" ]
+                    , div [ class "popover-instruction" ] [ text "Click to change " ]
                     ]
                 ]
 
