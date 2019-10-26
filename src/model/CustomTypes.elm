@@ -81,8 +81,18 @@ type alias CharacterSkill =
     { id : Int, pictureId : Int, name : String, description : String }
 
 
+type CrestHolder
+    = Major
+    | Minor
+    | NonOwner
+
+
+type alias Crest =
+    { id : Int, pictureId : Int, name : String, description : String }
+
+
 type alias Character =
-    { id : Int, name : String, gender : GenderUnionType, characterSkillId : Int }
+    { id : Int, name : String, gender : GenderUnionType, characterSkillId : Int, holderType : CrestHolder, crestId : Int }
 
 
 type alias CharacterBuild =
@@ -90,4 +100,4 @@ type alias CharacterBuild =
 
 
 type alias Skill =
-    { id : Int, pictureId : Int, name : String, description : String, combatArt : Bool }
+    { id : Int, pictureId : Int, name : String, description : String, combatArt : Bool, byJob : Bool }

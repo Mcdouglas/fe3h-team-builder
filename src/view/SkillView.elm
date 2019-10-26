@@ -52,7 +52,7 @@ viewSkill ( model, element ) =
         _ ->
             div [ class "card qs" ]
                 [ div
-                    [ class "skill-picture no-data card-img-top"
+                    [ class "add-skill card-img-top"
                     , style "content" "url(\"resources/lib/octicons/plus-small.svg\")"
                     ]
                     []
