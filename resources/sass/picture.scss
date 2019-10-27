@@ -6,7 +6,7 @@
     width: 3rem;
     height: 3rem;
     margin: 0 auto;
-    background-color: rgba(128,128,128,0.85);
+    background-color: rgba(0, 0, 0, 0.2);
 
     border: 1px solid rgba(0, 0, 0, 0.25);
     border-radius: 0.25rem;
@@ -27,6 +27,11 @@
     background-color: rgba(0, 0, 0, 0.15);
     border: 1px solid rgba(0, 0, 0, 0.25);
     border-radius: 0.25rem;
+}
+
+.no-crest {
+    content : url("../lib/octicons/circle-slash.svg");
+    opacity: 0.5;
 }
 
 .skill-picture {
@@ -62,6 +67,10 @@
     &:active {
         transform: translate(0.05rem,0.05rem);
     }
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
 }
 
 .add-skill {
@@ -76,5 +85,9 @@
 
     &:active {
         transform: translate(0.05rem,0.05rem);
+    }
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.5);
     }
 }

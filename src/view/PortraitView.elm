@@ -21,8 +21,10 @@ viewPortrait ( model, element ) =
     div
         [ class "item-a1" ]
         [ viewPortraitTile character
-        , viewCharacterSkill ( model, character.characterSkillId )
-        , viewCrestTile ( model, character.crestId )
+        , div [ class "item-a1b" ]
+            [ viewCharacterSkill ( model, character.characterSkillId )
+            , viewCrestTile ( model, character.crestId )
+            ]
         ]
 
 
@@ -54,7 +56,7 @@ viewCharacterSkill ( model, id ) =
     in
     case characterSkill of
         Just value ->
-            div [ class "item-a1b card qs" ]
+            div [ class "card qs" ]
                 [ getSkillCharacterPicture ( model, value.pictureId )
                 , div
                     [ class "card-text" ]
@@ -67,7 +69,7 @@ viewCharacterSkill ( model, id ) =
                 ]
 
         Nothing ->
-            div [ class "item-a1b" ] [ text "Character not found" ]
+            div [] [ text "Character not found" ]
 
 
 getSkillCharacterPicture : ( Model, Int ) -> Html Msg
@@ -87,7 +89,7 @@ viewCrestTile ( model, id ) =
     in
     case maybeCrest of
         Just value ->
-            div [ class "item-a1c card qs" ]
+            div [ class "card qs" ]
                 [ getCrestPicture ( model, value.pictureId )
                 , div
                     [ class "card-text" ]
@@ -100,7 +102,10 @@ viewCrestTile ( model, id ) =
                 ]
 
         Nothing ->
-            div [ class "item-a1c" ] []
+            div [ class "card qs" ]
+                [ div [ class "crest-picture no-crest card-img-top" ] []
+                , div [ class "card-text" ] [ text "No crest" ]
+                ]
 
 
 getCrestPicture : ( Model, Int ) -> Html Msg

@@ -59,11 +59,12 @@ getSkillPicture : ( Model, Int, Bool ) -> Html Msg
 getSkillPicture ( model, id, combatArt ) =
     let
         cssClass =
-            if combatArt == True then
-                "art-picture"
+            case combatArt of
+                True ->
+                    "art-picture"
 
-            else
-                "skill-picture"
+                False ->
+                    "skill-picture"
     in
     div
         [ class ("tile-clickable card-img-top " ++ cssClass)
