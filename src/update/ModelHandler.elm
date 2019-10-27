@@ -16,13 +16,13 @@ mockCharacterBuilds =
     , ( 2, Just (CharacterBuild 2 [] [] 42 False) )
     , ( 3, Just (CharacterBuild 10 [] [] 3 True) )
     , ( 4, Just (CharacterBuild 18 [] [] 5 False) )
-    , ( 5, Just (CharacterBuild 3 [] [] 6 True) )
+    , ( 5, Just (CharacterBuild 3 [] [] 28 True) )
     , ( 6, Just (CharacterBuild 11 [] [] 9 False) )
     , ( 7, Just (CharacterBuild 19 [] [] 3 True) )
     , ( 8, Just (CharacterBuild 4 [] [] 15 False) )
     , ( 9, Nothing )
     , ( 10, Just (CharacterBuild 20 [] [] 2 False) )
-    , ( 11, Just (CharacterBuild 34 [] [] 4 True) )
+    , ( 11, Just (CharacterBuild 34 [] [] 30 True) )
     ]
 
 
