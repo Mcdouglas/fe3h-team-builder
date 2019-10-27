@@ -15,7 +15,7 @@ modelHandlerTest =
     let
         -- default value
         wrongJob =
-            Job -1 "" 0 [] [] Nothing Nothing Nothing Nothing
+            Job -1 -1 "" 0 [] [] Nothing Nothing Nothing Nothing
 
         wrongJobCategory =
             JobCategory -1 Beginner Nothing Nothing
@@ -64,6 +64,7 @@ modelHandlerTest =
                     commoner
                         |> Expect.equal
                             { id = 0
+                            , idPicture = 0
                             , name = "Commoner"
                             , jobCategoryId = 0
                             , proficiencyList = []
@@ -79,6 +80,7 @@ modelHandlerTest =
                     hero
                         |> Expect.equal
                             { id = 19
+                            , idPicture = 19
                             , name = "Hero"
                             , jobCategoryId = 3
                             , proficiencyList = [ Proficiency Sword 3, Proficiency Axe 2 ]
@@ -94,6 +96,7 @@ modelHandlerTest =
                     gremory
                         |> Expect.equal
                             { id = 36
+                            , idPicture = 37
                             , name = "Gremory"
                             , jobCategoryId = 4
                             , proficiencyList = [ Proficiency Reason 3, Proficiency Faith 3 ]
@@ -110,6 +113,7 @@ modelHandlerTest =
                         |> Maybe.withDefault wrongJob
                         |> Expect.equal
                             { id = 40
+                            , idPicture = 0
                             , name = "Enlightened One"
                             , jobCategoryId = 5
                             , proficiencyList = [ Proficiency Sword 3, Proficiency Brawling 2, Proficiency Faith 3, Proficiency Authority 3 ]
