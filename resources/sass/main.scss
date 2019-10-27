@@ -74,7 +74,7 @@ body {
           grid-column-start: 2;
           grid-column-end: 3;
           
-          margin-left: 1rem;
+          margin: auto 0 auto 1rem;
           padding-right: 1rem;
           
           text-align: center;
@@ -87,7 +87,7 @@ body {
           grid-column-start: 3;
           grid-column-end: 4;
 
-          margin-left: 1rem;
+          margin: auto 0 auto 1rem;
           padding-right: 1rem;
           
           text-align: center;
@@ -99,7 +99,8 @@ body {
           grid-template-rows: 50% 50%;
           grid-column-start: 4;
           grid-column-end: 5;
-          margin-left: 1rem;
+          
+          margin: auto 0 auto 1rem;
           padding-right: 1rem;
 
           text-align: center;
