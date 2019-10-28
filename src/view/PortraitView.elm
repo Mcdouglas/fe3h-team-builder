@@ -41,6 +41,7 @@ getPortrait : Int -> Html Msg
 getPortrait id =
     img
         [ class "portrait-picture tile-clickable card-img-top"
+        , onClick (OpenCharacterModal id)
         , src ("resources/img/portraits/" ++ String.fromInt id ++ ".png")
         , width 100
         , height 100

@@ -12,7 +12,7 @@ import ViewHandler exposing (..)
 
 init : Model
 init =
-    Model mockCharacterBuilds loadAllStaticData Nothing
+    Model mockCharacterBuilds loadAllStaticData True -1 Nothing
 
 
 view model =
@@ -25,6 +25,12 @@ update msg model =
     case msg of
         ShowBuildInfo value ->
             toggleBuildInfo ( value, model )
+
+        OpenCharacterModal value ->
+            toggleCharacterModal ( model, True, value )
+
+        CloseCharacterModal ->
+            toggleCharacterModal ( model, False, -1 )
 
         _ ->
             model

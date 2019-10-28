@@ -6,6 +6,8 @@ import CustomTypes exposing (..)
 type alias Model =
     { team : List ( Int, Maybe CharacterBuild )
     , dataModel : DataModel
+    , characterModalOpen : Bool
+    , currentCharacter : Int
     , errorMessage : Maybe String
     }
 

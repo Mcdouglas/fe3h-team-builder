@@ -1,11 +1,13 @@
 module BuilderView exposing (..)
 
 import BuilderExpandedView exposing (..)
+import CharacterModalView exposing (..)
 import CustomTypes exposing (..)
 import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (onClick)
 import JobView exposing (..)
 import PortraitView exposing (..)
 import SkillView exposing (..)
@@ -17,6 +19,7 @@ viewPlanner model =
     div []
         [ h3 [ class "text-light" ] [ text "Fire Emblem Three Houses - Team Builder!" ]
         , viewTable model
+        , viewCharacterModal model
         ]
 
 

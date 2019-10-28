@@ -26,3 +26,8 @@ toggleBuildInfo ( characterId, model ) =
                 |> List.map (\e -> toggleInfo e)
     in
     { model | team = newTeam }
+
+
+toggleCharacterModal : ( Model, Bool, Int ) -> Model
+toggleCharacterModal ( model, state, id ) =
+    { model | characterModalOpen = state, currentCharacter = id }
