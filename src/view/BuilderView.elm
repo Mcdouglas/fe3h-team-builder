@@ -26,21 +26,19 @@ viewPlanner model =
 viewTable : Model -> Html Msg
 viewTable model =
     div [ class "c-table" ]
-        (List.map (\( id, e ) -> viewSelector ( model, e )) model.team)
+        (model.team
+            |> List.sortWith (\t1 t2 -> compare (Tuple.first t1) (Tuple.first t2))
+            |> List.map (\( id, e ) -> viewSelector ( model, e ))
+        )
 
 
-viewSelector : ( Model, Maybe CharacterBuild ) -> Html Msg
+viewSelector : ( Model, CharacterBuild ) -> Html Msg
 viewSelector ( model, element ) =
-    case element of
-        Just value ->
-            div [ class "c-container" ]
-                [ viewRow ( model, value )
-                , viewBuildInfo value
-                , div [ class "item-c" ] [ text "TODO" ]
-                ]
-
-        Nothing ->
-            div [ class "item-a" ] [ text "TODO Add new player" ]
+    div [ class "c-container" ]
+        [ viewRow ( model, element )
+        , viewBuildInfo element
+        , div [ class "item-c" ] [ text "TODO" ]
+        ]
 
 
 viewRow : ( Model, CharacterBuild ) -> Html Msg
