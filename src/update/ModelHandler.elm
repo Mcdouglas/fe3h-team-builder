@@ -11,7 +11,7 @@ import StandardSkill exposing (..)
 
 mockCharacterBuilds : List ( Int, CharacterBuild )
 mockCharacterBuilds =
-    [ ( 0, CharacterBuild 0 [ 13, 14, 20 ] [ 17, 12, 13 ] 0 False )
+    [ ( 0, CharacterBuild 0 [ 13, 14, 20 ] [ 12, 13, 17 ] 0 False )
     , ( 1, CharacterBuild 1 [] [] 1 True )
     , ( 2, CharacterBuild 2 [] [] 42 False )
     , ( 3, CharacterBuild 10 [] [] 3 True )
@@ -22,6 +22,7 @@ mockCharacterBuilds =
     , ( 8, CharacterBuild 4 [] [] 15 False )
     , ( 10, CharacterBuild 20 [] [] 2 False )
     , ( 11, CharacterBuild 34 [] [] 30 True )
+    , ( 9, CharacterBuild 22 [ 1, 2, 5 ] [ 13 ] 5 False )
     ]
 
 
