@@ -7,5 +7,6 @@ type Msg
     = InitialModel
     | ShowBuildInfo Int
     | OpenCharacterModal ( Int, Character )
-    | ShowCharacterModal ( Int, Maybe Character )
+    | UpdateCharacterModal ( Int, Maybe Character )
+    | UpdateBuild ( Int, Character )
     | CloseCharacterModal

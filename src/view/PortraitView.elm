@@ -20,7 +20,7 @@ viewPortrait ( model, ( id, element ) ) =
     in
     div
         [ class "item-a1" ]
-        [ viewPortraitTile ( id, character ) character
+        [ div [ onClick (OpenCharacterModal ( id, character )) ] [ viewPortraitTile ( id, character ) character ]
         , div [ class "item-a1b" ]
             [ viewCharacterSkill ( model, character.characterSkillId )
             , viewCrestTile ( model, character.crestId )
@@ -41,7 +41,6 @@ getPortrait : ( Int, Character ) -> Character -> Html Msg
 getPortrait build element =
     img
         [ class "portrait-picture tile-clickable card-img-top"
-        , onClick (OpenCharacterModal build)
         , src ("resources/img/portraits/" ++ String.fromInt element.id ++ ".png")
         , width 100
         , height 100

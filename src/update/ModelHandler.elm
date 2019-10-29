@@ -26,6 +26,23 @@ mockCharacterBuilds =
     ]
 
 
+updateBuild : Model -> ( Int, Character ) -> Model
+updateBuild model ( position, character ) =
+    let
+        initNewBuild ( id, item ) =
+            if id == position then
+                ( id, CharacterBuild character.id [] [] -1 False )
+
+            else
+                ( id, item )
+
+        newTeam =
+            model.team
+                |> List.map (\e -> initNewBuild e)
+    in
+    { model | team = newTeam }
+
+
 getPassiveSkills : CharacterBuild -> List (Maybe Skill)
 getPassiveSkills characterBuild =
     let

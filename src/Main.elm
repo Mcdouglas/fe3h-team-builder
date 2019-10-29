@@ -17,8 +17,7 @@ init =
 
 
 view model =
-    div []
-        [ viewModelOrError model ]
+    viewModelOrError model
 
 
 update : Msg -> Model -> Model
@@ -30,8 +29,11 @@ update msg model =
         OpenCharacterModal ( id, value ) ->
             openCharacterModal model True id
 
-        ShowCharacterModal value ->
+        UpdateCharacterModal value ->
             updateCharacterModal model value
+
+        UpdateBuild value ->
+            closeCharacterModal (updateBuild model value) False
 
         CloseCharacterModal ->
             closeCharacterModal model False

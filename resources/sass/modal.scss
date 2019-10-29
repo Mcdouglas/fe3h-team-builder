@@ -13,7 +13,7 @@
     /* Modal Content/Box */
     .modal-content {
       background-color: #fefefe;
-      margin: 15% auto; /* 15% from the top and centered */
+      transform: translate(12%, 12%);
       border: 1px solid #888;
       width: 80%; /* Could be more or less, depending on screen size */
       display:grid;
@@ -34,7 +34,8 @@
 
         border: 1px solid lightgray;
         background-color: #eee;
-        border-radius: .3rem;
+        border-top-right-radius: .3rem;
+        border-bottom-right-radius: .3rem;
 
         /* The Close Button */
         .close-modal {

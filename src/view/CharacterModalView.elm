@@ -44,6 +44,9 @@ viewCharacterModal model =
 
 viewSelectCharacter : ( Model, ( Int, Character ) ) -> Html Msg
 viewSelectCharacter ( model, ( position, element ) ) =
-    div [ onMouseOver (ShowCharacterModal ( position, Just element )) ]
+    div
+        [ onMouseOver (UpdateCharacterModal ( position, Just element ))
+        , onClick (UpdateBuild ( position, element ))
+        ]
         [ viewPortraitTile ( position, element ) element
         ]
