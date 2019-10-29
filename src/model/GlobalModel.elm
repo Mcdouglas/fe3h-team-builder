@@ -7,7 +7,7 @@ type alias Model =
     { team : List ( Int, CharacterBuild )
     , dataModel : DataModel
     , characterModalOpen : Bool
-    , currentCharacter : Int
+    , currentCharacter : ( Int, Maybe Character )
     , errorMessage : Maybe String
     }
 
@@ -19,4 +19,5 @@ type alias DataModel =
     , jobSkills : List JobSkill
     , masterySkills : List MasterySkill
     , standardSkills : List StandardSkill
+    , characters : List Character
     }

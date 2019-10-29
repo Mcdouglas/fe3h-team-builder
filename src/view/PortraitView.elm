@@ -11,8 +11,8 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 
 
-viewPortrait : ( Model, CharacterBuild ) -> Html Msg
-viewPortrait ( model, element ) =
+viewPortrait : ( Model, ( Int, CharacterBuild ) ) -> Html Msg
+viewPortrait ( model, ( id, element ) ) =
     let
         character =
             getCharacterById element.idCharacter
@@ -20,7 +20,7 @@ viewPortrait ( model, element ) =
     in
     div
         [ class "item-a1" ]
-        [ viewPortraitTile character
+        [ viewPortraitTile ( id, character ) character
         , div [ class "item-a1b" ]
             [ viewCharacterSkill ( model, character.characterSkillId )
             , viewCrestTile ( model, character.crestId )
@@ -28,21 +28,21 @@ viewPortrait ( model, element ) =
         ]
 
 
-viewPortraitTile : Character -> Html Msg
-viewPortraitTile element =
+viewPortraitTile : ( Int, Character ) -> Character -> Html Msg
+viewPortraitTile build element =
     div
         [ class "item-a1a card" ]
-        [ getPortrait element.id
+        [ getPortrait build element
         , div [ class "card-text" ] [ text element.name ]
         ]
 
 
-getPortrait : Int -> Html Msg
-getPortrait id =
+getPortrait : ( Int, Character ) -> Character -> Html Msg
+getPortrait build element =
     img
         [ class "portrait-picture tile-clickable card-img-top"
-        , onClick (OpenCharacterModal id)
-        , src ("resources/img/portraits/" ++ String.fromInt id ++ ".png")
+        , onClick (OpenCharacterModal build)
+        , src ("resources/img/portraits/" ++ String.fromInt element.id ++ ".png")
         , width 100
         , height 100
         ]

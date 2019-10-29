@@ -1,5 +1,6 @@
 module DataBuilder exposing (..)
 
+import Character exposing (initCharacters)
 import CustomTypes exposing (..)
 import GlobalModel exposing (..)
 import Job exposing (initJobs)
@@ -12,4 +13,4 @@ import Study exposing (initStudies)
 
 loadAllStaticData : DataModel
 loadAllStaticData =
-    DataModel initStudies initJobCategories initJobs initJobSkills initMasterySkills initStandardSkills
+    DataModel initStudies initJobCategories initJobs initJobSkills initMasterySkills initStandardSkills initCharacters

@@ -1,6 +1,7 @@
 module Main exposing (main)
 
 import Browser exposing (sandbox)
+import CustomTypes exposing (..)
 import DataBuilder exposing (loadAllStaticData)
 import DebugView exposing (..)
 import GlobalMessage exposing (Msg(..))
@@ -12,7 +13,7 @@ import ViewHandler exposing (..)
 
 init : Model
 init =
-    Model mockCharacterBuilds loadAllStaticData True -1 Nothing
+    Model mockCharacterBuilds loadAllStaticData False ( -1, Nothing ) Nothing
 
 
 view model =
@@ -26,11 +27,14 @@ update msg model =
         ShowBuildInfo value ->
             toggleBuildInfo ( value, model )
 
-        OpenCharacterModal value ->
-            toggleCharacterModal ( model, True, value )
+        OpenCharacterModal ( id, value ) ->
+            openCharacterModal model True id
+
+        ShowCharacterModal value ->
+            updateCharacterModal model value
 
         CloseCharacterModal ->
-            toggleCharacterModal ( model, False, -1 )
+            closeCharacterModal model False
 
         _ ->
             model

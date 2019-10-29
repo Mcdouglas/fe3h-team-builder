@@ -28,23 +28,23 @@ viewTable model =
     div [ class "c-table" ]
         (model.team
             |> List.sortWith (\t1 t2 -> compare (Tuple.first t1) (Tuple.first t2))
-            |> List.map (\( id, e ) -> viewSelector ( model, e ))
+            |> List.map (\e -> viewSelector ( model, e ))
         )
 
 
-viewSelector : ( Model, CharacterBuild ) -> Html Msg
-viewSelector ( model, element ) =
+viewSelector : ( Model, ( Int, CharacterBuild ) ) -> Html Msg
+viewSelector ( model, ( position, element ) ) =
     div [ class "c-container" ]
-        [ viewRow ( model, element )
+        [ viewRow ( model, ( position, element ) )
         , viewBuildInfo element
         , div [ class "item-c" ] [ text "TODO" ]
         ]
 
 
-viewRow : ( Model, CharacterBuild ) -> Html Msg
-viewRow ( model, element ) =
+viewRow : ( Model, ( Int, CharacterBuild ) ) -> Html Msg
+viewRow ( model, ( position, element ) ) =
     div [ class "item-a" ]
-        [ viewPortrait ( model, element )
+        [ viewPortrait ( model, ( position, element ) )
         , viewPassiveSkills ( model, element )
         , viewActiveSkills ( model, element )
         , viewJobSkills ( model, element )

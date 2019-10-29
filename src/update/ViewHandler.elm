@@ -1,5 +1,6 @@
 module ViewHandler exposing (..)
 
+import Character exposing (..)
 import CustomTypes exposing (..)
 import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (..)
@@ -23,6 +24,28 @@ toggleBuildInfo ( characterId, model ) =
     { model | team = newTeam }
 
 
-toggleCharacterModal : ( Model, Bool, Int ) -> Model
-toggleCharacterModal ( model, state, id ) =
-    { model | characterModalOpen = state, currentCharacter = id }
+openCharacterModal : Model -> Bool -> Int -> Model
+openCharacterModal model state position =
+    let
+        build =
+            model.team
+                |> List.filter (\( id, e ) -> id == position)
+                |> List.map (\( id, e ) -> getCharacterById e.idCharacter)
+                |> List.head
+    in
+    case build of
+        Just value ->
+            { model | characterModalOpen = state, currentCharacter = ( position, value ) }
+
+        Nothing ->
+            { model | characterModalOpen = state }
+
+
+updateCharacterModal : Model -> ( Int, Maybe Character ) -> Model
+updateCharacterModal model element =
+    { model | currentCharacter = element }
+
+
+closeCharacterModal : Model -> Bool -> Model
+closeCharacterModal model state =
+    { model | characterModalOpen = False }
