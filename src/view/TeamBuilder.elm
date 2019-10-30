@@ -1,4 +1,4 @@
-module BuilderView exposing (..)
+module TeamBuilder exposing (..)
 
 import BuilderExpandedView exposing (..)
 import CharacterSelector exposing (..)
