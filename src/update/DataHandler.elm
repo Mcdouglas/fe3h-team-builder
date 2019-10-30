@@ -11,8 +11,8 @@ import StandardSkill exposing (initStandardSkills)
 import Study exposing (initStudies)
 
 
-loadAllStaticData : DataModel
-loadAllStaticData =
+initStaticData : DataModel
+initStaticData =
     DataModel initStudies initJobCategories initJobs initJobSkills initMasterySkills initStandardSkills initCharacters
 
 

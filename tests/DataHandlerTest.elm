@@ -1,17 +1,17 @@
-module DataBuilderTest exposing (dataBuilderTest)
+module DataHandlerTest exposing (dataBuilderTest)
 
 import CustomTypes exposing (..)
+import DataHandler exposing (..)
 import Expect exposing (Expectation)
 import Fuzz exposing (Fuzzer, int, list, string)
 import GlobalModel exposing (..)
-import TeamBuilder exposing (..)
 import Test exposing (..)
 
 
 dataBuilderTest =
     let
         datas =
-            loadAllStaticData
+            initStaticData
     in
     describe "Test the data builder"
         [ test "Expect model contains 133 Studies"

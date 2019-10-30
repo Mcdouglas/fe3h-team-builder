@@ -18,7 +18,7 @@ init =
             mockCharacterBuilds
 
         dataModel =
-            loadAllStaticData
+            initStaticData
 
         viewModel =
             ViewModel False ( -1, Nothing )
