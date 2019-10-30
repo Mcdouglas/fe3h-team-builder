@@ -12,7 +12,7 @@ type alias Model =
 
 
 type alias ViewModel =
-    { characterModalOpen : Bool
+    { characterSelectorIsOpen : Bool
     , currentCharacter : ( Int, Maybe Character )
     }
 

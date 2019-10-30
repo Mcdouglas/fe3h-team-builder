@@ -1,7 +1,7 @@
 module BuilderView exposing (..)
 
 import BuilderExpandedView exposing (..)
-import CharacterModalView exposing (..)
+import CharacterSelector exposing (..)
 import CustomTypes exposing (..)
 import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (..)

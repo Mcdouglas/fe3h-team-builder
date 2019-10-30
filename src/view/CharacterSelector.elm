@@ -1,4 +1,4 @@
-module CharacterModalView exposing (..)
+module CharacterSelector exposing (..)
 
 import CustomTypes exposing (..)
 import GlobalMessage exposing (Msg(..))
@@ -19,7 +19,7 @@ viewCharacterModal model =
         Just character ->
             div
                 [ class "modal"
-                , hidden (not model.view.characterModalOpen)
+                , hidden (not model.view.characterSelectorIsOpen)
                 ]
                 [ div [ class "modal-content" ]
                     [ div [ class "characters-grid" ]

@@ -39,10 +39,10 @@ openCharacterModal model state position =
         newView =
             case build of
                 Just value ->
-                    { oldView | characterModalOpen = state, currentCharacter = ( position, value ) }
+                    { oldView | characterSelectorIsOpen = state, currentCharacter = ( position, value ) }
 
                 Nothing ->
-                    { oldView | characterModalOpen = state }
+                    { oldView | characterSelectorIsOpen = state }
     in
     { model | view = newView }
 
@@ -66,6 +66,6 @@ closeCharacterModal model state =
             model.view
 
         newView =
-            { oldView | characterModalOpen = False }
+            { oldView | characterSelectorIsOpen = False }
     in
     { model | view = newView }
