@@ -11,8 +11,8 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 
 
-viewPortrait : ( Model, ( Int, CharacterBuild ) ) -> Html Msg
-viewPortrait ( model, ( id, element ) ) =
+viewPortrait : Model -> ( Int, CharacterBuild ) -> Html Msg
+viewPortrait model ( id, element ) =
     let
         character =
             getCharacterById element.idCharacter
@@ -22,8 +22,8 @@ viewPortrait ( model, ( id, element ) ) =
         [ class "item-a1" ]
         [ div [ onClick (OpenCharacterSelector ( id, character )) ] [ viewPortraitTile ( id, character ) character ]
         , div [ class "item-a1b" ]
-            [ viewCharacterSkill ( model, character.characterSkillId )
-            , viewCrestTile ( model, character.crestId )
+            [ viewCharacterSkill model character.characterSkillId
+            , viewCrestTile model character.crestId
             ]
         ]
 
@@ -48,8 +48,8 @@ getPortrait build element =
         []
 
 
-viewCharacterSkill : ( Model, Int ) -> Html Msg
-viewCharacterSkill ( model, id ) =
+viewCharacterSkill : Model -> Int -> Html Msg
+viewCharacterSkill model id =
     let
         characterSkill =
             getCharacterSkillById id
@@ -57,7 +57,7 @@ viewCharacterSkill ( model, id ) =
     case characterSkill of
         Just value ->
             div [ class "card qs" ]
-                [ getSkillCharacterPicture ( model, value.pictureId )
+                [ getSkillCharacterPicture model value.pictureId
                 , div
                     [ class "card-text" ]
                     [ text value.name ]
@@ -72,8 +72,8 @@ viewCharacterSkill ( model, id ) =
             div [] [ text "Character not found" ]
 
 
-getSkillCharacterPicture : ( Model, Int ) -> Html Msg
-getSkillCharacterPicture ( model, id ) =
+getSkillCharacterPicture : Model -> Int -> Html Msg
+getSkillCharacterPicture model id =
     div
         [ class "cskill-picture card-img-top"
         , style "content" ("url(\"resources/img/skills/" ++ String.fromInt id ++ ".png\")")
@@ -81,8 +81,8 @@ getSkillCharacterPicture ( model, id ) =
         []
 
 
-viewCrestTile : ( Model, Int ) -> Html Msg
-viewCrestTile ( model, id ) =
+viewCrestTile : Model -> Int -> Html Msg
+viewCrestTile model id =
     let
         maybeCrest =
             getCrest id
@@ -90,7 +90,7 @@ viewCrestTile ( model, id ) =
     case maybeCrest of
         Just value ->
             div [ class "card qs" ]
-                [ getCrestPicture ( model, value.pictureId )
+                [ getCrestPicture model value.pictureId
                 , div
                     [ class "card-text" ]
                     [ text value.name ]
@@ -108,8 +108,8 @@ viewCrestTile ( model, id ) =
                 ]
 
 
-getCrestPicture : ( Model, Int ) -> Html Msg
-getCrestPicture ( model, id ) =
+getCrestPicture : Model -> Int -> Html Msg
+getCrestPicture model id =
     div
         [ class "crest-picture card-img-top"
         , style "content" ("url(\"resources/img/crests/" ++ String.fromInt id ++ ".png\")")

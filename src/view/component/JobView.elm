@@ -10,8 +10,8 @@ import JobCategory exposing (getJobCategoryById)
 import JobSkill exposing (..)
 
 
-viewJobSkills : ( Model, CharacterBuild ) -> Html Msg
-viewJobSkills ( model, element ) =
+viewJobSkills : Model -> CharacterBuild -> Html Msg
+viewJobSkills model element =
     let
         job =
             getJobById element.jobId
@@ -20,13 +20,13 @@ viewJobSkills ( model, element ) =
             job |> Maybe.map (\e -> getJobSkillsByJob e.id) |> Maybe.withDefault []
     in
     div [ class "item-a4" ]
-        [ viewJob ( model, job )
+        [ viewJob model job
         , div [ class "item-a4b" ] (listJobSkill |> List.map (\e -> viewJobSkill e))
         ]
 
 
-viewJob : ( Model, Maybe Job ) -> Html Msg
-viewJob ( model, element ) =
+viewJob : Model -> Maybe Job -> Html Msg
+viewJob model element =
     case element of
         Just value ->
             let
@@ -91,28 +91,24 @@ getJobPicture id =
 
 viewJobSkill : JobSkill -> Html Msg
 viewJobSkill element =
-    case element.combatArt of
-        True ->
-            div [ class "qs" ]
-                [ getSkillJobActivePicture element.pictureId
-                , div [ class "card-text" ] [ text element.name ]
-                , div
-                    [ class "custom-popover above" ]
-                    [ div [ class "popover-title" ] [ text ("[" ++ element.name ++ "]") ]
-                    , div [ class "popover-text" ] [ text element.description ]
-                    ]
-                ]
+    let
+        getSkillPicture =
+            case element.combatArt of
+                True ->
+                    getSkillJobActivePicture
 
-        False ->
-            div [ class "qs" ]
-                [ getSkillJobPassivePicture element.pictureId
-                , div [ class "card-text" ] [ text element.name ]
-                , div
-                    [ class "custom-popover above" ]
-                    [ div [ class "popover-title" ] [ text ("[" ++ element.name ++ "]") ]
-                    , div [ class "popover-text" ] [ text element.description ]
-                    ]
-                ]
+                False ->
+                    getSkillJobPassivePicture
+    in
+    div [ class "qs" ]
+        [ getSkillPicture element.pictureId
+        , div [ class "card-text" ] [ text element.name ]
+        , div
+            [ class "custom-popover above" ]
+            [ div [ class "popover-title" ] [ text ("[" ++ element.name ++ "]") ]
+            , div [ class "popover-text" ] [ text element.description ]
+            ]
+        ]
 
 
 getSkillJobPassivePicture : Int -> Html Msg

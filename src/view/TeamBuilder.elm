@@ -27,25 +27,25 @@ viewTeam model =
     div [ class "c-table" ]
         (model.team
             |> List.sortWith (\t1 t2 -> compare (Tuple.first t1) (Tuple.first t2))
-            |> List.map (\e -> viewRow ( model, e ))
+            |> List.map (\e -> viewRow model e)
         )
 
 
-viewRow : ( Model, ( Int, CharacterBuild ) ) -> Html Msg
-viewRow ( model, ( position, element ) ) =
+viewRow : Model -> ( Int, CharacterBuild ) -> Html Msg
+viewRow model ( position, element ) =
     div [ class "c-container" ]
-        [ viewBuild ( model, ( position, element ) )
+        [ viewBuild model ( position, element )
         , viewBuildInfo element
         , div [ class "item-c" ] [ text "TODO" ]
         ]
 
 
-viewBuild : ( Model, ( Int, CharacterBuild ) ) -> Html Msg
-viewBuild ( model, ( position, element ) ) =
+viewBuild : Model -> ( Int, CharacterBuild ) -> Html Msg
+viewBuild model ( position, element ) =
     div [ class "item-a" ]
-        [ viewPortrait ( model, ( position, element ) )
-        , viewPassiveSkills ( model, element )
-        , viewActiveSkills ( model, element )
-        , viewJobSkills ( model, element )
+        [ viewPortrait model ( position, element )
+        , viewPassiveSkills model element
+        , viewActiveSkills model element
+        , viewJobSkills model element
         , buttonBuildInfo element
         ]

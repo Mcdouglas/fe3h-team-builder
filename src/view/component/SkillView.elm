@@ -8,32 +8,32 @@ import Html.Attributes exposing (..)
 import ModelHandler exposing (..)
 
 
-viewPassiveSkills : ( Model, CharacterBuild ) -> Html Msg
-viewPassiveSkills ( model, element ) =
+viewPassiveSkills : Model -> CharacterBuild -> Html Msg
+viewPassiveSkills model element =
     let
         listPassiveSkill =
             getPassiveSkills element
     in
     div [ class "item-a2" ]
-        (List.map (\e -> viewSkill ( model, e )) listPassiveSkill)
+        (List.map (\e -> viewSkill model e) listPassiveSkill)
 
 
-viewActiveSkills : ( Model, CharacterBuild ) -> Html Msg
-viewActiveSkills ( model, element ) =
+viewActiveSkills : Model -> CharacterBuild -> Html Msg
+viewActiveSkills model element =
     let
         listActiveSkill =
             getActiveSkills element
     in
     div [ class "item-a3" ]
-        (List.map (\e -> viewSkill ( model, e )) listActiveSkill)
+        (List.map (\e -> viewSkill model e) listActiveSkill)
 
 
-viewSkill : ( Model, Maybe Skill ) -> Html Msg
-viewSkill ( model, element ) =
+viewSkill : Model -> Maybe Skill -> Html Msg
+viewSkill model element =
     case element of
         Just value ->
             div [ class "qs card" ]
-                [ getSkillPicture ( model, value.pictureId, value.combatArt )
+                [ getSkillPicture model value.pictureId value.combatArt
                 , div
                     [ class "card-text" ]
                     [ text value.name ]
@@ -55,8 +55,8 @@ viewSkill ( model, element ) =
                 ]
 
 
-getSkillPicture : ( Model, Int, Bool ) -> Html Msg
-getSkillPicture ( model, id, combatArt ) =
+getSkillPicture : Model -> Int -> Bool -> Html Msg
+getSkillPicture model id combatArt =
     let
         cssClass =
             case combatArt of
