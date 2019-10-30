@@ -2,7 +2,7 @@ module Main exposing (main)
 
 import Browser exposing (sandbox)
 import CustomTypes exposing (..)
-import DataBuilder exposing (..)
+import DataHandler exposing (..)
 import DebugView exposing (..)
 import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (..)

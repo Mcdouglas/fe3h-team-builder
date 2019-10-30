@@ -1,4 +1,4 @@
-module DataBuilder exposing (..)
+module DataHandler exposing (..)
 
 import Character exposing (initCharacters)
 import CustomTypes exposing (..)
