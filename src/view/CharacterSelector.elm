@@ -9,8 +9,8 @@ import Html.Events exposing (onClick, onMouseOver)
 import PortraitView exposing (..)
 
 
-viewCharacterModal : Model -> Html Msg
-viewCharacterModal model =
+viewCharacterSelector : Model -> Html Msg
+viewCharacterSelector model =
     let
         ( position, maybeCharacter ) =
             model.view.currentCharacter
@@ -28,7 +28,7 @@ viewCharacterModal model =
                         )
                     , div [ class "character-detail" ]
                         [ div
-                            [ onClick CloseCharacterModal
+                            [ onClick CloseCharacterSelector
                             , class "close close-modal"
                             , style "content" "url(\"resources/lib/octicons/x.svg\")"
                             ]
@@ -45,7 +45,7 @@ viewCharacterModal model =
 viewSelectCharacter : ( Model, ( Int, Character ) ) -> Html Msg
 viewSelectCharacter ( model, ( position, element ) ) =
     div
-        [ onMouseOver (UpdateCharacterModal ( position, Just element ))
+        [ onMouseOver (UpdateCharacterSelector ( position, Just element ))
         , onClick (UpdateBuild ( position, element ))
         ]
         [ viewPortraitTile ( position, element ) element

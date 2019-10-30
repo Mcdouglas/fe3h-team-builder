@@ -20,7 +20,7 @@ viewPortrait ( model, ( id, element ) ) =
     in
     div
         [ class "item-a1" ]
-        [ div [ onClick (OpenCharacterModal ( id, character )) ] [ viewPortraitTile ( id, character ) character ]
+        [ div [ onClick (OpenCharacterSelector ( id, character )) ] [ viewPortraitTile ( id, character ) character ]
         , div [ class "item-a1b" ]
             [ viewCharacterSkill ( model, character.characterSkillId )
             , viewCrestTile ( model, character.crestId )

@@ -6,7 +6,7 @@ import CustomTypes exposing (..)
 type Msg
     = InitialModel
     | ShowBuildInfo Int
-    | OpenCharacterModal ( Int, Character )
-    | UpdateCharacterModal ( Int, Maybe Character )
+    | OpenCharacterSelector ( Int, Character )
+    | UpdateCharacterSelector ( Int, Maybe Character )
     | UpdateBuild ( Int, Character )
-    | CloseCharacterModal
+    | CloseCharacterSelector

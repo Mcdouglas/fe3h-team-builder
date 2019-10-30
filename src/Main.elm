@@ -2,7 +2,7 @@ module Main exposing (main)
 
 import Browser exposing (sandbox)
 import CustomTypes exposing (..)
-import DataBuilder exposing (loadAllStaticData)
+import DataBuilder exposing (..)
 import DebugView exposing (..)
 import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (..)
@@ -39,17 +39,17 @@ update msg model =
         ShowBuildInfo value ->
             toggleBuildInfo ( value, model )
 
-        OpenCharacterModal ( id, value ) ->
-            openCharacterModal model True id
+        OpenCharacterSelector ( id, value ) ->
+            openCharacterSelector model True id
 
-        UpdateCharacterModal value ->
-            updateCharacterModal model value
+        UpdateCharacterSelector value ->
+            updateCharacterSelector model value
 
         UpdateBuild value ->
-            closeCharacterModal (updateBuild model value) False
+            closeCharacterSelector (updateBuild model value) False
 
-        CloseCharacterModal ->
-            closeCharacterModal model False
+        CloseCharacterSelector ->
+            closeCharacterSelector model False
 
         _ ->
             model

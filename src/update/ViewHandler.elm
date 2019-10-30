@@ -24,8 +24,8 @@ toggleBuildInfo ( characterId, model ) =
     { model | team = newTeam }
 
 
-openCharacterModal : Model -> Bool -> Int -> Model
-openCharacterModal model state position =
+openCharacterSelector : Model -> Bool -> Int -> Model
+openCharacterSelector model state position =
     let
         build =
             model.team
@@ -47,8 +47,8 @@ openCharacterModal model state position =
     { model | view = newView }
 
 
-updateCharacterModal : Model -> ( Int, Maybe Character ) -> Model
-updateCharacterModal model element =
+updateCharacterSelector : Model -> ( Int, Maybe Character ) -> Model
+updateCharacterSelector model element =
     let
         oldView =
             model.view
@@ -59,8 +59,8 @@ updateCharacterModal model element =
     { model | view = newView }
 
 
-closeCharacterModal : Model -> Bool -> Model
-closeCharacterModal model state =
+closeCharacterSelector : Model -> Bool -> Model
+closeCharacterSelector model state =
     let
         oldView =
             model.view

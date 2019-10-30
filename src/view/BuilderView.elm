@@ -19,7 +19,7 @@ viewPlanner model =
     div []
         [ h3 [ class "text-light" ] [ text "Fire Emblem Three Houses - Team Builder!" ]
         , viewTable model
-        , viewCharacterModal model
+        , viewCharacterSelector model
         ]
 
 
