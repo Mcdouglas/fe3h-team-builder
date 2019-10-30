@@ -1,12 +1,12 @@
 module CharacterSelector exposing (..)
 
+import CharacterView exposing (..)
 import CustomTypes exposing (..)
 import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onMouseOver)
-import PortraitView exposing (..)
 
 
 viewCharacterSelector : Model -> Html Msg
@@ -22,16 +22,21 @@ viewCharacterSelector model =
                 , hidden (not model.view.characterSelectorIsOpen)
                 ]
                 [ div [ class "modal-content" ]
-                    [ div [ class "characters-grid" ]
-                        (model.data.characters
-                            |> List.map (\e -> viewSelectCharacter model ( position, e ))
-                        )
+                    [ viewCharacterGrid model ( position, character )
                     , viewCharacterDetail model character
                     ]
                 ]
 
         Nothing ->
             div [] []
+
+
+viewCharacterGrid : Model -> ( Int, Character ) -> Html Msg
+viewCharacterGrid model ( position, _ ) =
+    div [ class "characters-grid" ]
+        (model.data.characters
+            |> List.map (\e -> viewSelectCharacter model ( position, e ))
+        )
 
 
 viewSelectCharacter : Model -> ( Int, Character ) -> Html Msg
@@ -47,11 +52,16 @@ viewSelectCharacter model ( position, element ) =
 viewCharacterDetail : Model -> Character -> Html Msg
 viewCharacterDetail model character =
     div [ class "character-detail" ]
-        [ div
-            [ onClick CloseCharacterSelector
-            , class "close close-modal"
-            , style "content" "url(\"resources/lib/octicons/x.svg\")"
-            ]
-            []
+        [ buttonCloseModal
         , h3 [] [ text character.name ]
         ]
+
+
+buttonCloseModal : Html Msg
+buttonCloseModal =
+    div
+        [ onClick CloseCharacterSelector
+        , class "close close-modal"
+        , style "content" "url(\"resources/lib/octicons/x.svg\")"
+        ]
+        []

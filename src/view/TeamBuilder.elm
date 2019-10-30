@@ -1,6 +1,7 @@
 module TeamBuilder exposing (..)
 
 import CharacterSelector exposing (..)
+import CharacterView exposing (..)
 import CustomTypes exposing (..)
 import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (..)
@@ -9,7 +10,6 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 import JobView exposing (..)
-import PortraitView exposing (..)
 import SkillView exposing (..)
 
 
