@@ -13,17 +13,17 @@ viewCharacterModal : Model -> Html Msg
 viewCharacterModal model =
     let
         ( position, maybeCharacter ) =
-            model.currentCharacter
+            model.view.currentCharacter
     in
     case maybeCharacter of
         Just character ->
             div
                 [ class "modal"
-                , hidden (not model.characterModalOpen)
+                , hidden (not model.view.characterModalOpen)
                 ]
                 [ div [ class "modal-content" ]
                     [ div [ class "characters-grid" ]
-                        (model.dataModel.characters
+                        (model.data.characters
                             |> List.map (\e -> viewSelectCharacter ( model, ( position, e ) ))
                         )
                     , div [ class "character-detail" ]

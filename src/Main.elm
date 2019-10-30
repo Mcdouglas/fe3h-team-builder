@@ -5,7 +5,7 @@ import CustomTypes exposing (..)
 import DataBuilder exposing (loadAllStaticData)
 import DebugView exposing (..)
 import GlobalMessage exposing (Msg(..))
-import GlobalModel exposing (Model)
+import GlobalModel exposing (..)
 import Html exposing (..)
 import ModelHandler exposing (..)
 import ViewHandler exposing (..)
@@ -13,7 +13,20 @@ import ViewHandler exposing (..)
 
 init : Model
 init =
-    Model mockCharacterBuilds loadAllStaticData False ( -1, Nothing ) Nothing
+    let
+        team =
+            mockCharacterBuilds
+
+        dataModel =
+            loadAllStaticData
+
+        viewModel =
+            ViewModel False ( -1, Nothing )
+
+        errorMessage =
+            Nothing
+    in
+    Model team dataModel viewModel errorMessage
 
 
 view model =

@@ -5,10 +5,15 @@ import CustomTypes exposing (..)
 
 type alias Model =
     { team : List ( Int, CharacterBuild )
-    , dataModel : DataModel
-    , characterModalOpen : Bool
-    , currentCharacter : ( Int, Maybe Character )
+    , data : DataModel
+    , view : ViewModel
     , errorMessage : Maybe String
+    }
+
+
+type alias ViewModel =
+    { characterModalOpen : Bool
+    , currentCharacter : ( Int, Maybe Character )
     }
 
 

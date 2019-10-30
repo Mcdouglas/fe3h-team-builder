@@ -32,20 +32,40 @@ openCharacterModal model state position =
                 |> List.filter (\( id, e ) -> id == position)
                 |> List.map (\( id, e ) -> getCharacterById e.idCharacter)
                 |> List.head
-    in
-    case build of
-        Just value ->
-            { model | characterModalOpen = state, currentCharacter = ( position, value ) }
 
-        Nothing ->
-            { model | characterModalOpen = state }
+        oldView =
+            model.view
+
+        newView =
+            case build of
+                Just value ->
+                    { oldView | characterModalOpen = state, currentCharacter = ( position, value ) }
+
+                Nothing ->
+                    { oldView | characterModalOpen = state }
+    in
+    { model | view = newView }
 
 
 updateCharacterModal : Model -> ( Int, Maybe Character ) -> Model
 updateCharacterModal model element =
-    { model | currentCharacter = element }
+    let
+        oldView =
+            model.view
+
+        newView =
+            { oldView | currentCharacter = element }
+    in
+    { model | view = newView }
 
 
 closeCharacterModal : Model -> Bool -> Model
 closeCharacterModal model state =
-    { model | characterModalOpen = False }
+    let
+        oldView =
+            model.view
+
+        newView =
+            { oldView | characterModalOpen = False }
+    in
+    { model | view = newView }
