@@ -1,4 +1,4 @@
-module DebugView exposing (..)
+module ErrorHandler exposing (..)
 
 import CustomTypes exposing (..)
 import GlobalMessage exposing (Msg(..))
