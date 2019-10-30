@@ -5,7 +5,6 @@
         "src/model",
         "src/model/job",
         "src/model/skill",
-        "src/tools",
         "src/update",
         "src/view"
     ],

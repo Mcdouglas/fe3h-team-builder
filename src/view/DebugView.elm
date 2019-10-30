@@ -5,7 +5,6 @@ import CustomTypes exposing (..)
 import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (Model)
 import Html exposing (..)
-import Stringable exposing (..)
 
 
 viewModelOrError : Model -> Html Msg

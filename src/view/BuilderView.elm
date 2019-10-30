@@ -11,7 +11,6 @@ import Html.Events exposing (onClick)
 import JobView exposing (..)
 import PortraitView exposing (..)
 import SkillView exposing (..)
-import Stringable exposing (..)
 
 
 viewPlanner : Model -> Html Msg
