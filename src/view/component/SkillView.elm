@@ -32,7 +32,7 @@ viewSkill : Model -> Maybe Skill -> Html Msg
 viewSkill model element =
     case element of
         Just value ->
-            div [ class "qs" ]
+            div []
                 [ getSkillPicture model value.pictureId value.combatArt
                 , div
                     []
@@ -46,7 +46,7 @@ viewSkill model element =
                 ]
 
         _ ->
-            div [ class "add-skill qs" ]
+            div [ class "add-skill" ]
                 [ div
                     [ style "content" "url(\"resources/lib/octicons/plus-small.svg\")"
                     ]
@@ -66,7 +66,7 @@ getSkillPicture model id combatArt =
                     "skill-picture"
     in
     div
-        [ class ("tile-clickable " ++ cssClass)
+        [ class ("tile-clickable qs " ++ cssClass)
         , style "content" ("url(\"resources/img/skills/" ++ String.fromInt id ++ ".png\")")
         ]
         []

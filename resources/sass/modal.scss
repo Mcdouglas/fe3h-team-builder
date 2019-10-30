@@ -52,6 +52,10 @@
           text-decoration: none;
           cursor: pointer;
         }
+
+        & > div {
+          position: relative;
+        }
       }
     }
   }

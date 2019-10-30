@@ -56,7 +56,7 @@ viewCharacterSkill model id =
     in
     case characterSkill of
         Just value ->
-            div [ class "qs" ]
+            div []
                 [ getSkillCharacterPicture model value.pictureId
                 , div
                     []
@@ -75,7 +75,7 @@ viewCharacterSkill model id =
 getSkillCharacterPicture : Model -> Int -> Html Msg
 getSkillCharacterPicture model id =
     div
-        [ class "cskill-picture"
+        [ class "cskill-picture qs"
         , style "content" ("url(\"resources/img/skills/" ++ String.fromInt id ++ ".png\")")
         ]
         []
@@ -89,7 +89,7 @@ viewCrestTile model id =
     in
     case maybeCrest of
         Just value ->
-            div [ class "qs" ]
+            div []
                 [ getCrestPicture model value.pictureId
                 , div
                     []
@@ -102,7 +102,7 @@ viewCrestTile model id =
                 ]
 
         Nothing ->
-            div [ class "qs" ]
+            div []
                 [ div [ class "crest-picture no-crest" ] []
                 , div [] [ text "No crest" ]
                 ]
@@ -111,7 +111,7 @@ viewCrestTile model id =
 getCrestPicture : Model -> Int -> Html Msg
 getCrestPicture model id =
     div
-        [ class "crest-picture"
+        [ class "crest-picture qs"
         , style "content" ("url(\"resources/img/crests/" ++ String.fromInt id ++ ".png\")")
         ]
         []

@@ -100,7 +100,7 @@ viewJobSkill element =
                 False ->
                     getSkillJobPassivePicture
     in
-    div [ class "qs" ]
+    div []
         [ getSkillPicture element.pictureId
         , div [] [ text element.name ]
         , div
@@ -114,7 +114,7 @@ viewJobSkill element =
 getSkillJobPassivePicture : Int -> Html Msg
 getSkillJobPassivePicture id =
     div
-        [ class "skill-picture"
+        [ class "skill-picture qs"
         , style "content" ("url(\"resources/img/skills/" ++ String.fromInt id ++ ".png\"")
         ]
         []
@@ -123,7 +123,7 @@ getSkillJobPassivePicture id =
 getSkillJobActivePicture : Int -> Html Msg
 getSkillJobActivePicture id =
     div
-        [ class "art-picture"
+        [ class "art-picture qs"
         , style "content" ("url(\"resources/img/skills/" ++ String.fromInt id ++ ".png\"")
         ]
         []

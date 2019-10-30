@@ -66,6 +66,10 @@ body {
 
             margin: auto 0;
             padding-top: 10%;
+
+            & > div { 
+              position: relative;
+            }
           }
         }
 
@@ -80,6 +84,10 @@ body {
           
           text-align: center;
           border-right: 1px solid #dee2e6 !important;
+
+          & > div {
+            position: relative;
+          }
         }
 
         .item-a3 {
@@ -93,6 +101,10 @@ body {
           
           text-align: center;
           border-right: 1px solid #dee2e6 !important;
+
+          & > div {
+            position: relative;
+          }
         }
 
         .item-a4 {
@@ -125,6 +137,10 @@ body {
             text-align: center;
 
             padding-top: 10%;
+
+            & > div {
+              position: relative;
+            }
           }
         }
       }
