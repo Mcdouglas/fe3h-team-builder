@@ -1,10 +1,10 @@
 module DataBuilderTest exposing (dataBuilderTest)
 
 import CustomTypes exposing (..)
-import DataBuilder exposing (..)
 import Expect exposing (Expectation)
 import Fuzz exposing (Fuzzer, int, list, string)
 import GlobalModel exposing (..)
+import TeamBuilder exposing (..)
 import Test exposing (..)
 
 

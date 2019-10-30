@@ -7,8 +7,18 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 
 
-toggleBuildInfo : CharacterBuild -> Html Msg
-toggleBuildInfo element =
+viewBuildInfo : CharacterBuild -> Html Msg
+viewBuildInfo element =
+    div
+        [ class "item-b2"
+        , hidden element.hiddenInfo
+        , id ("info-" ++ String.fromInt element.idCharacter)
+        ]
+        [ text "Hidden infos" ]
+
+
+buttonBuildInfo : CharacterBuild -> Html Msg
+buttonBuildInfo element =
     let
         infoShown =
             not element.hiddenInfo
@@ -26,13 +36,3 @@ toggleBuildInfo element =
             ]
             []
         ]
-
-
-viewBuildInfo : CharacterBuild -> Html Msg
-viewBuildInfo element =
-    div
-        [ class "item-b2"
-        , hidden element.hiddenInfo
-        , id ("info-" ++ String.fromInt element.idCharacter)
-        ]
-        [ text "Hidden infos" ]

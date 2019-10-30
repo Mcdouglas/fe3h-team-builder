@@ -13,39 +13,39 @@ import PortraitView exposing (..)
 import SkillView exposing (..)
 
 
-viewPlanner : Model -> Html Msg
-viewPlanner model =
+viewBuilder : Model -> Html Msg
+viewBuilder model =
     div []
         [ h3 [ class "text-light" ] [ text "Fire Emblem Three Houses - Team Builder!" ]
-        , viewTable model
+        , viewTeam model
         , viewCharacterSelector model
         ]
 
 
-viewTable : Model -> Html Msg
-viewTable model =
+viewTeam : Model -> Html Msg
+viewTeam model =
     div [ class "c-table" ]
         (model.team
             |> List.sortWith (\t1 t2 -> compare (Tuple.first t1) (Tuple.first t2))
-            |> List.map (\e -> viewSelector ( model, e ))
+            |> List.map (\e -> viewRow ( model, e ))
         )
 
 
-viewSelector : ( Model, ( Int, CharacterBuild ) ) -> Html Msg
-viewSelector ( model, ( position, element ) ) =
+viewRow : ( Model, ( Int, CharacterBuild ) ) -> Html Msg
+viewRow ( model, ( position, element ) ) =
     div [ class "c-container" ]
-        [ viewRow ( model, ( position, element ) )
+        [ viewBuild ( model, ( position, element ) )
         , viewBuildInfo element
         , div [ class "item-c" ] [ text "TODO" ]
         ]
 
 
-viewRow : ( Model, ( Int, CharacterBuild ) ) -> Html Msg
-viewRow ( model, ( position, element ) ) =
+viewBuild : ( Model, ( Int, CharacterBuild ) ) -> Html Msg
+viewBuild ( model, ( position, element ) ) =
     div [ class "item-a" ]
         [ viewPortrait ( model, ( position, element ) )
         , viewPassiveSkills ( model, element )
         , viewActiveSkills ( model, element )
         , viewJobSkills ( model, element )
-        , toggleBuildInfo element
+        , buttonBuildInfo element
         ]

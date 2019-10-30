@@ -14,7 +14,7 @@ viewModelOrError model =
             viewError message
 
         Nothing ->
-            viewPlanner model
+            viewBuilder model
 
 
 viewError : String -> Html Msg

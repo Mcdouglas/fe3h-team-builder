@@ -24,17 +24,9 @@ viewCharacterSelector model =
                 [ div [ class "modal-content" ]
                     [ div [ class "characters-grid" ]
                         (model.data.characters
-                            |> List.map (\e -> viewSelectCharacter ( model, ( position, e ) ))
+                            |> List.map (\e -> viewSelectCharacter model ( position, e ))
                         )
-                    , div [ class "character-detail" ]
-                        [ div
-                            [ onClick CloseCharacterSelector
-                            , class "close close-modal"
-                            , style "content" "url(\"resources/lib/octicons/x.svg\")"
-                            ]
-                            []
-                        , h3 [] [ text character.name ]
-                        ]
+                    , viewCharacterDetail model character
                     ]
                 ]
 
@@ -42,11 +34,24 @@ viewCharacterSelector model =
             div [] []
 
 
-viewSelectCharacter : ( Model, ( Int, Character ) ) -> Html Msg
-viewSelectCharacter ( model, ( position, element ) ) =
+viewSelectCharacter : Model -> ( Int, Character ) -> Html Msg
+viewSelectCharacter model ( position, element ) =
     div
         [ onMouseOver (UpdateCharacterSelector ( position, Just element ))
         , onClick (UpdateBuild ( position, element ))
         ]
         [ viewPortraitTile ( position, element ) element
+        ]
+
+
+viewCharacterDetail : Model -> Character -> Html Msg
+viewCharacterDetail model character =
+    div [ class "character-detail" ]
+        [ div
+            [ onClick CloseCharacterSelector
+            , class "close close-modal"
+            , style "content" "url(\"resources/lib/octicons/x.svg\")"
+            ]
+            []
+        , h3 [] [ text character.name ]
         ]
