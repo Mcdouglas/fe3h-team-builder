@@ -54,6 +54,8 @@ viewCharacterDetail model character =
     div [ class "character-detail" ]
         [ buttonCloseModal
         , h3 [] [ text character.name ]
+        , viewCharacterSkill model character.characterSkillId
+        , viewCrestTile model character.crestId
         ]
 
 
