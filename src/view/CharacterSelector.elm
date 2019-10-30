@@ -1,6 +1,8 @@
 module CharacterSelector exposing (..)
 
+import CharacterSkill exposing (..)
 import CharacterView exposing (..)
+import Crest exposing (..)
 import CustomTypes exposing (..)
 import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (..)
@@ -23,7 +25,7 @@ viewCharacterSelector model =
                 ]
                 [ div [ class "modal-content" ]
                     [ viewCharacterGrid model ( position, character )
-                    , viewCharacterDetail model character
+                    , viewSideBar model character
                     ]
                 ]
 
@@ -49,14 +51,66 @@ viewSelectCharacter model ( position, element ) =
         ]
 
 
+viewSideBar : Model -> Character -> Html Msg
+viewSideBar model character =
+    div [ class "sidebar" ]
+        [ buttonCloseModal
+        , viewCharacterDetail model character
+        ]
+
+
 viewCharacterDetail : Model -> Character -> Html Msg
 viewCharacterDetail model character =
     div [ class "character-detail" ]
-        [ buttonCloseModal
-        , h3 [] [ text character.name ]
-        , viewCharacterSkill model character.characterSkillId
-        , viewCrestTile model character.crestId
+        [ h3 [] [ text character.name ]
+        , viewCharacterSkillDetail model character.characterSkillId
+        , viewCharacterCrestDetail model character.crestId
         ]
+
+
+viewCharacterSkillDetail : Model -> Int -> Html Msg
+viewCharacterSkillDetail model skillId =
+    let
+        skill =
+            getCharacterSkillById skillId
+    in
+    case skill of
+        Just value ->
+            div []
+                [ div [ class "detail-title" ]
+                    [ getSkillCharacterPicture model value.pictureId
+                    , div [] [ text ("[ " ++ value.name ++ " ]") ]
+                    ]
+                , div [ class "detail-text" ] [ text value.description ]
+                ]
+
+        Nothing ->
+            div [] [ text "CharacterSkillNotFound" ]
+
+
+viewCharacterCrestDetail : Model -> Int -> Html Msg
+viewCharacterCrestDetail model crestId =
+    let
+        crest =
+            getCrest crestId
+    in
+    case crest of
+        Just value ->
+            div []
+                [ div [ class "detail-title" ]
+                    [ getCrestPicture model value.pictureId
+                    , div [] [ text ("[ " ++ value.name ++ " ]") ]
+                    ]
+                , div [ class "detail-text" ] [ text value.description ]
+                ]
+
+        Nothing ->
+            div []
+                [ div [ class "detail-title" ]
+                    [ div [ class "crest-picture no-crest" ] []
+                    , div [] [ text "No crest" ]
+                    ]
+                ]
 
 
 buttonCloseModal : Html Msg
