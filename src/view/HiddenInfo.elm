@@ -1,4 +1,4 @@
-module BuilderExpandedView exposing (..)
+module HiddenInfo exposing (..)
 
 import CustomTypes exposing (..)
 import GlobalMessage exposing (Msg(..))

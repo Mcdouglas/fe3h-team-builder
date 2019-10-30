@@ -1,10 +1,10 @@
 module TeamBuilder exposing (..)
 
-import BuilderExpandedView exposing (..)
 import CharacterSelector exposing (..)
 import CustomTypes exposing (..)
 import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (..)
+import HiddenInfo exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
