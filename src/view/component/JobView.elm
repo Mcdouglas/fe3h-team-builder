@@ -67,7 +67,7 @@ viewJob model element =
             in
             div [ class "item-a4a qs" ]
                 [ getJobPicture value.idPicture
-                , div [ class "card-text" ] [ text value.name ]
+                , div [] [ text value.name ]
                 , div
                     [ class "custom-popover above" ]
                     [ div [ class "popover-title" ] [ text ("[" ++ value.name ++ "]") ]
@@ -83,7 +83,7 @@ viewJob model element =
 getJobPicture : Int -> Html Msg
 getJobPicture id =
     div
-        [ class "job-picture tile-clickable card-img-top"
+        [ class "job-picture tile-clickable"
         , style "content" ("url(\"resources/img/jobs/" ++ String.fromInt id ++ ".gif\")")
         ]
         []
@@ -102,7 +102,7 @@ viewJobSkill element =
     in
     div [ class "qs" ]
         [ getSkillPicture element.pictureId
-        , div [ class "card-text" ] [ text element.name ]
+        , div [] [ text element.name ]
         , div
             [ class "custom-popover above" ]
             [ div [ class "popover-title" ] [ text ("[" ++ element.name ++ "]") ]

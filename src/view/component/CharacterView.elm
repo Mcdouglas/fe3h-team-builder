@@ -31,16 +31,16 @@ viewPortrait model ( id, element ) =
 viewPortraitTile : ( Int, Character ) -> Character -> Html Msg
 viewPortraitTile build element =
     div
-        [ class "item-a1a card" ]
+        [ class "item-a1a" ]
         [ getPortrait build element
-        , div [ class "card-text" ] [ text element.name ]
+        , div [] [ text element.name ]
         ]
 
 
 getPortrait : ( Int, Character ) -> Character -> Html Msg
 getPortrait build element =
     img
-        [ class "portrait-picture tile-clickable card-img-top"
+        [ class "portrait-picture tile-clickable"
         , src ("resources/img/portraits/" ++ String.fromInt element.id ++ ".png")
         , width 100
         , height 100
@@ -56,10 +56,10 @@ viewCharacterSkill model id =
     in
     case characterSkill of
         Just value ->
-            div [ class "card qs" ]
+            div [ class "qs" ]
                 [ getSkillCharacterPicture model value.pictureId
                 , div
-                    [ class "card-text" ]
+                    []
                     [ text value.name ]
                 , div
                     [ class "custom-popover above" ]
@@ -75,7 +75,7 @@ viewCharacterSkill model id =
 getSkillCharacterPicture : Model -> Int -> Html Msg
 getSkillCharacterPicture model id =
     div
-        [ class "cskill-picture card-img-top"
+        [ class "cskill-picture"
         , style "content" ("url(\"resources/img/skills/" ++ String.fromInt id ++ ".png\")")
         ]
         []
@@ -89,10 +89,10 @@ viewCrestTile model id =
     in
     case maybeCrest of
         Just value ->
-            div [ class "card qs" ]
+            div [ class "qs" ]
                 [ getCrestPicture model value.pictureId
                 , div
-                    [ class "card-text" ]
+                    []
                     [ text value.name ]
                 , div
                     [ class "custom-popover above" ]
@@ -102,16 +102,16 @@ viewCrestTile model id =
                 ]
 
         Nothing ->
-            div [ class "card qs" ]
-                [ div [ class "crest-picture no-crest card-img-top" ] []
-                , div [ class "card-text" ] [ text "No crest" ]
+            div [ class "qs" ]
+                [ div [ class "crest-picture no-crest" ] []
+                , div [] [ text "No crest" ]
                 ]
 
 
 getCrestPicture : Model -> Int -> Html Msg
 getCrestPicture model id =
     div
-        [ class "crest-picture card-img-top"
+        [ class "crest-picture"
         , style "content" ("url(\"resources/img/crests/" ++ String.fromInt id ++ ".png\")")
         ]
         []

@@ -32,10 +32,10 @@ viewSkill : Model -> Maybe Skill -> Html Msg
 viewSkill model element =
     case element of
         Just value ->
-            div [ class "qs card" ]
+            div [ class "qs" ]
                 [ getSkillPicture model value.pictureId value.combatArt
                 , div
-                    [ class "card-text" ]
+                    []
                     [ text value.name ]
                 , div
                     [ class "custom-popover above" ]
@@ -46,10 +46,9 @@ viewSkill model element =
                 ]
 
         _ ->
-            div [ class "add-skill qs card" ]
+            div [ class "add-skill qs" ]
                 [ div
-                    [ class "card-img-top"
-                    , style "content" "url(\"resources/lib/octicons/plus-small.svg\")"
+                    [ style "content" "url(\"resources/lib/octicons/plus-small.svg\")"
                     ]
                     []
                 ]
@@ -67,7 +66,7 @@ getSkillPicture model id combatArt =
                     "skill-picture"
     in
     div
-        [ class ("tile-clickable card-img-top " ++ cssClass)
+        [ class ("tile-clickable " ++ cssClass)
         , style "content" ("url(\"resources/img/skills/" ++ String.fromInt id ++ ".png\")")
         ]
         []
