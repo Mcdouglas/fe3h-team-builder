@@ -42,8 +42,6 @@ getPortrait build element =
     img
         [ class "portrait-picture tile-clickable"
         , src ("resources/img/portraits/" ++ String.fromInt element.id ++ ".png")
-        , width 100
-        , height 100
         ]
         []
 

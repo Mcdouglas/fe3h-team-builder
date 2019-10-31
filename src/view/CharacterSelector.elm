@@ -43,12 +43,21 @@ viewCharacterGrid model ( position, _ ) =
 
 viewSelectCharacter : Model -> ( Int, Character ) -> Html Msg
 viewSelectCharacter model ( position, element ) =
-    div
-        [ onMouseOver (UpdateCharacterSelector ( position, Just element ))
+    div []
+        [ viewCharacterPicker ( position, element )
+        , div [] [ text element.name ]
+        ]
+
+
+viewCharacterPicker : ( Int, Character ) -> Html Msg
+viewCharacterPicker ( position, element ) =
+    img
+        [ class "portrait-picture tile-clickable"
+        , src ("resources/img/portraits/" ++ String.fromInt element.id ++ ".png")
+        , onMouseOver (UpdateCharacterSelector ( position, Just element ))
         , onClick (UpdateBuild ( position, element ))
         ]
-        [ viewPortraitTile ( position, element ) element
-        ]
+        []
 
 
 viewSideBar : Model -> Character -> Html Msg
@@ -62,10 +71,27 @@ viewSideBar model character =
 viewCharacterDetail : Model -> Character -> Html Msg
 viewCharacterDetail model character =
     div [ class "character-detail" ]
-        [ h3 [] [ text character.name ]
+        [ viewFullPortraitDetail model character
         , viewCharacterSkillDetail model character.characterSkillId
         , viewCharacterCrestDetail model character.crestId
         ]
+
+
+viewFullPortraitDetail : Model -> Character -> Html Msg
+viewFullPortraitDetail model character =
+    div [ class "full-portrait-title" ]
+        [ getFullPortrait character.id
+        , div [] [ text character.name ]
+        ]
+
+
+getFullPortrait : Int -> Html Msg
+getFullPortrait id =
+    img
+        [ class "full-portrait-picutre"
+        , src ("resources/img/portraits/" ++ String.fromInt id ++ ".png")
+        ]
+        []
 
 
 viewCharacterSkillDetail : Model -> Int -> Html Msg
