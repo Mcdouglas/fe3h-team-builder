@@ -43,7 +43,17 @@ viewCharacterGrid model ( position, _ ) =
 
 viewCharacterPicker : ( Int, Character ) -> Html Msg
 viewCharacterPicker ( position, element ) =
-    div [ class "tile" ]
+    let
+        bannerCss = case element.bannerId of
+            Just value -> 
+                case value of
+                    0 -> "black-eagle-tile"
+                    1 -> "blue-lyon-tile"
+                    2 -> "golden-deer-tile"
+                    _ -> "church-seiros-tile"
+            Nothing -> "avatar-tile"
+    in
+    div [ class ("tile " ++ bannerCss) ]
         [ img
             [ src ("resources/img/portraits/" ++ String.fromInt element.id ++ ".png")
             , onMouseOver (UpdateCharacterSelector ( position, Just element ))

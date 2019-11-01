@@ -13,11 +13,12 @@
     /* Modal Content/Box */
     .modal-content {
       background-color: #fefefe;
-      transform: translate(20%, 25%);
+      transform: translate(30%, 50%);
       border: 1px solid #888;
-      width: 70%; /* Could be more or less, depending on screen size */
+      width: 60%; /* Could be more or less, depending on screen size */
       display:grid;
       grid-template-columns: calc(40rem - 8px) auto; /* (Nb_tile * (10rem - 2px)) */
+      padding: 1rem;
 
       .characters-grid {
         display: flex;
@@ -43,11 +44,32 @@
 
           &:hover {
             cursor: pointer;
+            transition: all 0.3s ease-out;
           }
 
           &:active {
               transform: translate(0.05rem,0.05rem);
           }
+        }
+
+        .avatar-tile:hover {
+          background-color: rgba(78, 127, 148, 0.6);
+        }
+
+        .black-eagle-tile:hover {
+            background-color: rgba(223, 115, 110, 0.6);
+        }
+
+        .blue-lyon-tile:hover {
+            background-color: rgba(150, 190, 192, 0.6);
+        }
+
+        .golden-deer-tile:hover {
+            background-color: rgba(238, 217, 153, 0.6);
+        }
+
+        .church-seiros-tile:hover {
+            background-color: rgba(233, 228, 225, 0.6);
         }
       }
 
@@ -64,7 +86,7 @@
           float: right;
           font-size: 28px;
           font-weight: bold;
-          margin: 1rem 1rem 0 0;
+          margin: 0.5rem 0.5rem 0 0;
         }
         
         .close-modal:hover,
