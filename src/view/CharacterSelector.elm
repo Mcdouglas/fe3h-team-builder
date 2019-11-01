@@ -37,27 +37,20 @@ viewCharacterGrid : Model -> ( Int, Character ) -> Html Msg
 viewCharacterGrid model ( position, _ ) =
     div [ class "characters-grid" ]
         (model.data.characters
-            |> List.map (\e -> viewSelectCharacter model ( position, e ))
+            |> List.map (\e -> viewCharacterPicker ( position, e ))
         )
-
-
-viewSelectCharacter : Model -> ( Int, Character ) -> Html Msg
-viewSelectCharacter model ( position, element ) =
-    div []
-        [ viewCharacterPicker ( position, element )
-        , div [] [ text element.name ]
-        ]
 
 
 viewCharacterPicker : ( Int, Character ) -> Html Msg
 viewCharacterPicker ( position, element ) =
-    img
-        [ class "portrait-picture tile-clickable"
-        , src ("resources/img/portraits/" ++ String.fromInt element.id ++ ".png")
-        , onMouseOver (UpdateCharacterSelector ( position, Just element ))
-        , onClick (UpdateBuild ( position, element ))
+    div [ class "tile" ]
+        [ img
+            [ src ("resources/img/portraits/" ++ String.fromInt element.id ++ ".png")
+            , onMouseOver (UpdateCharacterSelector ( position, Just element ))
+            , onClick (UpdateBuild ( position, element ))
+            ]
+            []
         ]
-        []
 
 
 viewSideBar : Model -> Character -> Html Msg
@@ -72,8 +65,7 @@ viewCharacterDetail : Model -> Character -> Html Msg
 viewCharacterDetail model character =
     div [ class "character-detail" ]
         [ viewFullPortraitDetail model character
-        , viewCharacterSkillDetail model character.characterSkillId
-        , viewCharacterCrestDetail model character.crestId
+        , viewContentDetail model character
         ]
 
 
@@ -81,17 +73,40 @@ viewFullPortraitDetail : Model -> Character -> Html Msg
 viewFullPortraitDetail model character =
     div [ class "full-portrait-title" ]
         [ getFullPortrait character.id
-        , div [] [ text character.name ]
+        , getBannerPicture character.bannerId
+        , div [ class "title-text" ] [ text character.name ]
         ]
 
 
 getFullPortrait : Int -> Html Msg
 getFullPortrait id =
     img
-        [ class "full-portrait-picutre"
+        [ class "full-portrait-picutre character-picture"
         , src ("resources/img/portraits/" ++ String.fromInt id ++ ".png")
         ]
         []
+
+
+viewContentDetail : Model -> Character -> Html Msg
+viewContentDetail model character =
+    div [ class "detail-content" ]
+        [ viewCharacterSkillDetail model character.characterSkillId
+        , viewCharacterCrestDetail model character.crestId
+        ]
+
+
+getBannerPicture : Maybe Int -> Html Msg
+getBannerPicture maybeId =
+    case maybeId of
+        Just id ->
+            img
+                [ class "banner-picture"
+                , src ("resources/img/banners/" ++ String.fromInt id ++ ".png")
+                ]
+                []
+
+        Nothing ->
+            div [] []
 
 
 viewCharacterSkillDetail : Model -> Int -> Html Msg

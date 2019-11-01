@@ -112,7 +112,7 @@ type alias Crest =
 
 
 type alias Character =
-    { id : Int, name : String, gender : GenderUnionType, characterSkillId : Int, holderType : CrestHolder, crestId : Int }
+    { id : Int, name : String, gender : GenderUnionType, characterSkillId : Int, holderType : CrestHolder, crestId : Int, bannerId : Maybe Int }
 
 
 type alias CharacterBuild =

@@ -16,7 +16,7 @@ viewPortrait model ( id, element ) =
     let
         character =
             getCharacterById element.idCharacter
-                |> Maybe.withDefault (Character -1 "" Male 0 NonOwner 0)
+                |> Maybe.withDefault (Character -1 "" Male 0 NonOwner 0 Nothing)
     in
     div
         [ class "item-a1" ]
@@ -40,7 +40,7 @@ viewPortraitTile build element =
 getPortrait : ( Int, Character ) -> Character -> Html Msg
 getPortrait build element =
     img
-        [ class "portrait-picture tile-clickable"
+        [ class "portrait-picture button-clickable"
         , src ("resources/img/portraits/" ++ String.fromInt element.id ++ ".png")
         ]
         []

@@ -83,7 +83,7 @@ viewJob model element =
 getJobPicture : Int -> Html Msg
 getJobPicture id =
     div
-        [ class "job-picture tile-clickable"
+        [ class "job-picture button-clickable"
         , style "content" ("url(\"resources/img/jobs/" ++ String.fromInt id ++ ".gif\")")
         ]
         []

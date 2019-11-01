@@ -66,7 +66,7 @@ getSkillPicture model id combatArt =
                     "skill-picture"
     in
     div
-        [ class ("tile-clickable qs " ++ cssClass)
+        [ class ("button-clickable qs " ++ cssClass)
         , style "content" ("url(\"resources/img/skills/" ++ String.fromInt id ++ ".png\")")
         ]
         []
