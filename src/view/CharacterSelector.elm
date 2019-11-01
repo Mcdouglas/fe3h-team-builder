@@ -44,14 +44,24 @@ viewCharacterGrid model ( position, _ ) =
 viewCharacterPicker : ( Int, Character ) -> Html Msg
 viewCharacterPicker ( position, element ) =
     let
-        bannerCss = case element.bannerId of
-            Just value -> 
-                case value of
-                    0 -> "black-eagle-tile"
-                    1 -> "blue-lyon-tile"
-                    2 -> "golden-deer-tile"
-                    _ -> "church-seiros-tile"
-            Nothing -> "avatar-tile"
+        bannerCss =
+            case element.bannerId of
+                Just value ->
+                    case value of
+                        0 ->
+                            "black-eagle-tile"
+
+                        1 ->
+                            "blue-lyon-tile"
+
+                        2 ->
+                            "golden-deer-tile"
+
+                        _ ->
+                            "church-seiros-tile"
+
+                Nothing ->
+                    "avatar-tile"
     in
     div [ class ("tile " ++ bannerCss) ]
         [ img
