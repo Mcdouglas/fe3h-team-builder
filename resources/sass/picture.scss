@@ -1,10 +1,12 @@
+@import 'variables';
+
 .card {
     border: none; // TO UNCOMMENT -- DEBUG
 }
 
 .portrait-picture {
-    width: 3rem;
-    height: 3rem;
+    width: 4em;
+    height: 4em;
     margin: 0 auto;
     background-color: rgba(0, 0, 0, 0.2);
 
@@ -12,17 +14,22 @@
     border-radius: 0.25rem;
 }
 
+.full-portrait-picutre {
+    width: 8em;
+    height: 8em;
+}
+
 .cskill-picture {
-    width: 2rem;
-    height: 2rem;
+    width: 2em;
+    height: 2em;
     margin: 0 auto;
     background-color: rgba(0, 0, 0, 0.85);
     border-radius: 0.25rem;
 }
 
 .crest-picture {
-    width: 2rem;
-    height: 2rem;
+    width: 2em;
+    height: 2em;
     margin: 0 auto;
     background-color: rgba(0, 0, 0, 0.15);
     border: 1px solid rgba(0, 0, 0, 0.25);
@@ -35,24 +42,24 @@
 }
 
 .skill-picture {
-    width: 2rem;
-    height: 2rem;
+    width: 2em;
+    height: 2em;
     margin: 0 auto;
     background-color: rgba(0, 0, 0, 0.85);
     border-radius: 0.25rem;
 }
 
 .art-picture {
-    width: 2rem;
-    height: 2rem;
+    width: 2em;
+    height: 2em;
     margin: 0 auto;
     background-color: rgba(0, 0, 0, 0.85);
     border-radius: 1rem;
 }
 
 .job-picture {
-    width: 3rem;
-    height: 3rem;
+    width: 3em;
+    height: 3em;
     margin: 0 auto;
     background-color: rgba(0, 0, 0, 0.2);
 
@@ -60,7 +67,7 @@
     border-radius: 0.25rem;
 }
 
-.tile-clickable {
+.button-clickable {
     cursor: pointer;
     box-shadow: 0 0 5px rgba(0,0,0,0.4);
 
@@ -74,8 +81,9 @@
 }
 
 .add-skill {
-    width: 2rem;
-    height: 2rem;
+    display: flex;
+    width: 2em;
+    height: 2em;
     margin: 0 auto;
     background-color: rgba(0, 0, 0, 0.4);
     border-radius: 0.25rem;
@@ -89,5 +97,9 @@
 
     &:hover {
         background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    & > div {
+        width: 100%
     }
 }

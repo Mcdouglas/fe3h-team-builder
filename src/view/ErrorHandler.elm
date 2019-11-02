@@ -1,11 +1,10 @@
-module DebugView exposing (..)
+module ErrorHandler exposing (..)
 
-import BuilderView exposing (..)
 import CustomTypes exposing (..)
 import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (Model)
 import Html exposing (..)
-import Stringable exposing (..)
+import TeamBuilder exposing (..)
 
 
 viewModelOrError : Model -> Html Msg
@@ -15,7 +14,7 @@ viewModelOrError model =
             viewError message
 
         Nothing ->
-            viewPlanner model
+            viewBuilder model
 
 
 viewError : String -> Html Msg

@@ -10,8 +10,8 @@ import JobCategory exposing (getJobCategoryById)
 import JobSkill exposing (..)
 
 
-viewJobSkills : ( Model, CharacterBuild ) -> Html Msg
-viewJobSkills ( model, element ) =
+viewJobSkills : Model -> CharacterBuild -> Html Msg
+viewJobSkills model element =
     let
         job =
             getJobById element.jobId
@@ -20,13 +20,13 @@ viewJobSkills ( model, element ) =
             job |> Maybe.map (\e -> getJobSkillsByJob e.id) |> Maybe.withDefault []
     in
     div [ class "item-a4" ]
-        [ viewJob ( model, job )
+        [ viewJob model job
         , div [ class "item-a4b" ] (listJobSkill |> List.map (\e -> viewJobSkill e))
         ]
 
 
-viewJob : ( Model, Maybe Job ) -> Html Msg
-viewJob ( model, element ) =
+viewJob : Model -> Maybe Job -> Html Msg
+viewJob model element =
     case element of
         Just value ->
             let
@@ -65,25 +65,25 @@ viewJob ( model, element ) =
                         |> appendMaybe magicUsage
                         |> List.intersperse (br [] [])
             in
-            div [ class "item-a4a qs" ]
+            div [ class "item-a4a" ]
                 [ getJobPicture value.idPicture
-                , div [ class "card-text" ] [ text value.name ]
+                , p [] [ text value.name ]
                 , div
                     [ class "custom-popover above" ]
-                    [ div [ class "popover-title" ] [ text ("[" ++ value.name ++ "]") ]
-                    , div [ class "popover-text" ] listHtml
-                    , div [ class "popover-instruction" ] [ text "Click to change " ]
+                    [ p [ class "popover-title" ] [ text ("[" ++ value.name ++ "]") ]
+                    , p [ class "popover-text" ] listHtml
+                    , p [ class "popover-instruction" ] [ text "Click to change " ]
                     ]
                 ]
 
         Nothing ->
-            div [] [ text "No data" ]
+            p [] [ text "No data" ]
 
 
 getJobPicture : Int -> Html Msg
 getJobPicture id =
     div
-        [ class "job-picture tile-clickable card-img-top"
+        [ class "job-picture qs button-clickable"
         , style "content" ("url(\"resources/img/jobs/" ++ String.fromInt id ++ ".gif\")")
         ]
         []
@@ -91,34 +91,30 @@ getJobPicture id =
 
 viewJobSkill : JobSkill -> Html Msg
 viewJobSkill element =
-    case element.combatArt of
-        True ->
-            div [ class "qs" ]
-                [ getSkillJobActivePicture element.pictureId
-                , div [ class "card-text" ] [ text element.name ]
-                , div
-                    [ class "custom-popover above" ]
-                    [ div [ class "popover-title" ] [ text ("[" ++ element.name ++ "]") ]
-                    , div [ class "popover-text" ] [ text element.description ]
-                    ]
-                ]
+    let
+        getSkillPicture =
+            case element.combatArt of
+                True ->
+                    getSkillJobActivePicture
 
-        False ->
-            div [ class "qs" ]
-                [ getSkillJobPassivePicture element.pictureId
-                , div [ class "card-text" ] [ text element.name ]
-                , div
-                    [ class "custom-popover above" ]
-                    [ div [ class "popover-title" ] [ text ("[" ++ element.name ++ "]") ]
-                    , div [ class "popover-text" ] [ text element.description ]
-                    ]
-                ]
+                False ->
+                    getSkillJobPassivePicture
+    in
+    div []
+        [ getSkillPicture element.pictureId
+        , p [] [ text element.name ]
+        , div
+            [ class "custom-popover above" ]
+            [ p [ class "popover-title" ] [ text ("[" ++ element.name ++ "]") ]
+            , p [ class "popover-text" ] [ text element.description ]
+            ]
+        ]
 
 
 getSkillJobPassivePicture : Int -> Html Msg
 getSkillJobPassivePicture id =
     div
-        [ class "skill-picture"
+        [ class "skill-picture qs"
         , style "content" ("url(\"resources/img/skills/" ++ String.fromInt id ++ ".png\"")
         ]
         []
@@ -127,7 +123,7 @@ getSkillJobPassivePicture id =
 getSkillJobActivePicture : Int -> Html Msg
 getSkillJobActivePicture id =
     div
-        [ class "art-picture"
+        [ class "art-picture qs"
         , style "content" ("url(\"resources/img/skills/" ++ String.fromInt id ++ ".png\"")
         ]
         []

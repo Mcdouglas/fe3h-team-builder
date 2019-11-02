@@ -5,9 +5,9 @@
         "src/model",
         "src/model/job",
         "src/model/skill",
-        "src/tools",
         "src/update",
-        "src/view"
+        "src/view",
+        "src/view/component"
     ],
     "elm-version": "0.19.0",
     "dependencies": {

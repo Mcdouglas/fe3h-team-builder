@@ -1,10 +1,11 @@
 module Main exposing (main)
 
 import Browser exposing (sandbox)
-import DataBuilder exposing (loadAllStaticData)
-import DebugView exposing (..)
+import CustomTypes exposing (..)
+import DataHandler exposing (..)
+import ErrorHandler exposing (..)
 import GlobalMessage exposing (Msg(..))
-import GlobalModel exposing (Model)
+import GlobalModel exposing (..)
 import Html exposing (..)
 import ModelHandler exposing (..)
 import ViewHandler exposing (..)
@@ -12,12 +13,24 @@ import ViewHandler exposing (..)
 
 init : Model
 init =
-    Model mockCharacterBuilds loadAllStaticData Nothing
+    let
+        team =
+            mockCharacterBuilds
+
+        dataModel =
+            initStaticData
+
+        viewModel =
+            ViewModel False ( -1, Nothing )
+
+        errorMessage =
+            Nothing
+    in
+    Model team dataModel viewModel errorMessage
 
 
 view model =
-    div []
-        [ viewModelOrError model ]
+    viewModelOrError model
 
 
 update : Msg -> Model -> Model
@@ -25,6 +38,18 @@ update msg model =
     case msg of
         ShowBuildInfo value ->
             toggleBuildInfo ( value, model )
+
+        OpenCharacterSelector ( id, value ) ->
+            openCharacterSelector model True id
+
+        UpdateCharacterSelector value ->
+            updateCharacterSelector model value
+
+        UpdateBuild value ->
+            closeCharacterSelector (updateBuild model value) False
+
+        CloseCharacterSelector ->
+            closeCharacterSelector model False
 
         _ ->
             model
