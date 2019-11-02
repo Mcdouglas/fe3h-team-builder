@@ -63,13 +63,15 @@ viewCharacterPicker ( position, element ) =
                 Nothing ->
                     "avatar-tile"
     in
-    div [ class ("tile " ++ bannerCss) ]
+    div
+        [ class "tile"
+        , onMouseOver (UpdateCharacterSelector ( position, Just element ))
+        , onClick (UpdateBuild ( position, element ))
+        ]
         [ img
-            [ src ("resources/img/portraits/" ++ String.fromInt element.id ++ ".png")
-            , onMouseOver (UpdateCharacterSelector ( position, Just element ))
-            , onClick (UpdateBuild ( position, element ))
-            ]
+            [ src ("resources/img/portraits/" ++ String.fromInt element.id ++ ".png") ]
             []
+        , div [ class ("tile-overlay " ++ bannerCss) ] []
         ]
 
 
@@ -126,7 +128,13 @@ getBannerPicture maybeId =
                 []
 
         Nothing ->
-            div [] []
+            img
+                [ class "banner-picture"
+                , style "opacity" "0"
+                , style "height" "3rem"
+                , style "width" "3rem"
+                ]
+                []
 
 
 viewCharacterSkillDetail : Model -> Int -> Html Msg

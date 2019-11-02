@@ -36,6 +36,7 @@
           border: 1px solid rgba(0,0,0,0.2);
           margin-bottom: -1px;
           margin-right: -1px;
+          position: relative;
 
           & > img {
             max-width: 7rem;
@@ -52,24 +53,66 @@
           }
         }
 
-        .avatar-tile:hover {
-          background-color: rgba(78, 127, 148, 0.5);
+        .tile-overlay {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 100%;
+          width: 100%;
+          opacity: 0;
+          transition: all 0.7s ease;
         }
 
-        .black-eagle-tile:hover {
-            background-color: rgba(223, 115, 110, 0.6);
+        .tile:hover .tile-overlay {
+          opacity: 1;
+          transform: scale(1.5);
         }
 
-        .blue-lyon-tile:hover {
-            background-color: rgba(150, 190, 192, 0.8);
+        .avatar-tile {
+          background: url("../img/crests/0.png");
+          background-size: 50%;
+          background-repeat: no-repeat;
+          background-position-x: 50%;
+          background-position-y: 50%;
+          background-color: rgba(78, 127, 148, 1);
         }
 
-        .golden-deer-tile:hover {
-            background-color: rgba(238, 217, 153, 0.7);
+        .black-eagle-tile {
+          background: url("../img/banners/4.png");
+          background-size: 60%;
+          background-repeat: no-repeat;
+          background-position-x: 50%;
+          background-position-y: 50%;
+          background-color: rgba(223, 115, 110, 1);
         }
 
-        .church-seiros-tile:hover {
-            background-color: rgba(233, 228, 225, 1);
+        .blue-lyon-tile {
+          background: url("../img/banners/5.png");
+          background-size: 67%;
+          background-repeat: no-repeat;
+          background-position-x: 50%;
+          background-position-y: 50%;
+          background-color: rgba(150, 190, 192, 1);
+        }
+
+        .golden-deer-tile {
+          background: url("../img/banners/6.png");
+          background-size: 62%;
+          background-repeat: no-repeat;
+          background-position-x: 50%;
+          background-position-y: 50%;
+          background-color: rgba(238, 217, 153, 1);
+        }
+
+        .church-seiros-tile {
+          background: url("../img/banners/7.png");
+          background-size: 78%;
+          background-repeat: no-repeat;
+          background-position-x: 50%;
+          background-position-y: 50%;
+          background-color: rgba(233, 228, 225, 1);
         }
       }
 
@@ -84,7 +127,6 @@
         .close-modal {
           color: #aaa;
           float: right;
-          font-size: 28px;
           font-weight: bold;
           margin: 0.5rem 0.5rem 0 0;
         }
@@ -102,7 +144,7 @@
           .full-portrait-title {
             display: grid;
             grid-template-columns: auto auto;
-            grid-template-rows: auto auto;
+            grid-template-rows: 68% auto;
             border-bottom: 1px solid rgba(0,0,0,0.4) !important;
             margin-bottom: 1.2em;
 
@@ -131,14 +173,14 @@
               grid-row-end: 3;
               grid-column-start: 2;
               grid-column-end: 3;
-              font-size: 1.75rem;
+              font-size: 1.75em;
               font-weight: 500;
-              margin-top: auto;
               text-align: right;
             }
           }
 
           .detail-content {
+            font-size: 0.75em;
             & > div {
               min-height: 4.5rem;
               max-width: 80%;
@@ -149,10 +191,7 @@
               display: grid;
               grid-template-columns: 20% auto;
               margin: auto 0;
-            }
-  
-            .detail-text {
-              font-size: 12px;
+              line-height: 2em;
             }
           }          
         }
