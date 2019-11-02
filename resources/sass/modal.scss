@@ -1,3 +1,5 @@
+@import 'variables';
+
 .modal {
     display: block; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -9,6 +11,7 @@
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    font-size: modal-font-size(1);
   
     /* Modal Content/Box */
     .modal-content {
@@ -17,29 +20,29 @@
       border: 1px solid #888;
       width: 60%; /* Could be more or less, depending on screen size */
       display:grid;
-      grid-template-columns: calc(40rem - 8px) auto; /* (Nb_tile * (10rem - 2px)) */
-      padding: 1rem;
+      grid-template-columns: calc(8 * (5em - 1px)) auto;
+      padding: 1em;
 
       .characters-grid {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        // padding-top: 2rem;
-        // padding-bottom: 2rem;
+        // padding-top: 1em;
+        // padding-bottom: 1em;
 
         .tile {
           
-          max-width: 5rem;
-          max-height: 5rem;
+          max-width: 5em;
+          max-height: 5em;
           overflow: hidden;
-          text-indent: -1rem;
+          text-indent: -1em;
           border: 1px solid rgba(0,0,0,0.2);
           margin-bottom: -1px;
           margin-right: -1px;
           position: relative;
 
           & > img {
-            max-width: 7rem;
+            max-width: 7em;
             max-height: initial;
           }
 
@@ -163,12 +166,12 @@
               
 
               height: auto;
-              width: 3rem;
+              width: 3em;
               justify-self: end;
-              transform: translateY(172%);
+              transform: translateY(171%);
             }
 
-            & > div.title-text {
+            & > .title-text {
               grid-row-start: 2;
               grid-row-end: 3;
               grid-column-start: 2;
@@ -181,6 +184,7 @@
 
           .detail-content {
             font-size: 0.75em;
+
             & > div {
               min-height: 4.5rem;
               max-width: 80%;
@@ -192,6 +196,10 @@
               grid-template-columns: 20% auto;
               margin: auto 0;
               line-height: 2em;
+            }
+
+            .detail-text {
+              margin-top: 0.75em;
             }
           }          
         }

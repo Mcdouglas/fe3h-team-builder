@@ -96,7 +96,7 @@ viewFullPortraitDetail model character =
     div [ class "full-portrait-title" ]
         [ getFullPortrait character.id
         , getBannerPicture character.bannerId
-        , div [ class "title-text" ] [ text character.name ]
+        , p [ class "title-text" ] [ text character.name ]
         ]
 
 
@@ -148,13 +148,13 @@ viewCharacterSkillDetail model skillId =
             div []
                 [ div [ class "detail-title" ]
                     [ getSkillCharacterPicture model value.pictureId
-                    , div [] [ text ("[ " ++ value.name ++ " ]") ]
+                    , p [] [ text ("[ " ++ value.name ++ " ]") ]
                     ]
-                , div [ class "detail-text" ] [ text value.description ]
+                , p [ class "detail-text" ] [ text value.description ]
                 ]
 
         Nothing ->
-            div [] [ text "CharacterSkillNotFound" ]
+            p [] [ text "CharacterSkillNotFound" ]
 
 
 viewCharacterCrestDetail : Model -> Int -> Html Msg
@@ -168,16 +168,16 @@ viewCharacterCrestDetail model crestId =
             div []
                 [ div [ class "detail-title" ]
                     [ getCrestPicture model value.pictureId
-                    , div [] [ text ("[ " ++ value.name ++ " ]") ]
+                    , p [] [ text ("[ " ++ value.name ++ " ]") ]
                     ]
-                , div [ class "detail-text" ] [ text value.description ]
+                , p [ class "detail-text" ] [ text value.description ]
                 ]
 
         Nothing ->
             div []
                 [ div [ class "detail-title" ]
                     [ div [ class "crest-picture no-crest" ] []
-                    , div [] [ text "No crest" ]
+                    , p [] [ text "No crest" ]
                     ]
                 ]
 

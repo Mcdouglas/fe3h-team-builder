@@ -33,7 +33,7 @@ viewPortraitTile build element =
     div
         [ class "item-a1a" ]
         [ getPortrait build element
-        , div [] [ text element.name ]
+        , p [] [ text element.name ]
         ]
 
 
@@ -56,18 +56,18 @@ viewCharacterSkill model id =
         Just value ->
             div []
                 [ getSkillCharacterPicture model value.pictureId
-                , div
+                , p
                     []
                     [ text value.name ]
                 , div
                     [ class "custom-popover above" ]
-                    [ div [ class "popover-title" ] [ text ("[" ++ value.name ++ "]") ]
-                    , div [ class "popover-text" ] [ text value.description ]
+                    [ p [ class "popover-title" ] [ text ("[" ++ value.name ++ "]") ]
+                    , p [ class "popover-text" ] [ text value.description ]
                     ]
                 ]
 
         Nothing ->
-            div [] [ text "Character not found" ]
+            p [] [ text "Character not found" ]
 
 
 getSkillCharacterPicture : Model -> Int -> Html Msg
@@ -89,20 +89,20 @@ viewCrestTile model id =
         Just value ->
             div []
                 [ getCrestPicture model value.pictureId
-                , div
+                , p
                     []
                     [ text value.name ]
                 , div
                     [ class "custom-popover above" ]
-                    [ div [ class "popover-title" ] [ text ("[" ++ value.name ++ "]") ]
-                    , div [ class "popover-text" ] [ text value.description ]
+                    [ p [ class "popover-title" ] [ text ("[" ++ value.name ++ "]") ]
+                    , p [ class "popover-text" ] [ text value.description ]
                     ]
                 ]
 
         Nothing ->
             div []
                 [ div [ class "crest-picture no-crest" ] []
-                , div [] [ text "No crest" ]
+                , p [] [ text "No crest" ]
                 ]
 
 

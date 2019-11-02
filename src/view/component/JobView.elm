@@ -67,17 +67,17 @@ viewJob model element =
             in
             div [ class "item-a4a qs" ]
                 [ getJobPicture value.idPicture
-                , div [] [ text value.name ]
+                , p [] [ text value.name ]
                 , div
                     [ class "custom-popover above" ]
-                    [ div [ class "popover-title" ] [ text ("[" ++ value.name ++ "]") ]
-                    , div [ class "popover-text" ] listHtml
-                    , div [ class "popover-instruction" ] [ text "Click to change " ]
+                    [ p [ class "popover-title" ] [ text ("[" ++ value.name ++ "]") ]
+                    , p [ class "popover-text" ] listHtml
+                    , p [ class "popover-instruction" ] [ text "Click to change " ]
                     ]
                 ]
 
         Nothing ->
-            div [] [ text "No data" ]
+            p [] [ text "No data" ]
 
 
 getJobPicture : Int -> Html Msg
@@ -102,11 +102,11 @@ viewJobSkill element =
     in
     div []
         [ getSkillPicture element.pictureId
-        , div [] [ text element.name ]
+        , p [] [ text element.name ]
         , div
             [ class "custom-popover above" ]
-            [ div [ class "popover-title" ] [ text ("[" ++ element.name ++ "]") ]
-            , div [ class "popover-text" ] [ text element.description ]
+            [ p [ class "popover-title" ] [ text ("[" ++ element.name ++ "]") ]
+            , p [ class "popover-text" ] [ text element.description ]
             ]
         ]
 

@@ -34,14 +34,14 @@ viewSkill model element =
         Just value ->
             div []
                 [ getSkillPicture model value.pictureId value.combatArt
-                , div
+                , p
                     []
                     [ text value.name ]
                 , div
                     [ class "custom-popover above" ]
-                    [ div [ class "popover-title" ] [ text ("[" ++ value.name ++ "]") ]
-                    , div [ class "popover-text" ] [ text value.description ]
-                    , div [ class "popover-instruction" ] [ text "Click to change " ]
+                    [ p [ class "popover-title" ] [ text ("[" ++ value.name ++ "]") ]
+                    , p [ class "popover-text" ] [ text value.description ]
+                    , p [ class "popover-instruction" ] [ text "Click to change " ]
                     ]
                 ]
 
