@@ -65,7 +65,7 @@ viewJob model element =
                         |> appendMaybe magicUsage
                         |> List.intersperse (br [] [])
             in
-            div [ class "item-a4a qs" ]
+            div [ class "item-a4a" ]
                 [ getJobPicture value.idPicture
                 , p [] [ text value.name ]
                 , div
@@ -83,7 +83,7 @@ viewJob model element =
 getJobPicture : Int -> Html Msg
 getJobPicture id =
     div
-        [ class "job-picture button-clickable"
+        [ class "job-picture qs button-clickable"
         , style "content" ("url(\"resources/img/jobs/" ++ String.fromInt id ++ ".gif\")")
         ]
         []
