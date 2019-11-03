@@ -7,7 +7,7 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 
 
-viewBuildInfo : CharacterBuild -> Html Msg
+viewBuildInfo : Build -> Html Msg
 viewBuildInfo element =
     div
         [ class "item-b2"
@@ -17,7 +17,7 @@ viewBuildInfo element =
         [ text "Hidden infos" ]
 
 
-buttonBuildInfo : CharacterBuild -> Html Msg
+buttonBuildInfo : Build -> Html Msg
 buttonBuildInfo element =
     let
         infoShown =

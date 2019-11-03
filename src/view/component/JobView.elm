@@ -10,7 +10,7 @@ import JobCategory exposing (getJobCategoryById)
 import JobSkill exposing (..)
 
 
-viewJobSkills : Model -> CharacterBuild -> Html Msg
+viewJobSkills : Model -> Build -> Html Msg
 viewJobSkills model element =
     let
         job =

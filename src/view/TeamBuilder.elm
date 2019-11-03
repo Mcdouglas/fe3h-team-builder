@@ -31,7 +31,7 @@ viewTeam model =
         )
 
 
-viewRow : Model -> ( Int, CharacterBuild ) -> Html Msg
+viewRow : Model -> ( Int, Build ) -> Html Msg
 viewRow model ( position, element ) =
     div [ class "c-container" ]
         [ viewBuild model ( position, element )
@@ -40,7 +40,7 @@ viewRow model ( position, element ) =
         ]
 
 
-viewBuild : Model -> ( Int, CharacterBuild ) -> Html Msg
+viewBuild : Model -> ( Int, Build ) -> Html Msg
 viewBuild model ( position, element ) =
     div [ class "item-a" ]
         [ viewPortrait model ( position, element )

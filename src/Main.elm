@@ -15,13 +15,13 @@ init : Model
 init =
     let
         team =
-            mockCharacterBuilds
+            mockBuilds
 
         dataModel =
             initStaticData
 
         viewModel =
-            ViewModel False ( -1, Nothing )
+            ViewModel False ( -1, Nothing ) False
 
         errorMessage =
             Nothing

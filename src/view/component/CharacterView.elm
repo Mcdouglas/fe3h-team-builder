@@ -11,7 +11,7 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 
 
-viewPortrait : Model -> ( Int, CharacterBuild ) -> Html Msg
+viewPortrait : Model -> ( Int, Build ) -> Html Msg
 viewPortrait model ( id, element ) =
     let
         character =

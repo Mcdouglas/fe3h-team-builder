@@ -8,7 +8,7 @@ import Html.Attributes exposing (..)
 import ModelHandler exposing (..)
 
 
-viewPassiveSkills : Model -> CharacterBuild -> Html Msg
+viewPassiveSkills : Model -> Build -> Html Msg
 viewPassiveSkills model element =
     let
         listPassiveSkill =
@@ -18,7 +18,7 @@ viewPassiveSkills model element =
         (List.map (\e -> viewSkill model e) listPassiveSkill)
 
 
-viewActiveSkills : Model -> CharacterBuild -> Html Msg
+viewActiveSkills : Model -> Build -> Html Msg
 viewActiveSkills model element =
     let
         listActiveSkill =

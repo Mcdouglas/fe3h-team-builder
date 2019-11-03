@@ -115,8 +115,13 @@ type alias Character =
     { id : Int, name : String, gender : GenderUnionType, characterSkillId : Int, holderType : CrestHolder, crestId : Int, bannerId : Maybe Int }
 
 
-type alias CharacterBuild =
-    { idCharacter : Int, listMasterySkillId : List Int, listStandardSkillId : List Int, jobId : Int, hiddenInfo : Bool }
+type SkillType
+    = Mastery
+    | Standard
+
+
+type alias Build =
+    { idCharacter : Int, listPassiveSkill : List ( Int, Int, SkillType ), listActiveSkill : List ( Int, Int, SkillType ), jobId : Int, hiddenInfo : Bool }
 
 
 type alias Skill =

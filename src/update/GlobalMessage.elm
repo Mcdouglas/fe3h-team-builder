@@ -10,3 +10,4 @@ type Msg
     | UpdateCharacterSelector ( Int, Maybe Character )
     | UpdateBuild ( Int, Character )
     | CloseCharacterSelector
+    | OpenPassiveSkillSelector ( Int, Build )
