@@ -167,7 +167,7 @@ viewCharacterCrestDetail model crestId =
         Just value ->
             div []
                 [ div [ class "detail-title" ]
-                    [ getCrestPicture model value.pictureId
+                    [ getCrestPicture value.pictureId
                     , p [] [ text ("[ " ++ value.name ++ " ]") ]
                     ]
                 , p [ class "detail-text" ] [ text value.description ]

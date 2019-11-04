@@ -32,18 +32,18 @@ viewTeam model =
 
 
 viewRow : Model -> ( Int, Build ) -> Html Msg
-viewRow model ( position, element ) =
+viewRow model ( idx, element ) =
     div [ class "c-container" ]
-        [ viewBuild model ( position, element )
+        [ viewBuild model ( idx, element )
         , viewBuildInfo element
         , div [ class "item-c" ] [ text "TODO" ]
         ]
 
 
 viewBuild : Model -> ( Int, Build ) -> Html Msg
-viewBuild model ( position, element ) =
+viewBuild model ( idx, element ) =
     div [ class "item-a" ]
-        [ viewPortrait model ( position, element )
+        [ viewPortrait model ( idx, element )
         , viewPassiveSkills model element
         , viewActiveSkills model element
         , viewJobSkills model element

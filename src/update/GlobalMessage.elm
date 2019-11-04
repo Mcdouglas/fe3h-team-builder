@@ -18,7 +18,7 @@ type CharacterModal
 
 
 type SkillModal
-    = OpenPassiveSkillSelector ( Int, Build )
+    = OpenSkillModal ( Int, Build )
 
 
 type BuildInfo

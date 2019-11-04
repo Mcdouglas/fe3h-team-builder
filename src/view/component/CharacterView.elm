@@ -20,7 +20,7 @@ viewPortrait model ( id, element ) =
     in
     div
         [ class "item-a1" ]
-        [ div [ onClick (CModalMsg (OpenCharacterModal ( id, character ))) ] [ viewPortraitTile ( id, character ) character ]
+        [ div [ onClick (CModalMsg (OpenCharacterModal ( id, character ))) ] [ viewPortraitTile character ]
         , div [ class "item-a1b" ]
             [ viewCharacterSkill model character.characterSkillId
             , viewCrestTile model character.crestId
@@ -28,17 +28,17 @@ viewPortrait model ( id, element ) =
         ]
 
 
-viewPortraitTile : ( Int, Character ) -> Character -> Html Msg
-viewPortraitTile build element =
+viewPortraitTile : Character -> Html Msg
+viewPortraitTile element =
     div
         [ class "item-a1a" ]
-        [ getPortrait build element
+        [ getPortrait element
         , p [] [ text element.name ]
         ]
 
 
-getPortrait : ( Int, Character ) -> Character -> Html Msg
-getPortrait build element =
+getPortrait : Character -> Html Msg
+getPortrait element =
     img
         [ class "portrait-picture button-clickable"
         , src ("resources/img/portraits/" ++ String.fromInt element.id ++ ".png")
@@ -71,31 +71,31 @@ viewCharacterSkill model id =
 
 
 getSkillCharacterPicture : Model -> Int -> Html Msg
-getSkillCharacterPicture model id =
+getSkillCharacterPicture model pictureId =
     div
         [ class "cskill-picture qs"
-        , style "content" ("url(\"resources/img/skills/" ++ String.fromInt id ++ ".png\")")
+        , style "content" ("url(\"resources/img/skills/" ++ String.fromInt pictureId ++ ".png\")")
         ]
         []
 
 
 viewCrestTile : Model -> Int -> Html Msg
-viewCrestTile model id =
+viewCrestTile model crestId =
     let
         maybeCrest =
-            getCrest id
+            getCrest crestId
     in
     case maybeCrest of
-        Just value ->
+        Just crest ->
             div []
-                [ getCrestPicture model value.pictureId
+                [ getCrestPicture crest.pictureId
                 , p
                     []
-                    [ text value.name ]
+                    [ text crest.name ]
                 , div
                     [ class "custom-popover above" ]
-                    [ p [ class "popover-title" ] [ text ("[" ++ value.name ++ "]") ]
-                    , p [ class "popover-text" ] [ text value.description ]
+                    [ p [ class "popover-title" ] [ text ("[" ++ crest.name ++ "]") ]
+                    , p [ class "popover-text" ] [ text crest.description ]
                     ]
                 ]
 
@@ -106,8 +106,8 @@ viewCrestTile model id =
                 ]
 
 
-getCrestPicture : Model -> Int -> Html Msg
-getCrestPicture model id =
+getCrestPicture : Int -> Html Msg
+getCrestPicture id =
     div
         [ class "crest-picture qs"
         , style "content" ("url(\"resources/img/crests/" ++ String.fromInt id ++ ".png\")")
