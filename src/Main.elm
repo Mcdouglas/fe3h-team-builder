@@ -1,14 +1,12 @@
 module Main exposing (main)
 
 import Browser exposing (sandbox)
-import CustomTypes exposing (..)
+import BuildInfoEventListener exposing (..)
+import CharacterEventListener exposing (..)
 import DataHandler exposing (..)
 import ErrorHandler exposing (..)
 import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (..)
-import Html exposing (..)
-import ModelHandler exposing (..)
-import ViewHandler exposing (..)
 
 
 init : Model
@@ -36,20 +34,11 @@ view model =
 update : Msg -> Model -> Model
 update msg model =
     case msg of
-        ShowBuildInfo value ->
-            toggleBuildInfo ( value, model )
+        BInfoMsg value ->
+            BuildInfoEventListener.handle value model
 
-        OpenCharacterSelector ( id, value ) ->
-            openCharacterSelector model True id
-
-        UpdateCharacterSelector value ->
-            updateCharacterSelector model value
-
-        UpdateBuild value ->
-            closeCharacterSelector (updateBuild model value) False
-
-        CloseCharacterSelector ->
-            closeCharacterSelector model False
+        CModalMsg value ->
+            CharacterEventListener.handle value model
 
         _ ->
             model

@@ -4,7 +4,7 @@ import CharacterSkill exposing (..)
 import CharacterView exposing (..)
 import Crest exposing (..)
 import CustomTypes exposing (..)
-import GlobalMessage exposing (Msg(..))
+import GlobalMessage exposing (CharacterModal(..), Msg(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -65,8 +65,8 @@ viewCharacterPicker ( position, element ) =
     in
     div
         [ class "tile"
-        , onMouseOver (UpdateCharacterSelector ( position, Just element ))
-        , onClick (UpdateBuild ( position, element ))
+        , onMouseOver (CModalMsg (UpdateCurrentCharacter ( position, Just element )))
+        , onClick (CModalMsg (UpdateBuildWithCharacter ( position, element )))
         ]
         [ img
             [ src ("resources/img/portraits/" ++ String.fromInt element.id ++ ".png") ]
@@ -185,7 +185,7 @@ viewCharacterCrestDetail model crestId =
 buttonCloseModal : Html Msg
 buttonCloseModal =
     div
-        [ onClick CloseCharacterSelector
+        [ onClick (CModalMsg CloseCharacterSelector)
         , class "close close-modal"
         , style "content" "url(\"resources/lib/octicons/x.svg\")"
         ]

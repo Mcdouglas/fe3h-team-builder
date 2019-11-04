@@ -1,7 +1,7 @@
 module HiddenInfo exposing (..)
 
 import CustomTypes exposing (..)
-import GlobalMessage exposing (Msg(..))
+import GlobalMessage exposing (BuildInfo(..), Msg(..))
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
@@ -24,7 +24,7 @@ buttonBuildInfo element =
             not element.hiddenInfo
     in
     div
-        [ onClick (ShowBuildInfo element.idCharacter)
+        [ onClick (BInfoMsg (ToggleBuildInfo element.idCharacter))
         , class "item-b1"
         ]
         [ img

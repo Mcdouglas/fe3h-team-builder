@@ -6,6 +6,7 @@
         "src/model/job",
         "src/model/skill",
         "src/update",
+        "src/update/listener",
         "src/view",
         "src/view/component"
     ],

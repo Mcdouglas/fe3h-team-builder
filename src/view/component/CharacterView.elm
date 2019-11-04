@@ -4,7 +4,7 @@ import Character exposing (..)
 import CharacterSkill exposing (..)
 import Crest exposing (..)
 import CustomTypes exposing (..)
-import GlobalMessage exposing (Msg(..))
+import GlobalMessage exposing (CharacterModal(..), Msg(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -20,7 +20,7 @@ viewPortrait model ( id, element ) =
     in
     div
         [ class "item-a1" ]
-        [ div [ onClick (OpenCharacterSelector ( id, character )) ] [ viewPortraitTile ( id, character ) character ]
+        [ div [ onClick (CModalMsg (OpenCharacterModal ( id, character ))) ] [ viewPortraitTile ( id, character ) character ]
         , div [ class "item-a1b" ]
             [ viewCharacterSkill model character.characterSkillId
             , viewCrestTile model character.crestId

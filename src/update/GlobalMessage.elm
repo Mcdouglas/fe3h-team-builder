@@ -5,9 +5,21 @@ import CustomTypes exposing (..)
 
 type Msg
     = InitialModel
-    | ShowBuildInfo Int
-    | OpenCharacterSelector ( Int, Character )
-    | UpdateCharacterSelector ( Int, Maybe Character )
-    | UpdateBuild ( Int, Character )
+    | CModalMsg CharacterModal
+    | SModalMsg SkillModal
+    | BInfoMsg BuildInfo
+
+
+type CharacterModal
+    = OpenCharacterModal ( Int, Character )
+    | UpdateCurrentCharacter ( Int, Maybe Character )
+    | UpdateBuildWithCharacter ( Int, Character )
     | CloseCharacterSelector
-    | OpenPassiveSkillSelector ( Int, Build )
+
+
+type SkillModal
+    = OpenPassiveSkillSelector ( Int, Build )
+
+
+type BuildInfo
+    = ToggleBuildInfo Int
