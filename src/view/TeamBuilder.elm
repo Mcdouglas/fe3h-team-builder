@@ -3,6 +3,7 @@ module TeamBuilder exposing (..)
 import BuildInfoView exposing (..)
 import BuildView exposing (..)
 import CharacterModal exposing (..)
+import SkillModal exposing (..)
 import CustomTypes exposing (..)
 import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (..)
@@ -16,6 +17,7 @@ viewBuilder model =
         [ h3 [ class "text-light" ] [ text "Fire Emblem Three Houses - Team Builder!" ]
         , viewTeam model
         , modalCharacterPicker model
+        , modalSkillPicker model
         ]
 
 

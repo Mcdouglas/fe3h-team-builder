@@ -25,7 +25,7 @@ handle msg model =
 openModal : Model -> Bool -> Int -> Model
 openModal model state position =
     let
-        build =
+        maybeCharacter =
             model.team
                 |> List.filter (\( id, e ) -> id == position)
                 |> List.map (\( id, e ) -> getCharacterById e.idCharacter)
@@ -35,7 +35,7 @@ openModal model state position =
             model.view
 
         newView =
-            case build of
+            case maybeCharacter of
                 Just value ->
                     { oldView | characterSelectorIsOpen = state, currentCharacter = ( position, value ) }
 

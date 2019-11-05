@@ -18,7 +18,7 @@ type CharacterModal
 
 
 type SkillModal
-    = OpenSkillModal ( Int, Build )
+    = OpenSkillModal ( Int, Int, Maybe Skill )
 
 
 type BuildInfo

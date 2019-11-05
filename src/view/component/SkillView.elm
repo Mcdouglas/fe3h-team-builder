@@ -1,17 +1,21 @@
 module SkillView exposing (..)
 
 import CustomTypes exposing (..)
-import GlobalMessage exposing (Msg(..))
+import GlobalMessage exposing (Msg(..),SkillModal(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (onClick)
 
 
-viewSkill : Model -> Maybe Skill -> Html Msg
-viewSkill model element =
-    case element of
+viewSkill : Model -> ( Int, Int, Maybe Skill ) -> Html Msg
+viewSkill model (buildPosition, skillPosition, maybeSkill) =
+    let
+        onClickEvent = onClick (SModalMsg (OpenSkillModal ( buildPosition, skillPosition, maybeSkill )))
+    in
+    case maybeSkill of
         Just value ->
-            div []
+            div [ onClickEvent ]
                 [ getSkillPicture model value.pictureId value.combatArt
                 , p
                     []
@@ -25,7 +29,7 @@ viewSkill model element =
                 ]
 
         _ ->
-            div [ class "add-skill" ]
+            div [ class "add-skill", onClickEvent ]
                 [ div
                     [ style "content" "url(\"resources/lib/octicons/plus-small.svg\")"
                     ]

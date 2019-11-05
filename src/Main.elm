@@ -3,6 +3,7 @@ module Main exposing (main)
 import Browser exposing (sandbox)
 import BuildInfoEventListener exposing (..)
 import CharacterEventListener exposing (..)
+import SkillEventListener exposing (..)
 import DataHandler exposing (..)
 import ErrorHandler exposing (..)
 import GlobalMessage exposing (Msg(..))
@@ -19,8 +20,12 @@ init =
         dataModel =
             initStaticData
 
+        initCharacterPicker = ( -1, Nothing)
+
+        initSkillPicker = (-1 , -1, Nothing)
+
         viewModel =
-            ViewModel False ( -1, Nothing ) False
+            ViewModel False initCharacterPicker False initSkillPicker
 
         errorMessage =
             Nothing
@@ -45,6 +50,9 @@ update msg model =
 
         CModalMsg value ->
             CharacterEventListener.handle value model
+
+        SModalMsg value ->
+            SkillEventListener.handle value model
 
         _ ->
             model
