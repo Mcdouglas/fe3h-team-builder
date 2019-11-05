@@ -17,14 +17,14 @@ handle msg model =
             closeModal model
 
 
-openModal : ( Int, Int, Maybe Skill ) -> Model -> Model
-openModal ( buildPosition, skillPosition, maybeSkill ) model =
+openModal : ( ( Int, Int ), Maybe Skill, Bool ) -> Model -> Model
+openModal skillPicker model =
     let
         oldView =
             model.view
 
         newView =
-            { oldView | skillModalIsOpen = True, skillPicker = ( buildPosition, skillPosition, maybeSkill ) }
+            { oldView | skillModalIsOpen = True, skillPicker = skillPicker }
     in
     { model | view = newView }
 

@@ -24,7 +24,7 @@ init =
             ( -1, Nothing )
 
         initSkillPicker =
-            ( -1, -1, Nothing )
+            ( ( -1, -1 ), Nothing, False )
 
         viewModel =
             ViewModel False initCharacterPicker False initSkillPicker

@@ -8,11 +8,11 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 
 
-viewSkill : Model -> ( Int, Int, Maybe Skill ) -> Html Msg
-viewSkill model ( buildPosition, skillPosition, maybeSkill ) =
+viewSkill : Model -> ( ( Int, Int ), Maybe Skill, Bool ) -> Html Msg
+viewSkill model ( positions, maybeSkill, isCombatArt ) =
     let
         onClickEvent =
-            onClick (SModalMsg (OpenSkillModal ( buildPosition, skillPosition, maybeSkill )))
+            onClick (SModalMsg (OpenSkillModal ( positions, maybeSkill, isCombatArt )))
     in
     case maybeSkill of
         Just value ->

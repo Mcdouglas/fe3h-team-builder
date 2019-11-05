@@ -18,7 +18,7 @@ type CharacterModal
 
 
 type SkillModal
-    = OpenSkillModal ( Int, Int, Maybe Skill )
+    = OpenSkillModal ( ( Int, Int ), Maybe Skill, Bool )
     | CloseSkillModal
 
 

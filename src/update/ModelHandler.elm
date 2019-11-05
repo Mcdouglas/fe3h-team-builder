@@ -19,3 +19,18 @@ getSkillByType idSkill skillType =
         Standard ->
             getStandardSkill idSkill
                 |> Maybe.andThen (\e -> Just (Skill e.id e.pictureId e.name e.description e.combatArt False))
+
+
+getSkillList : Bool -> DataModel -> List Skill
+getSkillList isCombatArt dataModel =
+    let
+        listSkills =
+            dataModel.standardSkills
+                |> List.filter (\s -> s.combatArt == isCombatArt)
+                |> List.map (\e -> Just (Skill e.id e.pictureId e.name e.description e.combatArt isCombatArt))
+    in
+    dataModel.masterySkills
+        |> List.filter (\s -> s.combatArt == isCombatArt)
+        |> List.map (\e -> Just (Skill e.id e.pictureId e.name e.description e.combatArt isCombatArt))
+        |> List.append listSkills
+        |> Maybe.Extra.values

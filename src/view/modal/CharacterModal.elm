@@ -20,7 +20,7 @@ modalCharacterPicker model =
     case maybeCharacter of
         Just character ->
             div
-                [ class "modal"
+                [ class "modal-c"
                 , hidden (not model.view.characterSelectorIsOpen)
                 ]
                 [ div [ class "modal-content" ]

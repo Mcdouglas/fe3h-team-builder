@@ -15,7 +15,7 @@ type alias ViewModel =
     { characterSelectorIsOpen : Bool
     , currentCharacter : ( Int, Maybe Character )
     , skillModalIsOpen : Bool
-    , skillPicker : ( Int, Int, Maybe Skill )
+    , skillPicker : ( ( Int, Int ), Maybe Skill, Bool )
     }
 
 
