@@ -16,8 +16,8 @@ viewSkill model ( buildPosition, skillPosition, maybeSkill ) =
     in
     case maybeSkill of
         Just value ->
-            div [ onClickEvent ]
-                [ getSkillPicture model value.pictureId value.combatArt
+            div []
+                [ getSkillPicture value.pictureId value.combatArt onClickEvent
                 , p
                     []
                     [ text value.name ]
@@ -30,19 +30,14 @@ viewSkill model ( buildPosition, skillPosition, maybeSkill ) =
                 ]
 
         _ ->
-            div [ class "add-skill", onClickEvent ]
-                [ div
-                    [ style "content" "url(\"resources/lib/octicons/plus-small.svg\")"
-                    ]
-                    []
-                ]
+            div [ class "add-skill", style "content" "url(\"resources/lib/octicons/plus-small.svg\")", onClickEvent ] [ ]
 
 
-getSkillPicture : Model -> Int -> Bool -> Html Msg
-getSkillPicture model id combatArt =
+getSkillPicture : Int -> Bool -> Attribute Msg -> Html Msg
+getSkillPicture pictureId isCombatArt onClickEvent =
     let
         cssClass =
-            case combatArt of
+            case isCombatArt of
                 True ->
                     "art-picture"
 
@@ -51,6 +46,7 @@ getSkillPicture model id combatArt =
     in
     div
         [ class ("button-clickable qs " ++ cssClass)
-        , style "content" ("url(\"resources/img/skills/" ++ String.fromInt id ++ ".png\")")
+        , style "content" ("url(\"resources/img/skills/" ++ String.fromInt pictureId ++ ".png\")")
+        , onClickEvent
         ]
         []

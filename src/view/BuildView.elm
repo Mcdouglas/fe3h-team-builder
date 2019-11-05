@@ -46,13 +46,12 @@ sectionCharacter model ( id, build ) =
 sectionPassiveSkills : Model -> Build -> Html Msg
 sectionPassiveSkills model build =
     let
-        defaultValue idx =
-            ( idx, -1, Nothing )
-
         listPassiveSkill =
             build.listPassiveSkill
                 |> List.map (\( idx, skillId, skillType ) -> ( idx, skillId, getSkillByType skillId skillType ))
-                |> List.foldr (::) [ defaultValue 0, defaultValue 1, defaultValue 2, defaultValue 3, defaultValue 4 ]
+                |> List.foldr (::) (List.repeat 5 ( -1, -1, Nothing ))
+                |> List.indexedMap Tuple.pair
+                |> List.map (\(id, (idx, idSkill, maybeSkill)) -> (id, idSkill, maybeSkill))
                 |> List.take 5
     in
     div [ class "item-a2" ]
@@ -62,13 +61,12 @@ sectionPassiveSkills model build =
 sectionActiveSkills : Model -> Build -> Html Msg
 sectionActiveSkills model build =
     let
-        defaultValue idx =
-            ( idx, -1, Nothing )
-
         listActiveSkill =
             build.listActiveSkill
                 |> List.map (\( idx, skillId, skillType ) -> ( idx, skillId, getSkillByType skillId skillType ))
-                |> List.foldr (::) [ defaultValue 0, defaultValue 1, defaultValue 2 ]
+                |> List.foldr (::) (List.repeat 3 ( -1, -1, Nothing ))
+                |> List.indexedMap Tuple.pair
+                |> List.map (\(id, (idx, idSkill, maybeSkill)) -> (id, idSkill, maybeSkill))
                 |> List.take 3
     in
     div [ class "item-a3" ]

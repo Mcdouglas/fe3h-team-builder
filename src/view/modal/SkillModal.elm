@@ -12,15 +12,10 @@ modalSkillPicker model =
         ( buildPosition, skillPosition, maybeSkill ) =
             model.view.skillPicker
     in
-    case maybeSkill of
-        Just character ->
-            div
-                [ class "modal"
-                , hidden (not model.view.skillModalIsOpen)
-                ]
-                [ div [ class "modal-content" ]
-                    []
-                ]
-
-        Nothing ->
-            div [] []
+    div
+        [ class "modal"
+        , hidden (not model.view.skillModalIsOpen)
+        ]
+        [ div [ class "modal-content" ]
+            []
+        ]

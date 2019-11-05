@@ -87,6 +87,7 @@
     margin: 0 auto;
     background-color: rgba(0, 0, 0, 0.4);
     border-radius: 0.25rem;
+    content: url("resources/lib/octicons/plus-small.svg");
 
     cursor: pointer;
     box-shadow: 0 0 5px rgba(0,0,0,0.4);
@@ -97,9 +98,5 @@
 
     &:hover {
         background-color: rgba(0, 0, 0, 0.5);
-    }
-
-    & > div {
-        width: 100%
     }
 }
