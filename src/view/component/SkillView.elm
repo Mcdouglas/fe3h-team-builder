@@ -30,7 +30,7 @@ viewSkill model ( buildPosition, skillPosition, maybeSkill ) =
                 ]
 
         _ ->
-            div [ class "add-skill", style "content" "url(\"resources/lib/octicons/plus-small.svg\")", onClickEvent ] [ ]
+            div [ class "add-skill", style "content" "url(\"resources/lib/octicons/plus-small.svg\")", onClickEvent ] []
 
 
 getSkillPicture : Int -> Bool -> Attribute Msg -> Html Msg

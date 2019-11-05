@@ -12,6 +12,7 @@ handle msg model =
     case msg of
         OpenSkillModal value ->
             openModal value model
+
         CloseSkillModal ->
             closeModal model
 

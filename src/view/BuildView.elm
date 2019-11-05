@@ -51,7 +51,7 @@ sectionPassiveSkills model build =
                 |> List.map (\( idx, skillId, skillType ) -> ( idx, skillId, getSkillByType skillId skillType ))
                 |> List.foldr (::) (List.repeat 5 ( -1, -1, Nothing ))
                 |> List.indexedMap Tuple.pair
-                |> List.map (\(id, (idx, idSkill, maybeSkill)) -> (id, idSkill, maybeSkill))
+                |> List.map (\( id, ( idx, idSkill, maybeSkill ) ) -> ( id, idSkill, maybeSkill ))
                 |> List.take 5
     in
     div [ class "item-a2" ]
@@ -66,7 +66,7 @@ sectionActiveSkills model build =
                 |> List.map (\( idx, skillId, skillType ) -> ( idx, skillId, getSkillByType skillId skillType ))
                 |> List.foldr (::) (List.repeat 3 ( -1, -1, Nothing ))
                 |> List.indexedMap Tuple.pair
-                |> List.map (\(id, (idx, idSkill, maybeSkill)) -> (id, idSkill, maybeSkill))
+                |> List.map (\( id, ( idx, idSkill, maybeSkill ) ) -> ( id, idSkill, maybeSkill ))
                 |> List.take 3
     in
     div [ class "item-a3" ]

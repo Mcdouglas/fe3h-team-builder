@@ -1,6 +1,6 @@
 module SkillModal exposing (..)
 
-import GlobalMessage exposing (Msg(..),SkillModal(..))
+import GlobalMessage exposing (Msg(..), SkillModal(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -18,13 +18,14 @@ modalSkillPicker model =
         , hidden (not model.view.skillModalIsOpen)
         ]
         [ div [ class "modal-content" ]
-            [ viewSkillGrid model ( buildPosition )
+            [ viewSkillGrid model buildPosition
             , viewSideBar model
             ]
         ]
 
-viewSkillGrid : Model -> ( Int ) -> Html Msg
-viewSkillGrid model ( position ) =
+
+viewSkillGrid : Model -> Int -> Html Msg
+viewSkillGrid model position =
     div [ class "characters-grid" ]
         []
 
