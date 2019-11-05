@@ -1,16 +1,13 @@
 module TeamBuilder exposing (..)
 
-import CharacterSelector exposing (..)
-import CharacterView exposing (..)
+import BuildInfoView exposing (..)
+import BuildView exposing (..)
+import CharacterModal exposing (..)
 import CustomTypes exposing (..)
 import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (..)
-import HiddenInfo exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (onClick)
-import JobView exposing (..)
-import SkillView exposing (..)
 
 
 viewBuilder : Model -> Html Msg
@@ -18,7 +15,7 @@ viewBuilder model =
     div []
         [ h3 [ class "text-light" ] [ text "Fire Emblem Three Houses - Team Builder!" ]
         , viewTeam model
-        , viewCharacterSelector model
+        , modalCharacterPicker model
         ]
 
 
@@ -35,17 +32,6 @@ viewRow : Model -> ( Int, Build ) -> Html Msg
 viewRow model ( idx, element ) =
     div [ class "c-container" ]
         [ viewBuild model ( idx, element )
-        , viewBuildInfo element
+        , sectionBuildInfo element
         , div [ class "item-c" ] [ text "TODO" ]
-        ]
-
-
-viewBuild : Model -> ( Int, Build ) -> Html Msg
-viewBuild model ( idx, element ) =
-    div [ class "item-a" ]
-        [ viewPortrait model ( idx, element )
-        , viewPassiveSkills model element
-        , viewActiveSkills model element
-        , viewJobSkills model element
-        , buttonBuildInfo element
         ]

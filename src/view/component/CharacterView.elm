@@ -1,31 +1,12 @@
 module CharacterView exposing (..)
 
-import Character exposing (..)
-import CharacterSkill exposing (..)
-import Crest exposing (..)
+import CharacterSkill exposing (getCharacterSkillById)
+import Crest exposing (getCrest)
 import CustomTypes exposing (..)
-import GlobalMessage exposing (CharacterModal(..), Msg(..))
+import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (onClick)
-
-
-viewPortrait : Model -> ( Int, Build ) -> Html Msg
-viewPortrait model ( id, element ) =
-    let
-        character =
-            getCharacterById element.idCharacter
-                |> Maybe.withDefault (Character -1 "" Male 0 NonOwner 0 Nothing)
-    in
-    div
-        [ class "item-a1" ]
-        [ div [ onClick (CModalMsg (OpenCharacterModal ( id, character ))) ] [ viewPortraitTile character ]
-        , div [ class "item-a1b" ]
-            [ viewCharacterSkill model character.characterSkillId
-            , viewCrestTile model character.crestId
-            ]
-        ]
 
 
 viewPortraitTile : Character -> Html Msg

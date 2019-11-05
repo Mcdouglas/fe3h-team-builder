@@ -8,7 +8,8 @@
         "src/update",
         "src/update/listener",
         "src/view",
-        "src/view/component"
+        "src/view/component",
+        "src/view/modal"
     ],
     "elm-version": "0.19.0",
     "dependencies": {

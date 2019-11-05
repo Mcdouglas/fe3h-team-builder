@@ -5,27 +5,6 @@ import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import ModelHandler exposing (..)
-
-
-viewPassiveSkills : Model -> Build -> Html Msg
-viewPassiveSkills model element =
-    let
-        listPassiveSkill =
-            getPassiveSkills element
-    in
-    div [ class "item-a2" ]
-        (List.map (\e -> viewSkill model e) listPassiveSkill)
-
-
-viewActiveSkills : Model -> Build -> Html Msg
-viewActiveSkills model element =
-    let
-        listActiveSkill =
-            getActiveSkills element
-    in
-    div [ class "item-a3" ]
-        (List.map (\e -> viewSkill model e) listActiveSkill)
 
 
 viewSkill : Model -> Maybe Skill -> Html Msg

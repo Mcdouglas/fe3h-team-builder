@@ -1,4 +1,4 @@
-module CharacterSelector exposing (..)
+module CharacterModal exposing (..)
 
 import CharacterSkill exposing (..)
 import CharacterView exposing (..)
@@ -11,8 +11,8 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onMouseOver)
 
 
-viewCharacterSelector : Model -> Html Msg
-viewCharacterSelector model =
+modalCharacterPicker : Model -> Html Msg
+modalCharacterPicker model =
     let
         ( position, maybeCharacter ) =
             model.view.currentCharacter

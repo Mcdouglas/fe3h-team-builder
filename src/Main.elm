@@ -7,6 +7,7 @@ import DataHandler exposing (..)
 import ErrorHandler exposing (..)
 import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (..)
+import TeamBuilder exposing (..)
 
 
 init : Model
@@ -28,7 +29,12 @@ init =
 
 
 view model =
-    viewModelOrError model
+    case model.errorMessage of
+        Just message ->
+            viewError message
+
+        Nothing ->
+            viewBuilder model
 
 
 update : Msg -> Model -> Model

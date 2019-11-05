@@ -10,21 +10,6 @@ import JobCategory exposing (getJobCategoryById)
 import JobSkill exposing (..)
 
 
-viewJobSkills : Model -> Build -> Html Msg
-viewJobSkills model element =
-    let
-        job =
-            getJobById element.jobId
-
-        listJobSkill =
-            job |> Maybe.map (\e -> getJobSkillsByJob e.id) |> Maybe.withDefault []
-    in
-    div [ class "item-a4" ]
-        [ viewJob model job
-        , div [ class "item-a4b" ] (listJobSkill |> List.map (\e -> viewJobSkill e))
-        ]
-
-
 viewJob : Model -> Maybe Job -> Html Msg
 viewJob model element =
     case element of
