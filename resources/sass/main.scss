@@ -1,6 +1,7 @@
 @import 'popover';
 @import 'picture';
-@import 'modal';
+@import 'modal-c';
+@import 'modal-s';
 @import 'variables';
 
 body {
@@ -83,6 +84,7 @@ body {
           grid-column-start: 2;
           grid-column-end: 3;
           
+          min-height: 3em;
           margin: auto 0 auto 1rem;
           padding-right: 1rem;
           

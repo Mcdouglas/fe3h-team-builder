@@ -11,16 +11,30 @@ handle : SkillModal -> Model -> Model
 handle msg model =
     case msg of
         OpenSkillModal value ->
-            openSkillModal value model
+            openModal value model
+        CloseSkillModal ->
+            closeModal model
 
 
-openSkillModal : ( Int, Int, Maybe Skill ) -> Model -> Model
-openSkillModal ( buildPosition, skillPosition, maybeSkill ) model =
+openModal : ( Int, Int, Maybe Skill ) -> Model -> Model
+openModal ( buildPosition, skillPosition, maybeSkill ) model =
     let
         oldView =
             model.view
 
         newView =
             { oldView | skillModalIsOpen = True, skillPicker = ( buildPosition, skillPosition, maybeSkill ) }
+    in
+    { model | view = newView }
+
+
+closeModal : Model -> Model
+closeModal model =
+    let
+        oldView =
+            model.view
+
+        newView =
+            { oldView | skillModalIsOpen = False }
     in
     { model | view = newView }

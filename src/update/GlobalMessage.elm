@@ -19,6 +19,7 @@ type CharacterModal
 
 type SkillModal
     = OpenSkillModal ( Int, Int, Maybe Skill )
+    | CloseSkillModal
 
 
 type BuildInfo
