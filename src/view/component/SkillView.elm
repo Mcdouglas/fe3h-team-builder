@@ -1,7 +1,7 @@
 module SkillView exposing (..)
 
 import CustomTypes exposing (..)
-import GlobalMessage exposing (Msg(..),SkillModal(..))
+import GlobalMessage exposing (Msg(..), SkillModal(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -9,9 +9,10 @@ import Html.Events exposing (onClick)
 
 
 viewSkill : Model -> ( Int, Int, Maybe Skill ) -> Html Msg
-viewSkill model (buildPosition, skillPosition, maybeSkill) =
+viewSkill model ( buildPosition, skillPosition, maybeSkill ) =
     let
-        onClickEvent = onClick (SModalMsg (OpenSkillModal ( buildPosition, skillPosition, maybeSkill )))
+        onClickEvent =
+            onClick (SModalMsg (OpenSkillModal ( buildPosition, skillPosition, maybeSkill )))
     in
     case maybeSkill of
         Just value ->

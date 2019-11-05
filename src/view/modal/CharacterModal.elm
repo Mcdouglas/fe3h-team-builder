@@ -185,7 +185,7 @@ viewCharacterCrestDetail model crestId =
 buttonCloseModal : Html Msg
 buttonCloseModal =
     div
-        [ onClick (CModalMsg CloseCharacterSelector)
+        [ onClick (CModalMsg CloseCharacterModal)
         , class "close close-modal"
         , style "content" "url(\"resources/lib/octicons/x.svg\")"
         ]

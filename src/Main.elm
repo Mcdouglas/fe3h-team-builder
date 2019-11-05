@@ -3,11 +3,11 @@ module Main exposing (main)
 import Browser exposing (sandbox)
 import BuildInfoEventListener exposing (..)
 import CharacterEventListener exposing (..)
-import SkillEventListener exposing (..)
 import DataHandler exposing (..)
 import ErrorHandler exposing (..)
 import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (..)
+import SkillEventListener exposing (..)
 import TeamBuilder exposing (..)
 
 
@@ -20,9 +20,11 @@ init =
         dataModel =
             initStaticData
 
-        initCharacterPicker = ( -1, Nothing)
+        initCharacterPicker =
+            ( -1, Nothing )
 
-        initSkillPicker = (-1 , -1, Nothing)
+        initSkillPicker =
+            ( -1, -1, Nothing )
 
         viewModel =
             ViewModel False initCharacterPicker False initSkillPicker

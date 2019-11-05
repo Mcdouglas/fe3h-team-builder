@@ -3,12 +3,12 @@ module TeamBuilder exposing (..)
 import BuildInfoView exposing (..)
 import BuildView exposing (..)
 import CharacterModal exposing (..)
-import SkillModal exposing (..)
 import CustomTypes exposing (..)
 import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import SkillModal exposing (..)
 
 
 viewBuilder : Model -> Html Msg

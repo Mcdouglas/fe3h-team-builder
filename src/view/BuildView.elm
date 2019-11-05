@@ -3,7 +3,7 @@ module BuildView exposing (..)
 import Character exposing (..)
 import CharacterView exposing (..)
 import CustomTypes exposing (..)
-import GlobalMessage exposing (BuildInfo(..), CharacterModal(..), Msg(..))
+import GlobalMessage exposing (BuildInfo(..), Msg(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -27,17 +27,17 @@ viewBuild model ( idx, element ) =
 
 
 sectionCharacter : Model -> ( Int, Build ) -> Html Msg
-sectionCharacter model ( id, element ) =
+sectionCharacter model ( id, build ) =
     let
         character =
-            getCharacterById element.idCharacter
+            getCharacterById build.idCharacter
                 |> Maybe.withDefault (Character -1 "" Male 0 NonOwner 0 Nothing)
     in
     div
         [ class "item-a1" ]
-        [ div [ onClick (CModalMsg (OpenCharacterModal ( id, character ))) ] [ viewPortraitTile character ]
+        [ viewCharacterTile id character
         , div [ class "item-a1b" ]
-            [ viewCharacterSkill model character.characterSkillId
+            [ viewCharacterSkillTile model character.characterSkillId
             , viewCrestTile model character.crestId
             ]
         ]
@@ -46,13 +46,14 @@ sectionCharacter model ( id, element ) =
 sectionPassiveSkills : Model -> Build -> Html Msg
 sectionPassiveSkills model build =
     let
-        defaultValue idx = (idx, -1, Nothing)
+        defaultValue idx =
+            ( idx, -1, Nothing )
 
-        listPassiveSkill = build.listPassiveSkill
-            |> List.map (\(idx, skillId, skillType) -> (idx, skillId, (getSkillByType skillId skillType)))
-            |> List.foldr (::) [ (defaultValue 0), (defaultValue 1), (defaultValue 2), (defaultValue 3), (defaultValue 4)]
-            |> List.take 5
-
+        listPassiveSkill =
+            build.listPassiveSkill
+                |> List.map (\( idx, skillId, skillType ) -> ( idx, skillId, getSkillByType skillId skillType ))
+                |> List.foldr (::) [ defaultValue 0, defaultValue 1, defaultValue 2, defaultValue 3, defaultValue 4 ]
+                |> List.take 5
     in
     div [ class "item-a2" ]
         (List.map (\e -> viewSkill model e) listPassiveSkill)
@@ -61,12 +62,14 @@ sectionPassiveSkills model build =
 sectionActiveSkills : Model -> Build -> Html Msg
 sectionActiveSkills model build =
     let
-        defaultValue idx = (idx, -1, Nothing)
+        defaultValue idx =
+            ( idx, -1, Nothing )
 
-        listActiveSkill = build.listActiveSkill
-            |> List.map (\(idx, skillId, skillType) -> (idx, skillId, (getSkillByType skillId skillType)))
-            |> List.foldr (::) [ (defaultValue 0), (defaultValue 1), (defaultValue 2) ]
-            |> List.take 3
+        listActiveSkill =
+            build.listActiveSkill
+                |> List.map (\( idx, skillId, skillType ) -> ( idx, skillId, getSkillByType skillId skillType ))
+                |> List.foldr (::) [ defaultValue 0, defaultValue 1, defaultValue 2 ]
+                |> List.take 3
     in
     div [ class "item-a3" ]
         (List.map (\e -> viewSkill model e) listActiveSkill)

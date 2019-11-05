@@ -1,16 +1,18 @@
 module SkillEventListener exposing (..)
 
-import GlobalModel exposing (..)
+import Array exposing (Array)
 import CustomTypes exposing (..)
 import GlobalMessage exposing (SkillModal(..))
+import GlobalModel exposing (..)
 import ModelHandler exposing (..)
-import Array exposing (Array)
+
 
 handle : SkillModal -> Model -> Model
 handle msg model =
     case msg of
-        OpenSkillModal ( buildPosition, skillPosition, maybeSkill ) -> 
+        OpenSkillModal ( buildPosition, skillPosition, maybeSkill ) ->
             openSkillModal buildPosition skillPosition maybeSkill model
+
 
 openSkillModal : Int -> Int -> Maybe Skill -> Model -> Model
 openSkillModal buildPosition skillPosition maybeSkill model =

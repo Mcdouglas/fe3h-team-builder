@@ -9,21 +9,21 @@ import GlobalModel exposing (..)
 handle : CharacterModal -> Model -> Model
 handle msg model =
     case msg of
-        OpenCharacterModal ( id, value ) ->
-            openModal model True id
+        OpenCharacterModal id ->
+            openModal model id
 
         UpdateCurrentCharacter value ->
             updateCurrent model value
 
         UpdateBuildWithCharacter value ->
-            closeModal (updateBuild model value) False
+            closeModal (updateBuild model value)
 
-        CloseCharacterSelector ->
-            closeModal model False
+        CloseCharacterModal ->
+            closeModal model
 
 
-openModal : Model -> Bool -> Int -> Model
-openModal model state position =
+openModal : Model -> Int -> Model
+openModal model position =
     let
         maybeCharacter =
             model.team
@@ -37,10 +37,22 @@ openModal model state position =
         newView =
             case maybeCharacter of
                 Just value ->
-                    { oldView | characterSelectorIsOpen = state, currentCharacter = ( position, value ) }
+                    { oldView | characterSelectorIsOpen = True, currentCharacter = ( position, value ) }
 
                 Nothing ->
-                    { oldView | characterSelectorIsOpen = state }
+                    { oldView | characterSelectorIsOpen = True }
+    in
+    { model | view = newView }
+
+
+closeModal : Model -> Model
+closeModal model =
+    let
+        oldView =
+            model.view
+
+        newView =
+            { oldView | characterSelectorIsOpen = False }
     in
     { model | view = newView }
 
@@ -53,18 +65,6 @@ updateCurrent model element =
 
         newView =
             { oldView | currentCharacter = element }
-    in
-    { model | view = newView }
-
-
-closeModal : Model -> Bool -> Model
-closeModal model state =
-    let
-        oldView =
-            model.view
-
-        newView =
-            { oldView | characterSelectorIsOpen = False }
     in
     { model | view = newView }
 

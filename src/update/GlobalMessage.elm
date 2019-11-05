@@ -11,10 +11,10 @@ type Msg
 
 
 type CharacterModal
-    = OpenCharacterModal ( Int, Character )
+    = OpenCharacterModal Int
     | UpdateCurrentCharacter ( Int, Maybe Character )
     | UpdateBuildWithCharacter ( Int, Character )
-    | CloseCharacterSelector
+    | CloseCharacterModal
 
 
 type SkillModal

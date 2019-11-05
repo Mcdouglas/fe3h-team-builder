@@ -3,32 +3,34 @@ module CharacterView exposing (..)
 import CharacterSkill exposing (getCharacterSkillById)
 import Crest exposing (getCrest)
 import CustomTypes exposing (..)
-import GlobalMessage exposing (Msg(..))
+import GlobalMessage exposing (CharacterModal(..), Msg(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (..)
 
 
-viewPortraitTile : Character -> Html Msg
-viewPortraitTile element =
-    div
-        [ class "item-a1a" ]
-        [ getPortrait element
-        , p [] [ text element.name ]
-        ]
+viewCharacterTile : Int -> Character -> Html Msg
+viewCharacterTile idx character =
+    let
+        onClickEvent =
+            onClick (CModalMsg (OpenCharacterModal idx))
+    in
+    div [ class "item-a1a" ] [ getCharacterPicture character.id onClickEvent, p [] [ text character.name ] ]
 
 
-getPortrait : Character -> Html Msg
-getPortrait element =
+getCharacterPicture : Int -> Attribute Msg -> Html Msg
+getCharacterPicture pictureId onClickEvent =
     img
         [ class "portrait-picture button-clickable"
-        , src ("resources/img/portraits/" ++ String.fromInt element.id ++ ".png")
+        , src ("resources/img/portraits/" ++ String.fromInt pictureId ++ ".png")
+        , onClickEvent
         ]
         []
 
 
-viewCharacterSkill : Model -> Int -> Html Msg
-viewCharacterSkill model id =
+viewCharacterSkillTile : Model -> Int -> Html Msg
+viewCharacterSkillTile model id =
     let
         characterSkill =
             getCharacterSkillById id

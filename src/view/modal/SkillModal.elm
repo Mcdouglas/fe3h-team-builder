@@ -1,8 +1,8 @@
 module SkillModal exposing (..)
 
-import Html exposing (..)
 import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (..)
+import Html exposing (..)
 import Html.Attributes exposing (..)
 
 
@@ -16,10 +16,10 @@ modalSkillPicker model =
         Just character ->
             div
                 [ class "modal"
-                , hidden ( not model.view.skillModalIsOpen )
+                , hidden (not model.view.skillModalIsOpen)
                 ]
                 [ div [ class "modal-content" ]
-                    [ ]
+                    []
                 ]
 
         Nothing ->
