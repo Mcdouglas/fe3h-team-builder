@@ -19,6 +19,9 @@ getSkillByType idSkill skillType =
         Standard ->
             getStandardSkill idSkill
                 |> Maybe.andThen (\e -> Just (Skill e.id e.pictureId e.name e.description e.combatArt skillType False))
+        
+        _ -> Nothing
+            
 
 
 getSkillList : Bool -> DataModel -> List Skill

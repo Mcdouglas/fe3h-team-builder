@@ -118,6 +118,7 @@ type alias Character =
 type SkillType
     = Mastery
     | Standard
+    | None
 
 
 type alias Build =

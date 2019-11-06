@@ -85,9 +85,14 @@ updateSkillInBuild build ( ( _, skillId ), skill, isCombatArt ) =
             case isCombatArt of
                 True ->
                     build.listActiveSkill
+                        |> List.foldr (::) (List.repeat 3 ( -1, -1, None ))
+                        |> List.take 3
 
                 False ->
                     build.listPassiveSkill
+                        |> List.foldr (::) (List.repeat 3 ( -1, -1, None ))
+                        |> List.take 5
+                        
 
         newListSkill =
             listSkills

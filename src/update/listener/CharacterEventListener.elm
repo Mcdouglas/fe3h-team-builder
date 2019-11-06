@@ -4,6 +4,7 @@ import Character exposing (..)
 import CustomTypes exposing (..)
 import GlobalMessage exposing (CharacterModal(..))
 import GlobalModel exposing (..)
+import DataHandler exposing (initBuild)
 
 
 handle : CharacterModal -> Model -> Model
@@ -74,7 +75,7 @@ updateBuild model ( position, character ) =
     let
         initNewBuild ( id, item ) =
             if id == position then
-                ( id, Build character.id [] [] -1 False )
+                ( id, (initBuild character.id) )
 
             else
                 ( id, item )
