@@ -92,7 +92,6 @@ updateSkillInBuild build ( ( _, skillId ), skill, isCombatArt ) =
                     build.listPassiveSkill
                         |> List.foldr (::) (List.repeat 3 ( -1, -1, None ))
                         |> List.take 5
-                        
 
         newListSkill =
             listSkills

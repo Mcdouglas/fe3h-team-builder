@@ -2,9 +2,9 @@ module CharacterEventListener exposing (..)
 
 import Character exposing (..)
 import CustomTypes exposing (..)
+import DataHandler exposing (initBuild)
 import GlobalMessage exposing (CharacterModal(..))
 import GlobalModel exposing (..)
-import DataHandler exposing (initBuild)
 
 
 handle : CharacterModal -> Model -> Model
@@ -75,7 +75,7 @@ updateBuild model ( position, character ) =
     let
         initNewBuild ( id, item ) =
             if id == position then
-                ( id, (initBuild character.id) )
+                ( id, initBuild character.id )
 
             else
                 ( id, item )
