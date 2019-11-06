@@ -16,18 +16,18 @@ import SkillView exposing (..)
 
 
 viewBuild : Model -> ( Int, Build ) -> Html Msg
-viewBuild model ( idx, element ) =
+viewBuild model ( idx, build ) =
     div [ class "item-a" ]
-        [ sectionCharacter model ( idx, element )
-        , sectionPassiveSkills model element
-        , sectionActiveSkills model element
-        , sectionJob model element
-        , buttonBuildInfo element
+        [ sectionCharacter model ( idx, build )
+        , sectionPassiveSkills model ( idx, build )
+        , sectionActiveSkills model ( idx, build )
+        , sectionJob model build
+        , buttonBuildInfo build
         ]
 
 
 sectionCharacter : Model -> ( Int, Build ) -> Html Msg
-sectionCharacter model ( id, build ) =
+sectionCharacter model ( idx, build ) =
     let
         character =
             getCharacterById build.idCharacter
@@ -35,7 +35,7 @@ sectionCharacter model ( id, build ) =
     in
     div
         [ class "item-a1" ]
-        [ viewCharacterTile id character
+        [ viewCharacterTile idx character
         , div [ class "item-a1b" ]
             [ viewCharacterSkillTile model character.characterSkillId
             , viewCrestTile model character.crestId
@@ -43,30 +43,31 @@ sectionCharacter model ( id, build ) =
         ]
 
 
-sectionPassiveSkills : Model -> Build -> Html Msg
-sectionPassiveSkills model build =
+sectionPassiveSkills : Model -> ( Int, Build ) -> Html Msg
+sectionPassiveSkills model ( buildIdx, build ) =
     let
         listPassiveSkill =
             build.listPassiveSkill
                 |> List.map (\( idx, skillId, skillType ) -> ( idx, skillId, getSkillByType skillId skillType ))
                 |> List.foldr (::) (List.repeat 5 ( -1, -1, Nothing ))
                 |> List.indexedMap Tuple.pair
-                |> List.map (\( id, ( idx, idSkill, maybeSkill ) ) -> ( ( id, idSkill ), maybeSkill, False ))
+                |> List.map (\( id, ( idx, idSkill, maybeSkill ) ) -> ( ( buildIdx, id ), maybeSkill, False ))
                 |> List.take 5
     in
     div [ class "item-a2" ]
         (List.map (\e -> viewSkill model e) listPassiveSkill)
 
 
-sectionActiveSkills : Model -> Build -> Html Msg
-sectionActiveSkills model build =
+sectionActiveSkills : Model -> ( Int, Build ) -> Html Msg
+sectionActiveSkills model ( buildIdx, build ) =
     let
         listActiveSkill =
             build.listActiveSkill
                 |> List.map (\( idx, skillId, skillType ) -> ( idx, skillId, getSkillByType skillId skillType ))
                 |> List.foldr (::) (List.repeat 3 ( -1, -1, Nothing ))
+                -- build.listActiveSkill = [ 1, 2 ] but need [ 1, 2, Nothing ]
                 |> List.indexedMap Tuple.pair
-                |> List.map (\( id, ( idx, idSkill, maybeSkill ) ) -> ( ( id, idSkill ), maybeSkill, True ))
+                |> List.map (\( id, ( idx, idSkill, maybeSkill ) ) -> ( ( buildIdx, id ), maybeSkill, True ))
                 |> List.take 3
     in
     div [ class "item-a3" ]

@@ -125,4 +125,4 @@ type alias Build =
 
 
 type alias Skill =
-    { id : Int, pictureId : Int, name : String, description : String, combatArt : Bool, byJob : Bool }
+    { id : Int, pictureId : Int, name : String, description : String, combatArt : Bool, skillT : SkillType, byJob : Bool }

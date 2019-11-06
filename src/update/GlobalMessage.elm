@@ -20,6 +20,8 @@ type CharacterModal
 type SkillModal
     = OpenSkillModal ( ( Int, Int ), Maybe Skill, Bool )
     | CloseSkillModal
+    | UpdateSkillPicker ( ( Int, Int ), Maybe Skill, Bool )
+    | UpdateBuildWithSkill ( ( Int, Int ), Skill, Bool )
 
 
 type BuildInfo

@@ -27,28 +27,31 @@ modalSkillPicker model =
         , hidden (not model.view.skillModalIsOpen)
         ]
         [ div [ class ("modal-content " ++ modalCss) ]
-            [ viewSkillGrid model isCombatArt
+            [ viewSkillGrid model model.view.skillPicker
             , viewSideBar model
             ]
         ]
 
 
-viewSkillGrid : Model -> Bool -> Html Msg
-viewSkillGrid model isCombatArt =
+viewSkillGrid : Model -> ( ( Int, Int ), Maybe Skill, Bool ) -> Html Msg
+viewSkillGrid model ( ( buildPosition, skillPosition ), maybeSkill, isCombatArt ) =
     let
         listSkills =
             getSkillList isCombatArt model.data
     in
     div [ class "skills-grid" ]
         (listSkills
-            |> List.map (\e -> viewSkillPicker e)
+            |> List.map (\e -> viewSkillPicker model.view.skillPicker e)
         )
 
 
-viewSkillPicker : Skill -> Html Msg
-viewSkillPicker skill =
+viewSkillPicker : ( ( Int, Int ), Maybe Skill, Bool ) -> Skill -> Html Msg
+viewSkillPicker ( positions, _, isCombatArt ) skill =
     div
-        [ class "tile" ]
+        [ class "tile"
+        , onMouseOver (SModalMsg (UpdateSkillPicker ( positions, Just skill, isCombatArt )))
+        , onClick (SModalMsg (UpdateBuildWithSkill ( positions, skill, isCombatArt )))
+        ]
         [ img
             [ src ("resources/img/skills/" ++ String.fromInt skill.pictureId ++ ".png") ]
             []
@@ -59,8 +62,20 @@ viewSkillPicker skill =
 
 viewSideBar : Model -> Html Msg
 viewSideBar model =
-    div [ class "sidebar" ]
-        [ buttonCloseModal ]
+    let
+        ( ( idx, skillId ), maybeSkill, isCombatArt ) =
+            model.view.skillPicker
+    in
+    case maybeSkill of
+        Just skill ->
+            div [ class "sidebar" ]
+                [ buttonCloseModal
+                , div [] [ p [] [ text skill.name ] ]
+                ]
+
+        Nothing ->
+            div [ class "sidebar" ]
+                [ buttonCloseModal ]
 
 
 buttonCloseModal : Html Msg

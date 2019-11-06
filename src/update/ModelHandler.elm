@@ -14,11 +14,11 @@ getSkillByType idSkill skillType =
     case skillType of
         Mastery ->
             getMasterySkill idSkill
-                |> Maybe.andThen (\e -> Just (Skill e.id e.pictureId e.name e.description e.combatArt True))
+                |> Maybe.andThen (\e -> Just (Skill e.id e.pictureId e.name e.description e.combatArt skillType True))
 
         Standard ->
             getStandardSkill idSkill
-                |> Maybe.andThen (\e -> Just (Skill e.id e.pictureId e.name e.description e.combatArt False))
+                |> Maybe.andThen (\e -> Just (Skill e.id e.pictureId e.name e.description e.combatArt skillType False))
 
 
 getSkillList : Bool -> DataModel -> List Skill
@@ -27,10 +27,10 @@ getSkillList isCombatArt dataModel =
         listSkills =
             dataModel.standardSkills
                 |> List.filter (\s -> s.combatArt == isCombatArt)
-                |> List.map (\e -> Just (Skill e.id e.pictureId e.name e.description e.combatArt isCombatArt))
+                |> List.map (\e -> Just (Skill e.id e.pictureId e.name e.description e.combatArt Standard isCombatArt))
     in
     dataModel.masterySkills
         |> List.filter (\s -> s.combatArt == isCombatArt)
-        |> List.map (\e -> Just (Skill e.id e.pictureId e.name e.description e.combatArt isCombatArt))
+        |> List.map (\e -> Just (Skill e.id e.pictureId e.name e.description e.combatArt Mastery isCombatArt))
         |> List.append listSkills
         |> Maybe.Extra.values
