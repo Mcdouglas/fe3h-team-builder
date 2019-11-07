@@ -101,6 +101,10 @@ type alias CharacterSkill =
     { id : Int, pictureId : Int, name : String, description : String }
 
 
+type alias Skill =
+    { id : Int, pictureId : Int, name : String, description : String, combatArt : Bool, skillT : SkillType, byJob : Bool }
+
+
 type CrestHolder
     = Major
     | Minor
@@ -123,7 +127,3 @@ type SkillType
 
 type alias Build =
     { idCharacter : Int, listPassiveSkill : List ( Int, Int, SkillType ), listActiveSkill : List ( Int, Int, SkillType ), jobId : Int, hiddenInfo : Bool }
-
-
-type alias Skill =
-    { id : Int, pictureId : Int, name : String, description : String, combatArt : Bool, skillT : SkillType, byJob : Bool }
