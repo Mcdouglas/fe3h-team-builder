@@ -12,13 +12,13 @@ import StandardSkill exposing (..)
 getSkillByType : Int -> SkillType -> Maybe Skill
 getSkillByType idSkill skillType =
     case skillType of
-        Mastery ->
+        MasteryType ->
             getMasterySkill idSkill
-                |> Maybe.andThen (\e -> Just (Skill e.id e.pictureId e.name e.description e.combatArt skillType True))
+                |> Maybe.andThen (\e -> Just (masterySkillToSkill e))
 
-        Standard ->
+        StandardType ->
             getStandardSkill idSkill
-                |> Maybe.andThen (\e -> Just (Skill e.id e.pictureId e.name e.description e.combatArt skillType False))
+                |> Maybe.andThen (\e -> Just (standardSkillToSkill e))
 
         _ ->
             Nothing
@@ -30,10 +30,10 @@ getSkillList isCombatArt dataModel =
         listSkills =
             dataModel.standardSkills
                 |> List.filter (\s -> s.combatArt == isCombatArt)
-                |> List.map (\e -> Just (Skill e.id e.pictureId e.name e.description e.combatArt Standard isCombatArt))
+                |> List.map (\e -> Just (standardSkillToSkill e))
     in
     dataModel.masterySkills
         |> List.filter (\s -> s.combatArt == isCombatArt)
-        |> List.map (\e -> Just (Skill e.id e.pictureId e.name e.description e.combatArt Mastery isCombatArt))
+        |> List.map (\e -> Just (masterySkillToSkill e))
         |> List.append listSkills
         |> Maybe.Extra.values
