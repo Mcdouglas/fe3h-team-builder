@@ -4,7 +4,7 @@ import CustomTypes exposing (..)
 
 
 type alias Model =
-    { team : List ( Int, CharacterBuild )
+    { team : List ( Int, Build )
     , data : DataModel
     , view : ViewModel
     , errorMessage : Maybe String
@@ -14,6 +14,8 @@ type alias Model =
 type alias ViewModel =
     { characterSelectorIsOpen : Bool
     , currentCharacter : ( Int, Maybe Character )
+    , skillModalIsOpen : Bool
+    , skillPicker : ( ( Int, Int ), Maybe Skill, Bool )
     }
 
 

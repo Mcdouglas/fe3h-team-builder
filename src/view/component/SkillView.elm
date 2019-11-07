@@ -1,39 +1,23 @@
 module SkillView exposing (..)
 
 import CustomTypes exposing (..)
-import GlobalMessage exposing (Msg(..))
+import GlobalMessage exposing (Msg(..), SkillModal(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import ModelHandler exposing (..)
+import Html.Events exposing (onClick)
 
 
-viewPassiveSkills : Model -> CharacterBuild -> Html Msg
-viewPassiveSkills model element =
+viewSkill : Model -> ( ( Int, Int ), Maybe Skill, Bool ) -> Html Msg
+viewSkill model ( positions, maybeSkill, isCombatArt ) =
     let
-        listPassiveSkill =
-            getPassiveSkills element
+        onClickEvent =
+            onClick (SModalMsg (OpenSkillModal ( positions, maybeSkill, isCombatArt )))
     in
-    div [ class "item-a2" ]
-        (List.map (\e -> viewSkill model e) listPassiveSkill)
-
-
-viewActiveSkills : Model -> CharacterBuild -> Html Msg
-viewActiveSkills model element =
-    let
-        listActiveSkill =
-            getActiveSkills element
-    in
-    div [ class "item-a3" ]
-        (List.map (\e -> viewSkill model e) listActiveSkill)
-
-
-viewSkill : Model -> Maybe Skill -> Html Msg
-viewSkill model element =
-    case element of
+    case maybeSkill of
         Just value ->
             div []
-                [ getSkillPicture model value.pictureId value.combatArt
+                [ getSkillTile value.pictureId value.combatArt onClickEvent
                 , p
                     []
                     [ text value.name ]
@@ -46,19 +30,14 @@ viewSkill model element =
                 ]
 
         _ ->
-            div [ class "add-skill" ]
-                [ div
-                    [ style "content" "url(\"resources/lib/octicons/plus-small.svg\")"
-                    ]
-                    []
-                ]
+            div [ class "add-skill", style "content" "url(\"resources/lib/octicons/plus-small.svg\")", onClickEvent ] []
 
 
-getSkillPicture : Model -> Int -> Bool -> Html Msg
-getSkillPicture model id combatArt =
+getSkillTile : Int -> Bool -> Attribute Msg -> Html Msg
+getSkillTile pictureId isCombatArt onClickEvent =
     let
         cssClass =
-            case combatArt of
+            case isCombatArt of
                 True ->
                     "art-picture"
 
@@ -67,6 +46,7 @@ getSkillPicture model id combatArt =
     in
     div
         [ class ("button-clickable qs " ++ cssClass)
-        , style "content" ("url(\"resources/img/skills/" ++ String.fromInt id ++ ".png\")")
+        , style "content" ("url(\"resources/img/skills/" ++ String.fromInt pictureId ++ ".png\")")
+        , onClickEvent
         ]
         []

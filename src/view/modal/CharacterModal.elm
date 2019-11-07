@@ -1,18 +1,18 @@
-module CharacterSelector exposing (..)
+module CharacterModal exposing (..)
 
 import CharacterSkill exposing (..)
 import CharacterView exposing (..)
 import Crest exposing (..)
 import CustomTypes exposing (..)
-import GlobalMessage exposing (Msg(..))
+import GlobalMessage exposing (CharacterModal(..), Msg(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onMouseOver)
 
 
-viewCharacterSelector : Model -> Html Msg
-viewCharacterSelector model =
+modalCharacterPicker : Model -> Html Msg
+modalCharacterPicker model =
     let
         ( position, maybeCharacter ) =
             model.view.currentCharacter
@@ -20,7 +20,7 @@ viewCharacterSelector model =
     case maybeCharacter of
         Just character ->
             div
-                [ class "modal"
+                [ class "modal-c"
                 , hidden (not model.view.characterSelectorIsOpen)
                 ]
                 [ div [ class "modal-content" ]
@@ -65,8 +65,8 @@ viewCharacterPicker ( position, element ) =
     in
     div
         [ class "tile"
-        , onMouseOver (UpdateCharacterSelector ( position, Just element ))
-        , onClick (UpdateBuild ( position, element ))
+        , onMouseOver (CModalMsg (UpdateCurrentCharacter ( position, Just element )))
+        , onClick (CModalMsg (UpdateBuildWithCharacter ( position, element )))
         ]
         [ img
             [ src ("resources/img/portraits/" ++ String.fromInt element.id ++ ".png") ]
@@ -167,7 +167,7 @@ viewCharacterCrestDetail model crestId =
         Just value ->
             div []
                 [ div [ class "detail-title" ]
-                    [ getCrestPicture model value.pictureId
+                    [ getCrestPicture value.pictureId
                     , p [] [ text ("[ " ++ value.name ++ " ]") ]
                     ]
                 , p [ class "detail-text" ] [ text value.description ]
@@ -185,7 +185,7 @@ viewCharacterCrestDetail model crestId =
 buttonCloseModal : Html Msg
 buttonCloseModal =
     div
-        [ onClick CloseCharacterSelector
+        [ onClick (CModalMsg CloseCharacterModal)
         , class "close close-modal"
         , style "content" "url(\"resources/lib/octicons/x.svg\")"
         ]

@@ -1,53 +1,36 @@
 module CharacterView exposing (..)
 
-import Character exposing (..)
-import CharacterSkill exposing (..)
-import Crest exposing (..)
+import CharacterSkill exposing (getCharacterSkillById)
+import Crest exposing (getCrest)
 import CustomTypes exposing (..)
-import GlobalMessage exposing (Msg(..))
+import GlobalMessage exposing (CharacterModal(..), Msg(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (onClick)
+import Html.Events exposing (..)
 
 
-viewPortrait : Model -> ( Int, CharacterBuild ) -> Html Msg
-viewPortrait model ( id, element ) =
+viewCharacterTile : Int -> Character -> Html Msg
+viewCharacterTile idx character =
     let
-        character =
-            getCharacterById element.idCharacter
-                |> Maybe.withDefault (Character -1 "" Male 0 NonOwner 0 Nothing)
+        onClickEvent =
+            onClick (CModalMsg (OpenCharacterModal idx))
     in
-    div
-        [ class "item-a1" ]
-        [ div [ onClick (OpenCharacterSelector ( id, character )) ] [ viewPortraitTile ( id, character ) character ]
-        , div [ class "item-a1b" ]
-            [ viewCharacterSkill model character.characterSkillId
-            , viewCrestTile model character.crestId
-            ]
-        ]
+    div [ class "item-a1a" ] [ getCharacterPicture character.id onClickEvent, p [] [ text character.name ] ]
 
 
-viewPortraitTile : ( Int, Character ) -> Character -> Html Msg
-viewPortraitTile build element =
-    div
-        [ class "item-a1a" ]
-        [ getPortrait build element
-        , p [] [ text element.name ]
-        ]
-
-
-getPortrait : ( Int, Character ) -> Character -> Html Msg
-getPortrait build element =
+getCharacterPicture : Int -> Attribute Msg -> Html Msg
+getCharacterPicture pictureId onClickEvent =
     img
         [ class "portrait-picture button-clickable"
-        , src ("resources/img/portraits/" ++ String.fromInt element.id ++ ".png")
+        , src ("resources/img/portraits/" ++ String.fromInt pictureId ++ ".png")
+        , onClickEvent
         ]
         []
 
 
-viewCharacterSkill : Model -> Int -> Html Msg
-viewCharacterSkill model id =
+viewCharacterSkillTile : Model -> Int -> Html Msg
+viewCharacterSkillTile model id =
     let
         characterSkill =
             getCharacterSkillById id
@@ -71,31 +54,31 @@ viewCharacterSkill model id =
 
 
 getSkillCharacterPicture : Model -> Int -> Html Msg
-getSkillCharacterPicture model id =
+getSkillCharacterPicture model pictureId =
     div
         [ class "cskill-picture qs"
-        , style "content" ("url(\"resources/img/skills/" ++ String.fromInt id ++ ".png\")")
+        , style "content" ("url(\"resources/img/skills/" ++ String.fromInt pictureId ++ ".png\")")
         ]
         []
 
 
 viewCrestTile : Model -> Int -> Html Msg
-viewCrestTile model id =
+viewCrestTile model crestId =
     let
         maybeCrest =
-            getCrest id
+            getCrest crestId
     in
     case maybeCrest of
-        Just value ->
+        Just crest ->
             div []
-                [ getCrestPicture model value.pictureId
+                [ getCrestPicture crest.pictureId
                 , p
                     []
-                    [ text value.name ]
+                    [ text crest.name ]
                 , div
                     [ class "custom-popover above" ]
-                    [ p [ class "popover-title" ] [ text ("[" ++ value.name ++ "]") ]
-                    , p [ class "popover-text" ] [ text value.description ]
+                    [ p [ class "popover-title" ] [ text ("[" ++ crest.name ++ "]") ]
+                    , p [ class "popover-text" ] [ text crest.description ]
                     ]
                 ]
 
@@ -106,8 +89,8 @@ viewCrestTile model id =
                 ]
 
 
-getCrestPicture : Model -> Int -> Html Msg
-getCrestPicture model id =
+getCrestPicture : Int -> Html Msg
+getCrestPicture id =
     div
         [ class "crest-picture qs"
         , style "content" ("url(\"resources/img/crests/" ++ String.fromInt id ++ ".png\")")

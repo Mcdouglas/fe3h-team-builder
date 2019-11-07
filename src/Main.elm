@@ -1,27 +1,33 @@
 module Main exposing (main)
 
 import Browser exposing (sandbox)
-import CustomTypes exposing (..)
+import BuildInfoEventListener exposing (..)
+import CharacterEventListener exposing (..)
 import DataHandler exposing (..)
 import ErrorHandler exposing (..)
 import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (..)
-import Html exposing (..)
-import ModelHandler exposing (..)
-import ViewHandler exposing (..)
+import SkillEventListener exposing (..)
+import TeamBuilder exposing (..)
 
 
 init : Model
 init =
     let
         team =
-            mockCharacterBuilds
+            mockBuilds
 
         dataModel =
             initStaticData
 
+        initCharacterPicker =
+            ( -1, Nothing )
+
+        initSkillPicker =
+            ( ( -1, -1 ), Nothing, False )
+
         viewModel =
-            ViewModel False ( -1, Nothing )
+            ViewModel False initCharacterPicker False initSkillPicker
 
         errorMessage =
             Nothing
@@ -30,26 +36,25 @@ init =
 
 
 view model =
-    viewModelOrError model
+    case model.errorMessage of
+        Just message ->
+            viewError message
+
+        Nothing ->
+            viewBuilder model
 
 
 update : Msg -> Model -> Model
 update msg model =
     case msg of
-        ShowBuildInfo value ->
-            toggleBuildInfo ( value, model )
+        BInfoMsg value ->
+            BuildInfoEventListener.handle value model
 
-        OpenCharacterSelector ( id, value ) ->
-            openCharacterSelector model True id
+        CModalMsg value ->
+            CharacterEventListener.handle value model
 
-        UpdateCharacterSelector value ->
-            updateCharacterSelector model value
-
-        UpdateBuild value ->
-            closeCharacterSelector (updateBuild model value) False
-
-        CloseCharacterSelector ->
-            closeCharacterSelector model False
+        SModalMsg value ->
+            SkillEventListener.handle value model
 
         _ ->
             model
