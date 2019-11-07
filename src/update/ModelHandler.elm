@@ -30,10 +30,10 @@ getSkillList isCombatArt dataModel =
         listSkills =
             dataModel.standardSkills
                 |> List.filter (\s -> s.combatArt == isCombatArt)
-                |> List.map (\e -> Just (standardSkillToSkill e))
+                |> List.map (\s -> Just (standardSkillToSkill s))
     in
     dataModel.masterySkills
-        |> List.filter (\s -> s.combatArt == isCombatArt)
-        |> List.map (\e -> Just (masterySkillToSkill e))
+        |> List.filter (\m -> m.combatArt == isCombatArt)
+        |> List.map (\m -> Just (masterySkillToSkill m))
         |> List.append listSkills
         |> Maybe.Extra.values

@@ -158,17 +158,13 @@ type alias Skill =
     , jobIdList : List Int
     , charactersOnly : List Int
     , allExcept : Bool
+    , durabilityCost : Maybe Int
+    , might : Maybe Int
+    , hit : Maybe Int
+    , avoid : Maybe Int
+    , criticalRate : Maybe Int
+    , range : Maybe ( Int, Int )
     }
-
-
-masterySkillToSkill : MasterySkill -> Skill
-masterySkillToSkill m =
-    Skill m.id MasteryType m.combatArt True m.name m.description m.pictureId Nothing m.jobIdList [] False
-
-
-standardSkillToSkill : StandardSkill -> Skill
-standardSkillToSkill s =
-    Skill s.id StandardType s.combatArt False s.name s.description s.pictureId (Just s.studyId) [] s.charactersOnly s.allExcept
 
 
 type alias JobSkill =
@@ -178,6 +174,12 @@ type alias JobSkill =
     , jobIdList : List Int
     , combatArt : Bool
     , description : String
+    , durabilityCost : Maybe Int
+    , might : Maybe Int
+    , hit : Maybe Int
+    , avoid : Maybe Int
+    , criticalRate : Maybe Int
+    , range : Maybe ( Int, Int )
     }
 
 
@@ -188,6 +190,12 @@ type alias MasterySkill =
     , jobIdList : List Int
     , combatArt : Bool
     , description : String
+    , durabilityCost : Maybe Int
+    , might : Maybe Int
+    , hit : Maybe Int
+    , avoid : Maybe Int
+    , criticalRate : Maybe Int
+    , range : Maybe ( Int, Int )
     }
 
 
@@ -200,6 +208,12 @@ type alias StandardSkill =
     , charactersOnly : List Int
     , allExcept : Bool
     , description : String
+    , durabilityCost : Maybe Int
+    , might : Maybe Int
+    , hit : Maybe Int
+    , avoid : Maybe Int
+    , criticalRate : Maybe Int
+    , range : Maybe ( Int, Int )
     }
 
 
@@ -209,3 +223,23 @@ type alias CharacterSkill =
     , name : String
     , description : String
     }
+
+
+masterySkillToSkill : MasterySkill -> Skill
+masterySkillToSkill m =
+    Skill m.id MasteryType m.combatArt True m.name m.description m.pictureId Nothing m.jobIdList [] False m.durabilityCost m.might m.hit m.avoid m.criticalRate m.range
+
+
+standardSkillToSkill : StandardSkill -> Skill
+standardSkillToSkill s =
+    Skill s.id StandardType s.combatArt False s.name s.description s.pictureId (Just s.studyId) [] s.charactersOnly s.allExcept s.durabilityCost s.might s.hit s.avoid s.criticalRate s.range
+
+
+jobSkillToSkill : JobSkill -> Skill
+jobSkillToSkill j =
+    Skill j.id JobType j.combatArt False j.name j.description j.pictureId Nothing j.jobIdList [] False j.durabilityCost j.might j.hit j.avoid j.criticalRate j.range
+
+
+characterSkillToSkill : CharacterSkill -> Skill
+characterSkillToSkill c =
+    Skill c.id CharacterType False False c.name c.description c.pictureId Nothing [] [] False Nothing Nothing Nothing Nothing Nothing Nothing
