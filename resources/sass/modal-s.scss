@@ -68,13 +68,64 @@
         background-color: #eee;
         border-top-right-radius: .3rem;
         border-bottom-right-radius: .3rem;
+        padding: 0.5em;
+
+        .skill-detail {
+
+          .skill-title {
+            display:flex;
+            margin-bottom: 0.5em;
+            border-bottom: 1px solid lightgray;
+            padding-bottom: 0.5em;
+  
+            .title-text {
+              font-size: 2em;
+              margin-left: 1em;
+            }
+  
+            .title-picture {
+              height: 3em;
+              width: 3em;
+              background-color: black;
+              border: 1px solid lightgray;
+            }
+          }
+
+          .skill-description {
+            display:flex;
+            min-height: 2em;
+
+            border-bottom: 1px solid light;
+            background-color: rgba(0,0,0,0.05);
+            border-radius: .3rem;
+
+            p:first-child {
+              font-size: 1em;
+              padding-left: 0.5em;
+              padding-right: 0.5em;
+              margin-right: 0.5em;
+              border-right: 1px solid lightgray;
+            }
+
+            p {
+              margin: auto 0;
+            }
+          }
+        }
+
+        .skill-detail.combat-art {
+          .skill-title {
+            .title-picture {
+              border-radius: 2em;
+            }
+          }
+        }
 
         /* The Close Button */
         .close-modal {
           color: #aaa;
           float: right;
           font-weight: bold;
-          margin: 0.5rem 0.5rem 0 0;
         }
         
         .close-modal:hover,

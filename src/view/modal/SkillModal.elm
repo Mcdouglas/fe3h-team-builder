@@ -70,12 +70,36 @@ viewSideBar model =
         Just skill ->
             div [ class "sidebar" ]
                 [ buttonCloseModal
-                , div [] [ p [] [ text skill.name ] ]
+                , viewSkillDetail skill
                 ]
 
         Nothing ->
             div [ class "sidebar" ]
                 [ buttonCloseModal ]
+
+
+viewSkillDetail : Skill -> Html Msg
+viewSkillDetail skill =
+    let
+        cssClass =
+            case skill.combatArt of
+                True ->
+                    "combat-art"
+
+                False ->
+                    ""
+    in
+    div [ class ("skill-detail " ++ cssClass) ]
+        [ div [ class "skill-title" ]
+            [ div
+                [ class "title-picture"
+                , style "content" ("url(\"resources/img/skills/" ++ String.fromInt skill.pictureId ++ ".png\")")
+                ]
+                []
+            , p [ class "title-text" ] [ text skill.name ]
+            ]
+        , div [ class "skill-description" ] [ p [] [ text "Effect" ], p [] [ text skill.description ] ]
+        ]
 
 
 buttonCloseModal : Html Msg

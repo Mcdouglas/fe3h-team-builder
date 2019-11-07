@@ -17,7 +17,7 @@ viewSkill model ( positions, maybeSkill, isCombatArt ) =
     case maybeSkill of
         Just value ->
             div []
-                [ getSkillPicture value.pictureId value.combatArt onClickEvent
+                [ getSkillTile value.pictureId value.combatArt onClickEvent
                 , p
                     []
                     [ text value.name ]
@@ -33,8 +33,8 @@ viewSkill model ( positions, maybeSkill, isCombatArt ) =
             div [ class "add-skill", style "content" "url(\"resources/lib/octicons/plus-small.svg\")", onClickEvent ] []
 
 
-getSkillPicture : Int -> Bool -> Attribute Msg -> Html Msg
-getSkillPicture pictureId isCombatArt onClickEvent =
+getSkillTile : Int -> Bool -> Attribute Msg -> Html Msg
+getSkillTile pictureId isCombatArt onClickEvent =
     let
         cssClass =
             case isCombatArt of
