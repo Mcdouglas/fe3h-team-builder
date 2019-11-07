@@ -88,6 +88,14 @@ viewSkillDetail skill =
 
                 False ->
                     ""
+
+        viewDescription =
+            case skill.combatArt of
+                True ->
+                    viewCombatArtDescription
+
+                False ->
+                    viewSkillDescription
     in
     div [ class ("skill-detail " ++ cssClass) ]
         [ div [ class "skill-title" ]
@@ -98,8 +106,18 @@ viewSkillDetail skill =
                 []
             , p [ class "title-text" ] [ text skill.name ]
             ]
-        , div [ class "skill-description" ] [ p [] [ text "Effect" ], p [] [ text skill.description ] ]
+        , viewDescription skill
         ]
+
+
+viewSkillDescription : Skill -> Html Msg
+viewSkillDescription skill =
+    div [] [ div [ class "skill-description" ] [ p [] [ text "Effect" ], p [] [ text skill.description ] ] ]
+
+
+viewCombatArtDescription : Skill -> Html Msg
+viewCombatArtDescription skill =
+    div [] [ div [ class "skill-description" ] [ p [] [ text "Effect" ], p [] [ text skill.description ] ] ]
 
 
 buttonCloseModal : Html Msg
