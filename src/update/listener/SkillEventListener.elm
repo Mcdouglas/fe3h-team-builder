@@ -20,7 +20,7 @@ handle msg model =
             updateModal value model
 
         UpdateBuildWithSkill value ->
-            closeModal (updateBuild (Debug.log "value" value) model)
+            closeModal (updateBuild value model)
 
 
 openModal : ( ( Int, Int ), Maybe Skill, Bool ) -> Model -> Model
@@ -85,12 +85,12 @@ updateSkillInBuild build ( ( _, skillId ), skill, isCombatArt ) =
             case isCombatArt of
                 True ->
                     build.listActiveSkill
-                        |> List.foldr (::) (List.repeat 3 ( -1, -1, None ))
+                        |> List.foldr (::) (List.repeat 3 ( -1, -1, NoType ))
                         |> List.take 3
 
                 False ->
                     build.listPassiveSkill
-                        |> List.foldr (::) (List.repeat 3 ( -1, -1, None ))
+                        |> List.foldr (::) (List.repeat 3 ( -1, -1, NoType ))
                         |> List.take 5
 
         newListSkill =
@@ -108,7 +108,7 @@ updateSkillInBuild build ( ( _, skillId ), skill, isCombatArt ) =
 updateSkillIf : ( Int, Int, SkillType ) -> Int -> Skill -> ( Int, Int, SkillType )
 updateSkillIf ( idx, oldId, skillType ) skillIdx skill =
     if idx == skillIdx then
-        Debug.log "newSkill" ( idx, skill.id, skill.skillT )
+        Debug.log "newSkill" ( idx, skill.id, skill.skillType )
 
     else
         Debug.log "sameSkill" ( idx, oldId, skillType )
