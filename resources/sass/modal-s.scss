@@ -98,13 +98,15 @@
             border-bottom: 1px solid light;
             background-color: rgba(0,0,0,0.05);
             border-radius: .3rem;
+            margin-bottom: 1em;
 
-            p:first-child {
+            & > p:first-child {
               font-size: 1em;
               padding-left: 0.5em;
               padding-right: 0.5em;
               margin-right: 0.5em;
               border-right: 1px solid lightgray;
+              min-width: 4em;
             }
 
             p {
@@ -118,6 +120,34 @@
             .title-picture {
               border-radius: 2em;
             }
+          }
+
+          .skill-description {
+              .art-table {
+                width: 100%;
+                display: grid;
+                grid-template-rows: auto auto;
+
+                  .art-table-header {
+
+                    & > p {
+                      font-weight: 600;
+                    }
+                  }
+
+                  .art-table-row {
+                    display: grid;
+                    $column-width: calc(1/6* 100%);
+                    grid-template-columns: $column-width $column-width $column-width $column-width $column-width $column-width;
+
+                    & > p {
+                      padding-left: 0.5em;
+                      padding-right: 0.5em;
+                      border: 1px solid lightgray;
+                      text-align: center;
+                    }
+                  }
+              }
           }
         }
 

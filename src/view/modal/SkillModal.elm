@@ -117,7 +117,54 @@ viewSkillDescription skill =
 
 viewCombatArtDescription : Skill -> Html Msg
 viewCombatArtDescription skill =
-    div [] [ div [ class "skill-description" ] [ p [] [ text "Effect" ], p [] [ text skill.description ] ] ]
+    let
+        durabilityCost =
+            skill.durabilityCost
+                |> Maybe.map (\e -> "-" ++ String.fromInt e)
+                |> Maybe.withDefault "-"
+
+        might =
+            skill.might
+                |> Maybe.map (\e -> String.fromInt e)
+                |> Maybe.withDefault "-"
+
+        hit =
+            skill.hit
+                |> Maybe.map (\e -> String.fromInt e)
+                |> Maybe.withDefault "-"
+
+        avoid =
+            skill.avoid
+                |> Maybe.map (\e -> String.fromInt e)
+                |> Maybe.withDefault "-"
+
+        criticalRate =
+            skill.criticalRate
+                |> Maybe.map (\e -> String.fromInt e)
+                |> Maybe.withDefault "-"
+
+        rangeInString ( start, end ) =
+            if start == end then
+                String.fromInt start
+
+            else
+                String.fromInt start ++ "~" ++ String.fromInt end
+
+        range =
+            skill.range
+                |> Maybe.map (\e -> rangeInString e)
+                |> Maybe.withDefault "-"
+    in
+    div []
+        [ div [ class "skill-description" ]
+            [ p [] [ text "Art" ]
+            , div [ class "art-table" ]
+                [ div [ class "art-table-row art-table-header" ] [ p [] [ text "Cost" ], p [] [ text "Mt" ], p [] [ text "Hit" ], p [] [ text "Avo" ], p [] [ text "Crit" ], p [] [ text "Range" ] ]
+                , div [ class "art-table-row" ] [ p [] [ text durabilityCost ], p [] [ text might ], p [] [ text hit ], p [] [ text avoid ], p [] [ text criticalRate ], p [] [ text range ] ]
+                ]
+            ]
+        , div [ class "skill-description" ] [ p [] [ text "Effect" ], p [] [ text skill.description ] ]
+        ]
 
 
 buttonCloseModal : Html Msg
