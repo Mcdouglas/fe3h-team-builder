@@ -7,6 +7,8 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import ModelHandler exposing (getSkillList)
+import Study exposing (getStudyById)
+import StudyView exposing (viewStudy)
 
 
 modalSkillPicker : Model -> Html Msg
@@ -92,10 +94,10 @@ viewSkillDetail skill =
         viewDescription =
             case skill.combatArt of
                 True ->
-                    viewCombatArtDescription
+                    viewActiveSkillDescription
 
                 False ->
-                    viewSkillDescription
+                    viewPassiveSkillDescription
     in
     div [ class ("skill-detail " ++ cssClass) ]
         [ div [ class "skill-title" ]
@@ -110,9 +112,35 @@ viewSkillDetail skill =
         ]
 
 
-viewSkillDescription : Skill -> Html Msg
-viewSkillDescription skill =
-    div [] [ div [ class "skill-description" ] [ p [] [ text "Effect" ], p [] [ text skill.description ] ] ]
+viewPassiveSkillDescription : Skill -> Html Msg
+viewPassiveSkillDescription skill =
+    div []
+        [ div [ class "skill-description" ] [ p [] [ text "Effect" ], p [] [ text skill.description ] ]
+        , viewStudyDescription skill
+        ]
+
+
+viewActiveSkillDescription : Skill -> Html Msg
+viewActiveSkillDescription skill =
+    div []
+        [ viewCombatArtDescription skill
+        , div [ class "skill-description" ] [ p [] [ text "Effect" ], p [] [ text skill.description ] ]
+        , viewStudyDescription skill
+        ]
+
+
+viewStudyDescription : Skill -> Html Msg
+viewStudyDescription skill =
+    let
+        maybeStudy =
+            skill.studyId |> Maybe.andThen getStudyById
+    in
+    case maybeStudy of
+        Just study ->
+            div [ class "skill-description" ] [ p [] [ text "Study" ], viewStudy study ]
+
+        Nothing ->
+            div [] [ text "No data" ]
 
 
 viewCombatArtDescription : Skill -> Html Msg
@@ -155,15 +183,12 @@ viewCombatArtDescription skill =
                 |> Maybe.map (\e -> rangeInString e)
                 |> Maybe.withDefault "-"
     in
-    div []
-        [ div [ class "skill-description" ]
-            [ p [] [ text "Art" ]
-            , div [ class "art-table" ]
-                [ div [ class "art-table-row art-table-header" ] [ p [] [ text "Cost" ], p [] [ text "Mt" ], p [] [ text "Hit" ], p [] [ text "Avo" ], p [] [ text "Crit" ], p [] [ text "Range" ] ]
-                , div [ class "art-table-row" ] [ p [] [ text durabilityCost ], p [] [ text might ], p [] [ text hit ], p [] [ text avoid ], p [] [ text criticalRate ], p [] [ text range ] ]
-                ]
+    div [ class "skill-description" ]
+        [ p [] [ text "Art" ]
+        , div [ class "art-table" ]
+            [ div [ class "art-table-row art-table-header" ] [ p [] [ text "Cost" ], p [] [ text "Mt" ], p [] [ text "Hit" ], p [] [ text "Avo" ], p [] [ text "Crit" ], p [] [ text "Range" ] ]
+            , div [ class "art-table-row" ] [ p [] [ text durabilityCost ], p [] [ text might ], p [] [ text hit ], p [] [ text avoid ], p [] [ text criticalRate ], p [] [ text range ] ]
             ]
-        , div [ class "skill-description" ] [ p [] [ text "Effect" ], p [] [ text skill.description ] ]
         ]
 
 

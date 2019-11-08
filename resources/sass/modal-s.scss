@@ -40,8 +40,7 @@
           border: 1px solid lightgray;
 
           & > img {
-            width: 2em;
-            height: 2em;
+            height: 1.5em;
           }
 
           & > p {
@@ -55,6 +54,8 @@
         .tile:hover {
           background-color: #c8c9ca;
           cursor: pointer;
+
+          transition: all 0.7s ease;
         }
       }
 
