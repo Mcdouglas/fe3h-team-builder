@@ -13,14 +13,6 @@
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
     font-size: modal-font-size(1);
   
-    .passive-skill-modal {
-      transform: translateY(1.5em);
-    }
-
-    .active-skill-modal {
-      transform: translateY(10em);
-    }
-
     /* Modal Content/Box */
     .modal-content {
       background-color: #fefefe;
@@ -30,11 +22,15 @@
       display:grid;
       grid-template-columns: calc(8 * (5em - 1px)) auto;
       padding: 1em;
+      transform: translateY(40%);
       
       .skills-grid {
+        height: 30em;
+        width:100%;
+        overflow: auto;
+
         display: grid;
-        grid-template-columns: 25% 25% 25% 25%;
-        grid-auto-rows: min-content;
+        grid-template-columns: 33.33% 33.34% 33.33%;
         border-left: 1px solid lightgray;
         border-top: 1px solid lightgray;
         border-bottom: 1px solid lightgray;
@@ -44,8 +40,8 @@
           border: 1px solid lightgray;
 
           & > img {
-            width: 1.5em;
-            height: 1.5em;
+            width: 2em;
+            height: 2em;
           }
 
           & > p {
