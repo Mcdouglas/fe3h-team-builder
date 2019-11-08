@@ -89,10 +89,9 @@
           }
 
           .skill-description {
-            display:flex;
+            display: flex;
             min-height: 2em;
 
-            border-bottom: 1px solid light;
             background-color: rgba(0,0,0,0.05);
             border-radius: .3rem;
             margin-bottom: 1em;
@@ -108,6 +107,17 @@
 
             p {
               margin: auto 0;
+            }
+
+            .job-description {
+              display: flex;
+
+              .job-view {
+                padding-right: 1em;
+              }
+              .study-view {
+                margin-left: 1em;
+              }
             }
           }
         }

@@ -1,11 +1,14 @@
 module SkillModal exposing (..)
 
-import CustomTypes exposing (Skill)
+import CustomTypes exposing (Job, Skill)
 import GlobalMessage exposing (Msg(..), SkillModal(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
+import Job exposing (getJobById)
+import JobView exposing (viewJob)
+import Maybe.Extra exposing (..)
 import ModelHandler exposing (getSkillList)
 import Study exposing (getStudyById)
 import StudyView exposing (viewStudy)
@@ -117,6 +120,7 @@ viewPassiveSkillDescription skill =
     div []
         [ div [ class "skill-description" ] [ p [] [ text "Effect" ], p [] [ text skill.description ] ]
         , viewStudyDescription skill
+        , viewJobsDescription skill
         ]
 
 
@@ -126,6 +130,7 @@ viewActiveSkillDescription skill =
         [ viewCombatArtDescription skill
         , div [ class "skill-description" ] [ p [] [ text "Effect" ], p [] [ text skill.description ] ]
         , viewStudyDescription skill
+        , viewJobsDescription skill
         ]
 
 
@@ -138,6 +143,43 @@ viewStudyDescription skill =
     case maybeStudy of
         Just study ->
             div [ class "skill-description" ] [ p [] [ text "Study" ], viewStudy study ]
+
+        Nothing ->
+            div [] []
+
+
+viewJobsDescription : Skill -> Html Msg
+viewJobsDescription skill =
+    let
+        jobToMasterList =
+            skill.jobIdList
+                |> List.map (\id -> getJobById id)
+
+        showDivIfListIsNotEmpty =
+            List.length jobToMasterList > 0
+    in
+    case showDivIfListIsNotEmpty of
+        True ->
+            div [ class "skill-description" ] ([ p [] [ text "Job" ] ] ++ List.map (\e -> viewJobDescription e) jobToMasterList)
+
+        False ->
+            div [] []
+
+
+viewJobDescription : Maybe Job -> Html Msg
+viewJobDescription maybeJob =
+    let
+        listStudyToReach =
+            maybeJob
+                |> Maybe.map (\e -> e.studyIdList)
+                |> Maybe.withDefault []
+                |> List.map (\id -> getStudyById id)
+                |> Maybe.Extra.combine
+                |> Maybe.withDefault []
+    in
+    case maybeJob of
+        Just job ->
+            div [ class "job-description" ] ([ viewJob job ] ++ List.map (\s -> viewStudy s) listStudyToReach)
 
         Nothing ->
             div [] [ text "No data" ]

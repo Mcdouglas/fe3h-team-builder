@@ -3,6 +3,13 @@
     
 }
 
+.job-view {
+    display: flex;
+    flex-flow: column;
+    text-align: center;
+    min-width: 5em;
+}
+
 .button-clickable {
     cursor: pointer;
     box-shadow: 0 0 5px rgba(0,0,0,0.4);
