@@ -111,6 +111,7 @@ magicUsageToString gender =
 
 type alias Study =
     { id : Int
+    , pictureId : Int
     , subject : Subject
     , rank : Rank
     }

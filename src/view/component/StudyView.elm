@@ -9,8 +9,8 @@ import Html.Attributes exposing (..)
 getStudyPicture : Int -> Html Msg
 getStudyPicture pictureId =
     img
-        [ class "study-picutre"
-        , src ("resources/img/studies/" ++ String.fromInt pictureId ++ ".png")
+        [ class "study-picture"
+        , src ("resources/img/skills/" ++ String.fromInt pictureId ++ ".png")
         ]
         []
 
@@ -22,7 +22,7 @@ getRankPicture rank =
             rankToId rank
     in
     img
-        [ class "rank-picutre"
+        [ class "rank-picture"
         , src ("resources/img/ranks/" ++ String.fromInt pictureId ++ ".png")
         ]
         []
@@ -31,6 +31,6 @@ getRankPicture rank =
 viewStudy : Study -> Html Msg
 viewStudy study =
     div [ class "study-view" ]
-        [ getStudyPicture study.id
+        [ getStudyPicture study.pictureId
         , getRankPicture study.rank
         ]
