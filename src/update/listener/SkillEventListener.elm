@@ -93,9 +93,20 @@ updateSkillInBuild build ( ( _, skillId ), skill, isCombatArt ) =
                         |> List.foldr (::) (List.repeat 3 ( -1, -1, NoType ))
                         |> List.take 5
 
+        alreadySelected =
+            not
+                (listSkills
+                    |> List.filter (\( _, id, skillType ) -> id == skill.id && skillType == skill.skillType)
+                    |> List.isEmpty
+                )
+
         newListSkill =
-            listSkills
-                |> List.map (\e -> updateSkillIf e skillId skill)
+            if alreadySelected then
+                listSkills
+
+            else
+                listSkills
+                    |> List.map (\e -> updateSkillIf e skillId skill)
     in
     case isCombatArt of
         True ->

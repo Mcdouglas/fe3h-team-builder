@@ -80,8 +80,19 @@ updateBuild model ( position, character ) =
             else
                 ( id, item )
 
+        alreadySelected =
+            not
+                (model.team
+                    |> List.filter (\( idx, build ) -> build.idCharacter == character.id)
+                    |> List.isEmpty
+                )
+
         newTeam =
-            model.team
-                |> List.map (\e -> initNewBuild e)
+            if alreadySelected then
+                model.team
+
+            else
+                model.team
+                    |> List.map (\e -> initNewBuild e)
     in
     { model | team = newTeam }

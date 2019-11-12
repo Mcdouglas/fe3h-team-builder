@@ -42,33 +42,40 @@ getSkillList idChar isCombatArt dataModel =
 
 genderIsLegit : GenderUnionType -> Skill -> Bool
 genderIsLegit gender skill =
-    if ((List.length skill.jobIdList) > 0) then
+    if List.length skill.jobIdList > 0 then
         (skill.jobIdList
             |> List.map (\id -> getJobById id)
             |> Maybe.Extra.values
-            |> List.filter (\j -> (j.gender |> Maybe.withDefault gender) == gender )
-            |> List.length) > 0
+            |> List.filter (\j -> (j.gender |> Maybe.withDefault gender) == gender)
+            |> List.length
+        )
+            > 0
+
     else
         True
 
 
 shouldCollectSkill : Int -> Skill -> Bool
 shouldCollectSkill idChar skill =
-    let 
-        genderIsOk = getCharacterById idChar
-            |> Maybe.map (\c -> genderIsLegit c.gender skill)
-            |> Maybe.withDefault False
+    let
+        genderIsOk =
+            getCharacterById idChar
+                |> Maybe.map (\c -> genderIsLegit c.gender skill)
+                |> Maybe.withDefault False
     in
     if List.length skill.charactersOnly > 0 then
         if skill.allExcept == True then
             if List.member idChar skill.charactersOnly then
                 False
-            else 
-                genderIsOk
-        else
-            if List.member idChar skill.charactersOnly then
-                genderIsOk
+
             else
-                False
+                genderIsOk
+
+        else if List.member idChar skill.charactersOnly then
+            genderIsOk
+
+        else
+            False
+
     else
         genderIsOk
