@@ -24,8 +24,8 @@ getSkillByType idSkill skillType =
             Nothing
 
 
-getSkillList : Bool -> DataModel -> List Skill
-getSkillList isCombatArt dataModel =
+getSkillList : Int -> Bool -> DataModel -> List Skill
+getSkillList idChar isCombatArt dataModel =
     let
         listSkills =
             dataModel.standardSkills
@@ -37,3 +37,38 @@ getSkillList isCombatArt dataModel =
         |> List.map (\m -> Just (masterySkillToSkill m))
         |> List.append listSkills
         |> Maybe.Extra.values
+        |> List.filter (\s -> shouldCollectSkill idChar s)
+
+
+genderIsLegit : GenderUnionType -> Skill -> Bool
+genderIsLegit gender skill =
+    if ((List.length skill.jobIdList) > 0) then
+        (skill.jobIdList
+            |> List.map (\id -> getJobById id)
+            |> Maybe.Extra.values
+            |> List.filter (\j -> (j.gender |> Maybe.withDefault gender) == gender )
+            |> List.length) > 0
+    else
+        True
+
+
+shouldCollectSkill : Int -> Skill -> Bool
+shouldCollectSkill idChar skill =
+    let 
+        genderIsOk = getCharacterById idChar
+            |> Maybe.map (\c -> genderIsLegit c.gender skill)
+            |> Maybe.withDefault False
+    in
+    if List.length skill.charactersOnly > 0 then
+        if skill.allExcept == True then
+            if List.member idChar skill.charactersOnly then
+                False
+            else 
+                genderIsOk
+        else
+            if List.member idChar skill.charactersOnly then
+                genderIsOk
+            else
+                False
+    else
+        genderIsOk

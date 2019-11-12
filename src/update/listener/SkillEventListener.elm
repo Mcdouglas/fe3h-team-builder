@@ -72,7 +72,7 @@ updateBuild tuple model =
 updateBuildIf : ( Int, Build ) -> ( ( Int, Int ), Skill, Bool ) -> ( Int, Build )
 updateBuildIf ( buildIdx, build ) ( ( idx, skillId ), skill, isCombatArt ) =
     if buildIdx == idx then
-        Debug.log "build" ( buildIdx, updateSkillInBuild build ( ( idx, skillId ), skill, isCombatArt ) )
+        ( buildIdx, updateSkillInBuild build ( ( idx, skillId ), skill, isCombatArt ) )
 
     else
         ( buildIdx, build )
@@ -108,7 +108,7 @@ updateSkillInBuild build ( ( _, skillId ), skill, isCombatArt ) =
 updateSkillIf : ( Int, Int, SkillType ) -> Int -> Skill -> ( Int, Int, SkillType )
 updateSkillIf ( idx, oldId, skillType ) skillIdx skill =
     if idx == skillIdx then
-        Debug.log "newSkill" ( idx, skill.id, skill.skillType )
+        ( idx, skill.id, skill.skillType )
 
     else
-        Debug.log "sameSkill" ( idx, oldId, skillType )
+        ( idx, oldId, skillType )

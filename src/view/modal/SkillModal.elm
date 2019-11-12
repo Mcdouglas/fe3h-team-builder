@@ -41,8 +41,12 @@ modalSkillPicker model =
 viewSkillGrid : Model -> ( ( Int, Int ), Maybe Skill, Bool ) -> Html Msg
 viewSkillGrid model ( ( buildPosition, skillPosition ), maybeSkill, isCombatArt ) =
     let
-        listSkills =
-            getSkillList isCombatArt model.data
+        listSkills = model.team
+            |> List.filter (\(idx, build) -> idx == buildPosition)
+            |> List.map (\(_, build) -> build.idCharacter)
+            |> List.head
+            |> Maybe.andThen (\id -> Just (getSkillList id isCombatArt model.data))
+            |> Maybe.withDefault []
     in
     div [ class "skills-grid" ]
         (listSkills

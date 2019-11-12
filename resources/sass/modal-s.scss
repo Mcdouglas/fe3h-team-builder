@@ -33,6 +33,7 @@
 
         display: grid;
         grid-template-columns: 33.33% 33.34% 33.33%;
+        grid-auto-rows: min-content;
         border-left: 1px solid lightgray;
         border-top: 1px solid lightgray;
         border-bottom: 1px solid lightgray;
