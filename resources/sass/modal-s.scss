@@ -15,14 +15,16 @@
   
     /* Modal Content/Box */
     .modal-content {
-      background-color: #fefefe;
-      margin: auto;
-      border: 1px solid #888;
-      width: 60%; /* Could be more or less, depending on screen size */
       display:grid;
       grid-template-columns: calc(8 * (5em - 1px)) auto;
+      background-color: #fefefe;
+      
+      width: fit-content;
+      margin: auto;
       padding: 1em;
-      transform: translateY(40%);
+      
+      border: 1px solid #888;
+      transform: translateY(30%);
       
       .skills-grid {
         height: 30em;
@@ -66,6 +68,7 @@
         border-top-right-radius: .3rem;
         border-bottom-right-radius: .3rem;
         padding: 0.5em;
+        width: 25vw;
 
         .skill-detail {
 
@@ -89,7 +92,8 @@
           }
 
           .skill-description {
-            display: flex;
+            display: grid;
+            grid-template-columns: 20% auto auto auto;
             min-height: 2em;
 
             background-color: rgba(0,0,0,0.05);
@@ -97,12 +101,12 @@
             margin-bottom: 1em;
 
             & > p:first-child {
-              font-size: 1em;
+              font-size: 0.8em;
               padding-left: 0.5em;
               padding-right: 0.5em;
               margin-right: 0.5em;
               border-right: 1px solid lightgray;
-              min-width: 4em;
+              width: 6em;
             }
 
             p {

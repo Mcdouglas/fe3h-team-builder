@@ -142,7 +142,7 @@ viewStudyDescription skill =
     in
     case maybeStudy of
         Just study ->
-            div [ class "skill-description" ] [ p [] [ text "Study" ], viewStudy study ]
+            div [ class "skill-description" ] [ p [] [ text "Skill level" ], viewStudy study ]
 
         Nothing ->
             div [] []
@@ -160,7 +160,7 @@ viewJobsDescription skill =
     in
     case showDivIfListIsNotEmpty of
         True ->
-            div [ class "skill-description" ] ([ p [] [ text "Job" ] ] ++ List.map (\e -> viewJobDescription e) jobToMasterList)
+            div [ class "skill-description" ] ([ p [] [ text "Class mastered" ] ] ++ List.map (\e -> viewJobDescription e) jobToMasterList)
 
         False ->
             div [] []
