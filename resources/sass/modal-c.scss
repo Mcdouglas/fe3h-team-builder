@@ -15,13 +15,18 @@
   
     /* Modal Content/Box */
     .modal-content {
-      background-color: #fefefe;
-      transform: translate(30%, 50%);
-      border: 1px solid #888;
-      width: 60%; /* Could be more or less, depending on screen size */
       display:grid;
       grid-template-columns: calc(8 * (5em - 1px)) auto;
+      
+      width: fit-content;
+      width: -moz-fit-content;       /* Firefox */
+      width: -webkit-fit-content;    /* Chrome */
+      margin: auto;
       padding: 1em;
+      
+      transform: translateY(50%);
+      border: 1px solid #888;
+      background-color: #fefefe;
 
       .characters-grid {
         display: flex;
@@ -125,6 +130,7 @@
         background-color: #eee;
         border-top-right-radius: .3rem;
         border-bottom-right-radius: .3rem;
+        width: 25vw;
 
         /* The Close Button */
         .close-modal {

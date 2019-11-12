@@ -10,8 +10,25 @@ import JobCategory exposing (getJobCategoryById)
 import JobSkill exposing (..)
 
 
-viewJob : Model -> Maybe Job -> Html Msg
-viewJob model element =
+viewJob : Job -> Html Msg
+viewJob job =
+    div [ class "job-view" ]
+        [ getJobPicture job.idPicture
+        , p [] [ text job.name ]
+        ]
+
+
+getJobPicture : Int -> Html Msg
+getJobPicture id =
+    div
+        [ class "job-picture"
+        , style "content" ("url(\"resources/img/jobs/" ++ String.fromInt id ++ ".gif\")")
+        ]
+        []
+
+
+buttonJob : Model -> Maybe Job -> Html Msg
+buttonJob model element =
     case element of
         Just value ->
             let
@@ -51,7 +68,7 @@ viewJob model element =
                         |> List.intersperse (br [] [])
             in
             div [ class "item-a4a" ]
-                [ getJobPicture value.idPicture
+                [ getJobButton value.idPicture
                 , p [] [ text value.name ]
                 , div
                     [ class "custom-popover above" ]
@@ -65,8 +82,8 @@ viewJob model element =
             p [] [ text "No data" ]
 
 
-getJobPicture : Int -> Html Msg
-getJobPicture id =
+getJobButton : Int -> Html Msg
+getJobButton id =
     div
         [ class "job-picture qs button-clickable"
         , style "content" ("url(\"resources/img/jobs/" ++ String.fromInt id ++ ".gif\")")

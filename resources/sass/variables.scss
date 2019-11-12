@@ -27,7 +27,11 @@
                 font-size: picture-font-size($coefficient);
             }
 
-            .modal {
+            .modal-s {
+                font-size: modal-font-size($coefficient);
+            }
+            
+            .modal-c {
                 font-size: modal-font-size($coefficient);
             }
 

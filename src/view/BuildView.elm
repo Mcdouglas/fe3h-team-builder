@@ -81,7 +81,7 @@ sectionJob model build =
             job |> Maybe.map (\e -> getJobSkillsByJob e.id) |> Maybe.withDefault []
     in
     div [ class "item-a4" ]
-        [ viewJob model job
+        [ buttonJob model job
         , div [ class "item-a4b" ] (listJobSkill |> List.map (\e -> viewJobSkill e))
         ]
 

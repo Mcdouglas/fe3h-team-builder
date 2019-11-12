@@ -72,7 +72,7 @@ updateBuild tuple model =
 updateBuildIf : ( Int, Build ) -> ( ( Int, Int ), Skill, Bool ) -> ( Int, Build )
 updateBuildIf ( buildIdx, build ) ( ( idx, skillId ), skill, isCombatArt ) =
     if buildIdx == idx then
-        Debug.log "build" ( buildIdx, updateSkillInBuild build ( ( idx, skillId ), skill, isCombatArt ) )
+        ( buildIdx, updateSkillInBuild build ( ( idx, skillId ), skill, isCombatArt ) )
 
     else
         ( buildIdx, build )
@@ -93,9 +93,20 @@ updateSkillInBuild build ( ( _, skillId ), skill, isCombatArt ) =
                         |> List.foldr (::) (List.repeat 3 ( -1, -1, NoType ))
                         |> List.take 5
 
+        alreadySelected =
+            not
+                (listSkills
+                    |> List.filter (\( _, id, skillType ) -> id == skill.id && skillType == skill.skillType)
+                    |> List.isEmpty
+                )
+
         newListSkill =
-            listSkills
-                |> List.map (\e -> updateSkillIf e skillId skill)
+            if alreadySelected then
+                listSkills
+
+            else
+                listSkills
+                    |> List.map (\e -> updateSkillIf e skillId skill)
     in
     case isCombatArt of
         True ->
@@ -108,7 +119,7 @@ updateSkillInBuild build ( ( _, skillId ), skill, isCombatArt ) =
 updateSkillIf : ( Int, Int, SkillType ) -> Int -> Skill -> ( Int, Int, SkillType )
 updateSkillIf ( idx, oldId, skillType ) skillIdx skill =
     if idx == skillIdx then
-        Debug.log "newSkill" ( idx, skill.id, skill.skillType )
+        ( idx, skill.id, skill.skillType )
 
     else
-        Debug.log "sameSkill" ( idx, oldId, skillType )
+        ( idx, oldId, skillType )

@@ -1,12 +1,17 @@
 module SkillModal exposing (..)
 
-import CustomTypes exposing (Skill)
+import CustomTypes exposing (Job, Skill)
 import GlobalMessage exposing (Msg(..), SkillModal(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
+import Job exposing (getJobById)
+import JobView exposing (viewJob)
+import Maybe.Extra exposing (..)
 import ModelHandler exposing (getSkillList)
+import Study exposing (getStudyById)
+import StudyView exposing (viewStudy)
 
 
 modalSkillPicker : Model -> Html Msg
@@ -37,7 +42,12 @@ viewSkillGrid : Model -> ( ( Int, Int ), Maybe Skill, Bool ) -> Html Msg
 viewSkillGrid model ( ( buildPosition, skillPosition ), maybeSkill, isCombatArt ) =
     let
         listSkills =
-            getSkillList isCombatArt model.data
+            model.team
+                |> List.filter (\( idx, build ) -> idx == buildPosition)
+                |> List.map (\( _, build ) -> build.idCharacter)
+                |> List.head
+                |> Maybe.andThen (\id -> Just (getSkillList id isCombatArt model.data))
+                |> Maybe.withDefault []
     in
     div [ class "skills-grid" ]
         (listSkills
@@ -92,10 +102,10 @@ viewSkillDetail skill =
         viewDescription =
             case skill.combatArt of
                 True ->
-                    viewCombatArtDescription
+                    viewActiveSkillDescription
 
                 False ->
-                    viewSkillDescription
+                    viewPassiveSkillDescription
     in
     div [ class ("skill-detail " ++ cssClass) ]
         [ div [ class "skill-title" ]
@@ -110,14 +120,123 @@ viewSkillDetail skill =
         ]
 
 
-viewSkillDescription : Skill -> Html Msg
-viewSkillDescription skill =
-    div [] [ div [ class "skill-description" ] [ p [] [ text "Effect" ], p [] [ text skill.description ] ] ]
+viewPassiveSkillDescription : Skill -> Html Msg
+viewPassiveSkillDescription skill =
+    div []
+        [ div [ class "skill-description" ] [ p [] [ text "Effect" ], p [] [ text skill.description ] ]
+        , viewStudyDescription skill
+        , viewJobsDescription skill
+        ]
+
+
+viewActiveSkillDescription : Skill -> Html Msg
+viewActiveSkillDescription skill =
+    div []
+        [ viewCombatArtDescription skill
+        , div [ class "skill-description" ] [ p [] [ text "Effect" ], p [] [ text skill.description ] ]
+        , viewStudyDescription skill
+        , viewJobsDescription skill
+        ]
+
+
+viewStudyDescription : Skill -> Html Msg
+viewStudyDescription skill =
+    let
+        maybeStudy =
+            skill.studyId |> Maybe.andThen getStudyById
+    in
+    case maybeStudy of
+        Just study ->
+            div [ class "skill-description" ] [ p [] [ text "Skill level" ], viewStudy study ]
+
+        Nothing ->
+            div [] []
+
+
+viewJobsDescription : Skill -> Html Msg
+viewJobsDescription skill =
+    let
+        jobToMasterList =
+            skill.jobIdList
+                |> List.map (\id -> getJobById id)
+
+        showDivIfListIsNotEmpty =
+            List.length jobToMasterList > 0
+    in
+    case showDivIfListIsNotEmpty of
+        True ->
+            div [ class "skill-description" ] ([ p [] [ text "Class mastered" ] ] ++ List.map (\e -> viewJobDescription e) jobToMasterList)
+
+        False ->
+            div [] []
+
+
+viewJobDescription : Maybe Job -> Html Msg
+viewJobDescription maybeJob =
+    let
+        listStudyToReach =
+            maybeJob
+                |> Maybe.map (\e -> e.studyIdList)
+                |> Maybe.withDefault []
+                |> List.map (\id -> getStudyById id)
+                |> Maybe.Extra.combine
+                |> Maybe.withDefault []
+    in
+    case maybeJob of
+        Just job ->
+            div [ class "job-description" ] ([ viewJob job ] ++ List.map (\s -> viewStudy s) listStudyToReach)
+
+        Nothing ->
+            div [] [ text "No data" ]
 
 
 viewCombatArtDescription : Skill -> Html Msg
 viewCombatArtDescription skill =
-    div [] [ div [ class "skill-description" ] [ p [] [ text "Effect" ], p [] [ text skill.description ] ] ]
+    let
+        durabilityCost =
+            skill.durabilityCost
+                |> Maybe.map (\e -> "-" ++ String.fromInt e)
+                |> Maybe.withDefault "-"
+
+        might =
+            skill.might
+                |> Maybe.map (\e -> String.fromInt e)
+                |> Maybe.withDefault "-"
+
+        hit =
+            skill.hit
+                |> Maybe.map (\e -> String.fromInt e)
+                |> Maybe.withDefault "-"
+
+        avoid =
+            skill.avoid
+                |> Maybe.map (\e -> String.fromInt e)
+                |> Maybe.withDefault "-"
+
+        criticalRate =
+            skill.criticalRate
+                |> Maybe.map (\e -> String.fromInt e)
+                |> Maybe.withDefault "-"
+
+        rangeInString ( start, end ) =
+            if start == end then
+                String.fromInt start
+
+            else
+                String.fromInt start ++ "~" ++ String.fromInt end
+
+        range =
+            skill.range
+                |> Maybe.map (\e -> rangeInString e)
+                |> Maybe.withDefault "-"
+    in
+    div [ class "skill-description" ]
+        [ p [] [ text "Art" ]
+        , div [ class "art-table" ]
+            [ div [ class "art-table-row art-table-header" ] [ p [] [ text "Cost" ], p [] [ text "Mt" ], p [] [ text "Hit" ], p [] [ text "Avo" ], p [] [ text "Crit" ], p [] [ text "Range" ] ]
+            , div [ class "art-table-row" ] [ p [] [ text durabilityCost ], p [] [ text might ], p [] [ text hit ], p [] [ text avoid ], p [] [ text criticalRate ], p [] [ text range ] ]
+            ]
+        ]
 
 
 buttonCloseModal : Html Msg
