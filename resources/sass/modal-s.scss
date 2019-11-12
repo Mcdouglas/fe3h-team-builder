@@ -20,6 +20,8 @@
       background-color: #fefefe;
       
       width: fit-content;
+      width: -moz-fit-content;       /* Firefox */
+      width: -webkit-fit-content;    /* Chrome */
       margin: auto;
       padding: 1em;
       

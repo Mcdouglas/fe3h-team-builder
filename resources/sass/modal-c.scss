@@ -19,6 +19,8 @@
       grid-template-columns: calc(8 * (5em - 1px)) auto;
       
       width: fit-content;
+      width: -moz-fit-content;       /* Firefox */
+      width: -webkit-fit-content;    /* Chrome */
       margin: auto;
       padding: 1em;
       
