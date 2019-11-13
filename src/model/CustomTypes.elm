@@ -142,6 +142,7 @@ type alias Job =
     , magicUsage : Maybe MagicUsage
     , note : Maybe String
     , customExperience : Maybe Int
+    , onlyCharacters : List Int
     }
 
 
