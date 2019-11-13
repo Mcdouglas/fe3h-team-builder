@@ -20,9 +20,9 @@ viewJob job =
 
 getJobPicture : Int -> Html Msg
 getJobPicture id =
-    div
+    img
         [ class "job-picture"
-        , style "content" ("url(\"resources/img/jobs/" ++ String.fromInt id ++ ".gif\")")
+        , src ("resources/img/jobs/" ++ String.fromInt id ++ ".gif")
         ]
         []
 
@@ -85,7 +85,7 @@ buttonJob model element =
 getJobButton : Int -> Html Msg
 getJobButton id =
     div
-        [ class "job-picture qs button-clickable"
+        [ class "job-picture job-button qs button-clickable"
         , style "content" ("url(\"resources/img/jobs/" ++ String.fromInt id ++ ".gif\")")
         ]
         []

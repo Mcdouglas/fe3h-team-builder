@@ -230,7 +230,7 @@ viewCombatArtDescription skill =
                 |> Maybe.map (\e -> rangeInString e)
                 |> Maybe.withDefault "-"
     in
-    div [ class "skill-description" ]
+    div [ class "skill-description art-description" ]
         [ p [] [ text "Art" ]
         , div [ class "art-table" ]
             [ div [ class "art-table-row art-table-header" ] [ p [] [ text "Cost" ], p [] [ text "Mt" ], p [] [ text "Hit" ], p [] [ text "Avo" ], p [] [ text "Crit" ], p [] [ text "Range" ] ]
