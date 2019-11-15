@@ -6,6 +6,7 @@ import CustomTypes exposing (..)
 type Msg
     = InitialModel
     | CModalMsg CharacterModal
+    | JModalMsg JobModal
     | SModalMsg SkillModal
     | BInfoMsg BuildInfo
 
@@ -15,6 +16,11 @@ type CharacterModal
     | UpdateCurrentCharacter ( Int, Maybe Character )
     | UpdateBuildWithCharacter ( Int, Character )
     | CloseCharacterModal
+
+
+type JobModal
+    = OpenJobModal
+    | CloseJobModal
 
 
 type SkillModal

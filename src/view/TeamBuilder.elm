@@ -2,13 +2,14 @@ module TeamBuilder exposing (..)
 
 import BuildInfoView exposing (..)
 import BuildView exposing (..)
-import CharacterModal exposing (..)
+import CharacterModal exposing (modalCharacterPicker)
 import CustomTypes exposing (..)
 import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import SkillModal exposing (..)
+import JobModal exposing (modalJobPicker)
+import SkillModal exposing (modalSkillPicker)
 
 
 viewBuilder : Model -> Html Msg
@@ -18,6 +19,7 @@ viewBuilder model =
         , viewTeam model
         , modalCharacterPicker model
         , modalSkillPicker model
+        , modalJobPicker model
         ]
 
 

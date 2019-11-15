@@ -1,12 +1,13 @@
 module Main exposing (main)
 
 import Browser exposing (sandbox)
-import BuildInfoEventListener exposing (..)
-import CharacterEventListener exposing (..)
+import BuildInfoEventListener exposing (handle)
+import CharacterEventListener exposing (handle)
 import DataHandler exposing (..)
 import ErrorHandler exposing (..)
 import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (..)
+import JobEventListener exposing (handle)
 import SkillEventListener exposing (..)
 import TeamBuilder exposing (..)
 
@@ -27,7 +28,7 @@ init =
             ( ( -1, -1 ), Nothing, False )
 
         viewModel =
-            ViewModel False initCharacterPicker False initSkillPicker
+            ViewModel False initCharacterPicker False initSkillPicker False
 
         errorMessage =
             Nothing
@@ -52,6 +53,9 @@ update msg model =
 
         CModalMsg value ->
             CharacterEventListener.handle value model
+
+        JModalMsg value ->
+            JobEventListener.handle value model
 
         SModalMsg value ->
             SkillEventListener.handle value model

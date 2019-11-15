@@ -1,10 +1,11 @@
 module JobView exposing (..)
 
 import CustomTypes exposing (..)
-import GlobalMessage exposing (Msg(..))
+import GlobalMessage exposing (JobModal(..), Msg(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (..)
 import Job exposing (..)
 import JobCategory exposing (getJobCategoryById)
 import JobSkill exposing (..)
@@ -87,6 +88,7 @@ getJobButton id =
     div
         [ class "job-picture job-button qs button-clickable"
         , style "content" ("url(\"resources/img/jobs/" ++ String.fromInt id ++ ".gif\")")
+        , onClick (JModalMsg OpenJobModal)
         ]
         []
 
