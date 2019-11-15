@@ -28,6 +28,38 @@
         border: 1px solid #888;
         background-color: #fefefe;
 
+        font-size: picture-font-size(1);
+
+        .jobs-grid {
+          display: grid;
+          grid-template-columns: 20% 20% 20% 20% 20%;
+
+          .job-tile {
+            display: flex;
+            flex-flow: column;
+            text-align: center;
+
+            font-size: picture-font-size(1);
+
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            margin-bottom: -1px;
+            margin-right: -1px;
+
+            cursor: pointer;
+
+            // user-select: none;
+
+            & > img {
+              margin: 0 auto;
+            }
+
+            &:hover {
+              background-color: rgba(0, 0, 0, 0.2);
+              transition: all 1s ease;
+            }
+          }
+        }
+
         .sidebar {
   
           border: 1px solid lightgray;
