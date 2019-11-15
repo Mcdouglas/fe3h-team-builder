@@ -73,6 +73,7 @@ modelHandlerTest =
                             , magicUsage = Just CanUseSomeMagic
                             , note = Nothing
                             , customExperience = Nothing
+                            , onlyCharacters = []
                             }
                 )
             , test "Expect job is Hero"
@@ -89,6 +90,7 @@ modelHandlerTest =
                             , magicUsage = Nothing
                             , note = Nothing
                             , customExperience = Nothing
+                            , onlyCharacters = []
                             }
                 )
             , test "Expect job is Gremory"
@@ -105,6 +107,7 @@ modelHandlerTest =
                             , magicUsage = Just CanUseMagic
                             , note = Nothing
                             , customExperience = Nothing
+                            , onlyCharacters = []
                             }
                 )
             , test "Expect job is Enlightened One"
@@ -122,6 +125,7 @@ modelHandlerTest =
                             , magicUsage = Just CanUseMagic
                             , note = Just "Byleth only"
                             , customExperience = Just 100
+                            , onlyCharacters = [ 0, 1 ]
                             }
                 )
             ]
