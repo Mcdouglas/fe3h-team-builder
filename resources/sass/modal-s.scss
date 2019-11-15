@@ -97,17 +97,16 @@
           .skill-description {
             display: grid;
             grid-template-columns: 20% auto auto auto;
-            min-height: 2em;
+            min-height: 4em;
 
             background-color: rgba(0,0,0,0.05);
             border-radius: .3rem;
+
+            padding-left: 1em;
             margin-bottom: 1em;
 
             & > p:first-child {
               font-size: 0.8em;
-              padding-left: 0.5em;
-              padding-right: 0.5em;
-              margin-right: 0.5em;
               border-right: 1px solid lightgray;
               width: 6em;
             }
@@ -116,15 +115,27 @@
               margin: auto 0;
             }
 
+            & > div {
+              min-height: 4em;
+            }
+
             .job-description {
               display: flex;
 
               .job-view {
                 padding-right: 1em;
+
+                & > img {
+                  margin: auto;
+                }
               }
-              
-              .study-view {
-                margin: auto 0 auto 1em;
+            }
+
+            .study-view {
+              margin: auto 0 auto 1em;
+
+              & > img {
+                margin: auto 0;
               }
             }
           }
@@ -137,32 +148,36 @@
             }
           }
 
+          .art-description {
+            grid-template-columns: 20% auto;
+
+            .art-table {
+              width: 100%;
+              display: grid;
+              grid-template-rows: auto auto;
+
+                .art-table-header {
+                  margin-bottom: 0.5em;
+                  & > p {
+                    font-weight: 600;
+                  }
+                }
+
+                .art-table-row {
+                  display: grid;
+                  $column-width: calc(1/6* 100%);
+                  grid-template-columns: $column-width $column-width $column-width $column-width $column-width $column-width;
+
+                  & > p {
+                    padding-left: 0.5em;
+                    padding-right: 0.5em;
+                    text-align: center;
+                  }
+                }
+            }
+          }
+
           .skill-description {
-              .art-table {
-                width: 100%;
-                display: grid;
-                grid-template-rows: auto auto;
-
-                  .art-table-header {
-
-                    & > p {
-                      font-weight: 600;
-                    }
-                  }
-
-                  .art-table-row {
-                    display: grid;
-                    $column-width: calc(1/6* 100%);
-                    grid-template-columns: $column-width $column-width $column-width $column-width $column-width $column-width;
-
-                    & > p {
-                      padding-left: 0.5em;
-                      padding-right: 0.5em;
-                      border: 1px solid lightgray;
-                      text-align: center;
-                    }
-                  }
-              }
           }
         }
 
