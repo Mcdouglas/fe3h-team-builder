@@ -15,7 +15,7 @@ modelHandlerTest =
     let
         -- default value
         wrongJob =
-            Job -1 -1 "" 0 [] [] Nothing Nothing Nothing Nothing
+            Job -1 -1 "" 0 [] [] Nothing Nothing Nothing Nothing []
 
         wrongJobCategory =
             JobCategory -1 Beginner Nothing Nothing
