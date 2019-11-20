@@ -19,8 +19,9 @@ type CharacterModal
 
 
 type JobModal
-    = OpenJobModal
+    = OpenJobModal ( Int, Maybe Job )
     | CloseJobModal
+    | UpdateJobPicker ( Int, Maybe Job )
 
 
 type SkillModal

@@ -17,6 +17,7 @@ type alias ViewModel =
     , skillModalIsOpen : Bool
     , skillPicker : ( ( Int, Int ), Maybe Skill, Bool )
     , jobModalIsOpen : Bool
+    , jobPicker : ( Int, Maybe Job )
     }
 
 

@@ -21,7 +21,7 @@ viewBuild model ( idx, build ) =
         [ sectionCharacter model ( idx, build )
         , sectionPassiveSkills model ( idx, build )
         , sectionActiveSkills model ( idx, build )
-        , sectionJob model build
+        , sectionJob model ( idx, build )
         , buttonBuildInfo build
         ]
 
@@ -71,8 +71,8 @@ sectionActiveSkills model ( buildIdx, build ) =
         (List.map (\e -> viewSkill model e) listActiveSkill)
 
 
-sectionJob : Model -> Build -> Html Msg
-sectionJob model build =
+sectionJob : Model -> ( Int, Build ) -> Html Msg
+sectionJob model ( buildIdx, build ) =
     let
         job =
             getJobById build.jobId
@@ -81,7 +81,7 @@ sectionJob model build =
             job |> Maybe.map (\e -> getJobSkillsByJob e.id) |> Maybe.withDefault []
     in
     div [ class "item-a4" ]
-        [ buttonJob model job
+        [ buttonJob model buildIdx job
         , div [ class "item-a4b" ] (listJobSkill |> List.map (\e -> viewJobSkill e))
         ]
 

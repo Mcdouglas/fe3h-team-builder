@@ -27,8 +27,11 @@ init =
         initSkillPicker =
             ( ( -1, -1 ), Nothing, False )
 
+        initJobPicker =
+            ( -1, Nothing )
+
         viewModel =
-            ViewModel False initCharacterPicker False initSkillPicker False
+            ViewModel False initCharacterPicker False initSkillPicker False initJobPicker
 
         errorMessage =
             Nothing

@@ -28,31 +28,31 @@ getJobPicture id =
         []
 
 
-buttonJob : Model -> Maybe Job -> Html Msg
-buttonJob model element =
-    case element of
-        Just value ->
+buttonJob : Model -> Int -> Maybe Job -> Html Msg
+buttonJob model buildIdx maybeJob =
+    case maybeJob of
+        Just job ->
             let
-                maybeJobCategory =
-                    getJobCategoryById value.jobCategoryId
-
                 note =
-                    value.note |> Maybe.map (\e -> text e)
+                    job.note |> Maybe.map (\e -> text e)
+
+                maybeJobCategory =
+                    getJobCategoryById job.jobCategoryId
 
                 level =
                     maybeJobCategory |> Maybe.andThen (\e -> e.level) |> Maybe.map (\e -> "Lvl req. " ++ String.fromInt e) |> Maybe.map (\e -> text e)
 
-                customExperience =
-                    value.customExperience |> Maybe.map (\e -> "Exp req. " ++ String.fromInt e) |> Maybe.map (\e -> text e)
-
                 experience =
                     maybeJobCategory |> Maybe.andThen (\e -> e.experience) |> Maybe.map (\e -> "Exp req. " ++ String.fromInt e) |> Maybe.map (\e -> text e)
 
+                customExperience =
+                    job.customExperience |> Maybe.map (\e -> "Exp req. " ++ String.fromInt e) |> Maybe.map (\e -> text e)
+
                 gender =
-                    value.gender |> Maybe.map (\e -> genderToString e ++ " only") |> Maybe.map (\e -> text e)
+                    job.gender |> Maybe.map (\e -> genderToString e ++ " only") |> Maybe.map (\e -> text e)
 
                 magicUsage =
-                    value.magicUsage |> Maybe.map (\e -> magicUsageToString e) |> Maybe.map (\e -> text e)
+                    job.magicUsage |> Maybe.map (\e -> magicUsageToString e) |> Maybe.map (\e -> text e)
 
                 appendMaybe maybe list =
                     Maybe.map List.singleton maybe
@@ -67,13 +67,16 @@ buttonJob model element =
                         |> appendMaybe gender
                         |> appendMaybe magicUsage
                         |> List.intersperse (br [] [])
+
+                onClickEvent =
+                    onClick (JModalMsg (OpenJobModal ( buildIdx, maybeJob )))
             in
             div [ class "item-a4a" ]
-                [ getJobButton value.idPicture
-                , p [] [ text value.name ]
+                [ getJobButton onClickEvent job.idPicture
+                , p [] [ text job.name ]
                 , div
                     [ class "custom-popover above" ]
-                    [ p [ class "popover-title" ] [ text ("[" ++ value.name ++ "]") ]
+                    [ p [ class "popover-title" ] [ text ("[" ++ job.name ++ "]") ]
                     , p [ class "popover-text" ] listHtml
                     , p [ class "popover-instruction" ] [ text "Click to change " ]
                     ]
@@ -83,12 +86,12 @@ buttonJob model element =
             p [] [ text "No data" ]
 
 
-getJobButton : Int -> Html Msg
-getJobButton id =
+getJobButton : Attribute Msg -> Int -> Html Msg
+getJobButton onClickEvent id =
     div
         [ class "job-picture job-button qs button-clickable"
         , style "content" ("url(\"resources/img/jobs/" ++ String.fromInt id ++ ".gif\")")
-        , onClick (JModalMsg OpenJobModal)
+        , onClickEvent
         ]
         []
 
