@@ -41,6 +41,7 @@ viewJobTile model job =
     div
         [ class "job-tile"
         , onMouseOver (JModalMsg (UpdateJobPicker ( buildIdx, Just job )))
+        , onClick (JModalMsg (UpdateBuild ( buildIdx, job )))
         ]
         [ getJobPicture job.idPicture
         , text job.name

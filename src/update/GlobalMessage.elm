@@ -22,6 +22,7 @@ type JobModal
     = OpenJobModal ( Int, Maybe Job )
     | CloseJobModal
     | UpdateJobPicker ( Int, Maybe Job )
+    | UpdateBuild ( Int, Job )
 
 
 type SkillModal

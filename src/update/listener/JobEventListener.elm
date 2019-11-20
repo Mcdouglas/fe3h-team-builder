@@ -1,6 +1,6 @@
 module JobEventListener exposing (..)
 
-import CustomTypes exposing (Job)
+import CustomTypes exposing (Build, Job)
 import GlobalMessage exposing (JobModal(..), Msg(..))
 import GlobalModel exposing (..)
 
@@ -17,6 +17,9 @@ handle msg model =
         UpdateJobPicker value ->
             updateJobPicker model value
 
+        UpdateBuild value ->
+            closeModal (updateBuild model value)
+
 
 updateJobPicker : Model -> ( Int, Maybe Job ) -> Model
 updateJobPicker model picker =
@@ -28,6 +31,25 @@ updateJobPicker model picker =
             { oldView | jobPicker = picker }
     in
     { model | view = newView }
+
+
+updateBuild : Model -> ( Int, Job ) -> Model
+updateBuild model ( buildIdx, job ) =
+    let
+        newTeam =
+            model.team
+                |> List.map (\e -> updateBuildAndKeepOther e ( buildIdx, job ))
+    in
+    { model | team = newTeam }
+
+
+updateBuildAndKeepOther : ( Int, Build ) -> ( Int, Job ) -> ( Int, Build )
+updateBuildAndKeepOther ( idx, build ) ( buildIdx, job ) =
+    if idx == buildIdx then
+        ( idx, { build | jobId = job.id } )
+
+    else
+        ( idx, build )
 
 
 openModal : Model -> ( Int, Maybe Job ) -> Model
