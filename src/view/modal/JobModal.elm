@@ -7,6 +7,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import JobView exposing (getJobPicture)
+import Job exposing (getJobsAvailableForCharacter)
 
 
 modalJobPicker : Model -> Html Msg
@@ -26,8 +27,15 @@ modalJobPicker model =
 viewJobGrid : Model -> Html Msg
 viewJobGrid model =
     let
-        listJob =
-            model.data.jobs
+        ( buildIdx, _ ) =
+            model.view.jobPicker
+        
+        listJob = model.team
+            |> List.filter (\(idx, build) -> idx == buildIdx)
+            |> List.head
+            |> Maybe.map (\(idx, build) -> build.idCharacter)
+            |> Maybe.map (\id -> getJobsAvailableForCharacter id)
+            |> Maybe.withDefault model.data.jobs
     in
     div [ class "jobs-grid" ] (List.map (\e -> viewJobTile model e) listJob)
 
