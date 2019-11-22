@@ -117,7 +117,7 @@ body {
   
             .item-a4b {
               display: grid;
-              grid-template-columns: 33.33% 33.34% 33.33%;
+              grid-auto-flow: column;
               grid-row-start: 2;
               grid-row-end: 3;
   
@@ -127,6 +127,8 @@ body {
   
               & > div {
                 position: relative;
+                width: 4em;
+                margin: auto;
               }
             }
           }

@@ -9,7 +9,7 @@ handle : JobModal -> Model -> Model
 handle msg model =
     case msg of
         OpenJobModal value ->
-            openModal model value
+            openModal (updateJobPicker model value)
 
         CloseJobModal ->
             closeModal model
@@ -34,11 +34,11 @@ updateJobPicker model picker =
 
 
 updateBuild : Model -> ( Int, Job ) -> Model
-updateBuild model ( buildIdx, job ) =
+updateBuild model shift =
     let
         newTeam =
             model.team
-                |> List.map (\e -> updateBuildAndKeepOther e ( buildIdx, job ))
+                |> List.map (\build -> updateBuildAndKeepOther build shift)
     in
     { model | team = newTeam }
 
@@ -52,14 +52,14 @@ updateBuildAndKeepOther ( idx, build ) ( buildIdx, job ) =
         ( idx, build )
 
 
-openModal : Model -> ( Int, Maybe Job ) -> Model
-openModal model currentJob =
+openModal : Model -> Model
+openModal model =
     let
         oldView =
             model.view
 
         newView =
-            { oldView | jobModalIsOpen = True, jobPicker = currentJob }
+            { oldView | jobModalIsOpen = True }
     in
     { model | view = newView }
 
