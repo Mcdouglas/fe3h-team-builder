@@ -37,8 +37,8 @@ initJobs =
     , Job 5 5 "Monk" 1 [ Proficiency Reason 1, Proficiency Faith 1 ] [ 62, 74 ] Nothing (Just CanUseMagic) Nothing Nothing []
 
     -- Intermediate
-    , Job 6 3 "Lord" 2 [ Proficiency Sword 2, Proficiency Lance 1, Proficiency Authority 2 ] [ 3, 89 ] Nothing Nothing (Just "Edelgard, Dimitri and Claude only") Nothing [ 2, 10, 18 ]
-    , Job 7 4 "Mercenary" 2 [ Proficiency Sword 2, Proficiency Axe 1 ] [ 4 ] Nothing Nothing Nothing Nothing []
+    , Job 6 6 "Lord" 2 [ Proficiency Sword 2, Proficiency Lance 1, Proficiency Authority 2 ] [ 3, 89 ] Nothing Nothing (Just "Edelgard, Dimitri and Claude only") Nothing [ 2, 10, 18 ]
+    , Job 7 7 "Mercenary" 2 [ Proficiency Sword 2, Proficiency Axe 1 ] [ 4 ] Nothing Nothing Nothing Nothing []
     , Job 8 8 "Thief" 2 [ Proficiency Sword 2, Proficiency Bow 1 ] [ 4 ] Nothing Nothing Nothing Nothing []
     , Job 9 9 "Cavalier" 2 [ Proficiency Sword 1, Proficiency Lance 2, Proficiency Riding 2 ] [ 16, 111 ] Nothing Nothing Nothing Nothing []
     , Job 10 10 "Pegasus Knight" 2 [ Proficiency Sword 1, Proficiency Lance 2, Proficiency Flying 2 ] [ 16, 123 ] (Just Female) Nothing Nothing Nothing []
