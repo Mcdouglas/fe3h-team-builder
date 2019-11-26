@@ -10,7 +10,10 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Job exposing (getJobsAvailableForCharacter)
 import JobView exposing (getJobPicture)
+import Maybe.Extra exposing (..)
 import ModelUtils exposing (jobToDescription)
+import Study exposing (getStudyById)
+import StudyView exposing (viewStudy)
 
 
 modalJobPicker : Model -> Html Msg
@@ -126,7 +129,13 @@ viewJobDescription job =
 
 viewCertificationRequirement : Job -> Html Msg
 viewCertificationRequirement job =
-    div [] []
+    let
+        studyList =
+            job.studyIdList
+                |> List.map getStudyById
+                |> Maybe.Extra.values
+    in
+    div [ class "job-description" ] ([ p [] [ text "Skill level" ] ] ++ List.map viewStudy studyList)
 
 
 viewSkillMastery : Job -> Html Msg
