@@ -135,7 +135,11 @@ viewCertificationRequirement job =
                 |> List.map getStudyById
                 |> Maybe.Extra.values
     in
-    div [ class "job-description" ] ([ p [] [ text "Skill level" ] ] ++ List.map viewStudy studyList)
+    if List.length studyList > 0 then
+        div [ class "job-description" ] ([ p [] [ text "Skill level" ] ] ++ List.map viewStudy studyList)
+
+    else
+        div [] []
 
 
 viewSkillMastery : Job -> Html Msg
