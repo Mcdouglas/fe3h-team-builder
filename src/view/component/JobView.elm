@@ -30,6 +30,10 @@ getJobPicture id =
 
 buttonJob : Model -> Int -> Maybe Job -> Html Msg
 buttonJob model buildIdx maybeJob =
+    let
+        onClickEvent =
+            onClick (JModalMsg (OpenJobModal ( buildIdx, maybeJob )))
+    in
     case maybeJob of
         Just job ->
             let
@@ -67,9 +71,6 @@ buttonJob model buildIdx maybeJob =
                         |> appendMaybe gender
                         |> appendMaybe magicUsage
                         |> List.intersperse (br [] [])
-
-                onClickEvent =
-                    onClick (JModalMsg (OpenJobModal ( buildIdx, maybeJob )))
             in
             div [ class "item-a4a" ]
                 [ getJobButton onClickEvent job.idPicture
@@ -83,7 +84,8 @@ buttonJob model buildIdx maybeJob =
                 ]
 
         Nothing ->
-            p [] [ text "No data" ]
+            div [ class "item-a4a" ]
+                [ addJobButton onClickEvent ]
 
 
 getJobButton : Attribute Msg -> Int -> Html Msg
@@ -91,6 +93,15 @@ getJobButton onClickEvent id =
     div
         [ class "job-picture job-button qs button-clickable"
         , style "content" ("url(\"resources/img/jobs/" ++ String.fromInt id ++ ".gif\")")
+        , onClickEvent
+        ]
+        []
+
+
+addJobButton : Attribute Msg -> Html Msg
+addJobButton onClickEvent =
+    div
+        [ class "add-job"
         , onClickEvent
         ]
         []

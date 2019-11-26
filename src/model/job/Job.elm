@@ -16,10 +16,11 @@ getJobsByJobSkill jobSkill =
         |> List.filter (\e -> List.member e.id jobSkill.jobIdList)
 
 
-getJobsAvailableForCharacter : Int -> List Job
-getJobsAvailableForCharacter idCharacter =
+getJobsAvailableForCharacter : Character -> List Job
+getJobsAvailableForCharacter character =
     initJobs
-        |> List.filter (\j -> ((j.onlyCharacters |> List.length) == 0) || (j.onlyCharacters |> List.member idCharacter))
+        |> List.filter (\j -> ((j.onlyCharacters |> List.length) == 0) || (j.onlyCharacters |> List.member character.id))
+        |> List.filter (\j -> j.gender |> Maybe.map (\g -> g == character.gender) |> Maybe.withDefault True)
 
 
 initJobs : List Job

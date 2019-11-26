@@ -1,13 +1,14 @@
 module JobModal exposing (..)
 
+import Character exposing (getCharacterById)
 import CustomTypes exposing (..)
 import GlobalMessage exposing (JobModal(..), Msg(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import JobView exposing (getJobPicture)
 import Job exposing (getJobsAvailableForCharacter)
+import JobView exposing (getJobPicture)
 
 
 modalJobPicker : Model -> Html Msg
@@ -29,13 +30,15 @@ viewJobGrid model =
     let
         ( buildIdx, _ ) =
             model.view.jobPicker
-        
-        listJob = model.team
-            |> List.filter (\(idx, build) -> idx == buildIdx)
-            |> List.head
-            |> Maybe.map (\(idx, build) -> build.idCharacter)
-            |> Maybe.map (\id -> getJobsAvailableForCharacter id)
-            |> Maybe.withDefault model.data.jobs
+
+        listJob =
+            model.team
+                |> List.filter (\( idx, build ) -> idx == buildIdx)
+                |> List.head
+                |> Maybe.map (\( idx, build ) -> build.idCharacter)
+                |> Maybe.andThen (\id -> getCharacterById id)
+                |> Maybe.map (\character -> getJobsAvailableForCharacter character)
+                |> Maybe.withDefault model.data.jobs
     in
     div [ class "jobs-grid" ] (List.map (\e -> viewJobTile model e) listJob)
 
