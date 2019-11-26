@@ -28,8 +28,6 @@
         border: 1px solid #888;
         background-color: #fefefe;
 
-        font-size: picture-font-size(1);
-
         .jobs-grid {
           display: grid;
           grid-template-columns: 20% 20% 20% 20% 20%;
@@ -67,6 +65,57 @@
           border-top-right-radius: .3rem;
           border-bottom-right-radius: .3rem;
           width: 25vw;
+          padding: 0.5em;
+
+          .job-title {
+            display: flex;
+            border-bottom: 1px solid lightgray;
+
+            .title-picture {
+              width: 4em;
+              height: 4em;
+            }
+  
+            .title-text {
+              font-size: 2em;
+              margin-left: 1em;
+            }
+          }
+
+          .job-description {
+            display: grid;
+            grid-template-columns: 20% auto auto auto;
+            min-height: 2em;
+            margin-top: 0.5em;
+
+            background-color: rgba(0,0,0,0.05);
+            border-radius: .3rem;
+
+            padding-left: 1em;
+            margin-bottom: 1em;
+
+            & > p:first-child {
+              font-size: 0.8em;
+              border-right: 1px solid lightgray;
+              width: 6em;
+            }
+
+            p {
+              margin: auto 0;
+            }
+
+            & > div {
+              min-height: 4em;
+            }
+
+            .study-view {
+              margin: auto 0 auto 1em;
+
+              & > img {
+                margin: auto 0;
+              }
+            }
+          }
   
           /* The Close Button */
           .close-modal {

@@ -1,6 +1,7 @@
 module JobView exposing (..)
 
 import CustomTypes exposing (..)
+import ElmUtils exposing (appendMaybe)
 import GlobalMessage exposing (JobModal(..), Msg(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
@@ -9,6 +10,7 @@ import Html.Events exposing (..)
 import Job exposing (..)
 import JobCategory exposing (getJobCategoryById)
 import JobSkill exposing (..)
+import ModelUtils exposing (jobToDescription)
 
 
 viewJob : Job -> Html Msg
@@ -37,39 +39,16 @@ buttonJob model buildIdx maybeJob =
     case maybeJob of
         Just job ->
             let
-                note =
-                    job.note |> Maybe.map (\e -> text e)
-
-                maybeJobCategory =
-                    getJobCategoryById job.jobCategoryId
-
-                level =
-                    maybeJobCategory |> Maybe.andThen (\e -> e.level) |> Maybe.map (\e -> "Lvl req. " ++ String.fromInt e) |> Maybe.map (\e -> text e)
-
-                experience =
-                    maybeJobCategory |> Maybe.andThen (\e -> e.experience) |> Maybe.map (\e -> "Exp req. " ++ String.fromInt e) |> Maybe.map (\e -> text e)
-
-                customExperience =
-                    job.customExperience |> Maybe.map (\e -> "Exp req. " ++ String.fromInt e) |> Maybe.map (\e -> text e)
-
-                gender =
-                    job.gender |> Maybe.map (\e -> genderToString e ++ " only") |> Maybe.map (\e -> text e)
-
-                magicUsage =
-                    job.magicUsage |> Maybe.map (\e -> magicUsageToString e) |> Maybe.map (\e -> text e)
-
-                appendMaybe maybe list =
-                    Maybe.map List.singleton maybe
-                        |> Maybe.withDefault []
-                        |> (++) list
+                jobDescription =
+                    jobToDescription job
 
                 listHtml =
-                    appendMaybe note []
-                        |> appendMaybe level
-                        |> appendMaybe customExperience
-                        |> appendMaybe experience
-                        |> appendMaybe gender
-                        |> appendMaybe magicUsage
+                    appendMaybe (jobDescription.level |> Maybe.map (\e -> "Lvl req. " ++ e)) []
+                        |> appendMaybe (jobDescription.customExperience |> Maybe.map (\e -> "Exp req. " ++ e))
+                        |> appendMaybe (jobDescription.experience |> Maybe.map (\e -> "Exp req. " ++ e))
+                        |> appendMaybe jobDescription.note
+                        |> appendMaybe (jobDescription.gender |> Maybe.map (\t -> t ++ " only"))
+                        |> appendMaybe jobDescription.magicUsage
                         |> List.intersperse (br [] [])
             in
             div [ class "item-a4a" ]

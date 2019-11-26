@@ -4,6 +4,7 @@ import CustomTypes exposing (..)
 import GlobalMessage exposing (Msg(..))
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import ModelUtils exposing (rankToId)
 
 
 getStudyPicture : Int -> Html Msg
