@@ -3,7 +3,7 @@ module BuildView exposing (..)
 import Character exposing (..)
 import CharacterView exposing (..)
 import CustomTypes exposing (..)
-import GlobalMessage exposing (BuildInfo(..), Msg(..))
+import GlobalMessage exposing (BuildPanel(..), Msg(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -93,7 +93,7 @@ buttonBuildInfo build =
             not build.hiddenInfo
     in
     div
-        [ onClick (BInfoMsg (ToggleBuildInfo build.idCharacter))
+        [ onClick (ToggleBuildInfo build.idCharacter)
         , class "item-b1"
         ]
         [ img
@@ -104,4 +104,13 @@ buttonBuildInfo build =
                 src "resources/lib/octicons/chevron-up.svg"
             ]
             []
+        ]
+
+
+controlPanel : Model -> Int -> Html Msg
+controlPanel model idx =
+    div [ class "c-panel" ]
+        [ div [ class "up-controller button-clickable", onClick (BuildMsg (UpBuild idx)) ] []
+        , div [ class "remove-controller button-clickable", onClick (BuildMsg (DeleteBuild idx)) ] []
+        , div [ class "down-controller button-clickable", onClick (BuildMsg (DownBuild idx)) ] []
         ]

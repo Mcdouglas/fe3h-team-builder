@@ -1,7 +1,8 @@
 module Main exposing (main)
 
 import Browser exposing (sandbox)
-import BuildInfoEventListener exposing (handle)
+import BuildEventListener exposing (handle)
+import BuildInfoHandler exposing (toggleBuildInfo)
 import CharacterEventListener exposing (handle)
 import DataHandler exposing (..)
 import ErrorHandler exposing (..)
@@ -51,8 +52,8 @@ view model =
 update : Msg -> Model -> Model
 update msg model =
     case msg of
-        BInfoMsg value ->
-            BuildInfoEventListener.handle value model
+        BuildMsg value ->
+            BuildEventListener.handle value model
 
         CModalMsg value ->
             CharacterEventListener.handle value model
@@ -62,6 +63,9 @@ update msg model =
 
         SModalMsg value ->
             SkillEventListener.handle value model
+
+        ToggleBuildInfo value ->
+            toggleBuildInfo model value
 
         _ ->
             model

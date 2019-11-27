@@ -6,7 +6,7 @@ body {
       
       .c-container {
         display: grid;
-        grid-template-columns: auto 5%;
+        grid-template-columns: auto 3%;
         grid-template-rows: auto auto;
         
         margin-bottom: 3rem;
@@ -186,6 +186,44 @@ body {
           grid-row-start: 1;
           grid-row-end: 2;
           border-left: 1px solid #dee2e6 !important;
+        }
+      }
+
+      .c-panel {
+        border-left: 1px solid #dee2e6;
+        display: grid;
+        grid-template-rows: 33.33% 33.34% 33.33%;
+
+        & > div {
+          border-radius: 1px;
+          border: 1px solid lightgray;
+        }
+
+        .up-controller {
+          background: url("../lib/octicons/triangle-up.svg");
+          background-color: rgba(0, 0, 0, 0.2);
+          background-repeat: no-repeat;
+          background-position-x: 50%;
+          background-position-y: 50%;
+          background-size: 1em;
+        }
+
+        .remove-controller {
+          background: url("../lib/octicons/dash.svg");
+          background-color: rgba(0, 0, 0, 0.2);
+          background-repeat: no-repeat;
+          background-position-x: 50%;
+          background-position-y: 50%;
+          background-size: 1em;
+        }
+
+        .down-controller {
+          background: url("../lib/octicons/triangle-down.svg");
+          background-color: rgba(0, 0, 0, 0.2);
+          background-repeat: no-repeat;
+          background-position-x: 50%;
+          background-position-y: 50%;
+          background-size: 1em;
         }
       }
     }

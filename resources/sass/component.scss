@@ -10,6 +10,14 @@
     min-width: 6em;
 }
 
+.job-button {
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.2);
+
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 0.25rem;
+}
+
 .button-clickable {
     cursor: pointer;
     box-shadow: 0 0 5px rgba(0,0,0,0.4);

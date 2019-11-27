@@ -4,10 +4,11 @@ import BuildInfoView exposing (..)
 import BuildView exposing (..)
 import CharacterModal exposing (modalCharacterPicker)
 import CustomTypes exposing (..)
-import GlobalMessage exposing (Msg(..))
+import GlobalMessage exposing (BuildPanel(..), Msg(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (onClick)
 import JobModal exposing (modalJobPicker)
 import SkillModal exposing (modalSkillPicker)
 
@@ -33,9 +34,9 @@ viewTeam model =
 
 
 viewRow : Model -> ( Int, Build ) -> Html Msg
-viewRow model ( idx, element ) =
+viewRow model ( idx, build ) =
     div [ class "c-container" ]
-        [ viewBuild model ( idx, element )
-        , sectionBuildInfo element
-        , div [ class "item-c" ] [ text "TODO" ]
+        [ viewBuild model ( idx, build )
+        , sectionBuildInfo build
+        , controlPanel model idx
         ]
