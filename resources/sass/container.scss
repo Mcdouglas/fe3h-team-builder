@@ -199,6 +199,10 @@ body {
           border: 1px solid lightgray;
         }
 
+        & > div:hover {
+          background-color: rgba(0, 0, 0, 0.3);
+        }
+
         .up-controller {
           background: url("../lib/octicons/triangle-up.svg");
           background-color: rgba(0, 0, 0, 0.2);
