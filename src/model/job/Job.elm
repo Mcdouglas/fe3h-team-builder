@@ -1,6 +1,7 @@
 module Job exposing (..)
 
 import CustomTypes exposing (..)
+import JobCategory exposing (getJobCategoryById)
 
 
 getJobById : Int -> Maybe Job
@@ -16,6 +17,13 @@ getJobsByJobSkill jobSkill =
         |> List.filter (\e -> List.member e.id jobSkill.jobIdList)
 
 
+getJobsAvailableForCharacter : Character -> List Job
+getJobsAvailableForCharacter character =
+    initJobs
+        |> List.filter (\j -> ((j.onlyCharacters |> List.length) == 0) || (j.onlyCharacters |> List.member character.id))
+        |> List.filter (\j -> j.gender |> Maybe.map (\g -> g == character.gender) |> Maybe.withDefault True)
+
+
 initJobs : List Job
 initJobs =
     [ -- Starting
@@ -29,17 +37,17 @@ initJobs =
     , Job 5 5 "Monk" 1 [ Proficiency Reason 1, Proficiency Faith 1 ] [ 62, 74 ] Nothing (Just CanUseMagic) Nothing Nothing []
 
     -- Intermediate
-    , Job 6 3 "Lord" 2 [ Proficiency Sword 2, Proficiency Lance 1, Proficiency Authority 2 ] [ 3, 89 ] Nothing Nothing (Just "Edelgard, Dimitri and Claude only") Nothing [ 2, 10, 18 ]
-    , Job 7 4 "Mercenary" 2 [ Proficiency Sword 2, Proficiency Axe 1 ] [ 4 ] Nothing Nothing Nothing Nothing []
+    , Job 6 6 "Lord" 2 [ Proficiency Sword 2, Proficiency Lance 1, Proficiency Authority 2 ] [ 3, 89 ] Nothing Nothing (Just "Edelgard, Dimitri and Claude only") Nothing [ 2, 10, 18 ]
+    , Job 7 7 "Mercenary" 2 [ Proficiency Sword 2, Proficiency Axe 1 ] [ 4 ] Nothing Nothing Nothing Nothing []
     , Job 8 8 "Thief" 2 [ Proficiency Sword 2, Proficiency Bow 1 ] [ 4 ] Nothing Nothing Nothing Nothing []
     , Job 9 9 "Cavalier" 2 [ Proficiency Sword 1, Proficiency Lance 2, Proficiency Riding 2 ] [ 16, 111 ] Nothing Nothing Nothing Nothing []
-    , Job 10 10 "Pegasus Knight" 12 [ Proficiency Sword 1, Proficiency Lance 2, Proficiency Flying 2 ] [ 16, 123 ] (Just Female) Nothing Nothing Nothing []
+    , Job 10 10 "Pegasus Knight" 2 [ Proficiency Sword 1, Proficiency Lance 2, Proficiency Flying 2 ] [ 16, 123 ] (Just Female) Nothing Nothing Nothing []
     , Job 11 11 "Brigand" 2 [ Proficiency Axe 2, Proficiency Brawling 1 ] [ 28 ] Nothing Nothing Nothing Nothing []
-    , Job 12 12 "Armored Knight" 12 [ Proficiency Lance 1, Proficiency Axe 2, Proficiency HeavyArmor 1 ] [ 28, 99 ] Nothing Nothing Nothing Nothing []
+    , Job 12 12 "Armored Knight" 2 [ Proficiency Lance 1, Proficiency Axe 2, Proficiency HeavyArmor 1 ] [ 28, 99 ] Nothing Nothing Nothing Nothing []
     , Job 13 13 "Archer" 2 [ Proficiency Sword 1, Proficiency Bow 2 ] [ 40 ] Nothing Nothing Nothing Nothing []
     , Job 14 14 "Brawler" 2 [ Proficiency Axe 1, Proficiency Brawling 1 ] [ 52 ] (Just Male) Nothing Nothing Nothing []
     , Job 15 15 "Mage" 2 [ Proficiency Reason 2, Proficiency Faith 1 ] [ 64 ] Nothing (Just CanUseMagic) Nothing Nothing []
-    , Job 16 16 "Dark Mage" 12 [ Proficiency Reason 2, Proficiency Faith 1 ] [ 64 ] (Just Male) (Just CanUseMagic) Nothing Nothing []
+    , Job 16 16 "Dark Mage" 2 [ Proficiency Reason 2, Proficiency Faith 1 ] [ 64 ] (Just Male) (Just CanUseMagic) Nothing Nothing []
     , Job 17 17 "Priest" 2 [ Proficiency Reason 1, Proficiency Faith 2 ] [ 76 ] Nothing (Just CanUseMagic) Nothing Nothing []
 
     -- Advanced

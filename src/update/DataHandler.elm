@@ -40,7 +40,7 @@ initBuilds =
 
 mockBuilds : List ( Int, Build )
 mockBuilds =
-    [ ( 0, Build 0 [ ( 0, 13, MasteryType ), ( 1, 14, MasteryType ), ( 2, 20, MasteryType ), ( 3, 17, StandardType ), ( 4, -1, NoType ) ] [ ( 0, 12, StandardType ), ( 1, 13, StandardType ), ( 2, -1, NoType ) ] 0 False )
+    [ ( 0, Build 0 [ ( 0, 13, MasteryType ), ( 1, 14, MasteryType ), ( 2, 20, MasteryType ), ( 3, 17, StandardType ), ( 4, -1, NoType ) ] [ ( 0, 12, StandardType ), ( 1, 13, StandardType ), ( 2, -1, NoType ) ] -1 False )
     , ( 1, Build 1 [ ( 0, -1, NoType ), ( 1, -1, NoType ), ( 2, -1, NoType ), ( 3, -1, NoType ), ( 4, -1, NoType ) ] [ ( 0, -1, NoType ), ( 1, -1, NoType ), ( 2, -1, NoType ) ] 1 True )
     , ( 2, Build 2 [ ( 0, -1, NoType ), ( 1, -1, NoType ), ( 2, -1, NoType ), ( 3, -1, NoType ), ( 4, -1, NoType ) ] [ ( 0, -1, NoType ), ( 1, -1, NoType ), ( 2, -1, NoType ) ] 42 False )
     , ( 3, Build 10 [ ( 0, -1, NoType ), ( 1, -1, NoType ), ( 2, -1, NoType ), ( 3, -1, NoType ), ( 4, -1, NoType ) ] [ ( 0, -1, NoType ), ( 1, -1, NoType ), ( 2, -1, NoType ) ] 3 True )

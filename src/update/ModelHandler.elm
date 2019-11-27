@@ -6,6 +6,7 @@ import GlobalModel exposing (..)
 import Job exposing (..)
 import MasterySkill exposing (..)
 import Maybe.Extra exposing (..)
+import ModelUtils exposing (masterySkillToSkill, standardSkillToSkill)
 import StandardSkill exposing (..)
 
 

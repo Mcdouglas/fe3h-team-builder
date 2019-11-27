@@ -96,10 +96,11 @@ body {
           .item-a4 {
             display: grid;
             grid-template-rows: 50% 50%;
+            row-gap: 5%;
             grid-column-start: 4;
             grid-column-end: 5;
             
-            margin: auto 0 auto 1rem;
+            margin-left: 1rem;
             padding-right: 1rem;
   
             text-align: center;
@@ -117,16 +118,16 @@ body {
   
             .item-a4b {
               display: grid;
-              grid-template-columns: 33.33% 33.34% 33.33%;
+              grid-auto-flow: column;
               grid-row-start: 2;
               grid-row-end: 3;
   
               text-align: center;
   
-              padding-top: 10%;
-  
               & > div {
                 position: relative;
+                width: 4em;
+                margin: auto;
               }
             }
           }

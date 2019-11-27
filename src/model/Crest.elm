@@ -11,12 +11,6 @@ getCrest val =
 
 
 initCrests : List Crest
-
-
-
---id : Int, pictureId : Int, name : String, description : String
-
-
 initCrests =
     [ Crest 1 0 "Flames" "Occasionally restores HP equal to 30% of damage dealt. Rarely raises Mt and stops counterattacks."
     , Crest 2 3 "Blaiddyd" "Occasionally doubles Atk and weapon uses for combat arts."
