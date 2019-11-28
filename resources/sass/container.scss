@@ -17,7 +17,7 @@ body {
         border-radius: 0.25rem;
         border: 1px solid rgba(0, 0, 0, 0.125);
 
-        $item-a-width: 18.5%;
+        $item-a1-width: 18.5%;
 
         .item-a-locked {
           background-color: rgba(0, 0, 0, 0.2);
@@ -26,14 +26,14 @@ body {
           top: 0;
           left: 0;
           height: 100%;
-          width: (100% - $item-a-width);
-          margin-left: $item-a-width;
+          width: (100% - $item-a1-width);
+          margin-left: $item-a1-width;
         }
   
         .item-a {
           position: relative;
           display: grid;
-          grid-template-columns: 18.5% 35% 28% 18.5%;
+          grid-template-columns: $item-a1-width 35% 28% 18.5%;
           grid-column-start: 1;
           grid-column-end: 2;
           grid-row-start: 1;
