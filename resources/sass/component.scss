@@ -31,6 +31,27 @@
     }
 }
 
+.add-character {
+    display: flex;
+    width: 4em;
+    height: 4em;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 0.25rem;
+    content: url("../lib/octicons/plus-small.svg");
+
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0,0,0,0.4);
+
+    &:active {
+        transform: translate(0.05rem,0.05rem);
+    }
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+}
+
 .add-skill {
     display: flex;
     width: 2em;

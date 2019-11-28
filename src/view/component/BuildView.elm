@@ -17,29 +17,25 @@ import SkillView exposing (..)
 
 viewBuild : Model -> ( Int, Build ) -> Html Msg
 viewBuild model ( idx, build ) =
+    let
+        maybeCharacter =
+            getCharacterById build.idCharacter
+
+        buildLockDiv =
+            case maybeCharacter of
+                Just _ ->
+                    div [] []
+
+                Nothing ->
+                    div [ class "item-a-locked" ] []
+    in
     div [ class "item-a" ]
-        [ sectionCharacter model ( idx, build )
+        [ sectionCharacter model idx maybeCharacter
         , sectionPassiveSkills model ( idx, build )
         , sectionActiveSkills model ( idx, build )
         , sectionJob model ( idx, build )
         , buttonBuildInfo build
-        ]
-
-
-sectionCharacter : Model -> ( Int, Build ) -> Html Msg
-sectionCharacter model ( idx, build ) =
-    let
-        character =
-            getCharacterById build.idCharacter
-                |> Maybe.withDefault (Character -1 "" Male 0 NonOwner 0 Nothing)
-    in
-    div
-        [ class "item-a1" ]
-        [ viewCharacterTile idx character
-        , div [ class "item-a1b" ]
-            [ viewCharacterSkillTile model character.characterSkillId
-            , viewCrestTile model character.crestId
-            ]
+        , buildLockDiv
         ]
 
 

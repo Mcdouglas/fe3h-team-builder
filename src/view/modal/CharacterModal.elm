@@ -1,5 +1,6 @@
 module CharacterModal exposing (..)
 
+import Character exposing (getCharacterById)
 import CharacterSkill exposing (..)
 import CharacterView exposing (..)
 import Crest exposing (..)
@@ -14,23 +15,30 @@ import Html.Events exposing (onClick, onMouseOver)
 modalCharacterPicker : Model -> Html Msg
 modalCharacterPicker model =
     let
-        ( position, maybeCharacter ) =
-            model.view.currentCharacter
+        ( idx, maybeCharacter ) =
+            model.view.characterPicker
+
+        newMaybeCharacter =
+            if maybeCharacter /= Nothing then
+                maybeCharacter
+
+            else
+                getCharacterById 0
     in
-    case maybeCharacter of
+    case newMaybeCharacter of
         Just character ->
             div
                 [ class "modal-c"
-                , hidden (not model.view.characterSelectorIsOpen)
+                , hidden (not model.view.characterModalIsOpen)
                 ]
                 [ div [ class "modal-content" ]
-                    [ viewCharacterGrid model ( position, character )
+                    [ viewCharacterGrid model ( idx, character )
                     , viewSideBar model character
                     ]
                 ]
 
         Nothing ->
-            div [] []
+            div [] [ text "No heroes found" ]
 
 
 viewCharacterGrid : Model -> ( Int, Character ) -> Html Msg
@@ -65,7 +73,7 @@ viewCharacterPicker ( position, element ) =
     in
     div
         [ class "tile"
-        , onMouseOver (CModalMsg (UpdateCurrentCharacter ( position, Just element )))
+        , onMouseOver (CModalMsg (UpdateCharacterPicker ( position, Just element )))
         , onClick (CModalMsg (UpdateBuildWithCharacter ( position, element )))
         ]
         [ img

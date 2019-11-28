@@ -14,7 +14,7 @@ type Msg
 
 type CharacterModal
     = OpenCharacterModal Int
-    | UpdateCurrentCharacter ( Int, Maybe Character )
+    | UpdateCharacterPicker ( Int, Maybe Character )
     | UpdateBuildWithCharacter ( Int, Character )
     | CloseCharacterModal
 

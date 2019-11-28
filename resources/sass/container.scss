@@ -16,6 +16,19 @@ body {
         background-color: #fff;
         border-radius: 0.25rem;
         border: 1px solid rgba(0, 0, 0, 0.125);
+
+        $item-a-width: 18.5%;
+
+        .item-a-locked {
+          background-color: rgba(0, 0, 0, 0.2);
+          z-index: 2;
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: (100% - $item-a-width);
+          margin-left: $item-a-width;
+        }
   
         .item-a {
           position: relative;
@@ -26,6 +39,8 @@ body {
           grid-row-start: 1;
           grid-row-end: 2;
           padding: 1rem 0;
+
+          z-index: 1;
   
           .item-a1 {
             display: grid;
@@ -148,7 +163,7 @@ body {
           cursor: pointer;
   
           outline: none;
-          z-index: 1;
+          z-index: 3;
   
           &:hover {
             background-color: #c8c9ca;
