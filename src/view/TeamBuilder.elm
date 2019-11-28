@@ -26,10 +26,20 @@ viewBuilder model =
 
 viewTeam : Model -> Html Msg
 viewTeam model =
+    let
+        addBuildButton =
+            if (model.team |> List.length) < 12 then
+                div [ class "add-build", onClick (BuildMsg AddBuild) ] []
+
+            else
+                div [] []
+    in
     div [ class "c-table" ]
-        (model.team
+        ((model.team
             |> List.sortWith (\t1 t2 -> compare (Tuple.first t1) (Tuple.first t2))
             |> List.map (\e -> viewRow model e)
+         )
+            ++ [ addBuildButton ]
         )
 
 

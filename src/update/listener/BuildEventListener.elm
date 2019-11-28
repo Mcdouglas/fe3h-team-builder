@@ -1,5 +1,6 @@
 module BuildEventListener exposing (..)
 
+import DataHandler exposing (initBuild)
 import GlobalMessage exposing (BuildPanel(..), Msg(..))
 import GlobalModel exposing (Model)
 
@@ -15,6 +16,9 @@ handle msg model =
 
         DownBuild value ->
             downBuild model value
+
+        AddBuild ->
+            addBuild model
 
 
 deleteBuild : Model -> Int -> Model
@@ -80,5 +84,17 @@ downBuild model buildIdx =
 
             else
                 model.team
+    in
+    { model | team = newTeam }
+
+
+addBuild : Model -> Model
+addBuild model =
+    let
+        idx =
+            List.length model.team
+
+        newTeam =
+            ( idx, initBuild -1 ) :: model.team
     in
     { model | team = newTeam }

@@ -37,3 +37,4 @@ type BuildPanel
     = DeleteBuild Int
     | UpBuild Int
     | DownBuild Int
+    | AddBuild
