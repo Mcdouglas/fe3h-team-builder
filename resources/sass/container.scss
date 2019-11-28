@@ -6,7 +6,7 @@ body {
       
       .c-container {
         display: grid;
-        grid-template-columns: auto 5%;
+        grid-template-columns: auto 3%;
         grid-template-rows: auto auto;
         
         margin-bottom: 3rem;
@@ -16,16 +16,31 @@ body {
         background-color: #fff;
         border-radius: 0.25rem;
         border: 1px solid rgba(0, 0, 0, 0.125);
+
+        $item-a1-width: 18.5%;
+
+        .item-a-locked {
+          background-color: rgba(0, 0, 0, 0.2);
+          z-index: 2;
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: (100% - $item-a1-width);
+          margin-left: $item-a1-width;
+        }
   
         .item-a {
           position: relative;
           display: grid;
-          grid-template-columns: 18.5% 35% 28% 18.5%;
+          grid-template-columns: $item-a1-width 35% 28% 18.5%;
           grid-column-start: 1;
           grid-column-end: 2;
           grid-row-start: 1;
           grid-row-end: 2;
           padding: 1rem 0;
+
+          z-index: 1;
   
           .item-a1 {
             display: grid;
@@ -138,7 +153,7 @@ body {
           width: 3rem;
   
           position: absolute;
-          left: 50%;
+          left: 51.5%;
           bottom: 0;
           transform: translate(-50%,50%);
           
@@ -148,7 +163,7 @@ body {
           cursor: pointer;
   
           outline: none;
-          z-index: 1;
+          z-index: 3;
   
           &:hover {
             background-color: #c8c9ca;
@@ -186,6 +201,48 @@ body {
           grid-row-start: 1;
           grid-row-end: 2;
           border-left: 1px solid #dee2e6 !important;
+        }
+      }
+
+      .c-panel {
+        border-left: 1px solid #dee2e6;
+        display: grid;
+        grid-template-rows: 33.33% 33.34% 33.33%;
+
+        & > div {
+          border-radius: 1px;
+          border: 1px solid lightgray;
+        }
+
+        & > div:hover {
+          background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        .up-controller {
+          background: url("../lib/octicons/triangle-up.svg");
+          background-color: rgba(0, 0, 0, 0.2);
+          background-repeat: no-repeat;
+          background-position-x: 50%;
+          background-position-y: 50%;
+          background-size: 1em;
+        }
+
+        .remove-controller {
+          background: url("../lib/octicons/dash.svg");
+          background-color: rgba(0, 0, 0, 0.2);
+          background-repeat: no-repeat;
+          background-position-x: 50%;
+          background-position-y: 50%;
+          background-size: 1em;
+        }
+
+        .down-controller {
+          background: url("../lib/octicons/triangle-down.svg");
+          background-color: rgba(0, 0, 0, 0.2);
+          background-repeat: no-repeat;
+          background-position-x: 50%;
+          background-position-y: 50%;
+          background-size: 1em;
         }
       }
     }

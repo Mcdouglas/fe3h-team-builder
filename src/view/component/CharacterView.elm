@@ -10,13 +10,37 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 
 
-viewCharacterTile : Int -> Character -> Html Msg
-viewCharacterTile idx character =
+sectionCharacter : Model -> Int -> Maybe Character -> Html Msg
+sectionCharacter model idx maybeCharacter =
+    case maybeCharacter of
+        Just character ->
+            div
+                [ class "item-a1" ]
+                [ buttonCharacter idx character
+                , div [ class "item-a1b" ]
+                    [ viewCharacterSkillTile model character.characterSkillId
+                    , viewCrestTile model character.crestId
+                    ]
+                ]
+
+        Nothing ->
+            div
+                [ class "item-a1" ]
+                [ addCharacter idx ]
+
+
+buttonCharacter : Int -> Character -> Html Msg
+buttonCharacter idx character =
     let
         onClickEvent =
             onClick (CModalMsg (OpenCharacterModal idx))
     in
     div [ class "item-a1a" ] [ getCharacterPicture character.id onClickEvent, p [] [ text character.name ] ]
+
+
+addCharacter : Int -> Html Msg
+addCharacter idx =
+    div [ class "add-character", onClick (CModalMsg (OpenCharacterModal idx)) ] []
 
 
 getCharacterPicture : Int -> Attribute Msg -> Html Msg

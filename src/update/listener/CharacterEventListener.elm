@@ -13,7 +13,7 @@ handle msg model =
         OpenCharacterModal id ->
             openModal model id
 
-        UpdateCurrentCharacter value ->
+        UpdateCharacterPicker value ->
             updateCurrent model value
 
         UpdateBuildWithCharacter value ->
@@ -24,24 +24,24 @@ handle msg model =
 
 
 openModal : Model -> Int -> Model
-openModal model position =
+openModal model idx =
     let
         maybeCharacter =
             model.team
-                |> List.filter (\( id, e ) -> id == position)
-                |> List.map (\( id, e ) -> getCharacterById e.idCharacter)
+                |> List.filter (\( id, e ) -> id == idx)
                 |> List.head
+                |> Maybe.map (\( id, e ) -> getCharacterById e.idCharacter)
 
         oldView =
             model.view
 
         newView =
             case maybeCharacter of
-                Just value ->
-                    { oldView | characterSelectorIsOpen = True, currentCharacter = ( position, value ) }
+                Just character ->
+                    { oldView | characterModalIsOpen = True, characterPicker = ( idx, character ) }
 
                 Nothing ->
-                    { oldView | characterSelectorIsOpen = True }
+                    { oldView | characterModalIsOpen = True }
     in
     { model | view = newView }
 
@@ -53,7 +53,7 @@ closeModal model =
             model.view
 
         newView =
-            { oldView | characterSelectorIsOpen = False }
+            { oldView | characterModalIsOpen = False }
     in
     { model | view = newView }
 
@@ -65,7 +65,7 @@ updateCurrent model element =
             model.view
 
         newView =
-            { oldView | currentCharacter = element }
+            { oldView | characterPicker = element }
     in
     { model | view = newView }
 
