@@ -6,6 +6,7 @@ import GlobalModel exposing (..)
 import Job exposing (..)
 import MasterySkill exposing (..)
 import Maybe.Extra exposing (..)
+import ModelUtils exposing (masterySkillToSkill, standardSkillToSkill)
 import StandardSkill exposing (..)
 
 
@@ -55,6 +56,21 @@ genderIsLegit gender skill =
         True
 
 
+characterIsLegit : Int -> Skill -> Bool
+characterIsLegit characterId skill =
+    if List.length skill.jobIdList > 0 then
+        (skill.jobIdList
+            |> List.map (\id -> getJobById id)
+            |> Maybe.Extra.values
+            |> List.filter (\j -> ((j.onlyCharacters |> List.length) == 0) || (j.onlyCharacters |> List.member characterId))
+            |> List.length
+        )
+            > 0
+
+    else
+        True
+
+
 shouldCollectSkill : Int -> Skill -> Bool
 shouldCollectSkill idChar skill =
     let
@@ -62,6 +78,12 @@ shouldCollectSkill idChar skill =
             getCharacterById idChar
                 |> Maybe.map (\c -> genderIsLegit c.gender skill)
                 |> Maybe.withDefault False
+
+        characterIsOk =
+            characterIsLegit idChar skill
+
+        skillIsOk =
+            genderIsOk && characterIsOk
     in
     if List.length skill.charactersOnly > 0 then
         if skill.allExcept == True then
@@ -69,13 +91,13 @@ shouldCollectSkill idChar skill =
                 False
 
             else
-                genderIsOk
+                skillIsOk
 
         else if List.member idChar skill.charactersOnly then
-            genderIsOk
+            skillIsOk
 
         else
             False
 
     else
-        genderIsOk
+        skillIsOk

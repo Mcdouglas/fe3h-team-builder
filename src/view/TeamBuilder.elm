@@ -2,13 +2,15 @@ module TeamBuilder exposing (..)
 
 import BuildInfoView exposing (..)
 import BuildView exposing (..)
-import CharacterModal exposing (..)
+import CharacterModal exposing (modalCharacterPicker)
 import CustomTypes exposing (..)
-import GlobalMessage exposing (Msg(..))
+import GlobalMessage exposing (BuildPanel(..), Msg(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import SkillModal exposing (..)
+import Html.Events exposing (onClick)
+import JobModal exposing (modalJobPicker)
+import SkillModal exposing (modalSkillPicker)
 
 
 viewBuilder : Model -> Html Msg
@@ -18,22 +20,33 @@ viewBuilder model =
         , viewTeam model
         , modalCharacterPicker model
         , modalSkillPicker model
+        , modalJobPicker model
         ]
 
 
 viewTeam : Model -> Html Msg
 viewTeam model =
+    let
+        addBuildButton =
+            if (model.team |> List.length) < 12 then
+                div [ class "add-build", onClick (BuildMsg AddBuild) ] []
+
+            else
+                div [] []
+    in
     div [ class "c-table" ]
-        (model.team
+        ((model.team
             |> List.sortWith (\t1 t2 -> compare (Tuple.first t1) (Tuple.first t2))
             |> List.map (\e -> viewRow model e)
+         )
+            ++ [ addBuildButton ]
         )
 
 
 viewRow : Model -> ( Int, Build ) -> Html Msg
-viewRow model ( idx, element ) =
+viewRow model ( idx, build ) =
     div [ class "c-container" ]
-        [ viewBuild model ( idx, element )
-        , sectionBuildInfo element
-        , div [ class "item-c" ] [ text "TODO" ]
+        [ viewBuild model ( idx, build )
+        , sectionBuildInfo build
+        , controlPanel model idx
         ]

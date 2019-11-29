@@ -1,18 +1,10 @@
-module BuildInfoEventListener exposing (..)
+module BuildInfoHandler exposing (..)
 
-import GlobalMessage exposing (BuildInfo(..))
 import GlobalModel exposing (..)
 
 
-handle : BuildInfo -> Model -> Model
-handle msg model =
-    case msg of
-        ToggleBuildInfo value ->
-            toggleBuildInfo ( value, model )
-
-
-toggleBuildInfo : ( Int, Model ) -> Model
-toggleBuildInfo ( characterId, model ) =
+toggleBuildInfo : Model -> Int -> Model
+toggleBuildInfo model characterId =
     let
         toggleInfo ( id, item ) =
             if item.idCharacter == characterId then

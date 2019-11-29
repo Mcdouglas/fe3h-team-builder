@@ -12,10 +12,12 @@ type alias Model =
 
 
 type alias ViewModel =
-    { characterSelectorIsOpen : Bool
-    , currentCharacter : ( Int, Maybe Character )
+    { characterModalIsOpen : Bool
+    , characterPicker : ( Int, Maybe Character )
     , skillModalIsOpen : Bool
     , skillPicker : ( ( Int, Int ), Maybe Skill, Bool )
+    , jobModalIsOpen : Bool
+    , jobPicker : ( Int, Maybe Job )
     }
 
 

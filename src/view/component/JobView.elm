@@ -1,13 +1,16 @@
 module JobView exposing (..)
 
 import CustomTypes exposing (..)
-import GlobalMessage exposing (Msg(..))
+import ElmUtils exposing (appendMaybe)
+import GlobalMessage exposing (JobModal(..), Msg(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (..)
 import Job exposing (..)
 import JobCategory exposing (getJobCategoryById)
 import JobSkill exposing (..)
+import ModelUtils exposing (jobToDescription)
 
 
 viewJob : Job -> Html Msg
@@ -20,73 +23,65 @@ viewJob job =
 
 getJobPicture : Int -> Html Msg
 getJobPicture id =
-    div
+    img
         [ class "job-picture"
-        , style "content" ("url(\"resources/img/jobs/" ++ String.fromInt id ++ ".gif\")")
+        , src ("resources/img/jobs/" ++ String.fromInt id ++ ".gif")
         ]
         []
 
 
-buttonJob : Model -> Maybe Job -> Html Msg
-buttonJob model element =
-    case element of
-        Just value ->
+buttonJob : Model -> Int -> Maybe Job -> Html Msg
+buttonJob model buildIdx maybeJob =
+    let
+        onClickEvent =
+            onClick (JModalMsg (OpenJobModal ( buildIdx, maybeJob )))
+    in
+    case maybeJob of
+        Just job ->
             let
-                maybeJobCategory =
-                    getJobCategoryById value.jobCategoryId
-
-                note =
-                    value.note |> Maybe.map (\e -> text e)
-
-                level =
-                    maybeJobCategory |> Maybe.andThen (\e -> e.level) |> Maybe.map (\e -> "Lvl req. " ++ String.fromInt e) |> Maybe.map (\e -> text e)
-
-                customExperience =
-                    value.customExperience |> Maybe.map (\e -> "Exp req. " ++ String.fromInt e) |> Maybe.map (\e -> text e)
-
-                experience =
-                    maybeJobCategory |> Maybe.andThen (\e -> e.experience) |> Maybe.map (\e -> "Exp req. " ++ String.fromInt e) |> Maybe.map (\e -> text e)
-
-                gender =
-                    value.gender |> Maybe.map (\e -> genderToString e ++ " only") |> Maybe.map (\e -> text e)
-
-                magicUsage =
-                    value.magicUsage |> Maybe.map (\e -> magicUsageToString e) |> Maybe.map (\e -> text e)
-
-                appendMaybe maybe list =
-                    Maybe.map List.singleton maybe
-                        |> Maybe.withDefault []
-                        |> (++) list
+                jobDescription =
+                    jobToDescription job
 
                 listHtml =
-                    appendMaybe note []
-                        |> appendMaybe level
-                        |> appendMaybe customExperience
-                        |> appendMaybe experience
-                        |> appendMaybe gender
-                        |> appendMaybe magicUsage
+                    appendMaybe (jobDescription.level |> Maybe.map (\e -> "Lvl req. " ++ e)) []
+                        |> appendMaybe (jobDescription.customExperience |> Maybe.map (\e -> "Exp req. " ++ e))
+                        |> appendMaybe (jobDescription.experience |> Maybe.map (\e -> "Exp req. " ++ e))
+                        |> appendMaybe jobDescription.note
+                        |> appendMaybe (jobDescription.gender |> Maybe.map (\t -> t ++ " only"))
+                        |> appendMaybe jobDescription.magicUsage
                         |> List.intersperse (br [] [])
             in
             div [ class "item-a4a" ]
-                [ getJobButton value.idPicture
-                , p [] [ text value.name ]
+                [ getJobButton onClickEvent job.idPicture
+                , p [] [ text job.name ]
                 , div
                     [ class "custom-popover above" ]
-                    [ p [ class "popover-title" ] [ text ("[" ++ value.name ++ "]") ]
+                    [ p [ class "popover-title" ] [ text ("[" ++ job.name ++ "]") ]
                     , p [ class "popover-text" ] listHtml
                     , p [ class "popover-instruction" ] [ text "Click to change " ]
                     ]
                 ]
 
         Nothing ->
-            p [] [ text "No data" ]
+            div [ class "item-a4a" ]
+                [ addJobButton onClickEvent ]
 
 
-getJobButton : Int -> Html Msg
-getJobButton id =
+getJobButton : Attribute Msg -> Int -> Html Msg
+getJobButton onClickEvent id =
     div
-        [ class "job-picture qs button-clickable"
+        [ class "job-picture job-button qs button-clickable"
         , style "content" ("url(\"resources/img/jobs/" ++ String.fromInt id ++ ".gif\")")
+        , onClickEvent
+        ]
+        []
+
+
+addJobButton : Attribute Msg -> Html Msg
+addJobButton onClickEvent =
+    div
+        [ class "add-job"
+        , onClickEvent
         ]
         []
 

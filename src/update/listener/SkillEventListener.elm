@@ -60,66 +60,70 @@ updateModal skillPicker model =
 
 
 updateBuild : ( ( Int, Int ), Skill, Bool ) -> Model -> Model
-updateBuild tuple model =
+updateBuild shift model =
     let
         newTeam =
             model.team
-                |> List.map (\e -> updateBuildIf e tuple)
+                |> List.map (\e -> updateBuildAndKeepOther e shift)
     in
     { model | team = newTeam }
 
 
-updateBuildIf : ( Int, Build ) -> ( ( Int, Int ), Skill, Bool ) -> ( Int, Build )
-updateBuildIf ( buildIdx, build ) ( ( idx, skillId ), skill, isCombatArt ) =
-    if buildIdx == idx then
-        ( buildIdx, updateSkillInBuild build ( ( idx, skillId ), skill, isCombatArt ) )
+updateBuildAndKeepOther : ( Int, Build ) -> ( ( Int, Int ), Skill, Bool ) -> ( Int, Build )
+updateBuildAndKeepOther ( idx, build ) ( ( buildIdx, skillIdx ), skill, isCombatArt ) =
+    if idx == buildIdx then
+        ( idx, updateSkillInBuild build ( ( idx, skillIdx ), skill, isCombatArt ) )
 
     else
-        ( buildIdx, build )
+        ( idx, build )
 
 
 updateSkillInBuild : Build -> ( ( Int, Int ), Skill, Bool ) -> Build
-updateSkillInBuild build ( ( _, skillId ), skill, isCombatArt ) =
-    let
-        listSkills =
-            case isCombatArt of
-                True ->
+updateSkillInBuild build ( ( _, skillIdx ), skill, isCombatArt ) =
+    case isCombatArt of
+        True ->
+            let
+                newListSkill =
                     build.listActiveSkill
                         |> List.foldr (::) (List.repeat 3 ( -1, -1, NoType ))
                         |> List.take 3
-
-                False ->
-                    build.listPassiveSkill
-                        |> List.foldr (::) (List.repeat 3 ( -1, -1, NoType ))
-                        |> List.take 5
-
-        alreadySelected =
-            not
-                (listSkills
-                    |> List.filter (\( _, id, skillType ) -> id == skill.id && skillType == skill.skillType)
-                    |> List.isEmpty
-                )
-
-        newListSkill =
-            if alreadySelected then
-                listSkills
-
-            else
-                listSkills
-                    |> List.map (\e -> updateSkillIf e skillId skill)
-    in
-    case isCombatArt of
-        True ->
+                        |> updateSkillInListIfNoCopy skillIdx skill
+            in
             { build | listActiveSkill = newListSkill }
 
         False ->
+            let
+                newListSkill =
+                    build.listPassiveSkill
+                        |> List.foldr (::) (List.repeat 3 ( -1, -1, NoType ))
+                        |> List.take 5
+                        |> updateSkillInListIfNoCopy skillIdx skill
+            in
             { build | listPassiveSkill = newListSkill }
 
 
-updateSkillIf : ( Int, Int, SkillType ) -> Int -> Skill -> ( Int, Int, SkillType )
-updateSkillIf ( idx, oldId, skillType ) skillIdx skill =
+updateSkillInListIfNoCopy : Int -> Skill -> List ( Int, Int, SkillType ) -> List ( Int, Int, SkillType )
+updateSkillInListIfNoCopy skillIdx skill list =
+    -- if the skill wasn't already present ( same id & same type )
+    let
+        doUpdate =
+            list
+                |> List.filter (\( _, skillId, skillType ) -> skillId == skill.id && skillType == skill.skillType)
+                |> List.isEmpty
+    in
+    case doUpdate of
+        True ->
+            list |> List.map (\e -> updateSkillAndKeepOther e skillIdx skill)
+
+        False ->
+            list
+
+
+updateSkillAndKeepOther : ( Int, Int, SkillType ) -> Int -> Skill -> ( Int, Int, SkillType )
+updateSkillAndKeepOther ( idx, oldSkillId, skillType ) skillIdx skill =
+    -- To improve ?
     if idx == skillIdx then
         ( idx, skill.id, skill.skillType )
 
     else
-        ( idx, oldId, skillType )
+        ( idx, oldSkillId, skillType )
