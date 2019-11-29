@@ -10,6 +10,12 @@ getMasterySkill val =
         |> List.head
 
 
+getMasterySkillsForJob : Int -> List MasterySkill
+getMasterySkillsForJob id =
+    initMasterySkills
+        |> List.filter (\e -> List.member id e.jobIdList)
+
+
 initMasterySkills : List MasterySkill
 initMasterySkills =
     [ -- Perks

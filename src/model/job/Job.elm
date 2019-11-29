@@ -24,6 +24,11 @@ getJobsAvailableForCharacter character =
         |> List.filter (\j -> j.gender |> Maybe.map (\g -> g == character.gender) |> Maybe.withDefault True)
 
 
+getJobByDefault : Job
+getJobByDefault =
+    Job 0 0 "Commoner" 0 [] [] Nothing (Just CanUseSomeMagic) Nothing Nothing []
+
+
 initJobs : List Job
 initJobs =
     [ -- Starting

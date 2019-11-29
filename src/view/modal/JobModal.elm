@@ -8,11 +8,12 @@ import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import Job exposing (getJobsAvailableForCharacter)
+import Job exposing (getJobByDefault, getJobsAvailableForCharacter)
 import JobSkill exposing (getJobSkillsByJob)
-import JobView exposing (getJobPicture)
+import JobView exposing (getJobTile)
+import MasterySkill exposing (getMasterySkillsForJob)
 import Maybe.Extra exposing (..)
-import ModelUtils exposing (jobSkillToSkill, jobToDescription)
+import ModelUtils exposing (jobSkillToSkill, jobToDescription, masterySkillToSkill)
 import SkillView exposing (viewSkill)
 import Study exposing (getStudyById)
 import StudyView exposing (viewStudy)
@@ -61,9 +62,7 @@ viewJobTile model job =
         , onMouseOver (JModalMsg (UpdateJobPicker ( buildIdx, Just job )))
         , onClick (JModalMsg (UpdateBuild ( buildIdx, job )))
         ]
-        [ getJobPicture job.idPicture
-        , text job.name
-        ]
+        [ getJobTile job.idPicture ]
 
 
 viewSideBar : Model -> Html Msg
@@ -77,20 +76,34 @@ viewSideBar model =
 viewJobDetail : Model -> Html Msg
 viewJobDetail model =
     let
-        ( _, maybeJob ) =
+        currentJob =
             model.view.jobPicker
-    in
-    case maybeJob of
-        Just currentJob ->
-            div []
-                [ viewTitleDetail currentJob
-                , viewJobDescription currentJob
-                , viewCertificationRequirement currentJob
-                , viewSkillMastery currentJob
-                ]
+                |> Tuple.second
+                |> Maybe.withDefault getJobByDefault
 
-        Nothing ->
-            div [] [ text "No data" ]
+        description =
+            jobToDescription currentJob
+
+        maybeExperience =
+            if description.experience /= Nothing then
+                description.experience
+
+            else
+                description.customExperience
+
+        noteText =
+            appendMaybeText description.note Nothing |> appendMaybeText description.magicUsage
+    in
+    div []
+        [ viewTitleDetail currentJob
+        , viewJobSkills currentJob
+        , div [ class "job-description" ] [ p [] [ text "Level minimum" ], p [] [ text (description.level |> Maybe.map (\l -> "Available at level " ++ l) |> Maybe.withDefault "-") ] ]
+        , div [ class "job-description" ] [ p [] [ text "Note" ], p [] [ text (noteText |> Maybe.withDefault "-") ] ]
+        , div [ class "job-description" ] [ p [] [ text "Gender restriction" ], p [] [ text (description.gender |> Maybe.map (\g -> g ++ " only") |> Maybe.withDefault "-") ] ]
+        , viewCertificationRequirement currentJob
+        , div [ class "job-description" ] [ p [] [ text "Experience to master" ], p [] [ text (maybeExperience |> Maybe.map (\e -> e ++ " class xp") |> Maybe.withDefault "-") ] ]
+        , viewSkillMastery currentJob
+        ]
 
 
 viewTitleDetail : Job -> Html Msg
@@ -105,30 +118,6 @@ viewTitleDetail job =
         ]
 
 
-viewJobDescription : Job -> Html Msg
-viewJobDescription job =
-    let
-        description =
-            jobToDescription job
-
-        maybeExperience =
-            if description.experience /= Nothing then
-                description.experience
-
-            else
-                description.customExperience
-
-        noteText =
-            appendMaybeText description.note Nothing |> appendMaybeText description.magicUsage
-    in
-    div []
-        [ maybeExperience |> Maybe.map (\e -> div [ class "job-description" ] [ p [] [ text "Experience to master" ], p [] [ text (e ++ " class xp") ] ]) |> Maybe.withDefault (div [] [])
-        , description.level |> Maybe.map (\l -> div [ class "job-description" ] [ p [] [ text "Level minimum" ], p [] [ text ("Available at level " ++ l) ] ]) |> Maybe.withDefault (div [] [])
-        , description.gender |> Maybe.map (\g -> div [ class "job-description" ] [ p [] [ text "Gender restriction" ], p [] [ text (g ++ " only") ] ]) |> Maybe.withDefault (div [] [])
-        , noteText |> Maybe.map (\n -> div [ class "job-description" ] [ p [] [ text "Note" ], p [] [ text n ] ]) |> Maybe.withDefault (div [] [])
-        ]
-
-
 viewCertificationRequirement : Job -> Html Msg
 viewCertificationRequirement job =
     let
@@ -136,26 +125,49 @@ viewCertificationRequirement job =
             job.studyIdList
                 |> List.map getStudyById
                 |> Maybe.Extra.values
-    in
-    if List.length studyList > 0 then
-        div [ class "job-description" ] ([ p [] [ text "Certificats" ] ] ++ List.map viewStudy studyList)
 
-    else
-        div [] []
+        studyListDiv =
+            if List.length studyList > 0 then
+                List.map viewStudy studyList
+
+            else
+                [ p [ class "list-empty" ] [ text "-" ] ]
+    in
+    div [ class "job-description list-study" ] ([ p [] [ text "Certificats" ] ] ++ studyListDiv)
+
+
+viewJobSkills : Job -> Html Msg
+viewJobSkills job =
+    let
+        skillList =
+            getJobSkillsByJob job.id
+                |> List.map (\s -> viewSkill (jobSkillToSkill s))
+
+        skillListDiv =
+            if List.length skillList > 0 then
+                skillList
+
+            else
+                [ p [ class "list-empty" ] [ text "-" ] ]
+    in
+    div [ class "job-description list-jobskill" ] ([ p [] [ text "Job skills" ] ] ++ skillListDiv)
 
 
 viewSkillMastery : Job -> Html Msg
 viewSkillMastery job =
     let
         skillList =
-            getJobSkillsByJob job.id
-                |> List.map (\s -> viewSkill (jobSkillToSkill s))
+            getMasterySkillsForJob job.id
+                |> List.map (\s -> viewSkill (masterySkillToSkill s))
+
+        skillListDiv =
+            if List.length skillList > 0 then
+                skillList
+
+            else
+                [ p [ class "list-empty" ] [ text "-" ] ]
     in
-    if List.length skillList > 0 then
-        div [ class "job-description list-jobskill" ] ([ p [] [ text "Job skills" ] ] ++ skillList)
-    else
-        div [] []
-    
+    div [ class "job-description list-jobskill" ] ([ p [] [ text "Skill learned" ] ] ++ skillListDiv)
 
 
 buttonCloseModal : Html Msg
