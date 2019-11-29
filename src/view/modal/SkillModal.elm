@@ -9,7 +9,7 @@ import Html.Events exposing (..)
 import Job exposing (getJobById)
 import JobView exposing (viewJob)
 import Maybe.Extra exposing (..)
-import ModelHandler exposing (getSkillList)
+import ModelHandler exposing (getActiveSkillByDefault, getPassiveSkillByDefault, getSkillList)
 import NoDataView exposing (viewNoData)
 import Study exposing (getStudyById)
 import StudyView exposing (viewStudy)
@@ -76,6 +76,14 @@ viewSideBar model =
     let
         ( ( idx, skillId ), maybeSkill, isCombatArt ) =
             model.view.skillPicker
+
+        getSkillByDefault =
+            case isCombatArt of
+                True ->
+                    getActiveSkillByDefault
+
+                False ->
+                    getPassiveSkillByDefault
     in
     case maybeSkill of
         Just skill ->
@@ -86,7 +94,9 @@ viewSideBar model =
 
         Nothing ->
             div [ class "sidebar" ]
-                [ buttonCloseModal ]
+                [ buttonCloseModal
+                , viewSkillDetail getSkillByDefault
+                ]
 
 
 viewSkillDetail : Skill -> Html Msg
