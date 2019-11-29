@@ -100,6 +100,32 @@
           .list-study {
             display: flex;
             height: 4em;
+<<<<<<< HEAD
+          }
+
+          .list-jobskill {
+            display: flex;
+            height: 5em;
+
+            & > div {
+              position: relative;
+              width: 25%;
+              margin: 1em 0;
+              text-align: center;
+=======
+
+            .study-view {
+              margin: 0.5em;
+              width: 25%;
+              border: 1px solid gray;
+              background: lightgray;
+              border-radius: 0.5em;
+
+              & > img {
+                margin: 0.5em auto;
+              }
+>>>>>>> 88de15095929c0c6301b872d17f245fe3cd76912
+            }
           }
 
           .list-jobskill {
