@@ -30,6 +30,15 @@ getJobPicture id =
         []
 
 
+getJobTile : Int -> Html Msg
+getJobTile id =
+    img
+        [ class "job-big-picture"
+        , src ("resources/img/jobs/" ++ String.fromInt id ++ ".gif")
+        ]
+        []
+
+
 buttonJob : Model -> Int -> Maybe Job -> Html Msg
 buttonJob model buildIdx maybeJob =
     let

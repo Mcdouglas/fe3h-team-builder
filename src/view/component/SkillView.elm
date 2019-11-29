@@ -45,9 +45,11 @@ viewSkill skill =
                     "skill-picture"
     in
     div []
-        [ div [ class cssClass
-          , style "content" ("url(\"resources/img/skills/" ++ String.fromInt skill.pictureId ++ ".png\")")
-          ] []
+        [ div
+            [ class cssClass
+            , style "content" ("url(\"resources/img/skills/" ++ String.fromInt skill.pictureId ++ ".png\")")
+            ]
+            []
         , p [] [ text skill.name ]
         ]
 
