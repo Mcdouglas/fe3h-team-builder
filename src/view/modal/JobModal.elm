@@ -9,9 +9,11 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Job exposing (getJobsAvailableForCharacter)
+import JobSkill exposing (getJobSkillsByJob)
 import JobView exposing (getJobPicture)
 import Maybe.Extra exposing (..)
-import ModelUtils exposing (jobToDescription)
+import ModelUtils exposing (jobSkillToSkill, jobToDescription)
+import SkillView exposing (viewSkill)
 import Study exposing (getStudyById)
 import StudyView exposing (viewStudy)
 
@@ -136,7 +138,7 @@ viewCertificationRequirement job =
                 |> Maybe.Extra.values
     in
     if List.length studyList > 0 then
-        div [ class "job-description" ] ([ p [] [ text "Skill level" ] ] ++ List.map viewStudy studyList)
+        div [ class "job-description" ] ([ p [] [ text "Certificats" ] ] ++ List.map viewStudy studyList)
 
     else
         div [] []
@@ -144,7 +146,16 @@ viewCertificationRequirement job =
 
 viewSkillMastery : Job -> Html Msg
 viewSkillMastery job =
-    div [] []
+    let
+        skillList =
+            getJobSkillsByJob job.id
+                |> List.map (\s -> viewSkill (jobSkillToSkill s))
+    in
+    if List.length skillList > 0 then
+        div [ class "job-description list-jobskill" ] ([ p [] [ text "Job skills" ] ] ++ skillList)
+    else
+        div [] []
+    
 
 
 buttonCloseModal : Html Msg

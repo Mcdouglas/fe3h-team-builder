@@ -104,16 +104,24 @@
               margin: auto 0;
             }
 
-            & > div {
-              min-height: 4em;
-            }
-
             .study-view {
               margin: auto 0 auto 1em;
 
               & > img {
-                margin: auto 0;
+                margin: 1em 0;
               }
+            }
+          }
+
+          .list-jobskill {
+            display: flex;
+            text-align: center;
+            margin: auto;
+
+            & > div {
+              position: relative;
+              width: 25%;
+              margin: 1em 0;
             }
           }
   
