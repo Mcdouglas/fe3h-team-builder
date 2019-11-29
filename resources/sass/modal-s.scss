@@ -141,15 +141,27 @@
           }
 
           .art-description {
-            grid-template-columns: 20% auto;
+            display: flex;
+
+            & > p {
+              margin-right: 0;
+              width: 20%;
+              border: none;
+            }
 
             .art-table {
               width: 100%;
               display: grid;
               grid-template-rows: auto auto;
+              background-color: lightgray;
+              border-radius: 1px;
+
+                p {
+                  margin: auto;
+                }
 
                 .art-table-header {
-                  margin: auto;
+                  border-bottom: 1px solid gray;
                   
                   & > p {
                     font-weight: 600;
