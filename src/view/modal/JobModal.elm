@@ -133,7 +133,7 @@ viewCertificationRequirement job =
             else
                 [ p [ class "list-empty" ] [ text "-" ] ]
     in
-    div [ class "job-description list-study" ] ([ p [] [ text "Certificats" ] ] ++ studyListDiv)
+    div [ class "job-description list-study" ] ([ p [] [ text "Certificats req." ] ] ++ studyListDiv)
 
 
 viewJobSkills : Job -> Html Msg

@@ -109,35 +109,27 @@
               font-size: 0.8em;
               border-right: 1px solid lightgray;
               width: 6em;
+              margin-right: 1em;
             }
 
-            p {
+            & > p {
               margin: auto 0;
             }
+          }
 
-            & > div {
-              min-height: 4em;
+          .job-description {
+            display: flex;
+            height: 6em;
+
+            & > .job-view {
+              margin-top: 1em;
+              margin-bottom: 1em;
             }
+          }
 
-            .job-description {
-              display: flex;
-
-              .job-view {
-                padding-right: 1em;
-
-                & > img {
-                  margin: auto;
-                }
-              }
-            }
-
-            .study-view {
-              margin: auto 0 auto 1em;
-
-              & > img {
-                margin: auto 0;
-              }
-            }
+          .list-study {
+            display: flex;
+            height: 4em;
           }
         }
 

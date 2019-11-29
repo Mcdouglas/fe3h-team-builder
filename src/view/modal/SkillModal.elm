@@ -131,10 +131,19 @@ viewPassiveSkillDescription skill =
 
 viewActiveSkillDescription : Skill -> Html Msg
 viewActiveSkillDescription skill =
+    let
+        description =
+            if (skill.description |> String.trim |> String.length) > 0 then
+                skill.description
+
+            else
+                "-"
+    in
     div []
         [ viewCombatArtDescription skill
-        , div [ class "skill-description" ] [ p [] [ text "Effect" ], p [] [ text skill.description ] ]
+        , div [ class "skill-description" ] [ p [] [ text "Effect" ], p [] [ text description ] ]
         , viewStudyDescription skill
+        , viewJobToMaster skill
         , viewJobsDescription skill
         ]
 
@@ -147,10 +156,25 @@ viewStudyDescription skill =
     in
     case maybeStudy of
         Just study ->
-            div [ class "skill-description" ] [ p [] [ text "Skill level" ], viewStudy study ]
+            div [ class "skill-description list-study" ] [ p [] [ text "Certificats req." ], viewStudy study ]
 
         Nothing ->
-            div [] []
+            div [ class "skill-description list-study" ] [ p [] [ text "Certificats req." ], p [] [ text "-" ] ]
+
+
+viewJobToMaster : Skill -> Html Msg
+viewJobToMaster skill =
+    let
+        maybeJobs =
+            skill.jobIdList
+                |> List.map (\id -> getJobById id)
+                |> Maybe.Extra.values
+    in
+    if (maybeJobs |> List.length) > 0 then
+        div [ class "skill-description job-description" ] ([ p [] [ text "Class to master" ] ] ++ List.map (\j -> viewJob j) maybeJobs)
+
+    else
+        div [ class "skill-description job-description" ] [ p [] [ text "Class to master" ], p [] [ text "-" ] ]
 
 
 viewJobsDescription : Skill -> Html Msg
@@ -159,19 +183,17 @@ viewJobsDescription skill =
         jobToMasterList =
             skill.jobIdList
                 |> List.map (\id -> getJobById id)
-
-        showDivIfListIsNotEmpty =
-            List.length jobToMasterList > 0
+                |> List.map (\mj -> viewJobDescription mj)
+                |> List.concat
     in
-    case showDivIfListIsNotEmpty of
-        True ->
-            div [ class "skill-description" ] ([ p [] [ text "Class mastered" ] ] ++ List.map (\e -> viewJobDescription e) jobToMasterList)
+    if List.length jobToMasterList > 0 then
+        div [ class "skill-description list-study" ] ([ p [] [ text "Class's certif." ] ] ++ jobToMasterList)
 
-        False ->
-            div [] []
+    else
+        div [ class "skill-description list-study" ] [ p [] [ text "Class's certif." ], p [] [ text "-" ] ]
 
 
-viewJobDescription : Maybe Job -> Html Msg
+viewJobDescription : Maybe Job -> List (Html Msg)
 viewJobDescription maybeJob =
     let
         listStudyToReach =
@@ -182,12 +204,7 @@ viewJobDescription maybeJob =
                 |> Maybe.Extra.combine
                 |> Maybe.withDefault []
     in
-    case maybeJob of
-        Just job ->
-            div [ class "job-description" ] ([ viewJob job ] ++ List.map (\s -> viewStudy s) listStudyToReach)
-
-        Nothing ->
-            div [] [ text "No data" ]
+    List.map (\s -> viewStudy s) listStudyToReach
 
 
 viewCombatArtDescription : Skill -> Html Msg

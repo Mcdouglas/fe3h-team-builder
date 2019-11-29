@@ -100,18 +100,6 @@
           .list-study {
             display: flex;
             height: 4em;
-
-            .study-view {
-              margin: 0.5em;
-              width: 25%;
-              border: 1px solid gray;
-              background: lightgray;
-              border-radius: 0.5em;
-
-              & > img {
-                margin: 0.5em auto;
-              }
-            }
           }
 
           .list-jobskill {

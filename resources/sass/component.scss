@@ -1,13 +1,13 @@
-.study-view {
-    display: flex;
-    
-}
-
 .job-view {
     display: flex;
     flex-flow: column;
     text-align: center;
-    min-width: 6em;
+    min-width: 5em;
+
+    & > img {
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 .job-button {
@@ -16,6 +16,19 @@
 
     border: 1px solid rgba(0, 0, 0, 0.25);
     border-radius: 0.25rem;
+}
+
+.study-view {
+  display: flex;
+  margin: 0.5em 0.5em 0.5em 0;
+  width: 25%;
+  border: 1px solid gray;
+  background: lightgray;
+  border-radius: 0.5em;
+
+  & > img {
+    margin: 0.5em auto;
+  }
 }
 
 .button-clickable {
