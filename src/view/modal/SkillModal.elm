@@ -10,9 +10,9 @@ import Job exposing (getJobById)
 import JobView exposing (viewJob)
 import Maybe.Extra exposing (..)
 import ModelHandler exposing (getSkillList)
+import NoDataView exposing (viewNoData)
 import Study exposing (getStudyById)
 import StudyView exposing (viewStudy)
-import NoDataView exposing (viewNoData)
 
 
 modalSkillPicker : Model -> Html Msg

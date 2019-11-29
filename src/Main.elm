@@ -32,7 +32,7 @@ init =
             ( -1, Nothing )
 
         viewModel =
-            ViewModel False initCharacterPicker False initSkillPicker False initJobPicker
+            ViewModel False initCharacterPicker False False initSkillPicker False initJobPicker
 
         errorMessage =
             Nothing

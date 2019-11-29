@@ -20,14 +20,6 @@ viewBuild model ( idx, build ) =
     let
         maybeCharacter =
             getCharacterById build.idCharacter
-
-        buildLockDiv =
-            case maybeCharacter of
-                Just _ ->
-                    div [] []
-
-                Nothing ->
-                    div [ class "item-a-locked" ] []
     in
     div [ class "item-a" ]
         [ sectionCharacter model idx maybeCharacter
@@ -35,7 +27,6 @@ viewBuild model ( idx, build ) =
         , sectionActiveSkills model ( idx, build )
         , sectionJob model ( idx, build )
         , buttonBuildInfo build
-        , buildLockDiv
         ]
 
 

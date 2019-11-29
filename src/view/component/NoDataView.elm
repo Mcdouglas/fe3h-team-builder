@@ -1,9 +1,10 @@
 module NoDataView exposing (..)
 
+import GlobalMessage exposing (Msg(..))
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import GlobalMessage exposing (Msg(..))
+
 
 viewNoData : Html Msg
-viewNoData = 
+viewNoData =
     div [ class "no-data" ] []
