@@ -12,6 +12,7 @@ import Maybe.Extra exposing (..)
 import ModelHandler exposing (getSkillList)
 import Study exposing (getStudyById)
 import StudyView exposing (viewStudy)
+import NoDataView exposing (viewNoData)
 
 
 modalSkillPicker : Model -> Html Msg
@@ -122,9 +123,18 @@ viewSkillDetail skill =
 
 viewPassiveSkillDescription : Skill -> Html Msg
 viewPassiveSkillDescription skill =
+    let
+        description =
+            if (skill.description |> String.trim |> String.length) > 0 then
+                p [] [ text skill.description ]
+
+            else
+                viewNoData
+    in
     div []
-        [ div [ class "skill-description" ] [ p [] [ text "Effect" ], p [] [ text skill.description ] ]
+        [ div [ class "skill-description" ] [ p [] [ text "Effect" ], description ]
         , viewStudyDescription skill
+        , viewJobToMaster skill
         , viewJobsDescription skill
         ]
 
@@ -134,14 +144,14 @@ viewActiveSkillDescription skill =
     let
         description =
             if (skill.description |> String.trim |> String.length) > 0 then
-                skill.description
+                p [] [ text skill.description ]
 
             else
-                "-"
+                viewNoData
     in
     div []
         [ viewCombatArtDescription skill
-        , div [ class "skill-description" ] [ p [] [ text "Effect" ], p [] [ text description ] ]
+        , div [ class "skill-description" ] [ p [] [ text "Effect" ], description ]
         , viewStudyDescription skill
         , viewJobToMaster skill
         , viewJobsDescription skill
@@ -159,7 +169,7 @@ viewStudyDescription skill =
             div [ class "skill-description list-study" ] [ p [] [ text "Certificats req." ], viewStudy study ]
 
         Nothing ->
-            div [ class "skill-description list-study" ] [ p [] [ text "Certificats req." ], p [] [ text "-" ] ]
+            div [ class "skill-description list-study" ] [ p [] [ text "Certificats req." ], viewNoData ]
 
 
 viewJobToMaster : Skill -> Html Msg
@@ -174,7 +184,7 @@ viewJobToMaster skill =
         div [ class "skill-description job-description" ] ([ p [] [ text "Class to master" ] ] ++ List.map (\j -> viewJob j) maybeJobs)
 
     else
-        div [ class "skill-description job-description" ] [ p [] [ text "Class to master" ], p [] [ text "-" ] ]
+        div [ class "skill-description job-description" ] [ p [] [ text "Class to master" ], viewNoData ]
 
 
 viewJobsDescription : Skill -> Html Msg
@@ -190,7 +200,7 @@ viewJobsDescription skill =
         div [ class "skill-description list-study" ] ([ p [] [ text "Class's certif." ] ] ++ jobToMasterList)
 
     else
-        div [ class "skill-description list-study" ] [ p [] [ text "Class's certif." ], p [] [ text "-" ] ]
+        div [ class "skill-description list-study" ] [ p [] [ text "Class's certif." ], viewNoData ]
 
 
 viewJobDescription : Maybe Job -> List (Html Msg)

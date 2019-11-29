@@ -41,6 +41,12 @@
     opacity: 0.5;
 }
 
+.no-data {
+    content : url("../lib/octicons/circle-slash.svg");
+    opacity: 0.5;
+    margin: auto 0;
+}
+
 .skill-picture {
     width: 2em;
     height: 2em;

@@ -17,6 +17,7 @@ import ModelUtils exposing (jobSkillToSkill, jobToDescription, masterySkillToSki
 import SkillView exposing (viewSkill)
 import Study exposing (getStudyById)
 import StudyView exposing (viewStudy)
+import NoDataView exposing (viewNoData)
 
 
 modalJobPicker : Model -> Html Msg
@@ -97,11 +98,11 @@ viewJobDetail model =
     div []
         [ viewTitleDetail currentJob
         , viewJobSkills currentJob
-        , div [ class "job-description" ] [ p [] [ text "Level minimum" ], p [] [ text (description.level |> Maybe.map (\l -> "Available at level " ++ l) |> Maybe.withDefault "-") ] ]
-        , div [ class "job-description" ] [ p [] [ text "Note" ], p [] [ text (noteText |> Maybe.withDefault "-") ] ]
-        , div [ class "job-description" ] [ p [] [ text "Gender restriction" ], p [] [ text (description.gender |> Maybe.map (\g -> g ++ " only") |> Maybe.withDefault "-") ] ]
+        , div [ class "job-description" ] [ p [] [ text "Level minimum" ], (description.level |> Maybe.map (\l -> p [] [ text ("Available at level " ++ l)]) |> Maybe.withDefault viewNoData) ]
+        , div [ class "job-description" ] [ p [] [ text "Note" ], (noteText |> Maybe.map (\n -> p [] [ text n ]) |> Maybe.withDefault viewNoData) ]
+        , div [ class "job-description" ] [ p [] [ text "Gender restriction" ], (description.gender |> Maybe.map (\g -> p [] [ text (g ++ " only") ]) |> Maybe.withDefault viewNoData) ]
         , viewCertificationRequirement currentJob
-        , div [ class "job-description" ] [ p [] [ text "Experience to master" ], p [] [ text (maybeExperience |> Maybe.map (\e -> e ++ " class xp") |> Maybe.withDefault "-") ] ]
+        , div [ class "job-description" ] [ p [] [ text "Experience to master" ], (maybeExperience |> Maybe.map (\e -> p [] [  text (e ++ " class xp")]) |> Maybe.withDefault viewNoData) ]
         , viewSkillMastery currentJob
         ]
 
@@ -131,7 +132,7 @@ viewCertificationRequirement job =
                 List.map viewStudy studyList
 
             else
-                [ p [ class "list-empty" ] [ text "-" ] ]
+                [ div [ class "no-data" ] [ ] ]
     in
     div [ class "job-description list-study" ] ([ p [] [ text "Certificats req." ] ] ++ studyListDiv)
 
@@ -148,7 +149,7 @@ viewJobSkills job =
                 skillList
 
             else
-                [ p [ class "list-empty" ] [ text "-" ] ]
+                [ div [ class "no-data" ] [ ] ]
     in
     div [ class "job-description list-jobskill" ] ([ p [] [ text "Job skills" ] ] ++ skillListDiv)
 
@@ -165,7 +166,7 @@ viewSkillMastery job =
                 skillList
 
             else
-                [ p [ class "list-empty" ] [ text "-" ] ]
+                [ div [ class "no-data" ] [ ] ]
     in
     div [ class "job-description list-jobskill" ] ([ p [] [ text "Skill learned" ] ] ++ skillListDiv)
 
