@@ -8,8 +8,8 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 
 
-viewSkill : Model -> ( ( Int, Int ), Maybe Skill, Bool ) -> Html Msg
-viewSkill model ( positions, maybeSkill, isCombatArt ) =
+skillButton : Model -> ( ( Int, Int ), Maybe Skill, Bool ) -> Html Msg
+skillButton model ( positions, maybeSkill, isCombatArt ) =
     let
         onClickEvent =
             onClick (SModalMsg (OpenSkillModal ( positions, maybeSkill, isCombatArt )))
@@ -31,6 +31,25 @@ viewSkill model ( positions, maybeSkill, isCombatArt ) =
 
         _ ->
             div [ class "add-skill", onClickEvent ] []
+
+
+viewSkill : Skill -> Html Msg
+viewSkill skill =
+    let
+        cssClass =
+            case skill.combatArt of
+                True ->
+                    "art-picture"
+
+                False ->
+                    "skill-picture"
+    in
+    div []
+        [ div [ class cssClass
+          , style "content" ("url(\"resources/img/skills/" ++ String.fromInt skill.pictureId ++ ".png\")")
+          ] []
+        , p [] [ text skill.name ]
+        ]
 
 
 getSkillTile : Int -> Bool -> Attribute Msg -> Html Msg
