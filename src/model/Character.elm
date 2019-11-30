@@ -10,6 +10,13 @@ getCharacterById val =
         |> List.head
 
 
+getCharacterByDefault : Character
+getCharacterByDefault =
+    initCharacters
+        |> List.head
+        |> Maybe.withDefault (Character -1 "" Male -1 Minor -1 Nothing)
+
+
 initCharacters : List Character
 initCharacters =
     [ Character 0 "Byleth" Male 1 Major 1 Nothing
