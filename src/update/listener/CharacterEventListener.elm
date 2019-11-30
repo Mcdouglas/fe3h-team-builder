@@ -20,7 +20,38 @@ handle msg model =
             updateOrCreateBuild model value
 
         CloseCharacterModal ->
-            closeModal model
+            handleDoubleClosure model
+
+        IgnoreCloseCharacterModal ->
+            ignoreClosureInModal model
+
+
+ignoreClosureInModal : Model -> Model
+ignoreClosureInModal model =
+    let
+        oldView =
+            model.view
+
+        newView =
+            { oldView | skipNextClosure = True }
+    in
+    { model | view = newView }
+
+
+handleDoubleClosure : Model -> Model
+handleDoubleClosure model =
+    let
+        oldView =
+            model.view
+
+        dontCloseModal =
+            model.view.skipNextClosure
+    in
+    if dontCloseModal then
+        { model | view = { oldView | skipNextClosure = False } }
+
+    else
+        closeModal model
 
 
 openModal : Model -> Int -> Model

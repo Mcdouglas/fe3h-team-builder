@@ -13,14 +13,45 @@ handle msg model =
         OpenSkillModal value ->
             openModal value model
 
-        CloseSkillModal ->
-            closeModal model
-
         UpdateSkillPicker value ->
             updatePicker value model
 
         UpdateBuildWithSkill value ->
             updateBuildWithSkill value model
+
+        CloseSkillModal ->
+            handleDoubleClosure model
+
+        IgnoreCloseSkillModal ->
+            ignoreClosureInModal model
+
+
+ignoreClosureInModal : Model -> Model
+ignoreClosureInModal model =
+    let
+        oldView =
+            model.view
+
+        newView =
+            { oldView | skipNextClosure = True }
+    in
+    { model | view = newView }
+
+
+handleDoubleClosure : Model -> Model
+handleDoubleClosure model =
+    let
+        oldView =
+            model.view
+
+        dontCloseModal =
+            model.view.skipNextClosure
+    in
+    if dontCloseModal then
+        { model | view = { oldView | skipNextClosure = False } }
+
+    else
+        closeModal model
 
 
 openModal : ( ( Int, Int ), Maybe Skill, Bool ) -> Model -> Model

@@ -31,8 +31,12 @@ modalSkillPicker model =
     div
         [ class "modal-s"
         , hidden (not model.view.skillModalIsOpen)
+        , onClick (SModalMsg CloseSkillModal)
         ]
-        [ div [ class ("modal-content " ++ modalCss) ]
+        [ div
+            [ class ("modal-content " ++ modalCss)
+            , onClick (SModalMsg IgnoreCloseSkillModal)
+            ]
             [ viewSkillGrid model model.view.skillPicker
             , viewSideBar model
             ]

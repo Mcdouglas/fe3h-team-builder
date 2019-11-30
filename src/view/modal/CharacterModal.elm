@@ -30,8 +30,12 @@ modalCharacterPicker model =
             div
                 [ class "modal-c"
                 , hidden (not model.view.characterModalIsOpen)
+                , onClick (CModalMsg CloseCharacterModal)
                 ]
-                [ div [ class "modal-content" ]
+                [ div
+                    [ class "modal-content"
+                    , onClick (CModalMsg IgnoreCloseCharacterModal)
+                    ]
                     [ viewCharacterGrid model ( idx, character )
                     , viewSideBar model character
                     ]

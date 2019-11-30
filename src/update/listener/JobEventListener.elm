@@ -11,14 +11,45 @@ handle msg model =
         OpenJobModal value ->
             openModal (updateJobPicker model value)
 
-        CloseJobModal ->
-            closeModal model
-
         UpdateJobPicker value ->
             updateJobPicker model value
 
         UpdateBuild value ->
             closeModal (updateBuild model value)
+
+        CloseJobModal ->
+            handleDoubleClosure model
+
+        IgnoreCloseJobModal ->
+            ignoreClosureInModal model
+
+
+ignoreClosureInModal : Model -> Model
+ignoreClosureInModal model =
+    let
+        oldView =
+            model.view
+
+        newView =
+            { oldView | skipNextClosure = True }
+    in
+    { model | view = newView }
+
+
+handleDoubleClosure : Model -> Model
+handleDoubleClosure model =
+    let
+        oldView =
+            model.view
+
+        dontCloseModal =
+            model.view.skipNextClosure
+    in
+    if dontCloseModal then
+        { model | view = { oldView | skipNextClosure = False } }
+
+    else
+        closeModal model
 
 
 updateJobPicker : Model -> ( Int, Maybe Job ) -> Model

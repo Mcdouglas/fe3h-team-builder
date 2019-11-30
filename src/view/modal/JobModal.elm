@@ -25,9 +25,12 @@ modalJobPicker model =
     div
         [ class "modal-j"
         , hidden (not model.view.jobModalIsOpen)
+        , onClick (JModalMsg CloseJobModal)
         ]
         [ div
-            [ class "modal-content" ]
+            [ class "modal-content"
+            , onClick (JModalMsg IgnoreCloseJobModal)
+            ]
             [ viewJobGrid model
             , viewSideBar model
             ]
