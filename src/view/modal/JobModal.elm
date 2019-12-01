@@ -40,33 +40,38 @@ modalJobPicker model =
 viewJobGrid : Model -> Html Msg
 viewJobGrid model =
     let
-        ( buildIdx, _ ) =
+        ( buildIdx, maybeJob ) =
             model.view.jobPicker
 
         listJob =
             model.team
-                |> List.filter (\( idx, build ) -> idx == buildIdx)
+                |> List.filter (\( idx, _ ) -> idx == buildIdx)
                 |> List.head
-                |> Maybe.map (\( idx, build ) -> build.idCharacter)
-                |> Maybe.andThen (\id -> getCharacterById id)
+                |> Maybe.andThen (\( _, build ) -> getCharacterById build.idCharacter)
                 |> Maybe.map (\character -> getJobsAvailableForCharacter character)
                 |> Maybe.withDefault model.data.jobs
+                |> List.map (\e -> viewJobTile model ( buildIdx, maybeJob ) e)
     in
-    div [ class "jobs-grid" ] (List.map (\e -> viewJobTile model e) listJob)
+    div [ class "jobs-grid" ] listJob
 
 
-viewJobTile : Model -> Job -> Html Msg
-viewJobTile model job =
+viewJobTile : Model -> (Int, Maybe Job) -> Job -> Html Msg
+viewJobTile model (buildIdx, _) job =
     let
-        ( buildIdx, _ ) =
-            model.view.jobPicker
+        lockedCss = if (model.team
+            |> List.filter (\( idx, _ ) -> idx == buildIdx)
+            |> List.filter (\(_, build ) -> job.id == build.jobId)
+            |> List.length) > 0 then
+                "locked-picture"
+            else
+                ""
     in
     div
-        [ class "job-tile"
+        [ class ("job-tile " ++ lockedCss)
         , onMouseOver (JModalMsg (UpdateJobPicker ( buildIdx, Just job )))
         , onClick (JModalMsg (UpdateBuild ( buildIdx, job )))
         ]
-        [ getJobTile job.idPicture ]
+        [ getJobTile lockedCss job.idPicture ]
 
 
 viewSideBar : Model -> Html Msg

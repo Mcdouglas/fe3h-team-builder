@@ -30,10 +30,10 @@ getJobPicture id =
         []
 
 
-getJobTile : Int -> Html Msg
-getJobTile id =
+getJobTile : String -> Int -> Html Msg
+getJobTile customCss id =
     img
-        [ class "job-big-picture"
+        [ class ("job-big-picture " ++ customCss)
         , src ("resources/img/jobs/" ++ String.fromInt id ++ ".gif")
         ]
         []
