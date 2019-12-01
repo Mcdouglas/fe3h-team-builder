@@ -11,9 +11,10 @@ import Html.Events exposing (..)
 import Job exposing (getJobByDefault, getJobsAvailableForCharacter)
 import JobSkill exposing (getJobSkillsByJob)
 import JobView exposing (getJobTile)
+import List.Extra exposing (groupWhile)
 import MasterySkill exposing (getMasterySkillsForJob)
 import Maybe.Extra exposing (..)
-import ModelUtils exposing (jobSkillToSkill, jobToDescription, masterySkillToSkill)
+import ModelUtils exposing (jobCategoryIdToString, jobSkillToSkill, jobToDescription, masterySkillToSkill)
 import NoDataView exposing (viewNoData)
 import SkillView exposing (viewSkill)
 import Study exposing (getStudyById)
@@ -50,19 +51,43 @@ viewJobGrid model =
                 |> Maybe.andThen (\( _, build ) -> getCharacterById build.idCharacter)
                 |> Maybe.map (\character -> getJobsAvailableForCharacter character)
                 |> Maybe.withDefault model.data.jobs
-                |> List.map (\e -> viewJobTile model ( buildIdx, maybeJob ) e)
+                |> List.map (\j -> ( j.jobCategoryId, j ))
+                |> List.Extra.groupWhile (\x y -> Tuple.first x == Tuple.first y)
+                |> List.map (\( a, l ) -> viewJobRow model ( buildIdx, maybeJob ) a l)
     in
     div [ class "jobs-grid" ] listJob
 
 
-viewJobTile : Model -> (Int, Maybe Job) -> Job -> Html Msg
-viewJobTile model (buildIdx, _) job =
+viewJobRow : Model -> ( Int, Maybe Job ) -> ( Int, Job ) -> List ( Int, Job ) -> Html Msg
+viewJobRow model shift ( categoryId, job ) listJobs =
     let
-        lockedCss = if (model.team
-            |> List.filter (\( idx, _ ) -> idx == buildIdx)
-            |> List.filter (\(_, build ) -> job.id == build.jobId)
-            |> List.length) > 0 then
+        customCss =
+            if List.length listJobs >= 7 then
+                "jobs-two-columns"
+
+            else
+                ""
+    in
+    div
+        [ class ("jobs-column " ++ customCss)
+        ]
+        ([ viewJobTile model shift job ] ++ (listJobs |> List.map (\( _, e ) -> viewJobTile model shift e)))
+
+
+viewJobTile : Model -> ( Int, Maybe Job ) -> Job -> Html Msg
+viewJobTile model ( buildIdx, _ ) job =
+    let
+        lockedCss =
+            if
+                (model.team
+                    |> List.filter (\( idx, _ ) -> idx == buildIdx)
+                    |> List.filter (\( _, build ) -> job.id == build.jobId)
+                    |> List.length
+                )
+                    > 0
+            then
                 "locked-picture"
+
             else
                 ""
     in
@@ -71,7 +96,7 @@ viewJobTile model (buildIdx, _) job =
         , onMouseOver (JModalMsg (UpdateJobPicker ( buildIdx, Just job )))
         , onClick (JModalMsg (UpdateBuild ( buildIdx, job )))
         ]
-        [ getJobTile lockedCss job.idPicture ]
+        [ getJobTile lockedCss job ]
 
 
 viewSideBar : Model -> Html Msg
@@ -90,6 +115,9 @@ viewJobDetail model =
                 |> Tuple.second
                 |> Maybe.withDefault getJobByDefault
 
+        category =
+            jobCategoryIdToString currentJob.jobCategoryId
+
         description =
             jobToDescription currentJob
 
@@ -105,6 +133,7 @@ viewJobDetail model =
     in
     div []
         [ viewTitleDetail currentJob
+        , div [ class "job-description" ] [ p [] [ text "Category" ], p [] [ text category ] ]
         , viewJobSkills currentJob
         , div [ class "job-description" ] [ p [] [ text "Level minimum" ], description.level |> Maybe.map (\l -> p [] [ text ("Available at level " ++ l) ]) |> Maybe.withDefault viewNoData ]
         , div [ class "job-description" ] [ p [] [ text "Note" ], noteText |> Maybe.map (\n -> p [] [ text n ]) |> Maybe.withDefault viewNoData ]
