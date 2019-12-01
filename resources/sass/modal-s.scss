@@ -56,11 +56,15 @@
           }
         }
 
-        .tile:hover {
+        .tile:not(.locked-picture):hover {
           background-color: #c8c9ca;
           cursor: pointer;
 
           transition: all 0.7s ease;
+        }
+
+        .tile.locked-picture {
+          background-color: lightgray;
         }
       }
 
@@ -180,9 +184,6 @@
                   }
                 }
             }
-          }
-
-          .skill-description {
           }
         }
 

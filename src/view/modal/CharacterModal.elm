@@ -18,7 +18,8 @@ modalCharacterPicker model =
         ( idx, maybeCharacter ) =
             model.view.characterPicker
 
-        character = maybeCharacter |> Maybe.withDefault getCharacterByDefault
+        character =
+            maybeCharacter |> Maybe.withDefault getCharacterByDefault
     in
     div
         [ class "modal-c"
@@ -39,7 +40,7 @@ viewCharacterGrid : Model -> Int -> Html Msg
 viewCharacterGrid model buildIdx =
     div [ class "characters-grid" ]
         (model.data.characters
-            |> List.map (\e -> viewCharacterPicker model buildIdx e )
+            |> List.map (\e -> viewCharacterPicker model buildIdx e)
         )
 
 
@@ -64,10 +65,11 @@ viewCharacterPicker model buildIdx element =
 
                 Nothing ->
                     "avatar-tile"
-        
-        lockedCss = 
-            if model.team |> List.map (\(_, b) -> b.idCharacter) |> List.member element.id then
+
+        lockedCss =
+            if model.team |> List.map (\( _, b ) -> b.idCharacter) |> List.member element.id then
                 "locked-picture"
+
             else
                 ""
     in
@@ -78,7 +80,8 @@ viewCharacterPicker model buildIdx element =
         ]
         [ img
             [ src ("resources/img/portraits/" ++ String.fromInt element.id ++ ".png")
-            , class lockedCss ]
+            , class lockedCss
+            ]
             []
         , div [ class ("tile-overlay " ++ bannerCss) ] []
         ]

@@ -53,22 +53,50 @@ viewSkillGrid model ( ( buildPosition, skillPosition ), maybeSkill, isCombatArt 
                 |> List.head
                 |> Maybe.andThen (\id -> Just (getSkillList id isCombatArt model.data))
                 |> Maybe.withDefault []
+                |> List.map (\e -> viewSkill model e)
     in
-    div [ class "skills-grid" ]
-        (listSkills
-            |> List.map (\e -> viewSkillPicker model.view.skillPicker e)
-        )
+    div [ class "skills-grid" ] listSkills
 
 
-viewSkillPicker : ( ( Int, Int ), Maybe Skill, Bool ) -> Skill -> Html Msg
-viewSkillPicker ( positions, _, isCombatArt ) skill =
+viewSkill : Model -> Skill -> Html Msg
+viewSkill model skill =
+    let
+        ( ( buildPosition, skillPosition ), maybeSkill, isCombatArt ) =
+            model.view.skillPicker
+
+        lockedCss =
+            if
+                (model.team
+                    |> List.filter (\( id, b ) -> id == buildPosition)
+                    |> List.head
+                    |> Maybe.map
+                        (\( _, b ) ->
+                            if isCombatArt then
+                                b.listActiveSkill
+
+                            else
+                                b.listPassiveSkill
+                        )
+                    |> Maybe.withDefault []
+                    |> List.filter (\( idx, skillId, skillType ) -> skill.id == skillId && skill.skillType == skillType)
+                    |> List.length
+                )
+                    > 0
+            then
+                "locked-picture"
+
+            else
+                ""
+    in
     div
-        [ class "tile"
-        , onMouseOver (SModalMsg (UpdateSkillPicker ( positions, Just skill, isCombatArt )))
-        , onClick (SModalMsg (UpdateBuildWithSkill ( positions, skill, isCombatArt )))
+        [ class ("tile " ++ lockedCss)
+        , onMouseOver (SModalMsg (UpdateSkillPicker ( ( buildPosition, skillPosition ), Just skill, isCombatArt )))
+        , onClick (SModalMsg (UpdateBuildWithSkill ( ( buildPosition, skillPosition ), skill, isCombatArt )))
         ]
         [ img
-            [ src ("resources/img/skills/" ++ String.fromInt skill.pictureId ++ ".png") ]
+            [ src ("resources/img/skills/" ++ String.fromInt skill.pictureId ++ ".png")
+            , class lockedCss
+            ]
             []
         , p [] [ text skill.name ]
         , div [ class "tile-overlay " ] []
