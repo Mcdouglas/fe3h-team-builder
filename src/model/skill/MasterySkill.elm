@@ -66,4 +66,13 @@ initMasterySkills =
     , MasterySkill 9 186 "Subdue" [ 6 ] True "Leaves foe with at least 1 HP." Nothing Nothing Nothing Nothing Nothing (Just ( 1, 1 ))
     , MasterySkill 21 191 "Swap" [ 18 ] True "User swaps places with an ally." (Just 3) Nothing (Just 20) Nothing Nothing (Just ( 1, 1 ))
     , MasterySkill 42 186 "Sword Dance" [ 39 ] True "Might increases based on user’s Charm." (Just 2) (Just 1) Nothing (Just 20) Nothing (Just ( 1, 1 ))
+    , MasterySkill 45 189 "Hunter's Volley" [ 25 ] True "Triggers 2 consecutive hits." (Just 5) (Just 1) (Just 15) Nothing (Just 10) (Just ( 2, 3 ))
+    , MasterySkill 46 190 "Fierce Iron Fist" [ 26 ] True "Triggers 3 consecutive hits." (Just 5) (Just 1) Nothing Nothing (Just 10) (Just ( 1, 1 ))
+    , MasterySkill 47 188 "Flickering Flower" [ 42 ] True "After combat, prevents foe from moving for 1 turn." (Just 3) (Just 10) (Just 10) (Just 10) Nothing (Just ( 1, 1 ))
+    , MasterySkill 48 187 "Paraselene" [ 44 ] True "After combat, user moves 1 space backwards." (Just 3) (Just 10) Nothing Nothing (Just 10) (Just ( 1, 1 ))
+    , MasterySkill 49 189 "Wind God" [ 46 ] True "" (Just 5) (Just 20) Nothing Nothing Nothing (Just ( 2, 3 ))
+    , MasterySkill 50 186 "Assassinate" [ 20 ] True "Can kill enemies instantly." (Just 5) Nothing (Just 15) Nothing (Just 15) (Just ( 1, 1 ))
+    , MasterySkill 51 186 "Astra" [ 18 ] True "5 consecutive hits at 30% Mt." (Just 9) Nothing (Just -10) Nothing Nothing (Just ( 1, 1 ))
+    , MasterySkill 52 191 "Triangle Attack" [ 10 ] True "Can only be triggered when 3 allied Flying units (including the user) are adjacent to the same enemy. Only user needs to know Triangle Attack." (Just 3) (Just 8) (Just 30) (Just 40) Nothing (Just ( 1, 1 ))
+    , MasterySkill 53 188 "War Master's Strike" [ 32 ] True "Effective against all foes." (Just 5) (Just 3) (Just 30) Nothing Nothing (Just ( 1, 1 ))
     ]
