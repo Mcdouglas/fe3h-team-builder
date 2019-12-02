@@ -15,7 +15,7 @@ modelHandlerTest =
     let
         -- default value
         wrongJob =
-            Job -1 -1 "" 0 [] [] Nothing Nothing Nothing Nothing []
+            Job -1 -1 "" 0 [] [] Nothing Nothing Nothing Nothing [] False
 
         wrongJobCategory =
             JobCategory -1 Beginner Nothing Nothing
@@ -74,6 +74,7 @@ modelHandlerTest =
                             , note = Nothing
                             , customExperience = Nothing
                             , onlyCharacters = []
+                            , False
                             }
                 )
             , test "Expect job is Hero"
@@ -91,6 +92,7 @@ modelHandlerTest =
                             , note = Nothing
                             , customExperience = Nothing
                             , onlyCharacters = []
+                            , False
                             }
                 )
             , test "Expect job is Gremory"
@@ -108,6 +110,7 @@ modelHandlerTest =
                             , note = Nothing
                             , customExperience = Nothing
                             , onlyCharacters = []
+                            , False
                             }
                 )
             , test "Expect job is Enlightened One"
@@ -126,6 +129,7 @@ modelHandlerTest =
                             , note = Just "Byleth only"
                             , customExperience = Just 100
                             , onlyCharacters = [ 0, 1 ]
+                            , False
                             }
                 )
             ]
