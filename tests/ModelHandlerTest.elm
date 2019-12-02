@@ -74,7 +74,7 @@ modelHandlerTest =
                             , note = Nothing
                             , customExperience = Nothing
                             , onlyCharacters = []
-                            , False
+                            , canFly = False
                             }
                 )
             , test "Expect job is Hero"
@@ -92,7 +92,7 @@ modelHandlerTest =
                             , note = Nothing
                             , customExperience = Nothing
                             , onlyCharacters = []
-                            , False
+                            , canFly = False
                             }
                 )
             , test "Expect job is Gremory"
@@ -110,7 +110,7 @@ modelHandlerTest =
                             , note = Nothing
                             , customExperience = Nothing
                             , onlyCharacters = []
-                            , False
+                            , canFly = False
                             }
                 )
             , test "Expect job is Enlightened One"
@@ -129,7 +129,7 @@ modelHandlerTest =
                             , note = Just "Byleth only"
                             , customExperience = Just 100
                             , onlyCharacters = [ 0, 1 ]
-                            , False
+                            , canFly = False
                             }
                 )
             ]
