@@ -51,13 +51,9 @@
             max-height: initial;
           }
 
-          &:hover {
+          &:hover:not(.locked-picture) {
             cursor: pointer;
             transition: all 0.3s ease-out;
-          }
-
-          &:active {
-              transform: translate(0.05rem,0.05rem);
           }
         }
 
@@ -70,12 +66,17 @@
           height: 100%;
           width: 100%;
           opacity: 0;
-          transition: all 0.7s ease;
+          transition: all 0.5s ease;
         }
 
         .tile:hover .tile-overlay {
           opacity: 1;
           transform: scale(1.5);
+        }
+
+        .tile.locked-picture .tile-overlay {
+          -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+          filter: grayscale(100%);
         }
 
         .avatar-tile {

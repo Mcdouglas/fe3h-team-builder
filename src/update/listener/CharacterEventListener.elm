@@ -17,10 +17,41 @@ handle msg model =
             updateCurrent model value
 
         UpdateBuildWithCharacter value ->
-            closeModal (updateBuild model value)
+            updateOrCreateBuild model value
 
         CloseCharacterModal ->
-            closeModal model
+            handleDoubleClosure model
+
+        IgnoreCloseCharacterModal ->
+            ignoreClosureInModal model
+
+
+ignoreClosureInModal : Model -> Model
+ignoreClosureInModal model =
+    let
+        oldView =
+            model.view
+
+        newView =
+            { oldView | skipNextClosure = True }
+    in
+    { model | view = newView }
+
+
+handleDoubleClosure : Model -> Model
+handleDoubleClosure model =
+    let
+        oldView =
+            model.view
+
+        dontCloseModal =
+            model.view.skipNextClosure
+    in
+    if dontCloseModal then
+        { model | view = { oldView | skipNextClosure = False } }
+
+    else
+        closeModal model
 
 
 openModal : Model -> Int -> Model
@@ -70,6 +101,43 @@ updateCurrent model element =
     { model | view = newView }
 
 
+updateOrCreateBuild : Model -> ( Int, Character ) -> Model
+updateOrCreateBuild model ( position, character ) =
+    let
+        notAlreadySelected =
+            model.team
+                |> List.filter (\( idx, build ) -> build.idCharacter == character.id)
+                |> List.isEmpty
+    in
+    if notAlreadySelected then
+        if model.view.isCreatingBuild == True then
+            closeModal (createBuild model character)
+
+        else
+            closeModal (updateBuild model ( position, character ))
+
+    else
+        model
+
+
+createBuild : Model -> Character -> Model
+createBuild model character =
+    let
+        newBuild =
+            ( List.length model.team, initBuild character.id )
+
+        newTeam =
+            newBuild :: model.team
+
+        oldView =
+            model.view
+
+        newView =
+            { oldView | isCreatingBuild = False }
+    in
+    { model | team = newTeam, view = newView }
+
+
 updateBuild : Model -> ( Int, Character ) -> Model
 updateBuild model ( position, character ) =
     let
@@ -80,19 +148,8 @@ updateBuild model ( position, character ) =
             else
                 ( id, item )
 
-        alreadySelected =
-            not
-                (model.team
-                    |> List.filter (\( idx, build ) -> build.idCharacter == character.id)
-                    |> List.isEmpty
-                )
-
         newTeam =
-            if alreadySelected then
-                model.team
-
-            else
-                model.team
-                    |> List.map (\e -> initNewBuild e)
+            model.team
+                |> List.map (\e -> initNewBuild e)
     in
     { model | team = newTeam }

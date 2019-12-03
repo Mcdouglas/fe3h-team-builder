@@ -30,6 +30,44 @@ getJobPicture id =
         []
 
 
+getJobTile : String -> Job -> Html Msg
+getJobTile customCss job =
+    div [ class ("job-background-tile " ++ customCss) ]
+        (getJobPictureWithBackground job)
+
+
+getJobPictureWithBackground : Job -> List (Html Msg)
+getJobPictureWithBackground job =
+    let
+        categoryId =
+            if job.canFly == True then
+                6
+
+            else
+                job.jobCategoryId
+    in
+    [ img
+        [ class "job-background"
+        , src ("resources/img/background/" ++ String.fromInt categoryId ++ ".png")
+        ]
+        []
+    , img
+        [ class "job-picture"
+        , src ("resources/img/jobs/" ++ String.fromInt job.idPicture ++ ".gif")
+        ]
+        []
+    ]
+
+
+oldGetJobTile : String -> Int -> Html Msg
+oldGetJobTile customCss id =
+    img
+        [ class ("job-big-picture " ++ customCss)
+        , src ("resources/img/jobs/" ++ String.fromInt id ++ ".gif")
+        ]
+        []
+
+
 buttonJob : Model -> Int -> Maybe Job -> Html Msg
 buttonJob model buildIdx maybeJob =
     let

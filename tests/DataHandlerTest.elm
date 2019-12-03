@@ -32,19 +32,19 @@ dataBuilderTest =
                     |> (\m -> List.length m.jobs)
                     |> Expect.equal 47
             )
-        , test "Expect model contains 47 jobSkills"
+        , test "Expect model contains 33 jobSkills"
             (\_ ->
                 datas
                     |> (\m -> List.length m.jobSkills)
-                    |> Expect.equal 42
+                    |> Expect.equal 33
             )
-        , test "Expect model contains 47 masterySkills"
+        , test "Expect model contains 54 masterySkills"
             (\_ ->
                 datas
                     |> (\m -> List.length m.masterySkills)
-                    |> Expect.equal 45
+                    |> Expect.equal 54
             )
-        , test "Expect model contains 47 standardSkills"
+        , test "Expect model contains 154 standardSkills"
             (\_ ->
                 datas
                     |> (\m -> List.length m.standardSkills)

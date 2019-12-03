@@ -101,3 +101,21 @@ shouldCollectSkill idChar skill =
 
     else
         skillIsOk
+
+
+getActiveSkillByDefault : Skill
+getActiveSkillByDefault =
+    initMasterySkills
+        |> List.filter (\s -> s.id == 3)
+        |> List.head
+        |> Maybe.map (\s -> masterySkillToSkill s)
+        |> Maybe.withDefault (Skill -1 MasteryType True True "" "" -1 Nothing [] [] False Nothing Nothing Nothing Nothing Nothing Nothing)
+
+
+getPassiveSkillByDefault : Skill
+getPassiveSkillByDefault =
+    initMasterySkills
+        |> List.filter (\s -> s.id == 0)
+        |> List.head
+        |> Maybe.map (\s -> masterySkillToSkill s)
+        |> Maybe.withDefault (Skill -1 MasteryType False True "" "" -1 Nothing [] [] False Nothing Nothing Nothing Nothing Nothing Nothing)

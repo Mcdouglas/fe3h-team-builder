@@ -83,6 +83,7 @@ type alias Job =
     , note : Maybe String
     , customExperience : Maybe Int
     , onlyCharacters : List Int
+    , canFly : Bool
     }
 
 
