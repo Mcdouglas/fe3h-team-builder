@@ -152,3 +152,24 @@ skillTypeToString skillType =
 
         NoType ->
             "NoType"
+
+
+listSortType : List SortType
+listSortType = 
+    [ SortByType
+    , SortByName
+    ]
+
+
+sortTypeToKeyValue : SortType -> (String, String)
+sortTypeToKeyValue sortType = 
+    case sortType of 
+        SortByType -> ("SortByType", "Type")
+        SortByName -> ("SortByName", "Name")
+
+
+stringToSortType : String -> SortType
+stringToSortType value =
+    case value of
+        "SortByType" -> SortByType
+        _ -> SortByName

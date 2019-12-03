@@ -212,7 +212,7 @@ buttonCloseModal : Html Msg
 buttonCloseModal =
     div
         [ onClick (JModalMsg CloseJobModal)
-        , class "close close-modal"
+        , class "close close-button"
         , style "content" "url(\"resources/lib/octicons/x.svg\")"
         ]
         []

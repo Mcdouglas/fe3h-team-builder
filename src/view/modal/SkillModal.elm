@@ -1,6 +1,6 @@
 module SkillModal exposing (..)
 
-import CustomTypes exposing (Job, Skill)
+import CustomTypes exposing (Job, Skill, SortType(..))
 import ElmUtils exposing (..)
 import GlobalMessage exposing (Msg(..), SkillModal(..))
 import GlobalModel exposing (..)
@@ -11,11 +11,10 @@ import Job exposing (getJobById)
 import JobView exposing (viewJob)
 import Maybe.Extra exposing (..)
 import ModelHandler exposing (getActiveSkillByDefault, getPassiveSkillByDefault, getSkillList)
-import ModelUtils exposing (skillTypeToString)
+import ModelUtils exposing (skillTypeToString, listSortType, sortTypeToKeyValue)
 import NoDataView exposing (viewNoData)
 import Study exposing (getStudyById)
 import StudyView exposing (viewStudy)
-
 
 modalSkillPicker : Model -> Html Msg
 modalSkillPicker model =
@@ -48,21 +47,44 @@ modalSkillPicker model =
 viewModalContent : Model -> Html Msg
 viewModalContent model =
     div
-        []
-        [ div
-            [ class "search-filter" ]
-            [ p [] [ text "Search :" ]
-            , input
-                [ placeholder "Skill name", value model.view.skillSearch, onInput (\msg -> SModalMsg (SearchSkill msg)) ]
-                []
-            ]
-        , viewSkillGrid model model.view.skillPicker
+        [ class "modal-table" ]
+        [ viewSearchFilter model
+        , viewSortFilter model
+        , viewSkillGrid model
         ]
 
 
-viewSkillGrid : Model -> ( ( Int, Int ), Maybe Skill, Bool ) -> Html Msg
-viewSkillGrid model ( ( buildPosition, skillPosition ), maybeSkill, isCombatArt ) =
+viewSearchFilter : Model -> Html Msg
+viewSearchFilter model = 
+    div
+        [ class "filter search-filter" ]
+        [ p [] [ text "Search :" ]
+        , input
+            [ placeholder "Skill name", value model.view.skillSearch, onInput (\msg -> SModalMsg (UpdateSkillFilter msg)) ]
+            []
+        , div
+            [ onClick (SModalMsg CleanSearchSkillFilter)
+            , class "close close-button"
+            , style "content" "url(\"resources/lib/octicons/x.svg\")"
+            ]
+            []
+        ]
+
+
+viewSortFilter : Model -> Html Msg
+viewSortFilter model =
+    div [ class "filter sort-filter" ] 
+    [ p [] [ text "Sort by :"]
+    , select [ onInput (\e -> SModalMsg (ChangeSortType e)) ] (listSortType |> List.map (\e -> sortTypeToKeyValue e) |> List.map (\(v, t) -> option [ value v ] [ text t ]))
+    ]
+
+
+viewSkillGrid : Model -> Html Msg
+viewSkillGrid model =
     let
+        ( ( buildPosition, skillPosition ), maybeSkill, isCombatArt ) = 
+            model.view.skillPicker
+
         listSkill =
             model.team
                 |> List.filter (\( idx, build ) -> idx == buildPosition)
@@ -92,14 +114,8 @@ listSortBy model list =
         SortByType ->
             list |> List.sortBy (\e -> skillTypeToString e.skillType) |> List.sortBy (\e -> boolToInt e.learnByJob)
 
-        ReverseSortByType ->
-            list |> List.sortBy (\e -> skillTypeToString e.skillType) |> List.sortBy (\e -> boolToInt e.learnByJob) |> List.reverse
-
         SortByName ->
             list |> List.sortBy .name
-
-        ReverseSortByName ->
-            list |> List.sortBy .name |> List.reverse
 
 
 viewSkillTile : Model -> Skill -> Html Msg
@@ -356,7 +372,7 @@ buttonCloseModal : Html Msg
 buttonCloseModal =
     div
         [ onClick (SModalMsg CloseSkillModal)
-        , class "close close-modal"
+        , class "close close-button"
         , style "content" "url(\"resources/lib/octicons/x.svg\")"
         ]
         []

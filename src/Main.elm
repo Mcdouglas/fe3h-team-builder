@@ -11,6 +11,7 @@ import GlobalModel exposing (..)
 import JobEventListener exposing (handle)
 import SkillEventListener exposing (..)
 import TeamBuilder exposing (..)
+import CustomTypes exposing (SortType(..))
 
 
 init : Model

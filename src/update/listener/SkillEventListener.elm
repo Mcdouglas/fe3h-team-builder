@@ -5,6 +5,7 @@ import CustomTypes exposing (..)
 import GlobalMessage exposing (SkillModal(..))
 import GlobalModel exposing (..)
 import ModelHandler exposing (..)
+import ModelUtils exposing (stringToSortType)
 
 
 handle : SkillModal -> Model -> Model
@@ -25,8 +26,14 @@ handle msg model =
         IgnoreCloseSkillModal ->
             ignoreClosureInModal model
 
-        SearchSkill value ->
-            updateSearchSkill value model
+        UpdateSkillFilter value ->
+            updateSearchSkillFilter value model
+        
+        CleanSearchSkillFilter ->
+            updateSearchSkillFilter "" model
+        
+        ChangeSortType value ->
+            updateSortTypeFilter value model
 
 
 ignoreClosureInModal : Model -> Model
@@ -174,10 +181,18 @@ updateSkillAndKeepOther ( idx, oldSkillId, skillType ) skillIdx skill =
         ( idx, oldSkillId, skillType )
 
 
-updateSearchSkill : String -> Model -> Model
-updateSearchSkill value model =
+updateSearchSkillFilter : String -> Model -> Model
+updateSearchSkillFilter value model =
     let
         oldView =
             model.view
     in
     { model | view = { oldView | skillSearch = value } }
+
+updateSortTypeFilter : String -> Model -> Model
+updateSortTypeFilter value model =
+    let
+        oldView =
+            model.view
+    in
+    { model | view = { oldView | skillListSortBy = Debug.log "sortType " (stringToSortType value) }}

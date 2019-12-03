@@ -11,13 +11,6 @@ type alias Model =
     }
 
 
-type SortType
-    = SortByType
-    | SortByName
-    | ReverseSortByType
-    | ReverseSortByName
-
-
 type alias ViewModel =
     { characterModalIsOpen : Bool
     , skillModalIsOpen : Bool

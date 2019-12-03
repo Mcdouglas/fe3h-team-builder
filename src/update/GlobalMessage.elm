@@ -34,7 +34,9 @@ type SkillModal
     | IgnoreCloseSkillModal
     | UpdateSkillPicker ( ( Int, Int ), Maybe Skill, Bool )
     | UpdateBuildWithSkill ( ( Int, Int ), Skill, Bool )
-    | SearchSkill String
+    | UpdateSkillFilter String
+    | CleanSearchSkillFilter
+    | ChangeSortType String
 
 
 type BuildPanel
