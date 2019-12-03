@@ -128,3 +128,19 @@
         background-color: rgba(0, 0, 0, 0.5);
     }
 }
+
+.search-filter{
+    display: flex;
+    width: 30%;
+    background-color: lightgray;
+    margin-bottom: 0.5em;
+    border: 1px solid gray;
+    
+    & > p {
+        margin: auto;
+    }
+
+    & > input {
+        width: 70%;
+    }
+}

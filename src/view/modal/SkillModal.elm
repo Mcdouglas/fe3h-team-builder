@@ -39,16 +39,31 @@ modalSkillPicker model =
             [ class ("modal-content " ++ modalCss)
             , onClick (SModalMsg IgnoreCloseSkillModal)
             ]
-            [ viewSkillGrid model model.view.skillPicker
+            [ viewModalContent model
             , viewSideBar model
             ]
+        ]
+
+
+viewModalContent : Model -> Html Msg
+viewModalContent model =
+    div
+        []
+        [ div
+            [ class "search-filter" ]
+            [ p [] [ text "Search :" ]
+            , input
+                [ placeholder "Skill name", value model.view.skillSearch, onInput (\msg -> SModalMsg (SearchSkill msg)) ]
+                []
+            ]
+        , viewSkillGrid model model.view.skillPicker
         ]
 
 
 viewSkillGrid : Model -> ( ( Int, Int ), Maybe Skill, Bool ) -> Html Msg
 viewSkillGrid model ( ( buildPosition, skillPosition ), maybeSkill, isCombatArt ) =
     let
-        listSkills =
+        listSkill =
             model.team
                 |> List.filter (\( idx, build ) -> idx == buildPosition)
                 |> List.map (\( _, build ) -> build.idCharacter)
@@ -56,9 +71,19 @@ viewSkillGrid model ( ( buildPosition, skillPosition ), maybeSkill, isCombatArt 
                 |> Maybe.andThen (\id -> Just (getSkillList id isCombatArt model.data))
                 |> Maybe.withDefault []
                 |> listSortBy model
+                |> searchTermInList model.view.skillSearch
                 |> List.map (\s -> viewSkillTile model s)
     in
-    div [ class "skills-grid" ] listSkills
+    div [ class "skills-grid" ] listSkill
+
+
+searchTermInList : String -> List Skill -> List Skill
+searchTermInList term list =
+    if (term |> String.trim |> String.length) > 0 then
+        list |> List.filter (\s -> String.contains (String.toLower term) (String.toLower s.name))
+
+    else
+        list
 
 
 listSortBy : Model -> List Skill -> List Skill

@@ -28,6 +28,7 @@ type alias ViewModel =
     , jobPicker : ( Int, Maybe Job )
     , isCreatingBuild : Bool
     , skillListSortBy : SortType
+    , skillSearch : String
     }
 
 

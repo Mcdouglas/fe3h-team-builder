@@ -25,6 +25,9 @@ handle msg model =
         IgnoreCloseSkillModal ->
             ignoreClosureInModal model
 
+        SearchSkill value ->
+            updateSearchSkill value model
+
 
 ignoreClosureInModal : Model -> Model
 ignoreClosureInModal model =
@@ -169,3 +172,12 @@ updateSkillAndKeepOther ( idx, oldSkillId, skillType ) skillIdx skill =
 
     else
         ( idx, oldSkillId, skillType )
+
+
+updateSearchSkill : String -> Model -> Model
+updateSearchSkill value model =
+    let
+        oldView =
+            model.view
+    in
+    { model | view = { oldView | skillSearch = value } }
