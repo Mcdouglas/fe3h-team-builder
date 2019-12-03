@@ -24,9 +24,17 @@ appendMaybeText maybeText maybeOldText =
                     Nothing
 
 
-appendMaybe : Maybe String -> List (Html Msg) -> List (Html Msg)
+appendMaybe : Maybe String -> List String -> List String
 appendMaybe maybe list =
-    Maybe.map text maybe
-        |> Maybe.map (\m -> List.singleton m)
+    Maybe.map List.singleton maybe
         |> Maybe.withDefault []
         |> (++) list
+
+
+boolToInt : Bool -> Int
+boolToInt bool =
+    if bool == True then
+        1
+
+    else
+        0

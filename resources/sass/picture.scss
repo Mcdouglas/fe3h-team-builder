@@ -41,6 +41,17 @@
     opacity: 0.5;
 }
 
+.no-data {
+    content : url("../lib/octicons/circle-slash.svg");
+    opacity: 0.5;
+    margin: auto 0;
+}
+
+img.locked-picture { 
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+}
+
 .skill-picture {
     width: 2em;
     height: 2em;
@@ -60,6 +71,19 @@
 .job-picture {
     width: 3em;
     height: 3em;
+}
+
+.job-big-picture {
+    width: 5em;
+    height: 5em;
+}
+
+.job-button {
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.2);
+
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 0.25rem;
 }
 
 .study-picture {

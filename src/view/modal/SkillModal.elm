@@ -1,6 +1,7 @@
 module SkillModal exposing (..)
 
 import CustomTypes exposing (Job, Skill)
+import ElmUtils exposing (..)
 import GlobalMessage exposing (Msg(..), SkillModal(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
@@ -9,7 +10,9 @@ import Html.Events exposing (..)
 import Job exposing (getJobById)
 import JobView exposing (viewJob)
 import Maybe.Extra exposing (..)
-import ModelHandler exposing (getSkillList)
+import ModelHandler exposing (getActiveSkillByDefault, getPassiveSkillByDefault, getSkillList)
+import ModelUtils exposing (skillTypeToString)
+import NoDataView exposing (viewNoData)
 import Study exposing (getStudyById)
 import StudyView exposing (viewStudy)
 
@@ -30,40 +33,114 @@ modalSkillPicker model =
     div
         [ class "modal-s"
         , hidden (not model.view.skillModalIsOpen)
+        , onClick (SModalMsg CloseSkillModal)
         ]
-        [ div [ class ("modal-content " ++ modalCss) ]
-            [ viewSkillGrid model model.view.skillPicker
+        [ div
+            [ class ("modal-content " ++ modalCss)
+            , onClick (SModalMsg IgnoreCloseSkillModal)
+            ]
+            [ viewModalContent model
             , viewSideBar model
             ]
+        ]
+
+
+viewModalContent : Model -> Html Msg
+viewModalContent model =
+    div
+        []
+        [ div
+            [ class "search-filter" ]
+            [ p [] [ text "Search :" ]
+            , input
+                [ placeholder "Skill name", value model.view.skillSearch, onInput (\msg -> SModalMsg (SearchSkill msg)) ]
+                []
+            ]
+        , viewSkillGrid model model.view.skillPicker
         ]
 
 
 viewSkillGrid : Model -> ( ( Int, Int ), Maybe Skill, Bool ) -> Html Msg
 viewSkillGrid model ( ( buildPosition, skillPosition ), maybeSkill, isCombatArt ) =
     let
-        listSkills =
+        listSkill =
             model.team
                 |> List.filter (\( idx, build ) -> idx == buildPosition)
                 |> List.map (\( _, build ) -> build.idCharacter)
                 |> List.head
                 |> Maybe.andThen (\id -> Just (getSkillList id isCombatArt model.data))
                 |> Maybe.withDefault []
+                |> listSortBy model
+                |> searchTermInList model.view.skillSearch
+                |> List.map (\s -> viewSkillTile model s)
     in
-    div [ class "skills-grid" ]
-        (listSkills
-            |> List.map (\e -> viewSkillPicker model.view.skillPicker e)
-        )
+    div [ class "skills-grid" ] listSkill
 
 
-viewSkillPicker : ( ( Int, Int ), Maybe Skill, Bool ) -> Skill -> Html Msg
-viewSkillPicker ( positions, _, isCombatArt ) skill =
+searchTermInList : String -> List Skill -> List Skill
+searchTermInList term list =
+    if (term |> String.trim |> String.length) > 0 then
+        list |> List.filter (\s -> String.contains (String.toLower term) (String.toLower s.name))
+
+    else
+        list
+
+
+listSortBy : Model -> List Skill -> List Skill
+listSortBy model list =
+    case model.view.skillListSortBy of
+        SortByType ->
+            list |> List.sortBy (\e -> skillTypeToString e.skillType) |> List.sortBy (\e -> boolToInt e.learnByJob)
+
+        ReverseSortByType ->
+            list |> List.sortBy (\e -> skillTypeToString e.skillType) |> List.sortBy (\e -> boolToInt e.learnByJob) |> List.reverse
+
+        SortByName ->
+            list |> List.sortBy .name
+
+        ReverseSortByName ->
+            list |> List.sortBy .name |> List.reverse
+
+
+viewSkillTile : Model -> Skill -> Html Msg
+viewSkillTile model skill =
+    let
+        ( ( buildPosition, skillPosition ), maybeSkill, isCombatArt ) =
+            model.view.skillPicker
+
+        lockedCss =
+            if
+                (model.team
+                    |> List.filter (\( id, b ) -> id == buildPosition)
+                    |> List.head
+                    |> Maybe.map
+                        (\( _, b ) ->
+                            if isCombatArt then
+                                b.listActiveSkill
+
+                            else
+                                b.listPassiveSkill
+                        )
+                    |> Maybe.withDefault []
+                    |> List.filter (\( idx, skillId, skillType ) -> skill.id == skillId && skill.skillType == skillType)
+                    |> List.length
+                )
+                    > 0
+            then
+                "locked-picture"
+
+            else
+                ""
+    in
     div
-        [ class "tile"
-        , onMouseOver (SModalMsg (UpdateSkillPicker ( positions, Just skill, isCombatArt )))
-        , onClick (SModalMsg (UpdateBuildWithSkill ( positions, skill, isCombatArt )))
+        [ class ("tile " ++ lockedCss)
+        , onMouseOver (SModalMsg (UpdateSkillPicker ( ( buildPosition, skillPosition ), Just skill, isCombatArt )))
+        , onClick (SModalMsg (UpdateBuildWithSkill ( ( buildPosition, skillPosition ), skill, isCombatArt )))
         ]
         [ img
-            [ src ("resources/img/skills/" ++ String.fromInt skill.pictureId ++ ".png") ]
+            [ src ("resources/img/skills/" ++ String.fromInt skill.pictureId ++ ".png")
+            , class lockedCss
+            ]
             []
         , p [] [ text skill.name ]
         , div [ class "tile-overlay " ] []
@@ -75,6 +152,14 @@ viewSideBar model =
     let
         ( ( idx, skillId ), maybeSkill, isCombatArt ) =
             model.view.skillPicker
+
+        getSkillByDefault =
+            case isCombatArt of
+                True ->
+                    getActiveSkillByDefault
+
+                False ->
+                    getPassiveSkillByDefault
     in
     case maybeSkill of
         Just skill ->
@@ -85,7 +170,9 @@ viewSideBar model =
 
         Nothing ->
             div [ class "sidebar" ]
-                [ buttonCloseModal ]
+                [ buttonCloseModal
+                , viewSkillDetail getSkillByDefault
+                ]
 
 
 viewSkillDetail : Skill -> Html Msg
@@ -122,19 +209,37 @@ viewSkillDetail skill =
 
 viewPassiveSkillDescription : Skill -> Html Msg
 viewPassiveSkillDescription skill =
+    let
+        description =
+            if (skill.description |> String.trim |> String.length) > 0 then
+                p [] [ text skill.description ]
+
+            else
+                viewNoData
+    in
     div []
-        [ div [ class "skill-description" ] [ p [] [ text "Effect" ], p [] [ text skill.description ] ]
+        [ div [ class "skill-description" ] [ p [] [ text "Effect" ], description ]
         , viewStudyDescription skill
+        , viewJobToMaster skill
         , viewJobsDescription skill
         ]
 
 
 viewActiveSkillDescription : Skill -> Html Msg
 viewActiveSkillDescription skill =
+    let
+        description =
+            if (skill.description |> String.trim |> String.length) > 0 then
+                p [] [ text skill.description ]
+
+            else
+                viewNoData
+    in
     div []
         [ viewCombatArtDescription skill
-        , div [ class "skill-description" ] [ p [] [ text "Effect" ], p [] [ text skill.description ] ]
+        , div [ class "skill-description" ] [ p [] [ text "Effect" ], description ]
         , viewStudyDescription skill
+        , viewJobToMaster skill
         , viewJobsDescription skill
         ]
 
@@ -147,10 +252,25 @@ viewStudyDescription skill =
     in
     case maybeStudy of
         Just study ->
-            div [ class "skill-description" ] [ p [] [ text "Skill level" ], viewStudy study ]
+            div [ class "skill-description list-study" ] [ p [] [ text "Certificats req." ], viewStudy study ]
 
         Nothing ->
-            div [] []
+            div [ class "skill-description list-study" ] [ p [] [ text "Certificats req." ], viewNoData ]
+
+
+viewJobToMaster : Skill -> Html Msg
+viewJobToMaster skill =
+    let
+        maybeJobs =
+            skill.jobIdList
+                |> List.map (\id -> getJobById id)
+                |> Maybe.Extra.values
+    in
+    if (maybeJobs |> List.length) > 0 then
+        div [ class "skill-description job-description" ] ([ p [] [ text "Class to master" ] ] ++ List.map (\j -> viewJob j) maybeJobs)
+
+    else
+        div [ class "skill-description job-description" ] [ p [] [ text "Class to master" ], viewNoData ]
 
 
 viewJobsDescription : Skill -> Html Msg
@@ -159,19 +279,17 @@ viewJobsDescription skill =
         jobToMasterList =
             skill.jobIdList
                 |> List.map (\id -> getJobById id)
-
-        showDivIfListIsNotEmpty =
-            List.length jobToMasterList > 0
+                |> List.map (\mj -> viewJobDescription mj)
+                |> List.concat
     in
-    case showDivIfListIsNotEmpty of
-        True ->
-            div [ class "skill-description" ] ([ p [] [ text "Class mastered" ] ] ++ List.map (\e -> viewJobDescription e) jobToMasterList)
+    if List.length jobToMasterList > 0 then
+        div [ class "skill-description list-study" ] ([ p [] [ text "Class's certif." ] ] ++ jobToMasterList)
 
-        False ->
-            div [] []
+    else
+        div [ class "skill-description list-study" ] [ p [] [ text "Class's certif." ], viewNoData ]
 
 
-viewJobDescription : Maybe Job -> Html Msg
+viewJobDescription : Maybe Job -> List (Html Msg)
 viewJobDescription maybeJob =
     let
         listStudyToReach =
@@ -182,12 +300,7 @@ viewJobDescription maybeJob =
                 |> Maybe.Extra.combine
                 |> Maybe.withDefault []
     in
-    case maybeJob of
-        Just job ->
-            div [ class "job-description" ] ([ viewJob job ] ++ List.map (\s -> viewStudy s) listStudyToReach)
-
-        Nothing ->
-            div [] [ text "No data" ]
+    List.map (\s -> viewStudy s) listStudyToReach
 
 
 viewCombatArtDescription : Skill -> Html Msg

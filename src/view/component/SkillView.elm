@@ -6,10 +6,11 @@ import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
+import Popover exposing (..)
 
 
-viewSkill : Model -> ( ( Int, Int ), Maybe Skill, Bool ) -> Html Msg
-viewSkill model ( positions, maybeSkill, isCombatArt ) =
+skillButton : Model -> ( ( Int, Int ), Maybe Skill, Bool ) -> Html Msg
+skillButton model ( positions, maybeSkill, isCombatArt ) =
     let
         onClickEvent =
             onClick (SModalMsg (OpenSkillModal ( positions, maybeSkill, isCombatArt )))
@@ -21,16 +22,33 @@ viewSkill model ( positions, maybeSkill, isCombatArt ) =
                 , p
                     []
                     [ text value.name ]
-                , div
-                    [ class "custom-popover above" ]
-                    [ p [ class "popover-title" ] [ text ("[" ++ value.name ++ "]") ]
-                    , p [ class "popover-text" ] [ text value.description ]
-                    , p [ class "popover-instruction" ] [ text "Click to change " ]
-                    ]
+                , viewPopoverClickable value.name value.description "Click to change"
                 ]
 
         _ ->
             div [ class "add-skill", onClickEvent ] []
+
+
+viewSkill : Skill -> Html Msg
+viewSkill skill =
+    let
+        cssClass =
+            case skill.combatArt of
+                True ->
+                    "art-picture"
+
+                False ->
+                    "skill-picture"
+    in
+    div []
+        [ div
+            [ class ("qs " ++ cssClass)
+            , style "content" ("url(\"resources/img/skills/" ++ String.fromInt skill.pictureId ++ ".png\")")
+            ]
+            []
+        , p [] [ text skill.name ]
+        , viewPopover skill.name skill.description
+        ]
 
 
 getSkillTile : Int -> Bool -> Attribute Msg -> Html Msg

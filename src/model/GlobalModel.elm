@@ -11,13 +11,24 @@ type alias Model =
     }
 
 
+type SortType
+    = SortByType
+    | SortByName
+    | ReverseSortByType
+    | ReverseSortByName
+
+
 type alias ViewModel =
     { characterModalIsOpen : Bool
-    , characterPicker : ( Int, Maybe Character )
     , skillModalIsOpen : Bool
-    , skillPicker : ( ( Int, Int ), Maybe Skill, Bool )
     , jobModalIsOpen : Bool
+    , skipNextClosure : Bool
+    , characterPicker : ( Int, Maybe Character )
+    , skillPicker : ( ( Int, Int ), Maybe Skill, Bool )
     , jobPicker : ( Int, Maybe Job )
+    , isCreatingBuild : Bool
+    , skillListSortBy : SortType
+    , skillSearch : String
     }
 
 

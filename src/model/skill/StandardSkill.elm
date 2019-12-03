@@ -28,7 +28,7 @@ initStandardSkills =
     , StandardSkill 22 18 "Lance Prowess Lv.3" 17 False [] False "Grants Hit +10, Avoid +10 and Critical Evade +7 when equipped with Lance." Nothing Nothing Nothing Nothing Nothing Nothing
     , StandardSkill 28 81 "Swordbreaker" 18 False [] False "Grants Hit/Avo +20 when using a lance against sword users." Nothing Nothing Nothing Nothing Nothing Nothing
     , StandardSkill 29 19 "Lance Prowess Lv.4" 19 False [] False "Grants Hit +12, Avoid +12 and Critical Evade +8 when equipped with Lance." Nothing Nothing Nothing Nothing Nothing Nothing
-    , StandardSkill 34 20 "Lance Prowess Lv.5" 21 False [] False "Grants Hit +15, Avoid +15 and Critical Evade +10 when equipped with Lance." Nothing Nothing Nothing Nothing Nothing Nothing
+    , StandardSkill 34 21 "Lance Prowess Lv.5" 21 False [] False "Grants Hit +15, Avoid +15 and Critical Evade +10 when equipped with Lance." Nothing Nothing Nothing Nothing Nothing Nothing
     , StandardSkill 35 53 "Lance Critical +10" 22 False [] False "Grants Crit +10 when using a lance." Nothing Nothing Nothing Nothing Nothing Nothing
     , StandardSkill 36 75 "Lancefaire" 23 False [] False "Might +5 when a lance is equipped." Nothing Nothing Nothing Nothing Nothing Nothing
 
@@ -100,7 +100,7 @@ initStandardSkills =
     , StandardSkill 127 102 "Rally Dexterity" 89 False [ 21 ] False "Use Rally to grant Dex +8 to an ally." Nothing Nothing Nothing Nothing Nothing Nothing
     , StandardSkill 128 103 "Rally Resistance" 89 False [ 3 ] False "Use Rally to grant Res +4 to an ally." Nothing Nothing Nothing Nothing Nothing Nothing
     , StandardSkill 129 105 "Rally Speed" 89 False [ 16 ] False "Use Rally to grant Spd +4 to an ally." Nothing Nothing Nothing Nothing Nothing Nothing
-    , StandardSkill 130 182 "Model Leader" 89 False [ 0, 1, 2, 10, 18, 26 ] False "Doubles experience earned for battalions." Nothing Nothing Nothing Nothing Nothing Nothing
+    , StandardSkill 130 183 "Model Leader" 89 False [ 0, 1, 2, 10, 18, 26 ] False "Doubles experience earned for battalions." Nothing Nothing Nothing Nothing Nothing Nothing
     , StandardSkill 131 155 "Defense Tactics" 90 False [] False "Battalion endurance takes half damage." Nothing Nothing Nothing Nothing Nothing Nothing
     , StandardSkill 132 50 "Authority Prowess Lv.4" 91 False [] False "Grants Mt +8 with gambits." Nothing Nothing Nothing Nothing Nothing Nothing
     , StandardSkill 133 158 "Battalion Vantage" 92 False [ 10, 21 ] False "When foe initiates combat, unit still attacks first if battalion endurance is ≤ 1/3." Nothing Nothing Nothing Nothing Nothing Nothing

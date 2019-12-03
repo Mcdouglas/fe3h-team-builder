@@ -52,15 +52,4 @@ initJobSkills =
     , JobSkill 30 54 "Axe Critical +10" [ 22 ] False "Critical +10 when equipped with an axe." Nothing Nothing Nothing Nothing Nothing Nothing
     , JobSkill 31 60 "Critical +20" [ 32 ] False "Critical +20." Nothing Nothing Nothing Nothing Nothing Nothing
     , JobSkill 32 109 "Fiendish Blow" [ 29 ] False "Mag +6 when initiating attack." Nothing Nothing Nothing Nothing Nothing Nothing
-
-    --- Combat Arts
-    , JobSkill 33 188 "Flickering Flower" [ 42 ] True "After combat, prevents foe from moving for 1 turn." (Just 3) (Just 10) (Just 10) (Just 10) Nothing (Just ( 1, 1 ))
-    , JobSkill 34 187 "Paraselene" [ 44 ] True "After combat, user moves 1 space backwards." (Just 3) (Just 10) Nothing Nothing (Just 10) (Just ( 1, 1 ))
-    , JobSkill 35 189 "Wind God" [ 46 ] True "" (Just 5) (Just 20) Nothing Nothing Nothing (Just ( 2, 3 ))
-    , JobSkill 36 186 "Assassinate" [ 20 ] True "Can kill enemies instantly." (Just 5) Nothing (Just 15) Nothing (Just 15) (Just ( 1, 1 ))
-    , JobSkill 37 186 "Astra" [ 18 ] True "5 consecutive hits at 30% Mt." (Just 9) Nothing (Just -10) Nothing Nothing (Just ( 1, 1 ))
-    , JobSkill 38 191 "Triangle Attack" [ 10 ] True "Can only be triggered when 3 allied Flying units (including the user) are adjacent to the same enemy. Only user needs to know Triangle Attack." (Just 3) (Just 8) (Just 30) (Just 40) Nothing (Just ( 1, 1 ))
-    , JobSkill 39 188 "War Master's Strike" [ 32 ] True "Effective against all foes." (Just 5) (Just 3) (Just 30) Nothing Nothing (Just ( 1, 1 ))
-    , JobSkill 40 189 "Hunter's Volley" [ 25 ] True "2 consecutive hits." (Just 5) (Just 1) (Just 15) (Just 10) Nothing (Just ( 2, 3 ))
-    , JobSkill 41 190 "Fierce Iron Fist" [ 26 ] True "3 consecutive hits." (Just 5) (Just 1) Nothing (Just 10) Nothing (Just ( 1, 1 ))
     ]

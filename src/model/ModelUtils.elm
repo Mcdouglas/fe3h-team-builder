@@ -93,6 +93,28 @@ rankToId rank =
             11
 
 
+jobCategoryIdToString : Int -> String
+jobCategoryIdToString id =
+    case id of
+        0 ->
+            "Starting"
+
+        1 ->
+            "Beginner"
+
+        2 ->
+            "Intermediate"
+
+        3 ->
+            "Advanced"
+
+        4 ->
+            "Master"
+
+        _ ->
+            "Unique"
+
+
 genderToString : GenderUnionType -> String
 genderToString gender =
     case gender of
@@ -111,3 +133,22 @@ magicUsageToString gender =
 
         CanUseSomeMagic ->
             "Can use some magic"
+
+
+skillTypeToString : SkillType -> String
+skillTypeToString skillType =
+    case skillType of
+        MasteryType ->
+            "MasteryType"
+
+        StandardType ->
+            "StandardType"
+
+        JobType ->
+            "JobType"
+
+        CharacterType ->
+            "CharacterType"
+
+        NoType ->
+            "NoType"

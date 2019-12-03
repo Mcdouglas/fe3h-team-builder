@@ -8,10 +8,15 @@ import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import Job exposing (getJobsAvailableForCharacter)
-import JobView exposing (getJobPicture)
+import Job exposing (getJobByDefault, getJobsAvailableForCharacter)
+import JobSkill exposing (getJobSkillsByJob)
+import JobView exposing (getJobTile)
+import List.Extra exposing (groupWhile)
+import MasterySkill exposing (getMasterySkillsForJob)
 import Maybe.Extra exposing (..)
-import ModelUtils exposing (jobToDescription)
+import ModelUtils exposing (jobCategoryIdToString, jobSkillToSkill, jobToDescription, masterySkillToSkill)
+import NoDataView exposing (viewNoData)
+import SkillView exposing (viewSkill)
 import Study exposing (getStudyById)
 import StudyView exposing (viewStudy)
 
@@ -21,9 +26,12 @@ modalJobPicker model =
     div
         [ class "modal-j"
         , hidden (not model.view.jobModalIsOpen)
+        , onClick (JModalMsg CloseJobModal)
         ]
         [ div
-            [ class "modal-content" ]
+            [ class "modal-content"
+            , onClick (JModalMsg IgnoreCloseJobModal)
+            ]
             [ viewJobGrid model
             , viewSideBar model
             ]
@@ -33,35 +41,62 @@ modalJobPicker model =
 viewJobGrid : Model -> Html Msg
 viewJobGrid model =
     let
-        ( buildIdx, _ ) =
+        ( buildIdx, maybeJob ) =
             model.view.jobPicker
 
         listJob =
             model.team
-                |> List.filter (\( idx, build ) -> idx == buildIdx)
+                |> List.filter (\( idx, _ ) -> idx == buildIdx)
                 |> List.head
-                |> Maybe.map (\( idx, build ) -> build.idCharacter)
-                |> Maybe.andThen (\id -> getCharacterById id)
+                |> Maybe.andThen (\( _, build ) -> getCharacterById build.idCharacter)
                 |> Maybe.map (\character -> getJobsAvailableForCharacter character)
                 |> Maybe.withDefault model.data.jobs
+                |> List.map (\j -> ( j.jobCategoryId, j ))
+                |> List.Extra.groupWhile (\x y -> Tuple.first x == Tuple.first y)
+                |> List.map (\( a, l ) -> viewJobRow model ( buildIdx, maybeJob ) a l)
     in
-    div [ class "jobs-grid" ] (List.map (\e -> viewJobTile model e) listJob)
+    div [ class "jobs-grid" ] listJob
 
 
-viewJobTile : Model -> Job -> Html Msg
-viewJobTile model job =
+viewJobRow : Model -> ( Int, Maybe Job ) -> ( Int, Job ) -> List ( Int, Job ) -> Html Msg
+viewJobRow model shift ( categoryId, job ) listJobs =
     let
-        ( buildIdx, _ ) =
-            model.view.jobPicker
+        customCss =
+            if List.length listJobs >= 7 then
+                "jobs-two-columns"
+
+            else
+                ""
     in
     div
-        [ class "job-tile"
+        [ class ("jobs-column " ++ customCss)
+        ]
+        ([ viewJobTile model shift job ] ++ (listJobs |> List.map (\( _, e ) -> viewJobTile model shift e)))
+
+
+viewJobTile : Model -> ( Int, Maybe Job ) -> Job -> Html Msg
+viewJobTile model ( buildIdx, _ ) job =
+    let
+        lockedCss =
+            if
+                (model.team
+                    |> List.filter (\( idx, _ ) -> idx == buildIdx)
+                    |> List.filter (\( _, build ) -> job.id == build.jobId)
+                    |> List.length
+                )
+                    > 0
+            then
+                "locked-picture"
+
+            else
+                ""
+    in
+    div
+        [ class ("job-tile " ++ lockedCss)
         , onMouseOver (JModalMsg (UpdateJobPicker ( buildIdx, Just job )))
         , onClick (JModalMsg (UpdateBuild ( buildIdx, job )))
         ]
-        [ getJobPicture job.idPicture
-        , text job.name
-        ]
+        [ getJobTile lockedCss job ]
 
 
 viewSideBar : Model -> Html Msg
@@ -75,20 +110,38 @@ viewSideBar model =
 viewJobDetail : Model -> Html Msg
 viewJobDetail model =
     let
-        ( _, maybeJob ) =
+        currentJob =
             model.view.jobPicker
-    in
-    case maybeJob of
-        Just currentJob ->
-            div []
-                [ viewTitleDetail currentJob
-                , viewJobDescription currentJob
-                , viewCertificationRequirement currentJob
-                , viewSkillMastery currentJob
-                ]
+                |> Tuple.second
+                |> Maybe.withDefault getJobByDefault
 
-        Nothing ->
-            div [] [ text "No data" ]
+        category =
+            jobCategoryIdToString currentJob.jobCategoryId
+
+        description =
+            jobToDescription currentJob
+
+        maybeExperience =
+            if description.experience /= Nothing then
+                description.experience
+
+            else
+                description.customExperience
+
+        noteText =
+            appendMaybeText description.note Nothing |> appendMaybeText description.magicUsage
+    in
+    div []
+        [ viewTitleDetail currentJob
+        , div [ class "job-description" ] [ p [] [ text "Category" ], p [] [ text category ] ]
+        , viewJobSkills currentJob
+        , div [ class "job-description" ] [ p [] [ text "Level minimum" ], description.level |> Maybe.map (\l -> p [] [ text ("Available at level " ++ l) ]) |> Maybe.withDefault viewNoData ]
+        , div [ class "job-description" ] [ p [] [ text "Note" ], noteText |> Maybe.map (\n -> p [] [ text n ]) |> Maybe.withDefault viewNoData ]
+        , div [ class "job-description" ] [ p [] [ text "Gender restriction" ], description.gender |> Maybe.map (\g -> p [] [ text (g ++ " only") ]) |> Maybe.withDefault viewNoData ]
+        , viewCertificationRequirement currentJob
+        , div [ class "job-description" ] [ p [] [ text "Experience to master" ], maybeExperience |> Maybe.map (\e -> p [] [ text (e ++ " class xp") ]) |> Maybe.withDefault viewNoData ]
+        , viewSkillMastery currentJob
+        ]
 
 
 viewTitleDetail : Job -> Html Msg
@@ -103,30 +156,6 @@ viewTitleDetail job =
         ]
 
 
-viewJobDescription : Job -> Html Msg
-viewJobDescription job =
-    let
-        description =
-            jobToDescription job
-
-        maybeExperience =
-            if description.experience /= Nothing then
-                description.experience
-
-            else
-                description.customExperience
-
-        noteText =
-            appendMaybeText description.note Nothing |> appendMaybeText description.magicUsage
-    in
-    div []
-        [ maybeExperience |> Maybe.map (\e -> div [ class "job-description" ] [ p [] [ text "Experience to master" ], p [] [ text (e ++ " class xp") ] ]) |> Maybe.withDefault (div [] [])
-        , description.level |> Maybe.map (\l -> div [ class "job-description" ] [ p [] [ text "Level minimum" ], p [] [ text ("Available at level " ++ l) ] ]) |> Maybe.withDefault (div [] [])
-        , description.gender |> Maybe.map (\g -> div [ class "job-description" ] [ p [] [ text "Gender restriction" ], p [] [ text (g ++ " only") ] ]) |> Maybe.withDefault (div [] [])
-        , noteText |> Maybe.map (\n -> div [ class "job-description" ] [ p [] [ text "Note" ], p [] [ text n ] ]) |> Maybe.withDefault (div [] [])
-        ]
-
-
 viewCertificationRequirement : Job -> Html Msg
 viewCertificationRequirement job =
     let
@@ -134,17 +163,49 @@ viewCertificationRequirement job =
             job.studyIdList
                 |> List.map getStudyById
                 |> Maybe.Extra.values
-    in
-    if List.length studyList > 0 then
-        div [ class "job-description" ] ([ p [] [ text "Skill level" ] ] ++ List.map viewStudy studyList)
 
-    else
-        div [] []
+        studyListDiv =
+            if List.length studyList > 0 then
+                List.map viewStudy studyList
+
+            else
+                [ div [ class "no-data" ] [] ]
+    in
+    div [ class "job-description list-study" ] ([ p [] [ text "Certificats req." ] ] ++ studyListDiv)
+
+
+viewJobSkills : Job -> Html Msg
+viewJobSkills job =
+    let
+        skillList =
+            getJobSkillsByJob job.id
+                |> List.map (\s -> viewSkill (jobSkillToSkill s))
+
+        skillListDiv =
+            if List.length skillList > 0 then
+                skillList
+
+            else
+                [ div [ class "no-data" ] [] ]
+    in
+    div [ class "job-description list-jobskill" ] ([ p [] [ text "Job skills" ] ] ++ skillListDiv)
 
 
 viewSkillMastery : Job -> Html Msg
 viewSkillMastery job =
-    div [] []
+    let
+        skillList =
+            getMasterySkillsForJob job.id
+                |> List.map (\s -> viewSkill (masterySkillToSkill s))
+
+        skillListDiv =
+            if List.length skillList > 0 then
+                skillList
+
+            else
+                [ div [ class "no-data" ] [] ]
+    in
+    div [ class "job-description list-jobskill" ] ([ p [] [ text "Skill learned" ] ] ++ skillListDiv)
 
 
 buttonCloseModal : Html Msg

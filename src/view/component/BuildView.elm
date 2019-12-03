@@ -20,14 +20,6 @@ viewBuild model ( idx, build ) =
     let
         maybeCharacter =
             getCharacterById build.idCharacter
-
-        buildLockDiv =
-            case maybeCharacter of
-                Just _ ->
-                    div [] []
-
-                Nothing ->
-                    div [ class "item-a-locked" ] []
     in
     div [ class "item-a" ]
         [ sectionCharacter model idx maybeCharacter
@@ -35,7 +27,6 @@ viewBuild model ( idx, build ) =
         , sectionActiveSkills model ( idx, build )
         , sectionJob model ( idx, build )
         , buttonBuildInfo build
-        , buildLockDiv
         ]
 
 
@@ -50,7 +41,7 @@ sectionPassiveSkills model ( buildIdx, build ) =
                 |> List.take 5
     in
     div [ class "item-a2" ]
-        (List.map (\e -> viewSkill model e) listPassiveSkill)
+        (List.map (\e -> skillButton model e) listPassiveSkill)
 
 
 sectionActiveSkills : Model -> ( Int, Build ) -> Html Msg
@@ -64,7 +55,7 @@ sectionActiveSkills model ( buildIdx, build ) =
                 |> List.take 3
     in
     div [ class "item-a3" ]
-        (List.map (\e -> viewSkill model e) listActiveSkill)
+        (List.map (\e -> skillButton model e) listActiveSkill)
 
 
 sectionJob : Model -> ( Int, Build ) -> Html Msg

@@ -8,6 +8,7 @@ import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
+import Popover exposing (..)
 
 
 sectionCharacter : Model -> Int -> Maybe Character -> Html Msg
@@ -66,11 +67,7 @@ viewCharacterSkillTile model id =
                 , p
                     []
                     [ text value.name ]
-                , div
-                    [ class "custom-popover above" ]
-                    [ p [ class "popover-title" ] [ text ("[" ++ value.name ++ "]") ]
-                    , p [ class "popover-text" ] [ text value.description ]
-                    ]
+                , viewPopover value.name value.description
                 ]
 
         Nothing ->
@@ -99,11 +96,7 @@ viewCrestTile model crestId =
                 , p
                     []
                     [ text crest.name ]
-                , div
-                    [ class "custom-popover above" ]
-                    [ p [ class "popover-title" ] [ text ("[" ++ crest.name ++ "]") ]
-                    , p [ class "popover-text" ] [ text crest.description ]
-                    ]
+                , viewPopover crest.name crest.description
                 ]
 
         Nothing ->

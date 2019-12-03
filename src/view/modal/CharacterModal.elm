@@ -1,6 +1,6 @@
 module CharacterModal exposing (..)
 
-import Character exposing (getCharacterById)
+import Character exposing (getCharacterByDefault)
 import CharacterSkill exposing (..)
 import CharacterView exposing (..)
 import Crest exposing (..)
@@ -18,39 +18,34 @@ modalCharacterPicker model =
         ( idx, maybeCharacter ) =
             model.view.characterPicker
 
-        newMaybeCharacter =
-            if maybeCharacter /= Nothing then
-                maybeCharacter
-
-            else
-                getCharacterById 0
+        character =
+            maybeCharacter |> Maybe.withDefault getCharacterByDefault
     in
-    case newMaybeCharacter of
-        Just character ->
-            div
-                [ class "modal-c"
-                , hidden (not model.view.characterModalIsOpen)
-                ]
-                [ div [ class "modal-content" ]
-                    [ viewCharacterGrid model ( idx, character )
-                    , viewSideBar model character
-                    ]
-                ]
+    div
+        [ class "modal-c"
+        , hidden (not model.view.characterModalIsOpen)
+        , onClick (CModalMsg CloseCharacterModal)
+        ]
+        [ div
+            [ class "modal-content"
+            , onClick (CModalMsg IgnoreCloseCharacterModal)
+            ]
+            [ viewCharacterGrid model idx
+            , viewSideBar model character
+            ]
+        ]
 
-        Nothing ->
-            div [] [ text "No heroes found" ]
 
-
-viewCharacterGrid : Model -> ( Int, Character ) -> Html Msg
-viewCharacterGrid model ( position, _ ) =
+viewCharacterGrid : Model -> Int -> Html Msg
+viewCharacterGrid model buildIdx =
     div [ class "characters-grid" ]
         (model.data.characters
-            |> List.map (\e -> viewCharacterPicker ( position, e ))
+            |> List.map (\e -> viewCharacterPicker model buildIdx e)
         )
 
 
-viewCharacterPicker : ( Int, Character ) -> Html Msg
-viewCharacterPicker ( position, element ) =
+viewCharacterPicker : Model -> Int -> Character -> Html Msg
+viewCharacterPicker model buildIdx element =
     let
         bannerCss =
             case element.bannerId of
@@ -70,14 +65,23 @@ viewCharacterPicker ( position, element ) =
 
                 Nothing ->
                     "avatar-tile"
+
+        lockedCss =
+            if model.team |> List.map (\( _, b ) -> b.idCharacter) |> List.member element.id then
+                "locked-picture"
+
+            else
+                ""
     in
     div
-        [ class "tile"
-        , onMouseOver (CModalMsg (UpdateCharacterPicker ( position, Just element )))
-        , onClick (CModalMsg (UpdateBuildWithCharacter ( position, element )))
+        [ class ("tile " ++ lockedCss)
+        , onMouseOver (CModalMsg (UpdateCharacterPicker ( buildIdx, Just element )))
+        , onClick (CModalMsg (UpdateBuildWithCharacter ( buildIdx, element )))
         ]
         [ img
-            [ src ("resources/img/portraits/" ++ String.fromInt element.id ++ ".png") ]
+            [ src ("resources/img/portraits/" ++ String.fromInt element.id ++ ".png")
+            , class lockedCss
+            ]
             []
         , div [ class ("tile-overlay " ++ bannerCss) ] []
         ]

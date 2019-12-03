@@ -91,10 +91,10 @@ downBuild model buildIdx =
 addBuild : Model -> Model
 addBuild model =
     let
-        idx =
-            List.length model.team
+        oldView =
+            model.view
 
-        newTeam =
-            ( idx, initBuild -1 ) :: model.team
+        newView =
+            { oldView | characterModalIsOpen = True, isCreatingBuild = True }
     in
-    { model | team = newTeam }
+    { model | view = newView }
