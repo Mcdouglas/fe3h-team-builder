@@ -11,10 +11,11 @@ import Job exposing (getJobById)
 import JobView exposing (viewJob)
 import Maybe.Extra exposing (..)
 import ModelHandler exposing (getActiveSkillByDefault, getPassiveSkillByDefault, getSkillList)
-import ModelUtils exposing (skillTypeToString, listSortType, sortTypeToKeyValue)
+import ModelUtils exposing (listSortType, skillTypeToString, sortTypeToKeyValue)
 import NoDataView exposing (viewNoData)
 import Study exposing (getStudyById)
 import StudyView exposing (viewStudy)
+
 
 modalSkillPicker : Model -> Html Msg
 modalSkillPicker model =
@@ -55,7 +56,7 @@ viewModalContent model =
 
 
 viewSearchFilter : Model -> Html Msg
-viewSearchFilter model = 
+viewSearchFilter model =
     div
         [ class "filter search-filter" ]
         [ p [] [ text "Search :" ]
@@ -73,16 +74,16 @@ viewSearchFilter model =
 
 viewSortFilter : Model -> Html Msg
 viewSortFilter model =
-    div [ class "filter sort-filter" ] 
-    [ p [] [ text "Sort by :"]
-    , select [ onInput (\e -> SModalMsg (ChangeSortType e)) ] (listSortType |> List.map (\e -> sortTypeToKeyValue e) |> List.map (\(v, t) -> option [ value v ] [ text t ]))
-    ]
+    div [ class "filter sort-filter" ]
+        [ p [] [ text "Sort by :" ]
+        , select [ onInput (\e -> SModalMsg (ChangeSortType e)) ] (listSortType |> List.map (\e -> sortTypeToKeyValue e) |> List.map (\( v, t ) -> option [ value v ] [ text t ]))
+        ]
 
 
 viewSkillGrid : Model -> Html Msg
 viewSkillGrid model =
     let
-        ( ( buildPosition, skillPosition ), maybeSkill, isCombatArt ) = 
+        ( ( buildPosition, skillPosition ), maybeSkill, isCombatArt ) =
             model.view.skillPicker
 
         listSkill =

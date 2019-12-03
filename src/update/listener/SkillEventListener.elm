@@ -28,10 +28,10 @@ handle msg model =
 
         UpdateSkillFilter value ->
             updateSearchSkillFilter value model
-        
+
         CleanSearchSkillFilter ->
             updateSearchSkillFilter "" model
-        
+
         ChangeSortType value ->
             updateSortTypeFilter value model
 
@@ -189,10 +189,11 @@ updateSearchSkillFilter value model =
     in
     { model | view = { oldView | skillSearch = value } }
 
+
 updateSortTypeFilter : String -> Model -> Model
 updateSortTypeFilter value model =
     let
         oldView =
             model.view
     in
-    { model | view = { oldView | skillListSortBy = Debug.log "sortType " (stringToSortType value) }}
+    { model | view = { oldView | skillListSortBy = Debug.log "sortType " (stringToSortType value) } }

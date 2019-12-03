@@ -4,6 +4,7 @@ import Browser exposing (sandbox)
 import BuildEventListener exposing (handle)
 import BuildInfoHandler exposing (toggleBuildInfo)
 import CharacterEventListener exposing (handle)
+import CustomTypes exposing (SortType(..))
 import DataHandler exposing (..)
 import ErrorHandler exposing (..)
 import GlobalMessage exposing (Msg(..))
@@ -11,7 +12,6 @@ import GlobalModel exposing (..)
 import JobEventListener exposing (handle)
 import SkillEventListener exposing (..)
 import TeamBuilder exposing (..)
-import CustomTypes exposing (SortType(..))
 
 
 init : Model
