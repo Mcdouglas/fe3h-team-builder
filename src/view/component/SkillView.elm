@@ -6,6 +6,7 @@ import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
+import Popover exposing (..)
 
 
 skillButton : Model -> ( ( Int, Int ), Maybe Skill, Bool ) -> Html Msg
@@ -21,12 +22,7 @@ skillButton model ( positions, maybeSkill, isCombatArt ) =
                 , p
                     []
                     [ text value.name ]
-                , div
-                    [ class "custom-popover above" ]
-                    [ p [ class "popover-title" ] [ text ("[" ++ value.name ++ "]") ]
-                    , p [ class "popover-text" ] [ text value.description ]
-                    , p [ class "popover-instruction" ] [ text "Click to change " ]
-                    ]
+                , viewPopoverClickable value.name value.description "Click to change"
                 ]
 
         _ ->
@@ -46,11 +42,12 @@ viewSkill skill =
     in
     div []
         [ div
-            [ class cssClass
+            [ class ("qs " ++ cssClass)
             , style "content" ("url(\"resources/img/skills/" ++ String.fromInt skill.pictureId ++ ".png\")")
             ]
             []
         , p [] [ text skill.name ]
+        , viewPopover skill.name skill.description
         ]
 
 

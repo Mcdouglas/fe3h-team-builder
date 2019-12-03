@@ -11,6 +11,7 @@ import Job exposing (..)
 import JobCategory exposing (getJobCategoryById)
 import JobSkill exposing (..)
 import ModelUtils exposing (jobToDescription)
+import Popover exposing (..)
 
 
 viewJob : Job -> Html Msg
@@ -80,24 +81,18 @@ buttonJob model buildIdx maybeJob =
                 jobDescription =
                     jobToDescription job
 
-                listHtml =
+                descriptionMultiline =
                     appendMaybe (jobDescription.level |> Maybe.map (\e -> "Lvl req. " ++ e)) []
                         |> appendMaybe (jobDescription.customExperience |> Maybe.map (\e -> "Exp req. " ++ e))
                         |> appendMaybe (jobDescription.experience |> Maybe.map (\e -> "Exp req. " ++ e))
                         |> appendMaybe jobDescription.note
                         |> appendMaybe (jobDescription.gender |> Maybe.map (\t -> t ++ " only"))
                         |> appendMaybe jobDescription.magicUsage
-                        |> List.intersperse (br [] [])
             in
             div [ class "item-a4a" ]
                 [ getJobButton onClickEvent job.idPicture
                 , p [] [ text job.name ]
-                , div
-                    [ class "custom-popover above" ]
-                    [ p [ class "popover-title" ] [ text ("[" ++ job.name ++ "]") ]
-                    , p [ class "popover-text" ] listHtml
-                    , p [ class "popover-instruction" ] [ text "Click to change " ]
-                    ]
+                , viewPopoverMultiline job.name descriptionMultiline "Click to change"
                 ]
 
         Nothing ->
@@ -125,10 +120,10 @@ addJobButton onClickEvent =
 
 
 viewJobSkill : JobSkill -> Html Msg
-viewJobSkill element =
+viewJobSkill skill =
     let
         getSkillPicture =
-            case element.combatArt of
+            case skill.combatArt of
                 True ->
                     getSkillJobActivePicture
 
@@ -136,13 +131,9 @@ viewJobSkill element =
                     getSkillJobPassivePicture
     in
     div []
-        [ getSkillPicture element.pictureId
-        , p [] [ text element.name ]
-        , div
-            [ class "custom-popover above" ]
-            [ p [ class "popover-title" ] [ text ("[" ++ element.name ++ "]") ]
-            , p [ class "popover-text" ] [ text element.description ]
-            ]
+        [ getSkillPicture skill.pictureId
+        , p [] [ text skill.name ]
+        , viewPopover skill.name skill.description
         ]
 
 
