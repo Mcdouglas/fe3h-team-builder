@@ -16,14 +16,14 @@ initStaticData =
     DataModel initStudies initJobCategories initJobs initJobSkills initMasterySkills initStandardSkills initCharacters
 
 
+initTeam : List ( Int, Build )
+initTeam =
+    [ ( 0, initBuild 0 ) ]
+
+
 initBuild : Int -> Build
 initBuild idCharacter =
     Build idCharacter [ ( 0, -1, NoType ), ( 1, -1, NoType ), ( 2, -1, NoType ), ( 3, -1, NoType ), ( 4, -1, NoType ) ] [ ( 0, -1, NoType ), ( 1, -1, NoType ), ( 2, -1, NoType ) ] -1 True
-
-
-initBuilds : List ( Int, Build )
-initBuilds =
-    [ ( 0, initBuild 0 ) ]
 
 
 mockBuilds : List ( Int, Build )

@@ -1,6 +1,7 @@
 module SkillModal exposing (..)
 
 import CustomTypes exposing (Job, Skill)
+import ElmUtils exposing (..)
 import GlobalMessage exposing (Msg(..), SkillModal(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
@@ -10,6 +11,7 @@ import Job exposing (getJobById)
 import JobView exposing (viewJob)
 import Maybe.Extra exposing (..)
 import ModelHandler exposing (getActiveSkillByDefault, getPassiveSkillByDefault, getSkillList)
+import ModelUtils exposing (skillTypeToString)
 import NoDataView exposing (viewNoData)
 import Study exposing (getStudyById)
 import StudyView exposing (viewStudy)
@@ -53,13 +55,30 @@ viewSkillGrid model ( ( buildPosition, skillPosition ), maybeSkill, isCombatArt 
                 |> List.head
                 |> Maybe.andThen (\id -> Just (getSkillList id isCombatArt model.data))
                 |> Maybe.withDefault []
-                |> List.map (\e -> viewSkill model e)
+                |> listSortBy model
+                |> List.map (\s -> viewSkillTile model s)
     in
     div [ class "skills-grid" ] listSkills
 
 
-viewSkill : Model -> Skill -> Html Msg
-viewSkill model skill =
+listSortBy : Model -> List Skill -> List Skill
+listSortBy model list =
+    case model.view.skillListSortBy of
+        SortByType ->
+            list |> List.sortBy (\e -> skillTypeToString e.skillType) |> List.sortBy (\e -> boolToInt e.learnByJob)
+
+        ReverseSortByType ->
+            list |> List.sortBy (\e -> skillTypeToString e.skillType) |> List.sortBy (\e -> boolToInt e.learnByJob) |> List.reverse
+
+        SortByName ->
+            list |> List.sortBy .name
+
+        ReverseSortByName ->
+            list |> List.sortBy .name |> List.reverse
+
+
+viewSkillTile : Model -> Skill -> Html Msg
+viewSkillTile model skill =
     let
         ( ( buildPosition, skillPosition ), maybeSkill, isCombatArt ) =
             model.view.skillPicker

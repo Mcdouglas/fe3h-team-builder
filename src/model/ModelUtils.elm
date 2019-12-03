@@ -133,3 +133,22 @@ magicUsageToString gender =
 
         CanUseSomeMagic ->
             "Can use some magic"
+
+
+skillTypeToString : SkillType -> String
+skillTypeToString skillType =
+    case skillType of
+        MasteryType ->
+            "MasteryType"
+
+        StandardType ->
+            "StandardType"
+
+        JobType ->
+            "JobType"
+
+        CharacterType ->
+            "CharacterType"
+
+        NoType ->
+            "NoType"

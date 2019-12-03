@@ -100,7 +100,7 @@ initStandardSkills =
     , StandardSkill 127 102 "Rally Dexterity" 89 False [ 21 ] False "Use Rally to grant Dex +8 to an ally." Nothing Nothing Nothing Nothing Nothing Nothing
     , StandardSkill 128 103 "Rally Resistance" 89 False [ 3 ] False "Use Rally to grant Res +4 to an ally." Nothing Nothing Nothing Nothing Nothing Nothing
     , StandardSkill 129 105 "Rally Speed" 89 False [ 16 ] False "Use Rally to grant Spd +4 to an ally." Nothing Nothing Nothing Nothing Nothing Nothing
-    , StandardSkill 130 182 "Model Leader" 89 False [ 0, 1, 2, 10, 18, 26 ] False "Doubles experience earned for battalions." Nothing Nothing Nothing Nothing Nothing Nothing
+    , StandardSkill 130 183 "Model Leader" 89 False [ 0, 1, 2, 10, 18, 26 ] False "Doubles experience earned for battalions." Nothing Nothing Nothing Nothing Nothing Nothing
     , StandardSkill 131 155 "Defense Tactics" 90 False [] False "Battalion endurance takes half damage." Nothing Nothing Nothing Nothing Nothing Nothing
     , StandardSkill 132 50 "Authority Prowess Lv.4" 91 False [] False "Grants Mt +8 with gambits." Nothing Nothing Nothing Nothing Nothing Nothing
     , StandardSkill 133 158 "Battalion Vantage" 92 False [ 10, 21 ] False "When foe initiates combat, unit still attacks first if battalion endurance is ≤ 1/3." Nothing Nothing Nothing Nothing Nothing Nothing

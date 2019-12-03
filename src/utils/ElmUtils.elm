@@ -29,3 +29,12 @@ appendMaybe maybe list =
     Maybe.map List.singleton maybe
         |> Maybe.withDefault []
         |> (++) list
+
+
+boolToInt : Bool -> Int
+boolToInt bool =
+    if bool == True then
+        1
+
+    else
+        0
