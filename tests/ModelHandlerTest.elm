@@ -119,7 +119,7 @@ modelHandlerTest =
                         |> Maybe.withDefault wrongJob
                         |> Expect.equal
                             { id = 40
-                            , idPicture = 0
+                            , idPicture = 40
                             , name = "Enlightened One"
                             , jobCategoryId = 5
                             , proficiencyList = [ Proficiency Sword 3, Proficiency Brawling 2, Proficiency Faith 3, Proficiency Authority 3 ]
