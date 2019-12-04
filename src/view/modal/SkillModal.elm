@@ -1,6 +1,7 @@
 module SkillModal exposing (..)
 
 import CustomTypes exposing (Job, Skill)
+import Dict exposing (Dict)
 import ElmUtils exposing (..)
 import GlobalMessage exposing (Msg(..), SkillModal(..))
 import GlobalModel exposing (..)
@@ -61,14 +62,12 @@ viewModalContent model =
 
 
 viewSkillGrid : Model -> ( ( Int, Int ), Maybe Skill, Bool ) -> Html Msg
-viewSkillGrid model ( ( buildPosition, skillPosition ), maybeSkill, isCombatArt ) =
+viewSkillGrid model ( ( buildIdx, _ ), maybeSkill, isCombatArt ) =
     let
         listSkill =
             model.team
-                |> List.filter (\( idx, build ) -> idx == buildPosition)
-                |> List.map (\( _, build ) -> build.idCharacter)
-                |> List.head
-                |> Maybe.andThen (\id -> Just (getSkillList id isCombatArt model.data))
+                |> Dict.get buildIdx
+                |> Maybe.andThen (\build -> Just (getSkillList build.idCharacter isCombatArt model.data))
                 |> Maybe.withDefault []
                 |> listSortBy model
                 |> searchTermInList model.view.skillSearch
@@ -105,21 +104,20 @@ listSortBy model list =
 viewSkillTile : Model -> Skill -> Html Msg
 viewSkillTile model skill =
     let
-        ( ( buildPosition, skillPosition ), maybeSkill, isCombatArt ) =
+        ( ( buildIdx, skillIdx ), maybeSkill, isCombatArt ) =
             model.view.skillPicker
 
         lockedCss =
             if
                 (model.team
-                    |> List.filter (\( id, b ) -> id == buildPosition)
-                    |> List.head
+                    |> Dict.get buildIdx
                     |> Maybe.map
-                        (\( _, b ) ->
+                        (\build ->
                             if isCombatArt then
-                                b.listActiveSkill
+                                build.listActiveSkill
 
                             else
-                                b.listPassiveSkill
+                                build.listPassiveSkill
                         )
                     |> Maybe.withDefault []
                     |> List.filter (\( idx, skillId, skillType ) -> skill.id == skillId && skill.skillType == skillType)
@@ -134,8 +132,8 @@ viewSkillTile model skill =
     in
     div
         [ class ("tile " ++ lockedCss)
-        , onMouseOver (SModalMsg (UpdateSkillPicker ( ( buildPosition, skillPosition ), Just skill, isCombatArt )))
-        , onClick (SModalMsg (UpdateBuildWithSkill ( ( buildPosition, skillPosition ), skill, isCombatArt )))
+        , onMouseOver (SModalMsg (UpdateSkillPicker ( ( buildIdx, skillIdx ), Just skill, isCombatArt )))
+        , onClick (SModalMsg (UpdateBuildWithSkill ( ( buildIdx, skillIdx ), skill, isCombatArt )))
         ]
         [ img
             [ src ("resources/img/skills/" ++ String.fromInt skill.pictureId ++ ".png")

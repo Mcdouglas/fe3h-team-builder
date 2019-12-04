@@ -2,6 +2,7 @@ module JobModal exposing (..)
 
 import Character exposing (getCharacterById)
 import CustomTypes exposing (..)
+import Dict exposing (Dict)
 import ElmUtils exposing (..)
 import GlobalMessage exposing (JobModal(..), Msg(..))
 import GlobalModel exposing (..)
@@ -46,9 +47,8 @@ viewJobGrid model =
 
         listJob =
             model.team
-                |> List.filter (\( idx, _ ) -> idx == buildIdx)
-                |> List.head
-                |> Maybe.andThen (\( _, build ) -> getCharacterById build.idCharacter)
+                |> Dict.get buildIdx
+                |> Maybe.andThen (\build -> getCharacterById build.idCharacter)
                 |> Maybe.map (\character -> getJobsAvailableForCharacter character)
                 |> Maybe.withDefault model.data.jobs
                 |> List.map (\j -> ( j.jobCategoryId, j ))
@@ -78,14 +78,7 @@ viewJobTile : Model -> ( Int, Maybe Job ) -> Job -> Html Msg
 viewJobTile model ( buildIdx, _ ) job =
     let
         lockedCss =
-            if
-                (model.team
-                    |> List.filter (\( idx, _ ) -> idx == buildIdx)
-                    |> List.filter (\( _, build ) -> job.id == build.jobId)
-                    |> List.length
-                )
-                    > 0
-            then
+            if model.team |> Dict.filter (\k v -> k == buildIdx) |> Dict.map (\k v -> v.jobId) |> Dict.member job.id then
                 "locked-picture"
 
             else

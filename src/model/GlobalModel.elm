@@ -1,10 +1,11 @@
 module GlobalModel exposing (..)
 
 import CustomTypes exposing (..)
+import Dict exposing (Dict)
 
 
 type alias Model =
-    { team : List ( Int, Build )
+    { team : Dict Int Build
     , data : DataModel
     , view : ViewModel
     , errorMessage : Maybe String

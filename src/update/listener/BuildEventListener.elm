@@ -1,6 +1,7 @@
 module BuildEventListener exposing (..)
 
 import DataHandler exposing (initBuild)
+import Dict exposing (Dict)
 import GlobalMessage exposing (BuildPanel(..), Msg(..))
 import GlobalModel exposing (Model)
 
@@ -12,10 +13,10 @@ handle msg model =
             deleteBuild model value
 
         UpBuild value ->
-            upBuild model value
+            upBuildInDict model value
 
         DownBuild value ->
-            downBuild model value
+            downBuildInDict model value
 
         AddBuild ->
             addBuild model
@@ -25,8 +26,8 @@ deleteBuild : Model -> Int -> Model
 deleteBuild model buildIdx =
     let
         newTeam =
-            if List.length model.team > 1 then
-                model.team |> List.filter (\( i, build ) -> i /= buildIdx)
+            if Dict.size model.team > 1 then
+                model.team |> Dict.remove buildIdx
 
             else
                 model.team
@@ -34,56 +35,64 @@ deleteBuild model buildIdx =
     { model | team = newTeam }
 
 
-upBuild : Model -> Int -> Model
-upBuild model buildIdx =
+upBuildInDict : Model -> Int -> Model
+upBuildInDict model buildIdx =
     let
-        nothingBefore =
-            (model.team |> List.filter (\( i, _ ) -> i == buildIdx - 1) |> List.head) == Nothing
+        upBuild build dict =
+            let
+                targetIdx =
+                    if buildIdx > 0 then
+                        buildIdx - 1
+
+                    else
+                        -1
+
+                maybeBuild =
+                    dict |> Dict.get targetIdx
+            in
+            case maybeBuild of
+                Just targetBuild ->
+                    dict |> Dict.insert buildIdx targetBuild |> Dict.insert targetIdx build
+
+                Nothing ->
+                    dict
 
         newTeam =
-            if nothingBefore == False then
-                model.team
-                    |> List.map
-                        (\( i, b ) ->
-                            if i == buildIdx then
-                                ( buildIdx - 1, b )
-
-                            else if i == buildIdx - 1 then
-                                ( buildIdx, b )
-
-                            else
-                                ( i, b )
-                        )
-
-            else
-                model.team
+            model.team
+                |> Dict.get buildIdx
+                |> Maybe.map (\build -> upBuild build model.team)
+                |> Maybe.withDefault model.team
     in
     { model | team = newTeam }
 
 
-downBuild : Model -> Int -> Model
-downBuild model buildIdx =
+downBuildInDict : Model -> Int -> Model
+downBuildInDict model buildIdx =
     let
-        nothingAfter =
-            (model.team |> List.filter (\( i, _ ) -> i == buildIdx + 1) |> List.head) == Nothing
+        downBuild build dict =
+            let
+                targetIdx =
+                    if buildIdx > 0 then
+                        buildIdx + 1
+
+                    else
+                        -1
+
+                maybeBuild =
+                    dict |> Dict.get targetIdx
+            in
+            case maybeBuild of
+                Just targetBuild ->
+                    dict |> Dict.insert buildIdx targetBuild |> Dict.insert targetIdx build
+
+                Nothing ->
+                    dict
 
         newTeam =
-            if nothingAfter == False then
-                model.team
-                    |> List.map
-                        (\( i, b ) ->
-                            if i == buildIdx then
-                                ( buildIdx + 1, b )
-
-                            else if i == buildIdx + 1 then
-                                ( buildIdx, b )
-
-                            else
-                                ( i, b )
-                        )
-
-            else
-                model.team
+            model.team
+                |> Dict.get buildIdx
+                |> Maybe.map (\build -> downBuild build model.team)
+                |> Maybe.withDefault model.team
     in
     { model | team = newTeam }
 
