@@ -38,30 +38,15 @@ deleteBuild model buildIdx =
 upBuildInDict : Model -> Int -> Model
 upBuildInDict model buildIdx =
     let
-        upBuild build dict =
-            let
-                targetIdx =
-                    if buildIdx > 0 then
-                        buildIdx - 1
-
-                    else
-                        -1
-
-                maybeBuild =
-                    dict |> Dict.get targetIdx
-            in
-            case maybeBuild of
-                Just targetBuild ->
-                    dict |> Dict.insert buildIdx targetBuild |> Dict.insert targetIdx build
-
-                Nothing ->
-                    dict
-
-        newTeam =
-            model.team
-                |> Dict.get buildIdx
-                |> Maybe.map (\build -> upBuild build model.team)
-                |> Maybe.withDefault model.team
+        newTeam = 
+            if buildIdx > 0 then
+                let
+                    buildToDown = model.team |> Dict.get (buildIdx - 1)
+                    buildToUp = model.team |> Dict.get buildIdx
+                in
+                    model.team |> Dict.update buildIdx (\b -> buildToDown) |> Dict.update (buildIdx - 1) (\b -> buildToUp)
+            else
+                model.team
     in
     { model | team = newTeam }
 
@@ -69,30 +54,15 @@ upBuildInDict model buildIdx =
 downBuildInDict : Model -> Int -> Model
 downBuildInDict model buildIdx =
     let
-        downBuild build dict =
-            let
-                targetIdx =
-                    if buildIdx > 0 then
-                        buildIdx + 1
-
-                    else
-                        -1
-
-                maybeBuild =
-                    dict |> Dict.get targetIdx
-            in
-            case maybeBuild of
-                Just targetBuild ->
-                    dict |> Dict.insert buildIdx targetBuild |> Dict.insert targetIdx build
-
-                Nothing ->
-                    dict
-
-        newTeam =
-            model.team
-                |> Dict.get buildIdx
-                |> Maybe.map (\build -> downBuild build model.team)
-                |> Maybe.withDefault model.team
+        newTeam = 
+            if buildIdx < 11 then
+                let
+                    buildToDown = model.team |> Dict.get buildIdx
+                    buildToUp = model.team |> Dict.get (buildIdx + 1)
+                in
+                    model.team |> Dict.update buildIdx (\b -> buildToUp) |> Dict.update (buildIdx + 1) (\b -> buildToDown)
+            else
+                model.team
     in
     { model | team = newTeam }
 
