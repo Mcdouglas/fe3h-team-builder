@@ -216,3 +216,8 @@ type alias CharacterSkill =
     , name : String
     , description : String
     }
+
+
+type SortType
+    = SortByType
+    | SortByName

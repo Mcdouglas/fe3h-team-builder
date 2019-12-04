@@ -129,18 +129,23 @@
     }
 }
 
-.search-filter{
+.filter {
     display: flex;
-    width: 30%;
-    background-color: lightgray;
-    margin-bottom: 0.5em;
-    border: 1px solid gray;
-    
-    & > p {
-        margin: auto;
-    }
+    background-color: #f8f9fa;
+    border: 1px solid lightgray;
+    height: 3em;
+}
 
-    & > input {
-        width: 70%;
+/* The Close Button */
+.close-button {
+    color: #aaa;
+    float: right;
+    font-weight: bold;
     }
+    
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
