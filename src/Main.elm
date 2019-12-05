@@ -1,7 +1,10 @@
 module Main exposing (main)
 
 import Browser exposing (application)
+<<<<<<< HEAD
 import Browser.Navigation as Nav
+=======
+>>>>>>> Transform sandbox -> application
 import BuildEventListener exposing (handle)
 import BuildInfoHandler exposing (toggleBuildInfo)
 import CharacterEventListener exposing (handle)
@@ -14,11 +17,19 @@ import JobEventListener exposing (handle)
 import SkillEventListener exposing (..)
 import TeamBuilder exposing (..)
 import Url exposing (..)
+<<<<<<< HEAD
 import UrlDecoder exposing (..)
 
 
 init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
 init flags url key =
+=======
+import Browser.Navigation as Nav
+
+
+init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
+init flags url key  =
+>>>>>>> Transform sandbox -> application
     let
         team =
             mockBuilds
