@@ -10,12 +10,12 @@ type Msg
     | SModalMsg SkillModal
     | BuildMsg BuildPanel
     | ToggleBuildInfo Int
+    | NoOp
 
 
 type CharacterModal
     = OpenCharacterModal Int
     | CloseCharacterModal
-    | IgnoreCloseCharacterModal
     | UpdateCharacterPicker ( Int, Maybe Character )
     | UpdateBuildWithCharacter ( Int, Character )
 
