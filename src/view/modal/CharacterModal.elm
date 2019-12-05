@@ -10,7 +10,8 @@ import GlobalMessage exposing (CharacterModal(..), Msg(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (onClick, onMouseOver)
+import Html.Events exposing (onClick, stopPropagationOn, onMouseOver)
+import Json.Decode as Json
 
 
 modalCharacterPicker : Model -> Html Msg
@@ -29,7 +30,7 @@ modalCharacterPicker model =
         ]
         [ div
             [ class "modal-content"
-            , onClick (CModalMsg IgnoreCloseCharacterModal)
+            , stopPropagationOn "click" (Json.succeed (NoOp, True)) 
             ]
             [ viewCharacterGrid model idx
             , viewSideBar model character
