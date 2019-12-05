@@ -1,6 +1,8 @@
 module GlobalMessage exposing (..)
 
 import CustomTypes exposing (..)
+import Browser exposing (..)
+import Url exposing (..)
 
 
 type Msg
@@ -10,7 +12,12 @@ type Msg
     | SModalMsg SkillModal
     | BuildMsg BuildPanel
     | ToggleBuildInfo Int
+<<<<<<< HEAD
     | NoOp
+=======
+    | LinkClicked Browser.UrlRequest
+    | UrlChanged Url.Url
+>>>>>>> Transform sandbox -> application
 
 
 type CharacterModal
