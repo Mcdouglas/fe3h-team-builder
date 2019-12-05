@@ -27,7 +27,7 @@ deleteBuild model buildIdx =
     let
         newTeam =
             if Dict.size model.team > 1 then
-                model.team |> Dict.remove buildIdx
+                model.team |> Dict.remove buildIdx |> Dict.values |> List.indexedMap Tuple.pair |> Dict.fromList
 
             else
                 model.team
