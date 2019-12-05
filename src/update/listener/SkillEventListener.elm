@@ -102,10 +102,13 @@ updatePicker skillPicker model =
 
 
 updateBuildWithSkill : ( ( Int, Int ), Skill, Bool ) -> Model -> Model
-updateBuildWithSkill ( ( buildIdx, skillIdx ), skill, isCombatArt ) model =
+updateBuildWithSkill shift model =
     let
+        ( ( buildIdx, _ ), skill, isCombatArt ) =
+            shift
+
         doUpdate =
-            (model.team
+            model.team
                 |> Dict.get buildIdx
                 |> Maybe.map
                     (\build ->
@@ -116,24 +119,25 @@ updateBuildWithSkill ( ( buildIdx, skillIdx ), skill, isCombatArt ) model =
                             build.listPassiveSkill
                     )
                 |> Maybe.withDefault []
-                |> List.filter (\( idx, skillId, skillType ) -> skillId == skill.id)
-                |> List.length
-            )
-                < 1
+                |> List.filter (\( _, skillId, _ ) -> skillId == skill.id)
+                |> List.isEmpty
     in
     if doUpdate then
-        closeModal (updateBuild ( ( buildIdx, skillIdx ), skill, isCombatArt ) model)
+        closeModal (updateBuild shift model)
 
     else
         model
 
 
 updateBuild : ( ( Int, Int ), Skill, Bool ) -> Model -> Model
-updateBuild ( ( buildIdx, skillIdx ), skill, isCombatArt ) model =
+updateBuild shift model =
     let
+        ( ( buildIdx, _ ), _, _ ) =
+            shift
+
         newTeam =
             model.team
-                |> Dict.update buildIdx (\build -> updateSkillInBuild build ( ( buildIdx, skillIdx ), skill, isCombatArt ))
+                |> Dict.update buildIdx (\build -> updateSkillInBuild build shift)
     in
     { model | team = newTeam }
 
@@ -192,4 +196,4 @@ updateSortTypeFilter value model =
         oldView =
             model.view
     in
-    { model | view = { oldView | skillListSortBy = Debug.log "sortType " (stringToSortType value) } }
+    { model | view = { oldView | skillListSortBy = stringToSortType value } }

@@ -38,13 +38,17 @@ deleteBuild model buildIdx =
 upBuildInDict : Model -> Int -> Model
 upBuildInDict model buildIdx =
     let
-        newTeam = 
+        newTeam =
             if buildIdx > 0 then
                 let
-                    buildToDown = model.team |> Dict.get (buildIdx - 1)
-                    buildToUp = model.team |> Dict.get buildIdx
+                    buildToDown =
+                        model.team |> Dict.get (buildIdx - 1)
+
+                    buildToUp =
+                        model.team |> Dict.get buildIdx
                 in
-                    model.team |> Dict.update buildIdx (\b -> buildToDown) |> Dict.update (buildIdx - 1) (\b -> buildToUp)
+                model.team |> Dict.update buildIdx (\b -> buildToDown) |> Dict.update (buildIdx - 1) (\b -> buildToUp)
+
             else
                 model.team
     in
@@ -54,13 +58,17 @@ upBuildInDict model buildIdx =
 downBuildInDict : Model -> Int -> Model
 downBuildInDict model buildIdx =
     let
-        newTeam = 
+        newTeam =
             if buildIdx < 11 then
                 let
-                    buildToDown = model.team |> Dict.get buildIdx
-                    buildToUp = model.team |> Dict.get (buildIdx + 1)
+                    buildToDown =
+                        model.team |> Dict.get buildIdx
+
+                    buildToUp =
+                        model.team |> Dict.get (buildIdx + 1)
                 in
-                    model.team |> Dict.update buildIdx (\b -> buildToUp) |> Dict.update (buildIdx + 1) (\b -> buildToDown)
+                model.team |> Dict.update buildIdx (\b -> buildToUp) |> Dict.update (buildIdx + 1) (\b -> buildToDown)
+
             else
                 model.team
     in

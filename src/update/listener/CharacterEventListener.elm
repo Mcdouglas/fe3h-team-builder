@@ -109,7 +109,7 @@ updateOrCreateBuild model ( position, character ) =
                 |> Dict.filter (\k v -> v.idCharacter == character.id)
                 |> Dict.isEmpty
     in
-    if notAlreadySelected then
+    if model.team |> Dict.filter (\k v -> v.idCharacter == character.id) |> Dict.isEmpty then
         if model.view.isCreatingBuild == True then
             closeModal (createBuild model character)
 

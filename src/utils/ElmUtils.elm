@@ -1,5 +1,6 @@
 module ElmUtils exposing (..)
 
+import Dict exposing (..)
 import GlobalMessage exposing (Msg(..))
 import Html exposing (..)
 

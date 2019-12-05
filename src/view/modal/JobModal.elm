@@ -12,7 +12,6 @@ import Html.Events exposing (..)
 import Job exposing (getJobByDefault, getJobsAvailableForCharacter)
 import JobSkill exposing (getJobSkillsByJob)
 import JobView exposing (getJobTile)
-import List.Extra exposing (groupWhile)
 import MasterySkill exposing (getMasterySkillsForJob)
 import Maybe.Extra exposing (..)
 import ModelUtils exposing (jobCategoryIdToString, jobSkillToSkill, jobToDescription, masterySkillToSkill)
@@ -52,17 +51,18 @@ viewJobGrid model =
                 |> Maybe.map (\character -> getJobsAvailableForCharacter character)
                 |> Maybe.withDefault model.data.jobs
                 |> List.map (\j -> ( j.jobCategoryId, j ))
-                |> List.Extra.groupWhile (\x y -> Tuple.first x == Tuple.first y)
-                |> List.map (\( a, l ) -> viewJobRow model ( buildIdx, maybeJob ) a l)
+                |> List.foldl (\( i, j ) dict -> Dict.update i (\m -> Just (m |> Maybe.withDefault [] |> (::) j)) dict) Dict.empty
+                |> Dict.map (\k v -> viewJobRow model ( buildIdx, maybeJob ) v)
+                |> Dict.values
     in
     div [ class "jobs-grid" ] listJob
 
 
-viewJobRow : Model -> ( Int, Maybe Job ) -> ( Int, Job ) -> List ( Int, Job ) -> Html Msg
-viewJobRow model shift ( categoryId, job ) listJobs =
+viewJobRow : Model -> ( Int, Maybe Job ) -> List Job -> Html Msg
+viewJobRow model shift listJob =
     let
         customCss =
-            if List.length listJobs >= 7 then
+            if List.length listJob >= 8 then
                 "jobs-two-columns"
 
             else
@@ -71,7 +71,7 @@ viewJobRow model shift ( categoryId, job ) listJobs =
     div
         [ class ("jobs-column " ++ customCss)
         ]
-        ([ viewJobTile model shift job ] ++ (listJobs |> List.map (\( _, e ) -> viewJobTile model shift e)))
+        (listJob |> List.map (\e -> viewJobTile model shift e))
 
 
 viewJobTile : Model -> ( Int, Maybe Job ) -> Job -> Html Msg
