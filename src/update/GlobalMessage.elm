@@ -12,12 +12,9 @@ type Msg
     | SModalMsg SkillModal
     | BuildMsg BuildPanel
     | ToggleBuildInfo Int
-<<<<<<< HEAD
     | NoOp
-=======
     | LinkClicked Browser.UrlRequest
     | UrlChanged Url.Url
->>>>>>> Transform sandbox -> application
 
 
 type CharacterModal
