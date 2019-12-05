@@ -5,6 +5,7 @@ import CharacterSkill exposing (..)
 import CharacterView exposing (..)
 import Crest exposing (..)
 import CustomTypes exposing (..)
+import Dict exposing (Dict)
 import GlobalMessage exposing (CharacterModal(..), Msg(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
@@ -45,10 +46,10 @@ viewCharacterGrid model buildIdx =
 
 
 viewCharacterPicker : Model -> Int -> Character -> Html Msg
-viewCharacterPicker model buildIdx element =
+viewCharacterPicker model buildIdx character =
     let
         bannerCss =
-            case element.bannerId of
+            case character.bannerId of
                 Just value ->
                     case value of
                         0 ->
@@ -67,7 +68,7 @@ viewCharacterPicker model buildIdx element =
                     "avatar-tile"
 
         lockedCss =
-            if model.team |> List.map (\( _, b ) -> b.idCharacter) |> List.member element.id then
+            if model.team |> Dict.map (\k v -> v.idCharacter) |> Dict.member character.id then
                 "locked-picture"
 
             else
@@ -75,11 +76,11 @@ viewCharacterPicker model buildIdx element =
     in
     div
         [ class ("tile " ++ lockedCss)
-        , onMouseOver (CModalMsg (UpdateCharacterPicker ( buildIdx, Just element )))
-        , onClick (CModalMsg (UpdateBuildWithCharacter ( buildIdx, element )))
+        , onMouseOver (CModalMsg (UpdateCharacterPicker ( buildIdx, Just character )))
+        , onClick (CModalMsg (UpdateBuildWithCharacter ( buildIdx, character )))
         ]
         [ img
-            [ src ("resources/img/portraits/" ++ String.fromInt element.id ++ ".png")
+            [ src ("resources/img/portraits/" ++ String.fromInt character.id ++ ".png")
             , class lockedCss
             ]
             []

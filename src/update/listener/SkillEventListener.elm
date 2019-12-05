@@ -2,6 +2,7 @@ module SkillEventListener exposing (..)
 
 import Array exposing (Array)
 import CustomTypes exposing (..)
+import Dict exposing (Dict)
 import GlobalMessage exposing (SkillModal(..))
 import GlobalModel exposing (..)
 import ModelHandler exposing (..)
@@ -101,28 +102,28 @@ updatePicker skillPicker model =
 
 
 updateBuildWithSkill : ( ( Int, Int ), Skill, Bool ) -> Model -> Model
-updateBuildWithSkill ( ( buildIdx, skillIdx ), skill, isCombatArt ) model =
+updateBuildWithSkill shift model =
     let
+        ( ( buildIdx, _ ), skill, isCombatArt ) =
+            shift
+
         doUpdate =
-            (model.team
-                |> List.filter (\( id, build ) -> id == buildIdx)
-                |> List.head
+            model.team
+                |> Dict.get buildIdx
                 |> Maybe.map
-                    (\( _, b ) ->
+                    (\build ->
                         if isCombatArt == True then
-                            b.listActiveSkill
+                            build.listActiveSkill
 
                         else
-                            b.listPassiveSkill
+                            build.listPassiveSkill
                     )
                 |> Maybe.withDefault []
-                |> List.filter (\( idx, skillId, skillType ) -> skillId == skill.id)
-                |> List.length
-            )
-                < 1
+                |> List.filter (\( _, skillId, _ ) -> skillId == skill.id)
+                |> List.isEmpty
     in
     if doUpdate then
-        closeModal (updateBuild ( ( buildIdx, skillIdx ), skill, isCombatArt ) model)
+        closeModal (updateBuild shift model)
 
     else
         model
@@ -131,44 +132,43 @@ updateBuildWithSkill ( ( buildIdx, skillIdx ), skill, isCombatArt ) model =
 updateBuild : ( ( Int, Int ), Skill, Bool ) -> Model -> Model
 updateBuild shift model =
     let
+        ( ( buildIdx, _ ), _, _ ) =
+            shift
+
         newTeam =
             model.team
-                |> List.map (\e -> updateBuildAndKeepOther e shift)
+                |> Dict.update buildIdx (\build -> updateSkillInBuild build shift)
     in
     { model | team = newTeam }
 
 
-updateBuildAndKeepOther : ( Int, Build ) -> ( ( Int, Int ), Skill, Bool ) -> ( Int, Build )
-updateBuildAndKeepOther ( idx, build ) ( ( buildIdx, skillIdx ), skill, isCombatArt ) =
-    if idx == buildIdx then
-        ( idx, updateSkillInBuild build ( ( idx, skillIdx ), skill, isCombatArt ) )
+updateSkillInBuild : Maybe Build -> ( ( Int, Int ), Skill, Bool ) -> Maybe Build
+updateSkillInBuild maybeBuild ( ( _, skillIdx ), skill, isCombatArt ) =
+    case maybeBuild of
+        Just build ->
+            case isCombatArt of
+                True ->
+                    let
+                        newListSkill =
+                            build.listActiveSkill
+                                |> List.foldr (::) (List.repeat 3 ( -1, -1, NoType ))
+                                |> List.take 3
+                                |> List.map (\l -> updateSkillAndKeepOther l skillIdx skill)
+                    in
+                    Just { build | listActiveSkill = newListSkill }
 
-    else
-        ( idx, build )
+                False ->
+                    let
+                        newListSkill =
+                            build.listPassiveSkill
+                                |> List.foldr (::) (List.repeat 3 ( -1, -1, NoType ))
+                                |> List.take 5
+                                |> List.map (\l -> updateSkillAndKeepOther l skillIdx skill)
+                    in
+                    Just { build | listPassiveSkill = newListSkill }
 
-
-updateSkillInBuild : Build -> ( ( Int, Int ), Skill, Bool ) -> Build
-updateSkillInBuild build ( ( _, skillIdx ), skill, isCombatArt ) =
-    case isCombatArt of
-        True ->
-            let
-                newListSkill =
-                    build.listActiveSkill
-                        |> List.foldr (::) (List.repeat 3 ( -1, -1, NoType ))
-                        |> List.take 3
-                        |> List.map (\l -> updateSkillAndKeepOther l skillIdx skill)
-            in
-            { build | listActiveSkill = newListSkill }
-
-        False ->
-            let
-                newListSkill =
-                    build.listPassiveSkill
-                        |> List.foldr (::) (List.repeat 3 ( -1, -1, NoType ))
-                        |> List.take 5
-                        |> List.map (\l -> updateSkillAndKeepOther l skillIdx skill)
-            in
-            { build | listPassiveSkill = newListSkill }
+        Nothing ->
+            Nothing
 
 
 updateSkillAndKeepOther : ( Int, Int, SkillType ) -> Int -> Skill -> ( Int, Int, SkillType )
@@ -196,4 +196,4 @@ updateSortTypeFilter value model =
         oldView =
             model.view
     in
-    { model | view = { oldView | skillListSortBy = Debug.log "sortType " (stringToSortType value) } }
+    { model | view = { oldView | skillListSortBy = stringToSortType value } }

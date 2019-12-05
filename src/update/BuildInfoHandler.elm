@@ -1,20 +1,21 @@
 module BuildInfoHandler exposing (..)
 
+import Dict exposing (Dict)
 import GlobalModel exposing (..)
 
 
 toggleBuildInfo : Model -> Int -> Model
 toggleBuildInfo model characterId =
     let
-        toggleInfo ( id, item ) =
+        toggleInfo item =
             if item.idCharacter == characterId then
-                ( id, { item | hiddenInfo = not item.hiddenInfo } )
+                { item | hiddenInfo = not item.hiddenInfo }
 
             else
-                ( id, item )
+                item
 
         newTeam =
             model.team
-                |> List.map (\e -> toggleInfo e)
+                |> Dict.map (\k v -> toggleInfo v)
     in
     { model | team = newTeam }

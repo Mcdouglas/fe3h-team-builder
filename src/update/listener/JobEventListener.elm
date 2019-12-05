@@ -1,6 +1,7 @@
 module JobEventListener exposing (..)
 
 import CustomTypes exposing (Build, Job)
+import Dict exposing (Dict)
 import GlobalMessage exposing (JobModal(..), Msg(..))
 import GlobalModel exposing (..)
 
@@ -65,22 +66,21 @@ updateJobPicker model picker =
 
 
 updateBuild : Model -> ( Int, Job ) -> Model
-updateBuild model shift =
+updateBuild model ( buildIdx, job ) =
     let
+        updateIf maybeBuild =
+            case maybeBuild of
+                Just build ->
+                    Just { build | jobId = job.id }
+
+                Nothing ->
+                    Nothing
+
         newTeam =
             model.team
-                |> List.map (\build -> updateBuildAndKeepOther build shift)
+                |> Dict.update buildIdx updateIf
     in
     { model | team = newTeam }
-
-
-updateBuildAndKeepOther : ( Int, Build ) -> ( Int, Job ) -> ( Int, Build )
-updateBuildAndKeepOther ( idx, build ) ( buildIdx, job ) =
-    if idx == buildIdx then
-        ( idx, { build | jobId = job.id } )
-
-    else
-        ( idx, build )
 
 
 openModal : Model -> Model

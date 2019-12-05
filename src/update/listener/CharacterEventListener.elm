@@ -3,6 +3,7 @@ module CharacterEventListener exposing (..)
 import Character exposing (..)
 import CustomTypes exposing (..)
 import DataHandler exposing (initBuild)
+import Dict exposing (Dict)
 import GlobalMessage exposing (CharacterModal(..))
 import GlobalModel exposing (..)
 
@@ -55,13 +56,12 @@ handleDoubleClosure model =
 
 
 openModal : Model -> Int -> Model
-openModal model idx =
+openModal model buildIdx =
     let
         maybeCharacter =
             model.team
-                |> List.filter (\( id, e ) -> id == idx)
-                |> List.head
-                |> Maybe.map (\( id, e ) -> getCharacterById e.idCharacter)
+                |> Dict.get buildIdx
+                |> Maybe.map (\build -> getCharacterById build.idCharacter)
 
         oldView =
             model.view
@@ -69,7 +69,7 @@ openModal model idx =
         newView =
             case maybeCharacter of
                 Just character ->
-                    { oldView | characterModalIsOpen = True, characterPicker = ( idx, character ) }
+                    { oldView | characterModalIsOpen = True, characterPicker = ( buildIdx, character ) }
 
                 Nothing ->
                     { oldView | characterModalIsOpen = True }
@@ -106,10 +106,10 @@ updateOrCreateBuild model ( position, character ) =
     let
         notAlreadySelected =
             model.team
-                |> List.filter (\( idx, build ) -> build.idCharacter == character.id)
-                |> List.isEmpty
+                |> Dict.filter (\k v -> v.idCharacter == character.id)
+                |> Dict.isEmpty
     in
-    if notAlreadySelected then
+    if model.team |> Dict.filter (\k v -> v.idCharacter == character.id) |> Dict.isEmpty then
         if model.view.isCreatingBuild == True then
             closeModal (createBuild model character)
 
@@ -123,11 +123,9 @@ updateOrCreateBuild model ( position, character ) =
 createBuild : Model -> Character -> Model
 createBuild model character =
     let
-        newBuild =
-            ( List.length model.team, initBuild character.id )
-
         newTeam =
-            newBuild :: model.team
+            model.team
+                |> Dict.insert (Dict.size model.team) (initBuild character.id)
 
         oldView =
             model.view
@@ -139,17 +137,9 @@ createBuild model character =
 
 
 updateBuild : Model -> ( Int, Character ) -> Model
-updateBuild model ( position, character ) =
+updateBuild model ( buildIdx, character ) =
     let
-        initNewBuild ( id, item ) =
-            if id == position then
-                ( id, initBuild character.id )
-
-            else
-                ( id, item )
-
-        newTeam =
-            model.team
-                |> List.map (\e -> initNewBuild e)
+        build =
+            initBuild character.id
     in
-    { model | team = newTeam }
+    { model | team = model.team |> Dict.insert buildIdx build }

@@ -4,6 +4,7 @@ import BuildInfoView exposing (..)
 import BuildView exposing (..)
 import CharacterModal exposing (modalCharacterPicker)
 import CustomTypes exposing (..)
+import Dict exposing (Dict)
 import GlobalMessage exposing (BuildPanel(..), Msg(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
@@ -28,7 +29,7 @@ viewTeam : Model -> Html Msg
 viewTeam model =
     let
         addBuildButton =
-            if (model.team |> List.length) < 12 then
+            if Dict.size model.team < 12 then
                 div [ class "add-build", onClick (BuildMsg AddBuild) ] []
 
             else
@@ -36,6 +37,7 @@ viewTeam model =
     in
     div [ class "c-table" ]
         ((model.team
+            |> Dict.toList
             |> List.sortWith (\t1 t2 -> compare (Tuple.first t1) (Tuple.first t2))
             |> List.map (\e -> viewRow model e)
          )
