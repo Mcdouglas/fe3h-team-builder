@@ -23,7 +23,6 @@ type CharacterModal
 type JobModal
     = OpenJobModal ( Int, Maybe Job )
     | CloseJobModal
-    | IgnoreCloseJobModal
     | UpdateJobPicker ( Int, Maybe Job )
     | UpdateBuild ( Int, Job )
 
@@ -31,7 +30,6 @@ type JobModal
 type SkillModal
     = OpenSkillModal ( ( Int, Int ), Maybe Skill, Bool )
     | CloseSkillModal
-    | IgnoreCloseSkillModal
     | UpdateSkillPicker ( ( Int, Int ), Maybe Skill, Bool )
     | UpdateBuildWithSkill ( ( Int, Int ), Skill, Bool )
     | UpdateSkillFilter String

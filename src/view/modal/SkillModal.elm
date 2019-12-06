@@ -10,6 +10,7 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Job exposing (getJobById)
 import JobView exposing (viewJob)
+import Json.Decode as Json
 import Maybe.Extra exposing (..)
 import ModelHandler exposing (getActiveSkillByDefault, getPassiveSkillByDefault, getSkillList)
 import ModelUtils exposing (listSortType, skillTypeToString, sortTypeToKeyValue)
@@ -38,7 +39,7 @@ modalSkillPicker model =
         ]
         [ div
             [ class ("modal-content " ++ modalCss)
-            , onClick (SModalMsg IgnoreCloseSkillModal)
+            , stopPropagationOn "click" (Json.succeed ( NoOp, True ))
             ]
             [ viewModalContent model
             , viewSideBar model

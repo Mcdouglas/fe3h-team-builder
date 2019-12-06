@@ -12,6 +12,7 @@ import Html.Events exposing (..)
 import Job exposing (getJobByDefault, getJobsAvailableForCharacter)
 import JobSkill exposing (getJobSkillsByJob)
 import JobView exposing (getJobTile)
+import Json.Decode as Json
 import MasterySkill exposing (getMasterySkillsForJob)
 import Maybe.Extra exposing (..)
 import ModelUtils exposing (jobCategoryIdToString, jobSkillToSkill, jobToDescription, masterySkillToSkill)
@@ -30,7 +31,7 @@ modalJobPicker model =
         ]
         [ div
             [ class "modal-content"
-            , onClick (JModalMsg IgnoreCloseJobModal)
+            , stopPropagationOn "click" (Json.succeed ( NoOp, True ))
             ]
             [ viewJobGrid model
             , viewSideBar model

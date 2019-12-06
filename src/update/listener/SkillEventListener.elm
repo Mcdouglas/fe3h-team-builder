@@ -22,10 +22,7 @@ handle msg model =
             updateBuildWithSkill value model
 
         CloseSkillModal ->
-            handleDoubleClosure model
-
-        IgnoreCloseSkillModal ->
-            ignoreClosureInModal model
+            closeModal model
 
         UpdateSkillFilter value ->
             updateSearchSkillFilter value model
@@ -35,34 +32,6 @@ handle msg model =
 
         ChangeSortType value ->
             updateSortTypeFilter value model
-
-
-ignoreClosureInModal : Model -> Model
-ignoreClosureInModal model =
-    let
-        oldView =
-            model.view
-
-        newView =
-            { oldView | skipNextClosure = True }
-    in
-    { model | view = newView }
-
-
-handleDoubleClosure : Model -> Model
-handleDoubleClosure model =
-    let
-        oldView =
-            model.view
-
-        dontCloseModal =
-            model.view.skipNextClosure
-    in
-    if dontCloseModal then
-        { model | view = { oldView | skipNextClosure = False } }
-
-    else
-        closeModal model
 
 
 openModal : ( ( Int, Int ), Maybe Skill, Bool ) -> Model -> Model
