@@ -45,7 +45,7 @@ init flags url key  =
 
 view : Model -> Browser.Document Msg
 view model =
-    { title = "FE3H-TEAM-BUILDER"
+    { title = "Url interpretor"
     , body =
         case model.errorMessage of
             Just message ->
