@@ -55,7 +55,11 @@ init flags url key  =
         model =
             Model team dataModel viewModel errorMessage url key
     in
+<<<<<<< HEAD
     ( model, Nav.replaceUrl model.key (encodeTeamInUrl model) )
+=======
+    (Model team dataModel viewModel errorMessage url key, Cmd.none)
+>>>>>>> Replace by other kind of url handlers
 
 
 view : Model -> Browser.Document Msg
@@ -102,8 +106,23 @@ update msg model =
                 Browser.External href ->
                     ( model, Nav.load href )
 
+<<<<<<< HEAD
         RewriteUrl ->
             ( model, Nav.replaceUrl model.key (encodeTeamInUrl model) )
+=======
+        UrlChanged url ->
+            ( { model | url = url }
+            , Cmd.none
+            )
+            
+        LinkClicked urlRequest ->
+            case urlRequest of
+                Browser.Internal url ->
+                    ( model, Nav.pushUrl model.key (Url.toString url) )
+
+                Browser.External href ->
+                    ( model, Nav.load href )
+>>>>>>> Replace by other kind of url handlers
 
         _ ->
             ( model, Cmd.none )
