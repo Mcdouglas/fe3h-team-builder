@@ -2,13 +2,16 @@ module GlobalModel exposing (..)
 
 import CustomTypes exposing (..)
 import Dict exposing (Dict)
-
+import Url exposing (..)
+import Browser.Navigation exposing (Key)
 
 type alias Model =
     { team : Dict Int Build
     , data : DataModel
     , view : ViewModel
     , errorMessage : Maybe String
+    , url : Url
+    , key: Key
     }
 
 

@@ -32,5 +32,6 @@
     "elm-format"
   ],
   "author": "mcdouglas",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {}
 }

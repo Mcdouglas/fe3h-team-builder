@@ -40,12 +40,12 @@ init flags url key  =
         errorMessage =
             Nothing
     in
-    (Model team dataModel viewModel errorMessage, Cmd.none)
+    (Model team dataModel viewModel errorMessage url key, Cmd.none)
 
 
 view : Model -> Browser.Document Msg
 view model =
-    { title = "Url interpretor"
+    { title = "FE3H-TEAM-BUILDER"
     , body =
         case model.errorMessage of
             Just message ->
@@ -73,11 +73,18 @@ update msg model =
         ToggleBuildInfo value ->
             (toggleBuildInfo model value, Cmd.none)
 
-        UrlChanged value ->
-            Debug.log "UrlChange" (model, Cmd.none)
+        UrlChanged url ->
+            ( { model | url = url }
+            , Cmd.none
+            )
             
-        LinkClicked value ->
-            Debug.log "LinkClicked" (model, Cmd.none)
+        LinkClicked urlRequest ->
+            case urlRequest of
+                Browser.Internal url ->
+                    ( model, Nav.pushUrl model.key (Url.toString url) )
+
+                Browser.External href ->
+                    ( model, Nav.load href )
 
         _ ->
             (model, Cmd.none)
