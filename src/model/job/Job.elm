@@ -1,6 +1,7 @@
 module Job exposing (..)
 
 import CustomTypes exposing (..)
+import Dict exposing (..)
 import JobCategory exposing (getJobCategoryById)
 
 
@@ -17,9 +18,9 @@ getJobsByJobSkill jobSkill =
         |> List.filter (\e -> List.member e.id jobSkill.jobIdList)
 
 
-getJobsAvailableForCharacter : Character -> List Job
-getJobsAvailableForCharacter character =
-    initJobs
+filterJobsAvailable : Character -> List Job -> List Job
+filterJobsAvailable character listJob =
+    listJob
         |> List.filter (\j -> ((j.onlyCharacters |> List.length) == 0) || (j.onlyCharacters |> List.member character.id))
         |> List.filter (\j -> j.gender |> Maybe.map (\g -> g == character.gender) |> Maybe.withDefault True)
 
@@ -27,6 +28,12 @@ getJobsAvailableForCharacter character =
 getJobByDefault : Job
 getJobByDefault =
     Job 0 0 "Commoner" 0 [] [] Nothing (Just CanUseSomeMagic) Nothing Nothing [] False
+
+
+getJobsByCategory : Int -> List Job
+getJobsByCategory categoryId =
+    initJobs
+        |> List.filter (\j -> j.jobCategoryId == categoryId)
 
 
 initJobs : List Job

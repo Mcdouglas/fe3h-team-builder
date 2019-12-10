@@ -9,7 +9,7 @@ import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import Job exposing (getJobByDefault, getJobsAvailableForCharacter)
+import Job exposing (filterJobsAvailable, getJobByDefault, getJobsByCategory)
 import JobSkill exposing (getJobSkillsByJob)
 import JobView exposing (getJobTile)
 import Json.Decode as Json
@@ -33,45 +33,41 @@ modalJobPicker model =
             [ class "modal-content"
             , stopPropagationOn "click" (Json.succeed ( NoOp, True ))
             ]
-            [ viewJobGrid model
-            , viewSideBar model
+            [ viewSideBar model
+            , viewJobsGrid model
             ]
         ]
 
 
-viewJobGrid : Model -> Html Msg
-viewJobGrid model =
+viewJobsGrid : Model -> Html Msg
+viewJobsGrid model =
     let
         ( buildIdx, maybeJob ) =
             model.view.jobPicker
 
-        listJob =
+        -- Todo category must be selected by user
+        categoryId =
+            3
+
+        jobsCategorized =
+            getJobsByCategory categoryId |> List.foldl (::) []
+
+        jobRowDiv =
             model.team
                 |> Dict.get buildIdx
-                |> Maybe.andThen (\build -> getCharacterById build.idCharacter)
-                |> Maybe.map (\character -> getJobsAvailableForCharacter character)
-                |> Maybe.withDefault model.data.jobs
-                |> List.map (\j -> ( j.jobCategoryId, j ))
-                |> List.foldl (\( i, j ) dict -> Dict.update i (\m -> Just (m |> Maybe.withDefault [] |> (::) j)) dict) Dict.empty
-                |> Dict.map (\k v -> viewJobRow model ( buildIdx, maybeJob ) v)
-                |> Dict.values
+                |> Maybe.map (\b -> b.idCharacter)
+                |> Maybe.andThen (\id -> getCharacterById id)
+                |> Maybe.andThen (\c -> Just (filterJobsAvailable c jobsCategorized))
+                |> Maybe.withDefault []
+                |> viewJobRow model ( buildIdx, maybeJob )
     in
-    div [ class "jobs-grid" ] listJob
+    div [ class "jobs-grid" ] [ jobRowDiv ]
 
 
 viewJobRow : Model -> ( Int, Maybe Job ) -> List Job -> Html Msg
 viewJobRow model shift listJob =
-    let
-        customCss =
-            if List.length listJob >= 8 then
-                "jobs-two-columns"
-
-            else
-                ""
-    in
     div
-        [ class ("jobs-column " ++ customCss)
-        ]
+        [ class "jobs-row" ]
         (listJob |> List.map (\e -> viewJobTile model shift e))
 
 
@@ -125,7 +121,7 @@ viewJobDetail model =
         noteText =
             appendMaybeText description.note Nothing |> appendMaybeText description.magicUsage
     in
-    div []
+    div [ class "job-menu" ]
         [ viewTitleDetail currentJob
         , div [ class "job-description" ] [ p [] [ text "Category" ], p [] [ text category ] ]
         , viewJobSkills currentJob
