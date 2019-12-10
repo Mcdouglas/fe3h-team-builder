@@ -40,8 +40,11 @@ init flags url key =
 
         errorMessage =
             Nothing
+
+        model =
+            Model team dataModel viewModel errorMessage url key
     in
-    ( Model team dataModel viewModel errorMessage url key, Cmd.none )
+    ( model, Nav.replaceUrl model.key (encodeTeamInUrl model) )
 
 
 view : Model -> Browser.Document Msg
@@ -61,16 +64,16 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         BuildMsg value ->
-            (BuildEventListener.handle value model, Nav.replaceUrl model.key (encodeTeamInUrl model) )
+            update RewriteUrl (BuildEventListener.handle value model)
 
         CModalMsg value ->
-            (CharacterEventListener.handle value model, Nav.replaceUrl model.key (encodeTeamInUrl model) )
+            update RewriteUrl (CharacterEventListener.handle value model)
 
         JModalMsg value ->
-            (JobEventListener.handle value model, Nav.replaceUrl model.key (encodeTeamInUrl model) )
+            update RewriteUrl (JobEventListener.handle value model)
 
         SModalMsg value ->
-            (SkillEventListener.handle value model, Nav.replaceUrl model.key (encodeTeamInUrl model) )
+            update RewriteUrl (SkillEventListener.handle value model)
 
         ToggleBuildInfo value ->
             ( toggleBuildInfo model value, Cmd.none )
@@ -88,8 +91,8 @@ update msg model =
                 Browser.External href ->
                     ( model, Nav.load href )
 
-        RewriteUrl value ->
-            ( model, Nav.replaceUrl model.key value )
+        RewriteUrl ->
+            ( model, Nav.replaceUrl model.key (encodeTeamInUrl model) )
 
         _ ->
             ( model, Cmd.none )
