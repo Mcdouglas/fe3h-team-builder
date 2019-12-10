@@ -14,7 +14,6 @@ import Html.Events exposing (onClick)
 import JobModal exposing (modalJobPicker)
 import SkillModal exposing (modalSkillPicker)
 import Url exposing (..)
-import UrlDecoder exposing (..)
 
 
 viewBuilder : Model -> Html Msg

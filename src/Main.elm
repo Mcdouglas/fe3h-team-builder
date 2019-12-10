@@ -1,14 +1,7 @@
 module Main exposing (main)
 
 import Browser exposing (application)
-<<<<<<< HEAD
-<<<<<<< HEAD
 import Browser.Navigation as Nav
-=======
->>>>>>> Transform sandbox -> application
-=======
-import Browser.Navigation as Nav
->>>>>>> Read url + rewrite url
 import BuildEventListener exposing (handle)
 import BuildInfoHandler exposing (toggleBuildInfo)
 import CharacterEventListener exposing (handle)
@@ -21,30 +14,11 @@ import JobEventListener exposing (handle)
 import SkillEventListener exposing (..)
 import TeamBuilder exposing (..)
 import Url exposing (..)
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 import UrlDecoder exposing (..)
 
 
 init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
 init flags url key =
-=======
-import Browser.Navigation as Nav
-
-
-init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
-init flags url key  =
->>>>>>> Transform sandbox -> application
-=======
-=======
-import UrlDecoder exposing (..)
->>>>>>> Update url but with one click delay
-
-
-init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
-init flags url key =
->>>>>>> Read url + rewrite url
     let
         team =
             mockBuilds
@@ -90,8 +64,6 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         BuildMsg value ->
-<<<<<<< HEAD
-<<<<<<< HEAD
             update RewriteUrl (BuildEventListener.handle value model)
 
         CModalMsg value ->
@@ -118,45 +90,9 @@ update msg model =
 
                 Browser.External href ->
                     ( model, Nav.load href )
-=======
-            ( BuildEventListener.handle value model, Cmd.none )
-=======
-            (BuildEventListener.handle value model, Nav.replaceUrl model.key (encodeTeamInUrl model) )
->>>>>>> Update url but with one click delay
 
-        CModalMsg value ->
-            (CharacterEventListener.handle value model, Nav.replaceUrl model.key (encodeTeamInUrl model) )
-
-        JModalMsg value ->
-            (JobEventListener.handle value model, Nav.replaceUrl model.key (encodeTeamInUrl model) )
-
-        SModalMsg value ->
-            (SkillEventListener.handle value model, Nav.replaceUrl model.key (encodeTeamInUrl model) )
-
-        ToggleBuildInfo value ->
-            ( toggleBuildInfo model value, Cmd.none )
->>>>>>> Read url + rewrite url
-
-<<<<<<< HEAD
         RewriteUrl ->
             ( model, Nav.replaceUrl model.key (encodeTeamInUrl model) )
-=======
-        UrlChanged url ->
-            ( { model | url = url }
-            , Cmd.none
-            )
-
-        LinkClicked urlRequest ->
-            case urlRequest of
-                Browser.Internal url ->
-                    ( model, Nav.pushUrl model.key (Url.toString url) )
-
-                Browser.External href ->
-                    ( model, Nav.load href )
->>>>>>> Replace by other kind of url handlers
-
-        RewriteUrl value ->
-            ( model, Nav.replaceUrl model.key value )
 
         _ ->
             ( model, Cmd.none )
