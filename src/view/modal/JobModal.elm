@@ -79,7 +79,7 @@ viewJobTile : Model -> ( Int, Maybe Job ) -> Job -> Html Msg
 viewJobTile model ( buildIdx, _ ) job =
     let
         lockedCss =
-            if model.team |> Dict.filter (\k v -> k == buildIdx) |> Dict.map (\k v -> v.jobId) |> Dict.member job.id then
+            if model.team |> Dict.filter (\k v -> k == buildIdx) |> Dict.map (\k v -> v.jobId) |> Dict.values |> List.member job.id then
                 "locked-picture"
 
             else
