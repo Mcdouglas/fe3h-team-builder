@@ -1,6 +1,7 @@
 module Main exposing (main)
 
 import Browser exposing (application)
+import Browser.Navigation as Nav
 import BuildEventListener exposing (handle)
 import BuildInfoHandler exposing (toggleBuildInfo)
 import CharacterEventListener exposing (handle)
@@ -13,11 +14,10 @@ import JobEventListener exposing (handle)
 import SkillEventListener exposing (..)
 import TeamBuilder exposing (..)
 import Url exposing (..)
-import Browser.Navigation as Nav
 
 
 init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
-init flags url key  =
+init flags url key =
     let
         team =
             mockBuilds
@@ -40,7 +40,7 @@ init flags url key  =
         errorMessage =
             Nothing
     in
-    (Model team dataModel viewModel errorMessage url key, Cmd.none)
+    ( Model team dataModel viewModel errorMessage url key, Cmd.none )
 
 
 view : Model -> Browser.Document Msg
@@ -55,29 +55,30 @@ view model =
                 [ viewBuilder model ]
     }
 
+
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         BuildMsg value ->
-            (BuildEventListener.handle value model, Cmd.none)
+            ( BuildEventListener.handle value model, Cmd.none )
 
         CModalMsg value ->
-            (CharacterEventListener.handle value model, Cmd.none)
+            ( CharacterEventListener.handle value model, Cmd.none )
 
         JModalMsg value ->
-            (JobEventListener.handle value model, Cmd.none)
+            ( JobEventListener.handle value model, Cmd.none )
 
         SModalMsg value ->
-            (SkillEventListener.handle value model, Cmd.none)
+            ( SkillEventListener.handle value model, Cmd.none )
 
         ToggleBuildInfo value ->
-            (toggleBuildInfo model value, Cmd.none)
+            ( toggleBuildInfo model value, Cmd.none )
 
         UrlChanged url ->
             ( { model | url = url }
             , Cmd.none
             )
-            
+
         LinkClicked urlRequest ->
             case urlRequest of
                 Browser.Internal url ->
@@ -86,8 +87,11 @@ update msg model =
                 Browser.External href ->
                     ( model, Nav.load href )
 
+        RewriteUrl value ->
+            ( model, Nav.replaceUrl model.key value )
+
         _ ->
-            (model, Cmd.none)
+            ( model, Cmd.none )
 
 
 main : Program () Model Msg
@@ -96,7 +100,7 @@ main =
         { init = init
         , view = view
         , update = update
-        , subscriptions = (\_ -> Sub.none)
+        , subscriptions = \_ -> Sub.none
         , onUrlChange = UrlChanged
         , onUrlRequest = LinkClicked
         }

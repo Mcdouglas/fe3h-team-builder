@@ -1,9 +1,10 @@
 module GlobalModel exposing (..)
 
+import Browser.Navigation exposing (Key)
 import CustomTypes exposing (..)
 import Dict exposing (Dict)
 import Url exposing (..)
-import Browser.Navigation exposing (Key)
+
 
 type alias Model =
     { team : Dict Int Build
@@ -11,7 +12,7 @@ type alias Model =
     , view : ViewModel
     , errorMessage : Maybe String
     , url : Url
-    , key: Key
+    , key : Key
     }
 
 
