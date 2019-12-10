@@ -14,6 +14,7 @@ import JobEventListener exposing (handle)
 import SkillEventListener exposing (..)
 import TeamBuilder exposing (..)
 import Url exposing (..)
+import UrlDecoder exposing (..)
 
 
 init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
@@ -60,16 +61,16 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         BuildMsg value ->
-            ( BuildEventListener.handle value model, Cmd.none )
+            (BuildEventListener.handle value model, Nav.replaceUrl model.key (encodeTeamInUrl model) )
 
         CModalMsg value ->
-            ( CharacterEventListener.handle value model, Cmd.none )
+            (CharacterEventListener.handle value model, Nav.replaceUrl model.key (encodeTeamInUrl model) )
 
         JModalMsg value ->
-            ( JobEventListener.handle value model, Cmd.none )
+            (JobEventListener.handle value model, Nav.replaceUrl model.key (encodeTeamInUrl model) )
 
         SModalMsg value ->
-            ( SkillEventListener.handle value model, Cmd.none )
+            (SkillEventListener.handle value model, Nav.replaceUrl model.key (encodeTeamInUrl model) )
 
         ToggleBuildInfo value ->
             ( toggleBuildInfo model value, Cmd.none )
