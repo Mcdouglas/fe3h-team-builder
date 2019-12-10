@@ -1,8 +1,12 @@
 module GlobalMessage exposing (..)
 
+<<<<<<< HEAD
 import Browser exposing (..)
 import CustomTypes exposing (..)
+=======
+>>>>>>> Read url + rewrite url
 import Browser exposing (..)
+import CustomTypes exposing (..)
 import Url exposing (..)
 
 
@@ -16,7 +20,11 @@ type Msg
     | NoOp
     | LinkClicked Browser.UrlRequest
     | UrlChanged Url.Url
+<<<<<<< HEAD
     | RewriteUrl
+=======
+    | RewriteUrl String
+>>>>>>> Read url + rewrite url
 
 
 type CharacterModal
