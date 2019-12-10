@@ -23,6 +23,7 @@ import TeamBuilder exposing (..)
 import Url exposing (..)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import UrlDecoder exposing (..)
 
 
@@ -36,6 +37,9 @@ init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
 init flags url key  =
 >>>>>>> Transform sandbox -> application
 =======
+=======
+import UrlDecoder exposing (..)
+>>>>>>> Update url but with one click delay
 
 
 init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
@@ -66,15 +70,7 @@ init flags url key =
         model =
             Model team dataModel viewModel errorMessage url key
     in
-<<<<<<< HEAD
-<<<<<<< HEAD
     ( model, Nav.replaceUrl model.key (encodeTeamInUrl model) )
-=======
-    (Model team dataModel viewModel errorMessage url key, Cmd.none)
->>>>>>> Replace by other kind of url handlers
-=======
-    ( Model team dataModel viewModel errorMessage url key, Cmd.none )
->>>>>>> Read url + rewrite url
 
 
 view : Model -> Browser.Document Msg
@@ -94,6 +90,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         BuildMsg value ->
+<<<<<<< HEAD
 <<<<<<< HEAD
             update RewriteUrl (BuildEventListener.handle value model)
 
@@ -123,15 +120,18 @@ update msg model =
                     ( model, Nav.load href )
 =======
             ( BuildEventListener.handle value model, Cmd.none )
+=======
+            (BuildEventListener.handle value model, Nav.replaceUrl model.key (encodeTeamInUrl model) )
+>>>>>>> Update url but with one click delay
 
         CModalMsg value ->
-            ( CharacterEventListener.handle value model, Cmd.none )
+            (CharacterEventListener.handle value model, Nav.replaceUrl model.key (encodeTeamInUrl model) )
 
         JModalMsg value ->
-            ( JobEventListener.handle value model, Cmd.none )
+            (JobEventListener.handle value model, Nav.replaceUrl model.key (encodeTeamInUrl model) )
 
         SModalMsg value ->
-            ( SkillEventListener.handle value model, Cmd.none )
+            (SkillEventListener.handle value model, Nav.replaceUrl model.key (encodeTeamInUrl model) )
 
         ToggleBuildInfo value ->
             ( toggleBuildInfo model value, Cmd.none )
