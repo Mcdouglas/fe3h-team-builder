@@ -15,7 +15,7 @@ type Msg
     | NoOp
     | LinkClicked Browser.UrlRequest
     | UrlChanged Url.Url
-    | RewriteUrl String
+    | RewriteUrl
 
 
 type CharacterModal
