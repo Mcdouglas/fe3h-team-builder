@@ -219,7 +219,7 @@ body {
         }
 
         .remove-controller {
-          background: url("../lib/octicons/dash.svg");
+          background: url("../lib/octicons/trashcan.svg");
           background-color: rgba(0, 0, 0, 0.2);
           background-repeat: no-repeat;
           background-position-x: 50%;
@@ -234,6 +234,11 @@ body {
           background-position-x: 50%;
           background-position-y: 50%;
           background-size: 1em;
+        }
+
+        & > div.locked-controller {
+          filter: contrast(0%);
+          border: none;
         }
       }
     }

@@ -3,6 +3,7 @@ module BuildView exposing (..)
 import Character exposing (..)
 import CharacterView exposing (..)
 import CustomTypes exposing (..)
+import Dict exposing (..)
 import GlobalMessage exposing (BuildPanel(..), Msg(..))
 import GlobalModel exposing (..)
 import Html exposing (..)
@@ -96,8 +97,30 @@ buttonBuildInfo build =
 
 controlPanel : Model -> Int -> Html Msg
 controlPanel model idx =
+    let
+        upCustomCss =
+            if idx > 0 then
+                "button-clickable"
+
+            else
+                "locked-controller"
+
+        removeCustomCss =
+            if Dict.size model.team > 1 then
+                "button-clickable"
+
+            else
+                "locked-controller"
+
+        downCustomCss =
+            if idx < (Dict.size model.team - 1) then
+                "button-clickable"
+
+            else
+                "locked-controller"
+    in
     div [ class "c-panel" ]
-        [ div [ class "up-controller button-clickable", onClick (BuildMsg (UpBuild idx)) ] []
-        , div [ class "remove-controller button-clickable", onClick (BuildMsg (DeleteBuild idx)) ] []
-        , div [ class "down-controller button-clickable", onClick (BuildMsg (DownBuild idx)) ] []
+        [ div [ class ("up-controller " ++ upCustomCss), onClick (BuildMsg (UpBuild idx)) ] []
+        , div [ class ("remove-controller " ++ removeCustomCss), onClick (BuildMsg (DeleteBuild idx)) ] []
+        , div [ class ("down-controller " ++ downCustomCss), onClick (BuildMsg (DownBuild idx)) ] []
         ]
