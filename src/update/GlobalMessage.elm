@@ -1,7 +1,7 @@
 module GlobalMessage exposing (..)
 
-import CustomTypes exposing (..)
 import Browser exposing (..)
+import CustomTypes exposing (..)
 import Url exposing (..)
 
 
@@ -15,6 +15,7 @@ type Msg
     | NoOp
     | LinkClicked Browser.UrlRequest
     | UrlChanged Url.Url
+    | RewriteUrl String
 
 
 type CharacterModal
