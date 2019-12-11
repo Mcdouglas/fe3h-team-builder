@@ -7,6 +7,7 @@ import BuildInfoHandler exposing (toggleBuildInfo)
 import CharacterEventListener exposing (handle)
 import CustomTypes exposing (SortType(..))
 import DataHandler exposing (..)
+import Dict exposing (..)
 import ErrorHandler exposing (..)
 import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (..)
@@ -21,7 +22,7 @@ init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
 init flags url key =
     let
         team =
-            mockBuilds
+            decodeUrlInTeam (Url.toString url)
 
         dataModel =
             initStaticData
@@ -44,7 +45,7 @@ init flags url key =
         model =
             Model team dataModel viewModel errorMessage url key
     in
-    ( model, Nav.replaceUrl model.key (encodeTeamInUrl model) )
+    ( model, Cmd.none )
 
 
 view : Model -> Browser.Document Msg
@@ -79,7 +80,7 @@ update msg model =
             ( toggleBuildInfo model value, Cmd.none )
 
         UrlChanged url ->
-            ( { model | url = url }
+            ( { model | team = decodeUrlInTeam (Url.toString url), url = url }
             , Cmd.none
             )
 
