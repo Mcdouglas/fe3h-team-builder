@@ -1,7 +1,9 @@
 module GlobalModel exposing (..)
 
+import Browser.Navigation exposing (Key)
 import CustomTypes exposing (..)
 import Dict exposing (Dict)
+import Url exposing (..)
 
 
 type alias Model =
@@ -9,6 +11,8 @@ type alias Model =
     , data : DataModel
     , view : ViewModel
     , errorMessage : Maybe String
+    , url : Url
+    , key : Key
     }
 
 

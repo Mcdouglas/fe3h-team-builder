@@ -1,6 +1,7 @@
 module Main exposing (main)
 
-import Browser exposing (sandbox)
+import Browser exposing (application)
+import Browser.Navigation as Nav
 import BuildEventListener exposing (handle)
 import BuildInfoHandler exposing (toggleBuildInfo)
 import CharacterEventListener exposing (handle)
@@ -12,10 +13,12 @@ import GlobalModel exposing (..)
 import JobEventListener exposing (handle)
 import SkillEventListener exposing (..)
 import TeamBuilder exposing (..)
+import Url exposing (..)
+import UrlDecoder exposing (..)
 
 
-init : Model
-init =
+init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
+init flags url key =
     let
         team =
             mockBuilds
@@ -37,45 +40,71 @@ init =
 
         errorMessage =
             Nothing
+
+        model =
+            Model team dataModel viewModel errorMessage url key
     in
-    Model team dataModel viewModel errorMessage
+    ( model, Nav.replaceUrl model.key (encodeTeamInUrl model) )
 
 
+view : Model -> Browser.Document Msg
 view model =
-    case model.errorMessage of
-        Just message ->
-            viewError message
+    { title = "FE3H-TEAM-BUILDER"
+    , body =
+        case model.errorMessage of
+            Just message ->
+                [ viewError message ]
 
-        Nothing ->
-            viewBuilder model
+            Nothing ->
+                [ viewBuilder model ]
+    }
 
 
-update : Msg -> Model -> Model
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         BuildMsg value ->
-            BuildEventListener.handle value model
+            update RewriteUrl (BuildEventListener.handle value model)
 
         CModalMsg value ->
-            CharacterEventListener.handle value model
+            update RewriteUrl (CharacterEventListener.handle value model)
 
         JModalMsg value ->
-            JobEventListener.handle value model
+            update RewriteUrl (JobEventListener.handle value model)
 
         SModalMsg value ->
-            SkillEventListener.handle value model
+            update RewriteUrl (SkillEventListener.handle value model)
 
         ToggleBuildInfo value ->
-            toggleBuildInfo model value
+            ( toggleBuildInfo model value, Cmd.none )
+
+        UrlChanged url ->
+            ( { model | url = url }
+            , Cmd.none
+            )
+
+        LinkClicked urlRequest ->
+            case urlRequest of
+                Browser.Internal url ->
+                    ( model, Nav.pushUrl model.key (Url.toString url) )
+
+                Browser.External href ->
+                    ( model, Nav.load href )
+
+        RewriteUrl ->
+            ( model, Nav.replaceUrl model.key (encodeTeamInUrl model) )
 
         _ ->
-            model
+            ( model, Cmd.none )
 
 
 main : Program () Model Msg
 main =
-    sandbox
+    application
         { init = init
         , view = view
         , update = update
+        , subscriptions = \_ -> Sub.none
+        , onUrlChange = UrlChanged
+        , onUrlRequest = LinkClicked
         }
