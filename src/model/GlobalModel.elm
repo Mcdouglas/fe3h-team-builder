@@ -5,6 +5,7 @@ import CustomTypes exposing (..)
 import Dict exposing (Dict)
 import Url exposing (..)
 
+
 type alias Model =
     { team : Dict Int Build
     , data : DataModel
