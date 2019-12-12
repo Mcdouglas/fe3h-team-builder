@@ -18,7 +18,7 @@
         display:grid;
         grid-template-rows: auto auto;
         
-        width: 70em;
+        width: 77em;
         margin: auto;
         padding: 1em;
         
@@ -30,36 +30,68 @@
           margin-top: 0.5em;
           display: flex;
           flex-flow: row;
-          align-items: center;
+          justify-content: center;
+
+          .return-button {
+            background: url("../lib/octicons/reply.svg");
+          }
+
+          .valid-button {
+            background: url("../lib/octicons/check.svg");
+          }
+
+          .button {
+            background-color: rgba(0, 0, 0, 0.2);
+            background-repeat: no-repeat;
+            background-position-x: 50%;
+            background-position-y: 50%;
+            background-size: 1em;
+            
+            height: 5em;
+            width: 5em;
+
+            margin-left: 0.125em;
+            margin-right: 0.125em;
+
+            box-shadow: 0 0 5px rgba(0,0,0,0.4);
+            border: 1px solid black;
+
+            &:hover {
+              cursor: pointer;
+              background-color: rgba(0, 0, 0, 0.3);
+              transition: all 0.6s ease;
+            }
+          }
 
           .jobs-row {
             display: flex;
             justify-content: center;
-            width: 100%;
+            width: fit-content;
 
             .job-tile {
-              text-align: center;
+              cursor: pointer;
               margin-left: 0.125em;
               margin-right: 0.125em;
               box-shadow: 0 0 5px rgba(0,0,0,0.4);
               border: 1px solid black;
 
-              &.locked-picture {
-                -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
-                filter: grayscale(100%);
-              }
-
-              &:not(.locked-picture):hover {
-                cursor: pointer;
-
-                filter: grayscale(100%);
+              &.clicked-picture {
+                border: 1px solid black;
+                box-shadow: 0 0 1em black;
                 transition: all 0.6s ease;
+                -webkit-filter: sepia(100%); /* Safari 6.0 - 9.0 */
+                filter: sepia(100%);
               }
                 
               & > .job-background-tile {
                 position: relative;
                 height: 5em;
                 width: 5em;
+
+                &.locked-picture {
+                  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+                  filter: grayscale(100%);
+                }
   
                 & > .job-background {
                   position: absolute;
@@ -121,13 +153,12 @@
               background-color: rgba(0,0,0,0.05);
               border-radius: .3rem;
 
-              padding-left: 1em;
-
               & > p:first-child {
                 font-size: 0.8em;
                 border-right: 1px solid lightgray;
                 width: 6em;
                 margin-right: 1em;
+                margin-left: 1em;
               }
 
               p {
@@ -142,15 +173,22 @@
             .list-study {
               display: flex;
               height: 4em;
+              width: 83%;
+
+              & > div:not(.no-data) {
+                margin-left: 1.25em;
+                margin-right: 1.25em;
+              }
             }
 
             .list-jobskill {
               display: flex;
               height: 5em;
+              width: 83%;
 
               & > div:not(.no-data) {
                 position: relative;
-                width: 25%;
+                width: 33%;
                 margin: 1em 0;
                 text-align: center;
               }

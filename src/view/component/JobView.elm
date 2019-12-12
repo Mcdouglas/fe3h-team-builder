@@ -72,8 +72,11 @@ oldGetJobTile customCss id =
 buttonJob : Model -> Int -> Maybe Job -> Html Msg
 buttonJob model buildIdx maybeJob =
     let
+        jobOrDefault =
+            maybeJob |> Maybe.withDefault getJobByDefault
+
         onClickEvent =
-            onClick (JModalMsg (OpenJobModal ( buildIdx, maybeJob )))
+            onClick (JModalMsg (OpenJobModal ( buildIdx, jobOrDefault )))
     in
     case maybeJob of
         Just job ->

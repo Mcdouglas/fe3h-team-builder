@@ -19,7 +19,7 @@ type alias ViewModel =
     , skipNextClosure : Bool
     , characterPicker : ( Int, Maybe Character )
     , skillPicker : ( ( Int, Int ), Maybe Skill, Bool )
-    , jobPicker : ( Int, Maybe Job )
+    , jobPicker : ( Int, Job )
     , isCreatingBuild : Bool
     , skillListSortBy : SortType
     , skillSearch : String

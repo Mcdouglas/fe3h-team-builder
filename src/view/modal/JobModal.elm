@@ -9,7 +9,7 @@ import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import Job exposing (filterJobsAvailable, getJobByDefault, getJobsByCategory)
+import Job exposing (filterJobsAvailable, getJobsByCategory)
 import JobSkill exposing (getJobSkillsByJob)
 import JobView exposing (getJobTile)
 import Json.Decode as Json
@@ -42,7 +42,7 @@ modalJobPicker model =
 viewJobsGrid : Model -> Html Msg
 viewJobsGrid model =
     let
-        ( buildIdx, maybeJob ) =
+        ( buildIdx, job ) =
             model.view.jobPicker
 
         -- Todo category must be selected by user
@@ -59,19 +59,23 @@ viewJobsGrid model =
                 |> Maybe.andThen (\id -> getCharacterById id)
                 |> Maybe.andThen (\c -> Just (filterJobsAvailable c jobsCategorized))
                 |> Maybe.withDefault []
-                |> viewJobRow model ( buildIdx, maybeJob )
+                |> viewJobRow model ( buildIdx, job )
     in
-    div [ class "jobs-grid" ] [ jobRowDiv ]
+    div [ class "jobs-grid" ]
+        [ div [ class "return-button button" ] []
+        , jobRowDiv
+        , div [ class "valid-button button", onClick (JModalMsg (UpdateBuild ( buildIdx, job ))) ] []
+        ]
 
 
-viewJobRow : Model -> ( Int, Maybe Job ) -> List Job -> Html Msg
+viewJobRow : Model -> ( Int, Job ) -> List Job -> Html Msg
 viewJobRow model shift listJob =
     div
         [ class "jobs-row" ]
         (listJob |> List.map (\e -> viewJobTile model shift e))
 
 
-viewJobTile : Model -> ( Int, Maybe Job ) -> Job -> Html Msg
+viewJobTile : Model -> ( Int, Job ) -> Job -> Html Msg
 viewJobTile model ( buildIdx, _ ) job =
     let
         lockedCss =
@@ -80,11 +84,17 @@ viewJobTile model ( buildIdx, _ ) job =
 
             else
                 ""
+
+        clickedCss =
+            if (model.view.jobPicker |> Tuple.second) == job then
+                "clicked-picture"
+
+            else
+                ""
     in
     div
-        [ class ("job-tile " ++ lockedCss)
-        , onMouseOver (JModalMsg (UpdateJobPicker ( buildIdx, Just job )))
-        , onClick (JModalMsg (UpdateBuild ( buildIdx, job )))
+        [ class ("job-tile " ++ lockedCss ++ " " ++ clickedCss)
+        , onClick (JModalMsg (UpdateJobPicker ( buildIdx, job )))
         ]
         [ getJobTile lockedCss job ]
 
@@ -103,7 +113,6 @@ viewJobDetail model =
         currentJob =
             model.view.jobPicker
                 |> Tuple.second
-                |> Maybe.withDefault getJobByDefault
 
         category =
             jobCategoryIdToString currentJob.jobCategoryId
@@ -161,7 +170,7 @@ viewCertificationRequirement job =
             else
                 [ div [ class "no-data" ] [] ]
     in
-    div [ class "job-description list-study" ] ([ p [] [ text "Certificats req." ] ] ++ studyListDiv)
+    div [ class "job-description" ] [ p [] [ text "Certificats req." ], div [ class "list-study" ] studyListDiv ]
 
 
 viewJobSkills : Job -> Html Msg
@@ -178,7 +187,7 @@ viewJobSkills job =
             else
                 [ div [ class "no-data" ] [] ]
     in
-    div [ class "job-description list-jobskill" ] ([ p [] [ text "Job skills" ] ] ++ skillListDiv)
+    div [ class "job-description" ] [ p [] [ text "Job skills" ], div [ class "list-jobskill" ] skillListDiv ]
 
 
 viewSkillMastery : Job -> Html Msg
@@ -195,7 +204,7 @@ viewSkillMastery job =
             else
                 [ div [ class "no-data" ] [] ]
     in
-    div [ class "job-description list-jobskill" ] ([ p [] [ text "Skill learned" ] ] ++ skillListDiv)
+    div [ class "job-description" ] [ p [] [ text "Skill learned" ], div [ class "list-jobskill" ] skillListDiv ]
 
 
 buttonCloseModal : Html Msg

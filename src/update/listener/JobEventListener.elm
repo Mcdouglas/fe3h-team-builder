@@ -22,7 +22,7 @@ handle msg model =
             closeModal model
 
 
-updateJobPicker : Model -> ( Int, Maybe Job ) -> Model
+updateJobPicker : Model -> ( Int, Job ) -> Model
 updateJobPicker model picker =
     let
         oldView =
