@@ -4,7 +4,7 @@ import CustomTypes exposing (..)
 import GlobalMessage exposing (Msg(..))
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import ModelUtils exposing (rankToId)
+import Study exposing (rankToId, subjectToId)
 
 
 getStudyPicture : Int -> Html Msg
@@ -32,6 +32,6 @@ getRankPicture rank =
 viewStudy : Study -> Html Msg
 viewStudy study =
     div [ class "study-view" ]
-        [ getStudyPicture study.pictureId
+        [ getStudyPicture (subjectToId study.subject)
         , getRankPicture study.rank
         ]

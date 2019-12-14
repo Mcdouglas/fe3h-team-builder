@@ -64,9 +64,7 @@ viewCharacterSkillTile model id =
         Just value ->
             div []
                 [ getSkillCharacterPicture model value.pictureId
-                , p
-                    []
-                    [ text value.name ]
+                , p [] [ text value.name ]
                 , viewPopover value.name value.description
                 ]
 
