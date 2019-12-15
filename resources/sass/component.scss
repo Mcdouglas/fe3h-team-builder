@@ -88,23 +88,31 @@
 }
 
 .add-skill {
-    display: flex;
-    width: 2em;
-    height: 2em;
-    margin: 0 auto;
-    background-color: rgba(0, 0, 0, 0.4);
-    border-radius: 0.25rem;
-    content: url("../lib/octicons/plus-small.svg");
 
-    cursor: pointer;
-    box-shadow: 0 0 5px rgba(0,0,0,0.4);
+    & > div {
+        width: 2em;
+        height: 2em;
+        margin: 0 auto;
+        
+        cursor: pointer;
 
-    &:active {
-        transform: translate(0.05rem,0.05rem);
-    }
+        border-radius: 0.25rem;
+        background-color: rgba(0, 0, 0, 0.4);
+        box-shadow: 0 0 5px rgba(0,0,0,0.4);
+        
+        background-image: url("../lib/octicons/plus-small.svg");
+        background-repeat: no-repeat;
+        background-position-x: 50%;
+        background-position-y: 50%;
+        background-size: 1em;
 
-    &:hover {
-        background-color: rgba(0, 0, 0, 0.5);
+        &:active {
+            transform: translate(0.05rem,0.05rem);
+        }
+    
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
     }
 }
 
