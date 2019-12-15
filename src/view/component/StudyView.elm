@@ -35,3 +35,27 @@ viewStudy study =
         [ getStudyPicture (subjectToId study.subject)
         , getRankPicture study.rank
         ]
+
+
+getAcademicSkill : StudyCapacity -> Html Msg
+getAcademicSkill sc =
+    let
+        studyCapacityName =
+            case sc of
+                Strength ->
+                    "strength"
+
+                Weakness ->
+                    "weakness"
+
+                BuddingTalent ->
+                    "budding_talent"
+
+                _ ->
+                    ""
+    in
+    if String.length studyCapacityName > 0 then
+        img [ class "study-picture", src ("resources/img/skills/" ++ studyCapacityName ++ ".png") ] []
+
+    else
+        div [] []

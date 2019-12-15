@@ -15,7 +15,7 @@ import Json.Decode as Json
 import NoDataView exposing (..)
 import Popover exposing (..)
 import Study exposing (getAcademicSkills, stringToSubject, subjectToId)
-import StudyView exposing (getStudyPicture)
+import StudyView exposing (getAcademicSkill, getStudyPicture)
 
 
 modalCharacterPicker : Model -> Html Msg
@@ -203,30 +203,6 @@ viewAcademicSkillsDetail model id =
             , div [ class "study-table-row" ] (Dict.values academicSkills |> List.map getAcademicSkill)
             ]
         ]
-
-
-getAcademicSkill : StudyCapacity -> Html Msg
-getAcademicSkill sc =
-    let
-        studyCapacityName =
-            case sc of
-                Strength ->
-                    "strength"
-
-                Weakness ->
-                    "weakness"
-
-                BuddingTalent ->
-                    "budding_talent"
-
-                _ ->
-                    ""
-    in
-    if String.length studyCapacityName > 0 then
-        img [ class "study-picture", src ("resources/img/skills/" ++ studyCapacityName ++ ".png") ] []
-
-    else
-        div [] []
 
 
 buttonCloseModal : Html Msg

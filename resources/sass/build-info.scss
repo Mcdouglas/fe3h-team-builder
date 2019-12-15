@@ -1,0 +1,10 @@
+.build-info {
+
+    & > div.character-section {
+        padding-right: 1em;
+
+        & > div.study-table {
+            width: 100%;
+        }
+    }
+}

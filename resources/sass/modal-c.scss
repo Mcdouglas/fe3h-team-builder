@@ -237,34 +237,6 @@
                 text-align: center;
                 margin: auto 0;
               }
-
-              & > .study-table {
-                width: min-content;
-                display: grid;
-                grid-template-rows: auto auto;
-                background-color: lightgray;
-                border-radius: 1px;
-
-                & > .study-table-header {
-                  border-bottom: 1px solid gray;
-                  
-                  & > p {
-                    font-weight: 600;
-                  }
-                }
-
-                & > .study-table-row {
-                  display: grid;
-                  $column-width: calc(1/11* 100%);
-                  grid-template-columns: $column-width $column-width $column-width $column-width $column-width $column-width $column-width $column-width $column-width $column-width $column-width;
-
-                  & > img, div {
-                    margin: 0.125em;
-                    height: 1.5em;
-                    width: 1.5em;
-                  }
-                }
-              }
             }
           }          
         }

@@ -32,8 +32,11 @@ decodeUrlInBuild segment =
 
         jobId =
             String.slice 35 37 segment |> Hex.fromString |> Result.withDefault 0
+
+        buildHidden =
+            String.slice 37 38 segment == "h"
     in
-    Build characterId listPassiveSkillId listActiveSkillId jobId False
+    Build characterId listPassiveSkillId listActiveSkillId jobId buildHidden
 
 
 decodeUrlInSkill : String -> ( Int, SkillType )
@@ -82,8 +85,15 @@ encodeBuildInQuerySegment build =
 
         jobInHex =
             intToHex build.jobId
+
+        buildHidden =
+            if build.hiddenInfo then
+                "h"
+
+            else
+                "s"
     in
-    "#" ++ charInHex ++ listPassiveSkillHex ++ listActiveSkillHex ++ jobInHex
+    "#" ++ charInHex ++ listPassiveSkillHex ++ listActiveSkillHex ++ jobInHex ++ buildHidden
 
 
 encodeSkillTypeToString : SkillType -> String
