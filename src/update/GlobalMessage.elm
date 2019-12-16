@@ -25,6 +25,8 @@ type JobModal
     | CloseJobModal
     | UpdateJobPicker ( Int, Job )
     | UpdateBuild ( Int, Job )
+    | UpdateCategory Int
+    | DeleteCategory
 
 
 type SkillModal

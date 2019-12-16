@@ -68,6 +68,28 @@
             justify-content: center;
             width: fit-content;
 
+            .category-tile {
+              cursor: pointer;
+              width: 5em;
+              height: 5em;
+              line-height: 5em;
+              margin-left: 0.125em;
+              margin-right: 0.125em;
+              box-shadow: 0 0 5px rgba(0,0,0,0.4);
+              border: 1px solid black;
+              
+
+              p {
+                font-size: 0.75em;
+                text-align: center;
+              }
+
+              &:hover {
+                box-shadow: 0 0 1em black;
+                transition: all 0.6s ease;
+              }
+            }
+
             .job-tile {
               cursor: pointer;
               margin-left: 0.125em;
@@ -76,7 +98,6 @@
               border: 1px solid black;
 
               &.clicked-picture {
-                border: 1px solid black;
                 box-shadow: 0 0 1em black;
                 transition: all 0.6s ease;
                 -webkit-filter: sepia(100%); /* Safari 6.0 - 9.0 */

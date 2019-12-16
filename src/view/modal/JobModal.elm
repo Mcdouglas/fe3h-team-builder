@@ -10,6 +10,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Job exposing (filterJobsAvailable, getJobsByCategory)
+import JobCategory exposing (initJobCategories)
 import JobSkill exposing (getJobSkillsByJob)
 import JobView exposing (getJobTile)
 import Json.Decode as Json
@@ -42,37 +43,52 @@ modalJobPicker model =
 viewJobsGrid : Model -> Html Msg
 viewJobsGrid model =
     let
+        rowDiv =
+            case model.view.categorySelected of
+                Just categoryId ->
+                    viewJobRow model categoryId
+
+                Nothing ->
+                    viewJobCategoryRow model
+    in
+    div [ class "jobs-grid" ] rowDiv
+
+
+viewJobCategoryRow : Model -> List (Html Msg)
+viewJobCategoryRow model =
+    [ div [ class "jobs-row" ] (List.map (\jc -> viewJobCategoryTile model jc.id) initJobCategories) ]
+
+
+viewJobCategoryTile : Model -> Int -> Html Msg
+viewJobCategoryTile model id =
+    div
+        [ class "category-tile"
+        , onClick (JModalMsg (UpdateCategory id))
+        ]
+        [ p [] [ text (jobCategoryIdToString id) ] ]
+
+
+viewJobRow : Model -> Int -> List (Html Msg)
+viewJobRow model categoryId =
+    let
         ( buildIdx, job ) =
             model.view.jobPicker
 
-        -- Todo category must be selected by user
-        categoryId =
-            3
+        jobsCategorized id =
+            getJobsByCategory id |> List.foldl (::) []
 
-        jobsCategorized =
-            getJobsByCategory categoryId |> List.foldl (::) []
-
-        jobRowDiv =
+        listJob =
             model.team
                 |> Dict.get buildIdx
                 |> Maybe.map (\b -> b.idCharacter)
                 |> Maybe.andThen (\id -> getCharacterById id)
-                |> Maybe.andThen (\c -> Just (filterJobsAvailable c jobsCategorized))
+                |> Maybe.andThen (\c -> Just (filterJobsAvailable c (jobsCategorized categoryId)))
                 |> Maybe.withDefault []
-                |> viewJobRow model ( buildIdx, job )
     in
-    div [ class "jobs-grid" ]
-        [ div [ class "return-button button" ] []
-        , jobRowDiv
-        , div [ class "valid-button button", onClick (JModalMsg (UpdateBuild ( buildIdx, job ))) ] []
-        ]
-
-
-viewJobRow : Model -> ( Int, Job ) -> List Job -> Html Msg
-viewJobRow model shift listJob =
-    div
-        [ class "jobs-row" ]
-        (listJob |> List.map (\e -> viewJobTile model shift e))
+    [ div [ class "return-button button", onClick (JModalMsg DeleteCategory) ] []
+    , div [ class "jobs-row" ] (listJob |> List.map (\e -> viewJobTile model ( buildIdx, job ) e))
+    , div [ class "valid-button button", onClick (JModalMsg (UpdateBuild ( buildIdx, job ))) ] []
+    ]
 
 
 viewJobTile : Model -> ( Int, Job ) -> Job -> Html Msg

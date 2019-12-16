@@ -23,6 +23,7 @@ type alias ViewModel =
     , isCreatingBuild : Bool
     , skillListSortBy : SortType
     , skillSearch : String
+    , categorySelected : Maybe Int
     }
 
 

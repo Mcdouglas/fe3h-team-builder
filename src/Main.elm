@@ -34,7 +34,7 @@ init =
             ( -1, getJobByDefault )
 
         viewModel =
-            ViewModel False False False False initCharacterPicker initSkillPicker initJobPicker False SortByType ""
+            ViewModel False False False False initCharacterPicker initSkillPicker initJobPicker False SortByType "" Nothing
 
         errorMessage =
             Nothing

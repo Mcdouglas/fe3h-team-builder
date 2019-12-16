@@ -18,8 +18,38 @@ handle msg model =
         UpdateBuild value ->
             closeModal (updateBuild model value)
 
+        UpdateCategory value ->
+            updateCategory model value
+
+        DeleteCategory ->
+            deleteCategory model
+
         CloseJobModal ->
             closeModal model
+
+
+updateCategory : Model -> Int -> Model
+updateCategory model value =
+    let
+        oldView =
+            model.view
+
+        newView =
+            { oldView | categorySelected = Just value }
+    in
+    { model | view = newView }
+
+
+deleteCategory : Model -> Model
+deleteCategory model =
+    let
+        oldView =
+            model.view
+
+        newView =
+            { oldView | categorySelected = Nothing }
+    in
+    { model | view = newView }
 
 
 updateJobPicker : Model -> ( Int, Job ) -> Model
