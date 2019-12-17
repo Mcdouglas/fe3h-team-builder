@@ -72,7 +72,7 @@ modelHandlerTest =
                             , gender = Nothing
                             , magicUsage = Just CanUseSomeMagic
                             , note = Nothing
-                            , customExperience = Nothing
+                            , customExperience = Just 20
                             , onlyCharacters = []
                             , canFly = False
                             }
