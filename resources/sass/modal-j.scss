@@ -70,18 +70,55 @@
 
             .category-tile {
               cursor: pointer;
-              width: 5em;
+              width: 8em;
               height: 5em;
-              line-height: 5em;
               margin-left: 0.125em;
               margin-right: 0.125em;
               box-shadow: 0 0 5px rgba(0,0,0,0.4);
-              border: 1px solid black;
-              
 
-              p {
-                font-size: 0.75em;
-                text-align: center;
+              & > div.unique-category {
+                background: url(../img/categories/0.png);
+                background-size: 100%;
+                background-repeat: no-repeat;
+                background-position-x: 50%;
+                background-position-y: 50%;
+                height: 100%;
+              }
+
+              & > div.beginner-category {
+                background: url(../img/categories/1.png);
+                background-size: 100%;
+                background-repeat: no-repeat;
+                background-position-x: 50%;
+                background-position-y: 50%;
+                height: 100%;
+              }
+
+              & > div.intermediate-category {
+                background: url(../img/categories/2.png);
+                background-size: 100%;
+                background-repeat: no-repeat;
+                background-position-x: 50%;
+                background-position-y: 50%;
+                height: 100%;
+              }
+
+              & > div.advanced-category {
+                background: url(../img/categories/3.png);
+                background-size: 100%;
+                background-repeat: no-repeat;
+                background-position-x: 50%;
+                background-position-y: 50%;
+                height: 100%;
+              }
+
+              & > div.master-category {
+                background: url(../img/categories/4.png);
+                background-size: 100%;
+                background-repeat: no-repeat;
+                background-position-x: 50%;
+                background-position-y: 50%;
+                height: 100%;
               }
 
               &:hover {

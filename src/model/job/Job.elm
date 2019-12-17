@@ -38,9 +38,17 @@ getJobsByCategory categoryId =
 
 initJobs : List Job
 initJobs =
-    [ -- Starting
-      Job 0 0 "Commoner" 0 [] [] Nothing (Just CanUseSomeMagic) Nothing Nothing [] False
-    , Job 1 1 "Noble" 0 [] [] Nothing (Just CanUseSomeMagic) Nothing Nothing [] False
+    [ -- Unique
+      Job 0 0 "Commoner" 0 [] [] Nothing (Just CanUseSomeMagic) Nothing (Just 20) [] False
+    , Job 1 1 "Noble" 0 [] [] Nothing (Just CanUseSomeMagic) Nothing (Just 20) [] False
+    , Job 39 39 "Dancer" 0 [ Proficiency Sword 2, Proficiency Authority 3 ] [] Nothing (Just CanUseMagic) Nothing (Just 100) [] False
+    , Job 40 40 "Enlightened One" 0 [ Proficiency Sword 3, Proficiency Brawling 2, Proficiency Faith 3, Proficiency Authority 3 ] [] Nothing (Just CanUseMagic) (Just "Byleth only") (Just 100) [ 0, 1 ] False
+    , Job 41 41 "Armored Lord" 0 [ Proficiency Axe 3, Proficiency Authority 3, Proficiency HeavyArmor 3 ] [] Nothing Nothing (Just "Edelgard only") (Just 150) [ 2 ] False
+    , Job 42 42 "Emperor" 0 [ Proficiency Axe 3, Proficiency Authority 3, Proficiency HeavyArmor 3 ] [] Nothing Nothing (Just "Edelgard only") (Just 200) [ 2 ] False
+    , Job 43 43 "High Lord" 0 [ Proficiency Sword 3, Proficiency Lance 3, Proficiency Authority 3 ] [] Nothing Nothing (Just "Dimitri only") (Just 150) [ 10 ] False
+    , Job 44 44 "Great Lord" 0 [ Proficiency Sword 3, Proficiency Lance 3, Proficiency Authority 3 ] [] Nothing Nothing (Just "Dimitri only") (Just 200) [ 10 ] False
+    , Job 45 45 "Wyvern Master" 0 [ Proficiency Bow 3, Proficiency Authority 3, Proficiency Flying 3 ] [] Nothing Nothing (Just "Claude only") (Just 150) [ 18 ] True
+    , Job 46 46 "Barbarossa" 0 [ Proficiency Bow 3, Proficiency Authority 3, Proficiency Flying 3 ] [] Nothing Nothing (Just "Claude only") (Just 200) [ 18 ] True
 
     -- Beginner
     , Job 2 2 "Myrmidon" 1 [ Proficiency Sword 1 ] [ 2 ] Nothing Nothing Nothing Nothing [] False
@@ -86,14 +94,4 @@ initJobs =
     , Job 36 37 "Gremory" 4 [ Proficiency Reason 3, Proficiency Faith 3 ] [ 68, 80 ] (Just Female) (Just CanUseMagic) Nothing Nothing [] False
     , Job 37 36 "Dark Knight" 4 [ Proficiency Lance 3, Proficiency Reason 3, Proficiency Riding 3 ] [ 16, 67, 117 ] Nothing (Just CanUseMagic) Nothing Nothing [] False
     , Job 38 38 "Holy Knight" 4 [ Proficiency Lance 3, Proficiency Faith 3, Proficiency Riding 3 ] [ 16, 79, 117 ] Nothing (Just CanUseMagic) Nothing Nothing [] False
-
-    -- Unique
-    , Job 39 39 "Dancer" 5 [ Proficiency Sword 2, Proficiency Authority 3 ] [] Nothing (Just CanUseMagic) Nothing (Just 100) [] False
-    , Job 40 40 "Enlightened One" 5 [ Proficiency Sword 3, Proficiency Brawling 2, Proficiency Faith 3, Proficiency Authority 3 ] [] Nothing (Just CanUseMagic) (Just "Byleth only") (Just 100) [ 0, 1 ] False
-    , Job 41 41 "Armored Lord" 5 [ Proficiency Axe 3, Proficiency Authority 3, Proficiency HeavyArmor 3 ] [] Nothing Nothing (Just "Edelgard only") (Just 150) [ 2 ] False
-    , Job 42 42 "Emperor" 5 [ Proficiency Axe 3, Proficiency Authority 3, Proficiency HeavyArmor 3 ] [] Nothing Nothing (Just "Edelgard only") (Just 200) [ 2 ] False
-    , Job 43 43 "High Lord" 5 [ Proficiency Sword 3, Proficiency Lance 3, Proficiency Authority 3 ] [] Nothing Nothing (Just "Dimitri only") (Just 150) [ 10 ] False
-    , Job 44 44 "Great Lord" 5 [ Proficiency Sword 3, Proficiency Lance 3, Proficiency Authority 3 ] [] Nothing Nothing (Just "Dimitri only") (Just 200) [ 10 ] False
-    , Job 45 45 "Wyvern Master" 5 [ Proficiency Bow 3, Proficiency Authority 3, Proficiency Flying 3 ] [] Nothing Nothing (Just "Claude only") (Just 150) [ 18 ] True
-    , Job 46 46 "Barbarossa" 5 [ Proficiency Bow 3, Proficiency Authority 3, Proficiency Flying 3 ] [] Nothing Nothing (Just "Claude only") (Just 200) [ 18 ] True
     ]

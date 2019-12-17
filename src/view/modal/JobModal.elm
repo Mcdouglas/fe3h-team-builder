@@ -61,11 +61,31 @@ viewJobCategoryRow model =
 
 viewJobCategoryTile : Model -> Int -> Html Msg
 viewJobCategoryTile model id =
+    let
+        customCss =
+            (case id of
+                1 ->
+                    "beginner"
+
+                2 ->
+                    "intermediate"
+
+                3 ->
+                    "advanced"
+
+                4 ->
+                    "master"
+
+                _ ->
+                    "unique"
+            )
+                ++ "-category"
+    in
     div
         [ class "category-tile"
         , onClick (JModalMsg (UpdateCategory id))
         ]
-        [ p [] [ text (jobCategoryIdToString id) ] ]
+        [ div [ class ("category-picture " ++ customCss) ] [] ]
 
 
 viewJobRow : Model -> Int -> List (Html Msg)
@@ -75,7 +95,7 @@ viewJobRow model categoryId =
             model.view.jobPicker
 
         jobsCategorized id =
-            getJobsByCategory id |> List.foldl (::) []
+            getJobsByCategory id |> List.foldr (::) []
 
         listJob =
             model.team
