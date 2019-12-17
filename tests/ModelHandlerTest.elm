@@ -148,7 +148,7 @@ modelHandlerTest =
                 (\_ ->
                     unique
                         |> Expect.equal
-                            { id = 5
+                            { id = 0
                             , category = Unique
                             , experience = Nothing
                             , level = Nothing
