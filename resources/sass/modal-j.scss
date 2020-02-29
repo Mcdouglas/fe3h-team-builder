@@ -47,7 +47,6 @@
             background-position-y: 50%;
             background-size: 1em;
             
-            height: 5em;
             width: 5em;
 
             margin-left: 0.125em;
@@ -59,7 +58,6 @@
             &:hover {
               cursor: pointer;
               background-color: rgba(0, 0, 0, 0.3);
-              transition: all 0.6s ease;
             }
           }
 
