@@ -1,0 +1,167 @@
+.modal-s {
+  display: block;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: black;
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */
+  font-size: 1rem;
+  /* Modal Content/Box */ }
+  .modal-s .modal-content {
+    display: grid;
+    grid-template-columns: calc(8 * (5em - 1px)) auto;
+    background-color: #fefefe;
+    width: fit-content;
+    width: -moz-fit-content;
+    /* Firefox */
+    width: -webkit-fit-content;
+    /* Chrome */
+    margin: auto;
+    padding: 1em;
+    border: 1px solid #888;
+    transform: translateY(25vh); }
+    .modal-s .modal-content .modal-table {
+      display: grid;
+      grid-template-columns: 65% 35%;
+      grid-template-rows: auto auto; }
+      .modal-s .modal-content .modal-table .search-filter {
+        grid-column-start: 1;
+        grid-column-end: 2;
+        grid-row-start: 1;
+        grid-row-end: 2; }
+        .modal-s .modal-content .modal-table .search-filter > p {
+          margin: auto; }
+        .modal-s .modal-content .modal-table .search-filter > input {
+          width: 80%;
+          height: 2em;
+          margin: auto 0;
+          border-radius: 0.25em; }
+          .modal-s .modal-content .modal-table .search-filter > input::placeholder {
+            font-size: 0.75em; }
+        .modal-s .modal-content .modal-table .search-filter > div {
+          margin: auto; }
+      .modal-s .modal-content .modal-table .sort-filter {
+        grid-column-start: 2;
+        grid-column-end: 3;
+        grid-row-start: 1;
+        grid-row-end: 2; }
+        .modal-s .modal-content .modal-table .sort-filter > p {
+          margin: auto; }
+        .modal-s .modal-content .modal-table .sort-filter > select {
+          width: 70%;
+          height: 2em;
+          margin: auto auto auto 0;
+          border-radius: 0.25em; }
+      .modal-s .modal-content .modal-table .skills-grid {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        grid-row-start: 2;
+        grid-row-end: 3;
+        height: 30em;
+        width: 100%;
+        overflow: auto;
+        display: grid;
+        grid-template-columns: 33.33% 33.34% 33.33%;
+        grid-auto-rows: min-content;
+        border-left: 1px solid lightgray;
+        border-top: 1px solid lightgray;
+        border-bottom: 1px solid lightgray; }
+        .modal-s .modal-content .modal-table .skills-grid .tile {
+          display: flex;
+          border: 1px solid lightgray; }
+          .modal-s .modal-content .modal-table .skills-grid .tile > img {
+            height: 1.5em; }
+          .modal-s .modal-content .modal-table .skills-grid .tile > p {
+            text-align: center;
+            width: 100%;
+            margin: auto 0;
+            padding-left: 0.5em; }
+        .modal-s .modal-content .modal-table .skills-grid .tile:not(.locked-picture):hover {
+          background-color: #c8c9ca;
+          cursor: pointer;
+          transition: all 0.7s ease; }
+        .modal-s .modal-content .modal-table .skills-grid .tile.locked-picture {
+          background-color: lightgray; }
+    .modal-s .modal-content .sidebar {
+      border: 1px solid lightgray;
+      background-color: #eee;
+      border-top-right-radius: .3rem;
+      border-bottom-right-radius: .3rem;
+      padding: 0.5em;
+      width: 25vw; }
+      .modal-s .modal-content .sidebar .skill-detail .skill-title {
+        display: flex;
+        margin-bottom: 0.5em;
+        border-bottom: 1px solid lightgray;
+        padding-bottom: 0.5em; }
+        .modal-s .modal-content .sidebar .skill-detail .skill-title .title-text {
+          font-size: 2em;
+          margin-left: 1em; }
+        .modal-s .modal-content .sidebar .skill-detail .skill-title .title-picture {
+          height: 3em;
+          width: 3em;
+          background-color: black;
+          border: 1px solid lightgray; }
+      .modal-s .modal-content .sidebar .skill-detail .skill-description {
+        display: grid;
+        grid-template-columns: 20% auto auto auto;
+        min-height: 4em;
+        background-color: rgba(0, 0, 0, 0.05);
+        border-radius: .3rem;
+        padding-left: 1em;
+        margin-bottom: 1em; }
+        .modal-s .modal-content .sidebar .skill-detail .skill-description > p:first-child {
+          font-size: 0.8em;
+          border-right: 1px solid lightgray;
+          width: 6em;
+          margin-right: 1em; }
+        .modal-s .modal-content .sidebar .skill-detail .skill-description > p {
+          margin: auto 0; }
+      .modal-s .modal-content .sidebar .skill-detail .job-description {
+        display: flex;
+        height: 6em; }
+        .modal-s .modal-content .sidebar .skill-detail .job-description > .job-view {
+          margin-top: 1em;
+          margin-bottom: 1em; }
+      .modal-s .modal-content .sidebar .skill-detail .list-study {
+        display: flex;
+        height: 4em; }
+      .modal-s .modal-content .sidebar .skill-detail.combat-art .skill-title .title-picture {
+        border-radius: 2em; }
+      .modal-s .modal-content .sidebar .skill-detail.combat-art .art-description {
+        display: flex; }
+        .modal-s .modal-content .sidebar .skill-detail.combat-art .art-description > p {
+          margin-right: 0;
+          width: 20%;
+          border: none; }
+        .modal-s .modal-content .sidebar .skill-detail.combat-art .art-description .art-table {
+          width: 100%;
+          display: grid;
+          grid-template-rows: auto auto;
+          background-color: lightgray;
+          border-radius: 1px; }
+          .modal-s .modal-content .sidebar .skill-detail.combat-art .art-description .art-table p {
+            margin: auto; }
+          .modal-s .modal-content .sidebar .skill-detail.combat-art .art-description .art-table .art-table-header {
+            border-bottom: 1px solid gray; }
+            .modal-s .modal-content .sidebar .skill-detail.combat-art .art-description .art-table .art-table-header > p {
+              font-weight: 600; }
+          .modal-s .modal-content .sidebar .skill-detail.combat-art .art-description .art-table .art-table-row {
+            display: grid;
+            grid-template-columns: calc(1/6* 100%) calc(1/6* 100%) calc(1/6* 100%) calc(1/6* 100%) calc(1/6* 100%) calc(1/6* 100%); }
+            .modal-s .modal-content .sidebar .skill-detail.combat-art .art-description .art-table .art-table-row > p {
+              padding-left: 0.5em;
+              padding-right: 0.5em;
+              text-align: center; }

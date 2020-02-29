@@ -1,0 +1,30 @@
+@import 'component';
+@import 'container';
+@import 'popover';
+@import 'picture';
+@import 'modal-c';
+@import 'modal-j';
+@import 'modal-s';
+@import 'build-info';
+@import 'variables';
+
+body {
+    background-image: url("../img/background.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center center;
+    background-size: cover;
+    height: 100vh;
+    font-size: general-font-size(1);
+
+    p {
+      font-size: picture-font-size(1);
+      margin: 0;
+    }
+}
+
+@include media-by-coefficient(11/12);
+@include media-by-coefficient(10/12);
+@include media-by-coefficient(9/12);
+@include media-by-coefficient(8/12);
+@include media-by-coefficient(7/12);

@@ -1,0 +1,43 @@
+@function max-width-by-coefficient($coefficient) {
+    @return 1920px * $coefficient;
+}
+
+@function general-font-size($coefficient) {
+    @return $coefficient * 1rem;
+}
+
+@function picture-font-size($coefficient) {
+    @return $coefficient * 2/3 * 1rem;
+}
+
+@function popover-font-size($coefficient) {
+    @return $coefficient * 11/16 * 1rem;
+}
+
+@function modal-font-size($coefficient) {
+    @return $coefficient * 1rem;
+}
+
+@mixin media-by-coefficient($coefficient) {
+    @media only screen and (max-width: 1920px * $coefficient) {
+        body {
+            font-size: general-font-size($coefficient);
+
+            p {
+                font-size: picture-font-size($coefficient);
+            }
+
+            .modal-s {
+                font-size: modal-font-size($coefficient);
+            }
+            
+            .modal-c {
+                font-size: modal-font-size($coefficient);
+            }
+
+            .custom-popover {
+                font-size: popover-font-size($coefficient);
+            }
+        }
+    }
+}

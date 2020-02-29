@@ -1,0 +1,97 @@
+@import 'variables';
+
+.card {
+    border: none; // TO UNCOMMENT -- DEBUG
+}
+
+.portrait-picture {
+    width: 4em;
+    height: 4em;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.2);
+
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 0.25rem;
+}
+
+.full-portrait-picutre {
+    width: 8em;
+    height: 8em;
+}
+
+.cskill-picture {
+    width: 2em;
+    height: 2em;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.85);
+    border-radius: 0.25rem;
+}
+
+.crest-picture {
+    width: 2em;
+    height: 2em;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 0.25rem;
+}
+
+.no-crest {
+    content : url("../lib/octicons/circle-slash.svg");
+    opacity: 0.5;
+}
+
+.no-data {
+    content : url("../lib/octicons/circle-slash.svg");
+    opacity: 0.5;
+    margin: auto 0;
+}
+
+img.locked-picture { 
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+}
+
+.skill-picture {
+    width: 2em;
+    height: 2em;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.85);
+    border-radius: 0.25rem;
+}
+
+.art-picture {
+    width: 2em;
+    height: 2em;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.85);
+    border-radius: 1rem;
+}
+
+.job-picture {
+    width: 3em;
+    height: 3em;
+}
+
+.job-big-picture {
+    width: 5em;
+    height: 5em;
+}
+
+.job-button {
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.2);
+
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 0.25rem;
+}
+
+.study-picture {
+    height: 2em;
+    width: 2em;
+}
+
+.rank-picture {
+    height: 2em;
+    width: 2em;
+}

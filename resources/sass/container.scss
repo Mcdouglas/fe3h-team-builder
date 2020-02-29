@@ -1,0 +1,266 @@
+body {
+
+    .c-table {
+      margin-top: 5rem;
+      font-family: 'Open Sans', Arial, Helvetica, sans-serif;;
+      
+      .c-container {
+        display: grid;
+        grid-template-columns: auto 3%;
+        grid-template-rows: auto auto;
+        
+        margin-bottom: 3rem;
+        margin-right: 5rem;
+        margin-left: 5rem;
+        
+        background-color: lightgray;
+        border-radius: 0.25rem;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+
+        $item-a1-width: 20%;
+        $item-a2-width: 37.5%;
+        $item-a3-width: 22.5%;
+        $item-a4-width: 20%;
+
+        .item-a {
+          position: relative;
+          display: grid;
+          grid-template-columns: $item-a1-width $item-a2-width $item-a3-width $item-a4-width;
+          grid-column-start: 1;
+          grid-column-end: 2;
+          grid-row-start: 1;
+          grid-row-end: 2;
+          padding: 1rem 0;
+          background-color: #fff;
+
+          z-index: 1;
+  
+          .item-a1 {
+            display: grid;
+            grid-template-rows: 50% 50%;
+            grid-column-start: 1;
+            grid-column-end: 2;
+            border-right: 1px solid #dee2e6 !important;
+            
+            margin-left: 1rem;
+            padding-right: 1rem;
+            text-align: center;
+  
+            .item-a1a {
+              grid-row-start: 1;
+              grid-row-end: 2;
+            }
+  
+            .item-a1b {
+              display: grid;
+              grid-template-columns: 50% 50%;
+              grid-row-start: 2;
+              grid-row-end: 3;
+  
+              margin: auto 0;
+              padding-top: 10%;
+  
+              & > div { 
+                position: relative;
+              }
+            }
+          }
+  
+          .item-a2 {
+            display: flex;
+            grid-column-start: 2;
+            grid-column-end: 3;
+            
+            min-height: 3em;
+            margin: auto 0 auto 1rem;
+            padding-right: 1rem;
+            
+            text-align: center;
+            border-right: 1px solid #dee2e6 !important;
+  
+            & > div {
+              position: relative;
+              width: 20%;
+
+              & > p {
+                width: 60%;
+                overflow-wrap: break-word;
+                margin: auto;
+              }
+            }
+          }
+  
+          .item-a3 {
+            display: flex;
+            grid-column-start: 3;
+            grid-column-end: 4;
+  
+            min-height: 3em;
+            margin: auto 0 auto 1rem;
+            padding-right: 1rem;
+            
+            text-align: center;
+            border-right: 1px solid #dee2e6 !important;
+  
+            & > div {
+              position: relative;
+              width: 33.33%;
+
+              & > p {
+                & > p {
+                  width: 60%;
+                  overflow-wrap: break-word;
+                  margin: auto;
+                }
+              }
+            }
+          }
+  
+          .item-a4 {
+            display: grid;
+            grid-template-rows: 50% 50%;
+            grid-column-start: 4;
+            grid-column-end: 5;
+            
+            margin: auto 0 auto 1rem;
+            padding-right: 1rem;
+  
+            text-align: center;
+  
+            .item-a4a {
+            grid-row-start: 1;
+            grid-row-end: 2;
+            text-align: center;
+            position: relative;
+            
+              & > div {
+                margin: auto;
+              }
+            }
+  
+            .item-a4b {
+              display: flex;
+              grid-auto-flow: column;
+              grid-row-start: 2;
+              grid-row-end: 3;
+  
+              text-align: center;
+  
+              padding-top: 10%;
+  
+              & > div {
+                position: relative;
+                width: 25%;
+                margin: auto;
+              }
+            }
+          }
+        }
+  
+        .item-b1 {
+          height: 1.5rem;
+          width: 3rem;
+  
+          position: absolute;
+          left: 51.5%;
+          bottom: 0;
+          transform: translate(-50%,50%);
+          
+          background-color: #f8f9fa;
+          border: 1px solid #dee2e6;
+          border-radius: 0.25rem;
+          cursor: pointer;
+  
+          outline: none;
+          z-index: 3;
+  
+          &:hover {
+            background-color: #c8c9ca;
+          }
+  
+          &:active {
+            transform: translate(-48%,52%);
+          }
+          
+          & > img{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+          }
+        }
+  
+        .item-b2 {
+          position: relative;
+          padding: 1em 0 0.5em 0;
+
+          display: grid;
+          grid-template-columns: $item-a1-width $item-a2-width $item-a3-width $item-a4-width;
+
+          grid-column-start: 1;
+          grid-column-end: 2;
+          grid-row-start: 2;
+          grid-row-end: 3;
+
+          border-top: 1px solid #dee2e6 !important;
+          border-bottom-left-radius: 0.25em;
+          border-bottom-right-radius: 0.25em;
+        }
+        
+        .item-c {
+          grid-column-start: 2;
+          grid-column-end: 3;
+          grid-row-start: 1;
+          grid-row-end: 2;
+          border-left: 1px solid #dee2e6 !important;
+        }
+      }
+
+      .c-panel {
+        border-left: 1px solid #dee2e6;
+        display: grid;
+        grid-template-rows: 33.33% 33.34% 33.33%;
+
+        & > div {
+          border-radius: 1px;
+          border: 1px solid lightgray;
+        }
+
+        & > div:hover {
+          background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        .up-controller {
+          background: url("../lib/octicons/triangle-up.svg");
+          background-color: rgba(0, 0, 0, 0.2);
+          background-repeat: no-repeat;
+          background-position-x: 50%;
+          background-position-y: 50%;
+          background-size: 1em;
+        }
+
+        .remove-controller {
+          background: url("../lib/octicons/trashcan.svg");
+          background-color: rgba(0, 0, 0, 0.2);
+          background-repeat: no-repeat;
+          background-position-x: 50%;
+          background-position-y: 50%;
+          background-size: 1em;
+        }
+
+        .down-controller {
+          background: url("../lib/octicons/triangle-down.svg");
+          background-color: rgba(0, 0, 0, 0.2);
+          background-repeat: no-repeat;
+          background-position-x: 50%;
+          background-position-y: 50%;
+          background-size: 1em;
+        }
+
+        & > div.locked-controller {
+          filter: contrast(0%);
+          border: none;
+        }
+      }
+    }
+}

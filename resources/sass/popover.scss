@@ -1,0 +1,89 @@
+@import 'variables';
+
+/* The element to hover over */
+.qs {
+    position: relative;
+}
+
+.qs:hover ~ .custom-popover {
+    display: block;
+    animation: fade-in .3s linear 1;
+    -webkit-animation: fade-in .3s linear 1;
+    -moz-animation: fade-in .3s linear 1;
+    -ms-animation: fade-in .3s linear 1;
+}
+
+.custom-popover {
+    font-size: popover-font-size(1);
+
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translate(-50%,-10%);
+    box-sizing: unset;
+    
+    display: none;
+    height: auto;
+    max-height: 12rem;
+    width: 12rem;
+    max-width: 15rem;
+    margin-bottom: 0;
+    padding: 0.5rem;
+    
+    color: #fff;
+    line-height: 1.5em;
+    text-align: left;
+
+    background-color: rgba(0,0,20,0.75);
+    box-shadow: 0 0 0.25rem rgba(0,0,0,0.4);
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    
+    z-index: 4;
+
+    pointer-events:none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    
+    &:before {
+        content: '';
+        
+        display: block;
+        margin-left: -7px;
+        
+        position: absolute;
+        bottom: -7px;
+        left: 50%;
+        
+        border-top: 7px solid rgba(0,0,0,0.85);
+        border-right: 7px solid transparent;
+        border-left: 7px solid transparent;
+    }
+
+    &>.popover-title {
+        
+    }
+
+    &>.popover-text {
+        color: #FFD100;
+    }
+}
+
+@keyframes fade-in {
+from   { opacity: 0; }
+to { opacity: 1; }
+}
+@-webkit-keyframes fade-in {
+    from   { opacity: 0; }
+    to { opacity: 1; }
+}
+@-moz-keyframes fade-in {
+    from   { opacity: 0; }
+    to { opacity: 1; }
+}
+@-ms-keyframes fade-in {
+    from   { opacity: 0; }
+    to { opacity: 1; }
+}

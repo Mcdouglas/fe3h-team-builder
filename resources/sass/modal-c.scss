@@ -1,0 +1,245 @@
+@import 'variables';
+
+.modal-c {
+    display: block; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    font-size: modal-font-size(1);
+  
+    /* Modal Content/Box */
+    .modal-content {
+      display:grid;
+      grid-template-columns: calc(8 * (5em - 1px)) auto;
+      
+      width: fit-content;
+      width: -moz-fit-content;       /* Firefox */
+      width: -webkit-fit-content;    /* Chrome */
+      margin: auto;
+      padding: 1em;
+      
+      transform: translateY(25vh);
+      border: 1px solid #888;
+      background-color: #fefefe;
+
+      .characters-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        // padding-top: 1em;
+        // padding-bottom: 1em;
+
+        .tile {
+          
+          max-width: 5em;
+          max-height: 5em;
+          overflow: hidden;
+          text-indent: -1em;
+          border: 1px solid rgba(0,0,0,0.2);
+          margin-bottom: -1px;
+          margin-right: -1px;
+          position: relative;
+
+          & > img {
+            max-width: 7em;
+            max-height: initial;
+          }
+
+          &:hover:not(.locked-picture) {
+            cursor: pointer;
+            transition: all 0.3s ease-out;
+          }
+        }
+
+        .tile-overlay {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 100%;
+          width: 100%;
+          opacity: 0;
+          transition: all 0.5s ease;
+        }
+
+        .tile:hover .tile-overlay {
+          opacity: 1;
+          transform: scale(1.5);
+        }
+
+        .tile.locked-picture .tile-overlay {
+          -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+          filter: grayscale(100%);
+        }
+
+        .avatar-tile {
+          background: url("../img/crests/0.png");
+          background-size: 50%;
+          background-repeat: no-repeat;
+          background-position-x: 50%;
+          background-position-y: 50%;
+          background-color: rgba(78, 127, 148, 1);
+        }
+
+        .black-eagle-tile {
+          background: url("../img/banners/4.png");
+          background-size: 60%;
+          background-repeat: no-repeat;
+          background-position-x: 50%;
+          background-position-y: 50%;
+          background-color: rgba(223, 115, 110, 1);
+        }
+
+        .blue-lyon-tile {
+          background: url("../img/banners/5.png");
+          background-size: 67%;
+          background-repeat: no-repeat;
+          background-position-x: 50%;
+          background-position-y: 50%;
+          background-color: rgba(150, 190, 192, 1);
+        }
+
+        .golden-deer-tile {
+          background: url("../img/banners/6.png");
+          background-size: 62%;
+          background-repeat: no-repeat;
+          background-position-x: 50%;
+          background-position-y: 50%;
+          background-color: rgba(238, 217, 153, 1);
+        }
+
+        .church-seiros-tile {
+          background: url("../img/banners/7.png");
+          background-size: 78%;
+          background-repeat: no-repeat;
+          background-position-x: 50%;
+          background-position-y: 50%;
+          background-color: rgba(233, 228, 225, 1);
+        }
+      }
+
+      .sidebar {
+
+        border: 1px solid lightgray;
+        background-color: #eee;
+        border-top-right-radius: .3rem;
+        border-bottom-right-radius: .3rem;
+        width: min-content;
+
+        /* The Close Button */
+        .close-button {
+          margin: 0.5rem 0.5rem 0 0;
+        }
+
+        .character-detail {
+          margin: 1rem;
+
+          .full-portrait-title {
+            display: grid;
+            grid-template-columns: auto auto;
+            grid-template-rows: 68% auto;
+            border-bottom: 1px solid rgba(0,0,0,0.4) !important;
+            margin-bottom: 1.2em;
+
+            & > img.character-picture {
+              grid-row-start: 1;
+              grid-row-end: 3;
+              grid-column-start: 1;
+              grid-column-end: 2;
+            }
+
+            & > img.banner-picture {
+              grid-row-start: 1;
+              grid-row-end: 2;
+              grid-column-start: 2;
+              grid-column-end: 3;
+              
+
+              height: auto;
+              width: 3em;
+              justify-self: end;
+              transform: translate(-50%, -23%);
+            }
+
+            & > .title-text {
+              grid-row-start: 2;
+              grid-row-end: 3;
+              grid-column-start: 2;
+              grid-column-end: 3;
+              font-size: 1.75em;
+              font-weight: 500;
+              text-align: right;
+            }
+          }
+
+          .detail-content {
+            font-size: modal-font-size(1);
+            display: grid;
+            grid-template-columns: 50% 50%;
+            column-gap: 1em;
+            row-gap: 1em;
+
+            .detail-title {
+              display: grid;
+              grid-template-columns: 20% auto;
+              margin: auto 0;
+              line-height: 2em;
+            }
+
+            .detail-text {
+              font-size: modal-font-size(0.75);
+              margin-top: 0.75em;
+            }
+
+            .double-description {
+              grid-column-start: 1;
+              grid-column-end: 3;
+            }
+
+            .character-description {
+              display: flex;
+              flex-flow: row;
+              min-height: 4em;
+  
+              background-color: rgba(0,0,0,0.05);
+              border-radius: .3rem;
+  
+              padding-left: 1em;
+              margin-right: 1em;
+  
+              & > p:first-child {
+                font-size: 0.8em;
+                border-right: 1px solid lightgray;
+                width: 6em;
+                margin-right: 1em;
+              }
+  
+              p {
+                margin: auto 0;
+              }
+
+              & > div.no-data {
+                margin: auto;
+                width: 100%;
+                height: 2em;
+              }
+
+              & > div:not(.no-data) {
+                position: relative;
+                width: 100%;
+                text-align: center;
+                margin: auto 0;
+              }
+            }
+          }          
+        }
+      }
+    }
+  }

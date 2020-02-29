@@ -1,0 +1,255 @@
+@import 'variables';
+
+.modal-j {
+    display: block; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    font-size: modal-font-size(1);
+    
+    /* Modal Content/Box */
+    .modal-content {
+        display:grid;
+        grid-template-rows: auto auto;
+        
+        width: 77em;
+        margin: auto;
+        padding: 1em;
+        
+        transform: translateY(15%);
+        border: 1px solid #888;
+        background-color: #fefefe;
+
+        .jobs-grid {
+          margin-top: 0.5em;
+          display: flex;
+          flex-flow: row;
+          justify-content: center;
+
+          .return-button {
+            background: url("../lib/octicons/reply.svg");
+          }
+
+          .valid-button {
+            background: url("../lib/octicons/check.svg");
+          }
+
+          .button {
+            background-color: rgba(0, 0, 0, 0.2);
+            background-repeat: no-repeat;
+            background-position-x: 50%;
+            background-position-y: 50%;
+            background-size: 1em;
+            
+            width: 5em;
+
+            margin-left: 0.125em;
+            margin-right: 0.125em;
+
+            box-shadow: 0 0 5px rgba(0,0,0,0.4);
+            border: 1px solid black;
+
+            &:hover {
+              cursor: pointer;
+              background-color: rgba(0, 0, 0, 0.3);
+            }
+          }
+
+          .jobs-row {
+            display: flex;
+            justify-content: center;
+            width: fit-content;
+
+            .category-tile {
+              cursor: pointer;
+              width: 8em;
+              height: 5em;
+              margin-left: 0.125em;
+              margin-right: 0.125em;
+              box-shadow: 0 0 5px rgba(0,0,0,0.4);
+
+              & > div.unique-category {
+                background: url(../img/categories/0.png);
+                background-size: 100%;
+                background-repeat: no-repeat;
+                background-position-x: 50%;
+                background-position-y: 50%;
+                height: 100%;
+              }
+
+              & > div.beginner-category {
+                background: url(../img/categories/1.png);
+                background-size: 100%;
+                background-repeat: no-repeat;
+                background-position-x: 50%;
+                background-position-y: 50%;
+                height: 100%;
+              }
+
+              & > div.intermediate-category {
+                background: url(../img/categories/2.png);
+                background-size: 100%;
+                background-repeat: no-repeat;
+                background-position-x: 50%;
+                background-position-y: 50%;
+                height: 100%;
+              }
+
+              & > div.advanced-category {
+                background: url(../img/categories/3.png);
+                background-size: 100%;
+                background-repeat: no-repeat;
+                background-position-x: 50%;
+                background-position-y: 50%;
+                height: 100%;
+              }
+
+              & > div.master-category {
+                background: url(../img/categories/4.png);
+                background-size: 100%;
+                background-repeat: no-repeat;
+                background-position-x: 50%;
+                background-position-y: 50%;
+                height: 100%;
+              }
+
+              &:hover {
+                box-shadow: 0 0 1em black;
+                transition: all 0.6s ease;
+              }
+            }
+
+            .job-tile {
+              cursor: pointer;
+              margin-left: 0.125em;
+              margin-right: 0.125em;
+              box-shadow: 0 0 5px rgba(0,0,0,0.4);
+              border: 1px solid black;
+
+              &.clicked-picture {
+                box-shadow: 0 0 1em black;
+                transition: all 0.6s ease;
+                -webkit-filter: sepia(100%); /* Safari 6.0 - 9.0 */
+                filter: sepia(100%);
+              }
+                
+              & > .job-background-tile {
+                position: relative;
+                height: 5em;
+                width: 5em;
+
+                &.locked-picture {
+                  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+                  filter: grayscale(100%);
+                }
+  
+                & > .job-background {
+                  position: absolute;
+                  left:0;
+                  top: 0;
+                  height: 100%;
+                  width: 100%;
+                }
+                
+                & > .job-picture {
+                  position: absolute;
+                  left: 17%;
+                  top: 25%;
+                  z-index: 2;
+                  
+                  width: 3.5em;
+                  height: 3.5em;
+                }
+              }
+            }
+          }
+        }
+
+        .sidebar {
+          border: 1px solid lightgray;
+          background-color: #eee;
+          border-top-right-radius: .3rem;
+          border-bottom-right-radius: .3rem;
+          padding: 0.5em;
+          width: 100%;
+
+          .job-menu {
+            display: grid;
+            grid-template-columns: auto 60%;
+
+            .job-title {
+              display: flex;
+              border-bottom: 1px solid lightgray;
+              grid-column-start: 1;
+              grid-column-end: 3;
+  
+              .title-picture {
+                width: 5em;
+                height: 5em;
+              }
+    
+              .title-text {
+                font-size: 2em;
+                margin-left: 1em;
+              }
+            }
+            
+            .job-description {
+              display: flex;
+              flex-flow: row;
+              min-height: 3em;
+              margin-top: 1em;
+
+              background-color: rgba(0,0,0,0.05);
+              border-radius: .3rem;
+
+              & > p:first-child {
+                font-size: 0.8em;
+                border-right: 1px solid lightgray;
+                width: 6em;
+                margin-right: 1em;
+                margin-left: 1em;
+              }
+
+              p {
+                margin: auto 0;
+              }
+            }
+
+            .job-description:not(:first-child) {
+              margin-left: 0.5em;
+            }
+
+            .list-study {
+              display: flex;
+              height: 4em;
+              width: 83%;
+
+              & > div:not(.no-data) {
+                margin-left: 1.25em;
+                margin-right: 1.25em;
+              }
+            }
+
+            .list-jobskill {
+              display: flex;
+              height: 5em;
+              width: 83%;
+
+              & > div:not(.no-data) {
+                position: relative;
+                width: 33%;
+                margin: 1em 0;
+                text-align: center;
+              }
+            }
+          }
+        }
+    }
+}

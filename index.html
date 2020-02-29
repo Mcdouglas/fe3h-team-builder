@@ -1,0 +1,20 @@
+<!DOCTYPE html>	
+<html>
+  <head>
+    <link rel="stylesheet" 
+          href="resources/lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="resources/css/main.css">
+  </head>
+
+  <body>
+    <div id="elm-app"></div>
+    <script src="resources/lib/bootstrap/js/bootstrap.bundle.min.js" ></script>
+    <script src="bundle.js"></script>
+    <script>
+      var app = Elm.Main.init({
+        node: document.getElementById("elm-app")
+      });      
+    </script>
+  </body>
+</html>

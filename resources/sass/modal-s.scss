@@ -1,0 +1,246 @@
+@import 'variables';
+
+.modal-s {
+    display: block; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    font-size: modal-font-size(1);
+  
+    /* Modal Content/Box */
+    .modal-content {
+      display:grid;
+      grid-template-columns: calc(8 * (5em - 1px)) auto;
+      background-color: #fefefe;
+      
+      width: fit-content;
+      width: -moz-fit-content;       /* Firefox */
+      width: -webkit-fit-content;    /* Chrome */
+      margin: auto;
+      padding: 1em;
+      
+      border: 1px solid #888;
+      transform: translateY(25vh);
+
+      .modal-table {
+        display: grid;
+        grid-template-columns: 65% 35%;
+        grid-template-rows: auto auto;
+
+        .search-filter{
+          grid-column-start: 1;
+          grid-column-end: 2;
+          grid-row-start: 1;
+          grid-row-end: 2;
+
+            & > p {
+                margin: auto;
+            }
+        
+            & > input {
+                width: 80%;
+                height: 2em;
+                margin: auto 0;
+                border-radius: 0.25em;
+        
+                &::placeholder {
+                    font-size: 0.75em;
+                }
+            }
+        
+            & > div {
+                margin: auto;
+            }
+        }
+        
+        .sort-filter {
+          grid-column-start: 2;
+          grid-column-end: 3;
+          grid-row-start: 1;
+          grid-row-end: 2;
+
+          & > p {
+              margin: auto;
+          }
+
+          & > select {
+            width: 70%;
+            height: 2em;
+            margin: auto auto auto 0;
+            border-radius: 0.25em;
+          }
+        }
+
+        .skills-grid {
+          grid-column-start: 1;
+          grid-column-end: 3;
+          grid-row-start: 2;
+          grid-row-end: 3;
+          height: 30em;
+          width:100%;
+          overflow: auto;
+  
+          display: grid;
+          grid-template-columns: 33.33% 33.34% 33.33%;
+          grid-auto-rows: min-content;
+          border-left: 1px solid lightgray;
+          border-top: 1px solid lightgray;
+          border-bottom: 1px solid lightgray;
+  
+          .tile {
+            display: flex;
+            border: 1px solid lightgray;
+  
+            & > img {
+              height: 1.5em;
+            }
+  
+            & > p {
+              text-align: center;
+              width: 100%;
+              margin: auto 0;
+              padding-left: 0.5em;
+            }
+          }
+  
+          .tile:not(.locked-picture):hover {
+            background-color: #c8c9ca;
+            cursor: pointer;
+  
+            transition: all 0.7s ease;
+          }
+  
+          .tile.locked-picture {
+            background-color: lightgray;
+          }
+        }
+      }
+      
+
+      .sidebar {
+
+        border: 1px solid lightgray;
+        background-color: #eee;
+        border-top-right-radius: .3rem;
+        border-bottom-right-radius: .3rem;
+        padding: 0.5em;
+        width: 25vw;
+
+        .skill-detail {
+
+          .skill-title {
+            display:flex;
+            margin-bottom: 0.5em;
+            border-bottom: 1px solid lightgray;
+            padding-bottom: 0.5em;
+  
+            .title-text {
+              font-size: 2em;
+              margin-left: 1em;
+            }
+  
+            .title-picture {
+              height: 3em;
+              width: 3em;
+              background-color: black;
+              border: 1px solid lightgray;
+            }
+          }
+
+          .skill-description {
+            display: grid;
+            grid-template-columns: 20% auto auto auto;
+            min-height: 4em;
+
+            background-color: rgba(0,0,0,0.05);
+            border-radius: .3rem;
+
+            padding-left: 1em;
+            margin-bottom: 1em;
+
+            & > p:first-child {
+              font-size: 0.8em;
+              border-right: 1px solid lightgray;
+              width: 6em;
+              margin-right: 1em;
+            }
+
+            & > p {
+              margin: auto 0;
+            }
+          }
+
+          .job-description {
+            display: flex;
+            height: 6em;
+
+            & > .job-view {
+              margin-top: 1em;
+              margin-bottom: 1em;
+            }
+          }
+
+          .list-study {
+            display: flex;
+            height: 4em;
+          }
+        }
+
+        .skill-detail.combat-art {
+          .skill-title {
+            .title-picture {
+              border-radius: 2em;
+            }
+          }
+
+          .art-description {
+            display: flex;
+
+            & > p {
+              margin-right: 0;
+              width: 20%;
+              border: none;
+            }
+
+            .art-table {
+              width: 100%;
+              display: grid;
+              grid-template-rows: auto auto;
+              background-color: lightgray;
+              border-radius: 1px;
+
+                p {
+                  margin: auto;
+                }
+
+                .art-table-header {
+                  border-bottom: 1px solid gray;
+                  
+                  & > p {
+                    font-weight: 600;
+                  }
+                }
+
+                .art-table-row {
+                  display: grid;
+                  $column-width: calc(1/6* 100%);
+                  grid-template-columns: $column-width $column-width $column-width $column-width $column-width $column-width;
+
+                  & > p {
+                    padding-left: 0.5em;
+                    padding-right: 0.5em;
+                    text-align: center;
+                  }
+                }
+            }
+          }
+        }
+      }
+    }
+}
