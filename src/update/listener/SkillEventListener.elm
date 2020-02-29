@@ -1,11 +1,10 @@
-module SkillEventListener exposing (..)
+module SkillEventListener exposing (handle)
 
-import Array exposing (Array)
-import CustomTypes exposing (..)
-import Dict exposing (Dict)
+import Array exposing (Array(..))
+import CustomTypes exposing (Build, Skill, SkillType(..))
+import Dict exposing (Dict(..))
 import GlobalMessage exposing (SkillModal(..))
-import GlobalModel exposing (..)
-import ModelHandler exposing (..)
+import GlobalModel exposing (Model)
 import ModelUtils exposing (stringToSortType)
 
 
@@ -113,10 +112,10 @@ updateBuild shift model =
 
 updateSkillInBuild : Maybe Build -> ( ( Int, Int ), Skill, Bool ) -> Maybe Build
 updateSkillInBuild maybeBuild ( ( _, skillIdx ), skill, isCombatArt ) =
-    case maybeBuild of
-        Just build ->
-            case isCombatArt of
-                True ->
+    maybeBuild
+        |> Maybe.andThen
+            (\build ->
+                if isCombatArt then
                     let
                         newListSkill =
                             build.listActiveSkill
@@ -126,7 +125,7 @@ updateSkillInBuild maybeBuild ( ( _, skillIdx ), skill, isCombatArt ) =
                     in
                     Just { build | listActiveSkill = newListSkill }
 
-                False ->
+                else
                     let
                         newListSkill =
                             build.listPassiveSkill
@@ -135,9 +134,7 @@ updateSkillInBuild maybeBuild ( ( _, skillIdx ), skill, isCombatArt ) =
                                 |> List.map (\l -> updateSkillAndKeepOther l skillIdx skill)
                     in
                     Just { build | listPassiveSkill = newListSkill }
-
-        Nothing ->
-            Nothing
+            )
 
 
 updateSkillAndKeepOther : ( Int, Int, SkillType ) -> Int -> Skill -> ( Int, Int, SkillType )

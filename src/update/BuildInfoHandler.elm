@@ -1,7 +1,7 @@
-module BuildInfoHandler exposing (..)
+module BuildInfoHandler exposing (toggleBuildInfo)
 
-import Dict exposing (Dict)
-import GlobalModel exposing (..)
+import Dict exposing (Dict(..))
+import GlobalModel exposing (Model)
 
 
 toggleBuildInfo : Model -> Int -> Model
@@ -16,6 +16,6 @@ toggleBuildInfo model characterId =
 
         newTeam =
             model.team
-                |> Dict.map (\k v -> toggleInfo v)
+                |> Dict.map (\_ v -> toggleInfo v)
     in
     { model | team = newTeam }

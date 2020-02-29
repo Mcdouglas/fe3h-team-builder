@@ -1,8 +1,8 @@
-module GlobalMessage exposing (..)
+module GlobalMessage exposing (BuildPanel(..), CharacterModal(..), JobModal(..), Msg(..), SkillModal(..))
 
-import Browser exposing (..)
-import CustomTypes exposing (..)
-import Url exposing (..)
+import Browser exposing (UrlRequest)
+import CustomTypes exposing (Character, Job, Skill)
+import Url exposing (Url)
 
 
 type Msg
@@ -13,8 +13,8 @@ type Msg
     | BuildMsg BuildPanel
     | ToggleBuildInfo Int
     | NoOp
-    | LinkClicked Browser.UrlRequest
-    | UrlChanged Url.Url
+    | LinkClicked UrlRequest
+    | UrlChanged Url
     | RewriteUrl
 
 

@@ -1,9 +1,9 @@
-module JobEventListener exposing (..)
+module JobEventListener exposing (handle)
 
-import CustomTypes exposing (Build, Job)
-import Dict exposing (Dict)
+import CustomTypes exposing (Job)
+import Dict exposing (Dict(..))
 import GlobalMessage exposing (JobModal(..), Msg(..))
-import GlobalModel exposing (..)
+import GlobalModel exposing (Model)
 
 
 handle : JobModal -> Model -> Model
@@ -68,12 +68,7 @@ updateBuild : Model -> ( Int, Job ) -> Model
 updateBuild model ( buildIdx, job ) =
     let
         updateIf maybeBuild =
-            case maybeBuild of
-                Just build ->
-                    Just { build | jobId = job.id }
-
-                Nothing ->
-                    Nothing
+            maybeBuild |> Maybe.andThen (\b -> Just { b | jobId = job.id })
 
         newTeam =
             model.team

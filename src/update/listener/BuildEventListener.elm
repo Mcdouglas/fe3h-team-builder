@@ -1,7 +1,6 @@
-module BuildEventListener exposing (..)
+module BuildEventListener exposing (handle)
 
-import DataHandler exposing (initBuild)
-import Dict exposing (Dict)
+import Dict exposing (Dict(..))
 import GlobalMessage exposing (BuildPanel(..), Msg(..))
 import GlobalModel exposing (Model)
 
@@ -47,7 +46,7 @@ upBuildInDict model buildIdx =
                     buildToUp =
                         model.team |> Dict.get buildIdx
                 in
-                model.team |> Dict.update buildIdx (\b -> buildToDown) |> Dict.update (buildIdx - 1) (\b -> buildToUp)
+                model.team |> Dict.update buildIdx (\_ -> buildToDown) |> Dict.update (buildIdx - 1) (\_ -> buildToUp)
 
             else
                 model.team
@@ -67,7 +66,7 @@ downBuildInDict model buildIdx =
                     buildToUp =
                         model.team |> Dict.get (buildIdx + 1)
                 in
-                model.team |> Dict.update buildIdx (\b -> buildToUp) |> Dict.update (buildIdx + 1) (\b -> buildToDown)
+                model.team |> Dict.update buildIdx (\_ -> buildToUp) |> Dict.update (buildIdx + 1) (\_ -> buildToDown)
 
             else
                 model.team

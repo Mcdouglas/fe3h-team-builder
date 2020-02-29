@@ -1,11 +1,11 @@
-module CharacterEventListener exposing (..)
+module CharacterEventListener exposing (handle)
 
-import Character exposing (..)
-import CustomTypes exposing (..)
+import Character exposing (getCharacterById)
+import CustomTypes exposing (Character)
 import DataHandler exposing (initBuild)
-import Dict exposing (Dict)
+import Dict exposing (Dict(..))
 import GlobalMessage exposing (CharacterModal(..))
-import GlobalModel exposing (..)
+import GlobalModel exposing (Model)
 
 
 handle : CharacterModal -> Model -> Model
@@ -72,13 +72,7 @@ updateCurrent model element =
 
 updateOrCreateBuild : Model -> ( Int, Character ) -> Model
 updateOrCreateBuild model ( position, character ) =
-    let
-        notAlreadySelected =
-            model.team
-                |> Dict.filter (\k v -> v.idCharacter == character.id)
-                |> Dict.isEmpty
-    in
-    if model.team |> Dict.filter (\k v -> v.idCharacter == character.id) |> Dict.isEmpty then
+    if model.team |> Dict.filter (\_ v -> v.idCharacter == character.id) |> Dict.isEmpty then
         if model.view.isCreatingBuild == True then
             closeModal (createBuild model character)
 
