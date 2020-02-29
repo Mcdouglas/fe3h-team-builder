@@ -1,5 +1,7 @@
 module CustomTypes exposing (..)
 
+import Dict exposing (..)
+
 
 type Subject
     = Sword
@@ -51,10 +53,16 @@ type MagicUsage
 
 type alias Study =
     { id : Int
-    , pictureId : Int
     , subject : Subject
     , rank : Rank
     }
+
+
+type StudyCapacity
+    = Strength
+    | Weakness
+    | BuddingTalent
+    | NoTalent
 
 
 type alias Proficiency =

@@ -51,6 +51,6 @@ viewRow : Model -> ( Int, Build ) -> Html Msg
 viewRow model ( idx, build ) =
     div [ class "c-container" ]
         [ viewBuild model ( idx, build )
-        , sectionBuildInfo build
+        , sectionBuildInfo model ( idx, build )
         , controlPanel model idx
         ]

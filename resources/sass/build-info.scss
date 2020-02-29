@@ -1,0 +1,85 @@
+.build-info {
+
+    & > div.character-section { 
+        margin-left: 0.5em;
+        padding-right: 0.5em;
+        border-right: 1px solid rgba(0, 0, 0, 0.125);
+
+        & > div.study-table {
+            width: 100%;
+        }
+    }
+
+    & > div.job-section {
+        display: flex;
+        justify-content: space-evenly;
+        
+        margin-left: 1em;
+        padding-right: 1em;
+
+        & > .study-view {
+            margin-top: 0.5em;
+        }
+    }
+
+    & > div.passive-skill-section,div.active-skill-section {
+        display: flex;
+        margin-left: 1em;
+        padding-right: 1em;
+        border-right: 1px solid rgba(0, 0, 0, 0.125);
+  
+        & > div {
+            position: relative;
+            
+            & > p {
+              width: 60%;
+              overflow-wrap: break-word;
+              margin: auto;
+            }
+        }
+    }
+
+    & > div.passive-skill-section > div {
+        width: 20%;
+    }
+
+    & > div.active-skill-section > div {
+        width: 33.33%;
+    }
+
+    div.skill-info {
+
+        & > div.arrow-down {
+            height: 2em;
+            width: 100%;
+            margin: auto 0;
+            background: url("../lib/octicons/arrow-down.svg");
+            background-color: rgba(0, 0, 0, 0.2);
+            background-repeat: no-repeat;
+            background-position-x: 50%;
+            background-position-y: 50%;
+            background-size: 1em;
+        }
+
+        & > div:not(:first-child) {
+            margin-top: 0.5em;
+        }
+    }
+
+    div.study-view {
+        width: auto;
+        border: none;
+        justify-content: center;
+        margin: auto 0;
+
+        & > img {
+            height: 1.5em;
+            width: 1.5em;
+            margin: auto 0;
+        }
+    }
+
+    div.job-view {
+        margin-top: 0;
+    }
+}

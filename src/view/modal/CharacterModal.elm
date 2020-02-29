@@ -12,6 +12,10 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onMouseOver, stopPropagationOn)
 import Json.Decode as Json
+import NoDataView exposing (..)
+import Popover exposing (..)
+import Study exposing (getAcademicSkills, stringToSubject, subjectToId)
+import StudyView exposing (getAcademicSkill, getStudyPicture)
 
 
 modalCharacterPicker : Model -> Html Msg
@@ -128,6 +132,7 @@ viewContentDetail model character =
     div [ class "detail-content" ]
         [ viewCharacterSkillDetail model character.characterSkillId
         , viewCharacterCrestDetail model character.crestId
+        , viewAcademicSkillsDetail model character.id
         ]
 
 
@@ -153,47 +158,51 @@ getBannerPicture maybeId =
 
 viewCharacterSkillDetail : Model -> Int -> Html Msg
 viewCharacterSkillDetail model skillId =
-    let
-        skill =
-            getCharacterSkillById skillId
-    in
-    case skill of
-        Just value ->
-            div []
-                [ div [ class "detail-title" ]
+    div [ class "character-description" ]
+        [ p [] [ text "Personnal skill" ]
+        , case getCharacterSkillById skillId of
+            Just value ->
+                div []
                     [ getSkillCharacterPicture model value.pictureId
-                    , p [] [ text ("[ " ++ value.name ++ " ]") ]
+                    , p [] [ text value.name ]
+                    , viewPopover value.name value.description
                     ]
-                , p [ class "detail-text" ] [ text value.description ]
-                ]
 
-        Nothing ->
-            p [] [ text "CharacterSkillNotFound" ]
+            Nothing ->
+                viewNoData
+        ]
 
 
 viewCharacterCrestDetail : Model -> Int -> Html Msg
 viewCharacterCrestDetail model crestId =
-    let
-        crest =
-            getCrest crestId
-    in
-    case crest of
-        Just value ->
-            div []
-                [ div [ class "detail-title" ]
+    div [ class "character-description" ]
+        [ p [] [ text "Crest" ]
+        , case getCrest crestId of
+            Just value ->
+                div []
                     [ getCrestPicture value.pictureId
-                    , p [] [ text ("[ " ++ value.name ++ " ]") ]
+                    , p [] [ text value.name ]
+                    , viewPopover value.name value.description
                     ]
-                , p [ class "detail-text" ] [ text value.description ]
-                ]
 
-        Nothing ->
-            div []
-                [ div [ class "detail-title" ]
-                    [ div [ class "crest-picture no-crest" ] []
-                    , p [] [ text "No crest" ]
-                    ]
-                ]
+            Nothing ->
+                viewNoData
+        ]
+
+
+viewAcademicSkillsDetail : Model -> Int -> Html Msg
+viewAcademicSkillsDetail model id =
+    let
+        academicSkills =
+            getAcademicSkills id
+    in
+    div [ class "character-description double-description" ]
+        [ p [] [ text "Skill level" ]
+        , div [ class "study-table" ]
+            [ div [ class "study-table-row study-table-header" ] (Dict.toList academicSkills |> List.map (\( k, v ) -> k |> stringToSubject |> subjectToId) |> List.sort |> List.map getStudyPicture)
+            , div [ class "study-table-row" ] (Dict.values academicSkills |> List.map getAcademicSkill)
+            ]
+        ]
 
 
 buttonCloseModal : Html Msg

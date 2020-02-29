@@ -131,7 +131,7 @@
         background-color: #eee;
         border-top-right-radius: .3rem;
         border-bottom-right-radius: .3rem;
-        width: 25vw;
+        width: min-content;
 
         /* The Close Button */
         .close-button {
@@ -165,7 +165,7 @@
               height: auto;
               width: 3em;
               justify-self: end;
-              transform: translateY(171%);
+              transform: translate(-50%, -23%);
             }
 
             & > .title-text {
@@ -180,14 +180,12 @@
           }
 
           .detail-content {
-            font-size: 0.75em;
+            font-size: modal-font-size(1);
+            display: grid;
+            grid-template-columns: 50% 50%;
+            column-gap: 1em;
+            row-gap: 1em;
 
-            & > div {
-              min-height: 4.5rem;
-              max-width: 80%;
-              margin: 0 0 1rem 0;
-            }
-            
             .detail-title {
               display: grid;
               grid-template-columns: 20% auto;
@@ -196,7 +194,49 @@
             }
 
             .detail-text {
+              font-size: modal-font-size(0.75);
               margin-top: 0.75em;
+            }
+
+            .double-description {
+              grid-column-start: 1;
+              grid-column-end: 3;
+            }
+
+            .character-description {
+              display: flex;
+              flex-flow: row;
+              min-height: 4em;
+  
+              background-color: rgba(0,0,0,0.05);
+              border-radius: .3rem;
+  
+              padding-left: 1em;
+              margin-right: 1em;
+  
+              & > p:first-child {
+                font-size: 0.8em;
+                border-right: 1px solid lightgray;
+                width: 6em;
+                margin-right: 1em;
+              }
+  
+              p {
+                margin: auto 0;
+              }
+
+              & > div.no-data {
+                margin: auto;
+                width: 100%;
+                height: 2em;
+              }
+
+              & > div:not(.no-data) {
+                position: relative;
+                width: 100%;
+                text-align: center;
+                margin: auto 0;
+              }
             }
           }          
         }

@@ -13,21 +13,25 @@ body {
         margin-right: 5rem;
         margin-left: 5rem;
         
-        background-color: #fff;
+        background-color: lightgray;
         border-radius: 0.25rem;
         border: 1px solid rgba(0, 0, 0, 0.125);
 
-        $item-a1-width: 18.5%;
+        $item-a1-width: 20%;
+        $item-a2-width: 37.5%;
+        $item-a3-width: 22.5%;
+        $item-a4-width: 20%;
 
         .item-a {
           position: relative;
           display: grid;
-          grid-template-columns: $item-a1-width 35% 28% 18.5%;
+          grid-template-columns: $item-a1-width $item-a2-width $item-a3-width $item-a4-width;
           grid-column-start: 1;
           grid-column-end: 2;
           grid-row-start: 1;
           grid-row-end: 2;
           padding: 1rem 0;
+          background-color: #fff;
 
           z-index: 1;
   
@@ -63,8 +67,7 @@ body {
           }
   
           .item-a2 {
-            display: grid;
-            grid-template-columns: 20% 20% 20% 20% 20%;
+            display: flex;
             grid-column-start: 2;
             grid-column-end: 3;
             
@@ -77,12 +80,18 @@ body {
   
             & > div {
               position: relative;
+              width: 20%;
+
+              & > p {
+                width: 60%;
+                overflow-wrap: break-word;
+                margin: auto;
+              }
             }
           }
   
           .item-a3 {
-            display: grid;
-            grid-template-columns: 33.33% 33.34% 33.33%;
+            display: flex;
             grid-column-start: 3;
             grid-column-end: 4;
   
@@ -95,6 +104,15 @@ body {
   
             & > div {
               position: relative;
+              width: 33.33%;
+
+              & > p {
+                & > p {
+                  width: 60%;
+                  overflow-wrap: break-word;
+                  margin: auto;
+                }
+              }
             }
           }
   
@@ -173,17 +191,20 @@ body {
         }
   
         .item-b2 {
+          position: relative;
+          padding: 1em 0 0.5em 0;
+
+          display: grid;
+          grid-template-columns: $item-a1-width $item-a2-width $item-a3-width $item-a4-width;
+
           grid-column-start: 1;
-          grid-column-end: 3;
+          grid-column-end: 2;
           grid-row-start: 2;
           grid-row-end: 3;
-          display: grid;
-          grid-template-columns: 20% 30% 30% 20%;
+
           border-top: 1px solid #dee2e6 !important;
-          background-color: lightgray;
-          border-bottom-left-radius: 0.25rem;
-          border-bottom-right-radius: 0.25rem;
-          padding: 1rem;
+          border-bottom-left-radius: 0.25em;
+          border-bottom-right-radius: 0.25em;
         }
         
         .item-c {

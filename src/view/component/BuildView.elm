@@ -77,22 +77,14 @@ sectionJob model ( buildIdx, build ) =
 buttonBuildInfo : Build -> Html Msg
 buttonBuildInfo build =
     let
-        infoShown =
-            not build.hiddenInfo
-    in
-    div
-        [ onClick (ToggleBuildInfo build.idCharacter)
-        , class "item-b1"
-        ]
-        [ img
-            [ if build.hiddenInfo == True then
+        htmlAttribute =
+            if build.hiddenInfo then
                 src "resources/lib/octicons/chevron-down.svg"
 
-              else
+            else
                 src "resources/lib/octicons/chevron-up.svg"
-            ]
-            []
-        ]
+    in
+    div [ onClick (ToggleBuildInfo build.idCharacter), class "item-b1" ] [ img [ htmlAttribute ] [] ]
 
 
 controlPanel : Model -> Int -> Html Msg

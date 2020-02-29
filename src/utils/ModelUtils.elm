@@ -54,46 +54,6 @@ characterSkillToSkill c =
     Skill c.id CharacterType False False c.name c.description c.pictureId Nothing [] [] False Nothing Nothing Nothing Nothing Nothing Nothing
 
 
-rankToId : Rank -> Int
-rankToId rank =
-    case rank of
-        E ->
-            0
-
-        Eplus ->
-            1
-
-        D ->
-            2
-
-        Dplus ->
-            3
-
-        C ->
-            4
-
-        Cplus ->
-            5
-
-        B ->
-            6
-
-        Bplus ->
-            7
-
-        A ->
-            8
-
-        Aplus ->
-            9
-
-        S ->
-            10
-
-        Splus ->
-            11
-
-
 jobCategoryIdToString : Int -> String
 jobCategoryIdToString id =
     case id of

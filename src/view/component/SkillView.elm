@@ -26,7 +26,7 @@ skillButton model ( positions, maybeSkill, isCombatArt ) =
                 ]
 
         _ ->
-            div [ class "add-skill", onClickEvent ] []
+            div [ class "add-skill" ] [ div [ onClickEvent ] [] ]
 
 
 viewSkill : Skill -> Html Msg
