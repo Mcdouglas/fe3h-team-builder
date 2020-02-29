@@ -87,7 +87,7 @@ updateBuildWithSkill shift model =
                             build.listPassiveSkill
                     )
                 |> Maybe.withDefault []
-                |> List.filter (\( _, skillId, _ ) -> skillId == skill.id)
+                |> List.filter (\( _, skillId, skillType ) -> (skillId == skill.id) && (skillType == skill.skillType))
                 |> List.isEmpty
     in
     if doUpdate then
@@ -127,7 +127,7 @@ updateSkillInBuild maybeBuild ( ( _, skillIdx ), skill, isCombatArt ) =
 
                 else
                     let
-                        newListSkill =
+                        newListSkill = 
                             build.listPassiveSkill
                                 |> List.foldr (::) (List.repeat 3 ( -1, 0, NoType ))
                                 |> List.take 5
