@@ -6,21 +6,20 @@ import BuildEventListener exposing (handle)
 import BuildInfoHandler exposing (toggleBuildInfo)
 import CharacterEventListener exposing (handle)
 import CustomTypes exposing (SortType(..))
-import DataHandler exposing (..)
-import Dict exposing (..)
-import ErrorHandler exposing (..)
+import DataHandler exposing (initStaticData)
+import ErrorHandler exposing (viewError)
 import GlobalMessage exposing (Msg(..))
-import GlobalModel exposing (..)
-import Job exposing (..)
+import GlobalModel exposing (Model, ViewModel)
+import Job exposing (getJobByDefault)
 import JobEventListener exposing (handle)
-import SkillEventListener exposing (..)
-import TeamBuilder exposing (..)
-import Url exposing (..)
-import UrlDecoder exposing (..)
+import SkillEventListener exposing (handle)
+import TeamBuilder exposing (viewBuilder)
+import Url exposing (Url)
+import UrlDecoder exposing (decodeUrlInTeam, encodeTeamInUrl)
 
 
-init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
-init flags url key =
+init : () -> Url -> Nav.Key -> ( Model, Cmd Msg )
+init _ url key =
     let
         team =
             decodeUrlInTeam (Url.toString url)
