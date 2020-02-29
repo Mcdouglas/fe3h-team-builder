@@ -120,7 +120,7 @@ updateSkillInBuild maybeBuild ( ( _, skillIdx ), skill, isCombatArt ) =
                     let
                         newListSkill =
                             build.listActiveSkill
-                                |> List.foldr (::) (List.repeat 3 ( -1, -1, NoType ))
+                                |> List.foldr (::) (List.repeat 3 ( -1, 0, NoType ))
                                 |> List.take 3
                                 |> List.map (\l -> updateSkillAndKeepOther l skillIdx skill)
                     in
@@ -130,7 +130,7 @@ updateSkillInBuild maybeBuild ( ( _, skillIdx ), skill, isCombatArt ) =
                     let
                         newListSkill =
                             build.listPassiveSkill
-                                |> List.foldr (::) (List.repeat 3 ( -1, -1, NoType ))
+                                |> List.foldr (::) (List.repeat 3 ( -1, 0, NoType ))
                                 |> List.take 5
                                 |> List.map (\l -> updateSkillAndKeepOther l skillIdx skill)
                     in

@@ -1,5 +1,6 @@
 module TeamBuilder exposing (..)
 
+import Browser.Navigation as Nav
 import BuildInfoView exposing (..)
 import BuildView exposing (..)
 import CharacterModal exposing (modalCharacterPicker)
@@ -12,6 +13,7 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 import JobModal exposing (modalJobPicker)
 import SkillModal exposing (modalSkillPicker)
+import Url exposing (..)
 
 
 viewBuilder : Model -> Html Msg
