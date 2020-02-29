@@ -53,10 +53,7 @@ sectionPassiveSkill : Model -> Build -> Html Msg
 sectionPassiveSkill model build =
     let
         skillIdToView skillId skillType =
-            if skillType == StandardType then
-                getStandardSkill skillId |> Maybe.andThen (\s -> getStudyById s.studyId) |> Maybe.map viewStudy |> Maybe.withDefault viewNoData |> List.singleton
-
-            else
+            if skillType == CustomTypes.MasteryType then
                 let
                     firstDiv =
                         getMasterySkill skillId |> Maybe.andThen (\m -> getJobById (List.head m.jobIdList |> Maybe.withDefault 0)) |> Maybe.map (\j -> j.studyIdList) |> Maybe.withDefault [] |> List.map getStudyById |> List.map (\s -> Maybe.map viewStudy s |> Maybe.withDefault viewNoData)
@@ -68,21 +65,21 @@ sectionPassiveSkill model build =
                         getMasterySkill skillId |> Maybe.andThen (\m -> getJobById (List.head m.jobIdList |> Maybe.withDefault 0)) |> Maybe.map viewJob |> Maybe.withDefault viewNoData
                 in
                 firstDiv ++ [ secondDiv, thirdDiv ]
+            else if skillType == CustomTypes.StandardType then
+                getStandardSkill skillId |> Maybe.andThen (\s -> getStudyById s.studyId) |> Maybe.map viewStudy |> Maybe.withDefault viewNoData |> List.singleton
+            else 
+                p[][] |> List.singleton
 
-        fakeData skillid skillType =
-            viewNoData
     in
-    div [ class "passive-skill-section" ] (build.listPassiveSkill |> List.map (\( idx, skillId, skillType ) -> div [ class "skill-info" ] (skillIdToView skillId skillType)))
+    div [ class "passive-skill-section" ] (build.listPassiveSkill |> List.map (\( _, skillId, skillType ) -> div [ class "skill-info" ] (skillIdToView skillId skillType)))
 
 
 sectionActiveSkill : Model -> Build -> Html Msg
 sectionActiveSkill model build =
     let
         skillIdToView skillId skillType =
-            if skillType == StandardType then
-                getStandardSkill skillId |> Maybe.andThen (\s -> getStudyById s.studyId) |> Maybe.map viewStudy |> Maybe.withDefault viewNoData |> List.singleton
 
-            else
+            if skillType == CustomTypes.MasteryType then
                 let
                     firstDiv =
                         getMasterySkill skillId |> Maybe.andThen (\m -> getJobById (List.head m.jobIdList |> Maybe.withDefault 0)) |> Maybe.map (\j -> j.studyIdList) |> Maybe.withDefault [] |> List.map getStudyById |> List.map (\s -> Maybe.map viewStudy s |> Maybe.withDefault viewNoData)
@@ -94,11 +91,13 @@ sectionActiveSkill model build =
                         getMasterySkill skillId |> Maybe.andThen (\m -> getJobById (List.head m.jobIdList |> Maybe.withDefault 0)) |> Maybe.map viewJob |> Maybe.withDefault viewNoData
                 in
                 firstDiv ++ [ secondDiv, thirdDiv ]
+            else if skillType == StandardType then
+                getStandardSkill skillId |> Maybe.andThen (\s -> getStudyById s.studyId) |> Maybe.map viewStudy |> Maybe.withDefault viewNoData |> List.singleton
+            else
+                p[][] |> List.singleton
 
-        fakeData skillid skillType =
-            viewNoData
     in
-    div [ class "active-skill-section" ] (build.listActiveSkill |> List.map (\( idx, skillId, skillType ) -> div [ class "skill-info" ] (skillIdToView skillId skillType)))
+    div [ class "active-skill-section" ] (build.listActiveSkill |> List.map (\( _, skillId, skillType ) -> div [ class "skill-info" ] (skillIdToView skillId skillType)))
 
 
 sectionJob : Model -> Build -> Html Msg
