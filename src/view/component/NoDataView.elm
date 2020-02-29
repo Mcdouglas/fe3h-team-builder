@@ -1,8 +1,8 @@
-module NoDataView exposing (..)
+module NoDataView exposing (viewNoData)
 
 import GlobalMessage exposing (Msg(..))
-import Html exposing (..)
-import Html.Attributes exposing (..)
+import Html exposing (Html, div)
+import Html.Attributes exposing (class)
 
 
 viewNoData : Html Msg

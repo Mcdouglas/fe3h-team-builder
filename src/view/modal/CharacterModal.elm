@@ -1,19 +1,19 @@
-module CharacterModal exposing (..)
+module CharacterModal exposing (modalCharacterPicker)
 
 import Character exposing (getCharacterByDefault)
-import CharacterSkill exposing (..)
-import CharacterView exposing (..)
-import Crest exposing (..)
-import CustomTypes exposing (..)
-import Dict exposing (Dict)
+import CharacterSkill exposing (getCharacterSkillById)
+import CharacterView exposing (getCrestPicture, getSkillCharacterPicture)
+import Crest exposing (getCrest)
+import CustomTypes exposing (Character)
+import Dict exposing (Dict(..))
 import GlobalMessage exposing (CharacterModal(..), Msg(..))
-import GlobalModel exposing (..)
-import Html exposing (..)
-import Html.Attributes exposing (..)
+import GlobalModel exposing (Model)
+import Html exposing (Html, div, img, p, text)
+import Html.Attributes exposing (class, hidden, src, style)
 import Html.Events exposing (onClick, onMouseOver, stopPropagationOn)
 import Json.Decode as Json
-import NoDataView exposing (..)
-import Popover exposing (..)
+import NoDataView exposing (viewNoData)
+import Popover exposing (viewPopover)
 import Study exposing (getAcademicSkills, stringToSubject, subjectToId)
 import StudyView exposing (getAcademicSkill, getStudyPicture)
 
@@ -37,7 +37,7 @@ modalCharacterPicker model =
             , stopPropagationOn "click" (Json.succeed ( NoOp, True ))
             ]
             [ viewCharacterGrid model idx
-            , viewSideBar model character
+            , viewSideBar character
             ]
         ]
 
@@ -73,7 +73,7 @@ viewCharacterPicker model buildIdx character =
                     "avatar-tile"
 
         lockedCss =
-            if model.team |> Dict.map (\k v -> v.idCharacter) |> Dict.values |> List.member character.id then
+            if model.team |> Dict.map (\_ v -> v.idCharacter) |> Dict.values |> List.member character.id then
                 "locked-picture"
 
             else
@@ -93,24 +93,24 @@ viewCharacterPicker model buildIdx character =
         ]
 
 
-viewSideBar : Model -> Character -> Html Msg
-viewSideBar model character =
+viewSideBar : Character -> Html Msg
+viewSideBar character =
     div [ class "sidebar" ]
         [ buttonCloseModal
-        , viewCharacterDetail model character
+        , viewCharacterDetail character
         ]
 
 
-viewCharacterDetail : Model -> Character -> Html Msg
-viewCharacterDetail model character =
+viewCharacterDetail : Character -> Html Msg
+viewCharacterDetail character =
     div [ class "character-detail" ]
-        [ viewFullPortraitDetail model character
-        , viewContentDetail model character
+        [ viewFullPortraitDetail character
+        , viewContentDetail character
         ]
 
 
-viewFullPortraitDetail : Model -> Character -> Html Msg
-viewFullPortraitDetail model character =
+viewFullPortraitDetail : Character -> Html Msg
+viewFullPortraitDetail character =
     div [ class "full-portrait-title" ]
         [ getFullPortrait character.id
         , getBannerPicture character.bannerId
@@ -127,12 +127,12 @@ getFullPortrait id =
         []
 
 
-viewContentDetail : Model -> Character -> Html Msg
-viewContentDetail model character =
+viewContentDetail : Character -> Html Msg
+viewContentDetail character =
     div [ class "detail-content" ]
-        [ viewCharacterSkillDetail model character.characterSkillId
-        , viewCharacterCrestDetail model character.crestId
-        , viewAcademicSkillsDetail model character.id
+        [ viewCharacterSkillDetail character.characterSkillId
+        , viewCharacterCrestDetail character.crestId
+        , viewAcademicSkillsDetail character.id
         ]
 
 
@@ -156,14 +156,14 @@ getBannerPicture maybeId =
                 []
 
 
-viewCharacterSkillDetail : Model -> Int -> Html Msg
-viewCharacterSkillDetail model skillId =
+viewCharacterSkillDetail : Int -> Html Msg
+viewCharacterSkillDetail skillId =
     div [ class "character-description" ]
         [ p [] [ text "Personnal skill" ]
         , case getCharacterSkillById skillId of
             Just value ->
                 div []
-                    [ getSkillCharacterPicture model value.pictureId
+                    [ getSkillCharacterPicture value.pictureId
                     , p [] [ text value.name ]
                     , viewPopover value.name value.description
                     ]
@@ -173,8 +173,8 @@ viewCharacterSkillDetail model skillId =
         ]
 
 
-viewCharacterCrestDetail : Model -> Int -> Html Msg
-viewCharacterCrestDetail model crestId =
+viewCharacterCrestDetail : Int -> Html Msg
+viewCharacterCrestDetail crestId =
     div [ class "character-description" ]
         [ p [] [ text "Crest" ]
         , case getCrest crestId of
@@ -190,8 +190,8 @@ viewCharacterCrestDetail model crestId =
         ]
 
 
-viewAcademicSkillsDetail : Model -> Int -> Html Msg
-viewAcademicSkillsDetail model id =
+viewAcademicSkillsDetail : Int -> Html Msg
+viewAcademicSkillsDetail id =
     let
         academicSkills =
             getAcademicSkills id
@@ -199,7 +199,7 @@ viewAcademicSkillsDetail model id =
     div [ class "character-description double-description" ]
         [ p [] [ text "Skill level" ]
         , div [ class "study-table" ]
-            [ div [ class "study-table-row study-table-header" ] (Dict.toList academicSkills |> List.map (\( k, v ) -> k |> stringToSubject |> subjectToId) |> List.sort |> List.map getStudyPicture)
+            [ div [ class "study-table-row study-table-header" ] (Dict.toList academicSkills |> List.map (\( k, _ ) -> k |> stringToSubject |> subjectToId) |> List.sort |> List.map getStudyPicture)
             , div [ class "study-table-row" ] (Dict.values academicSkills |> List.map getAcademicSkill)
             ]
         ]

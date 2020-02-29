@@ -1,9 +1,9 @@
-module StudyView exposing (..)
+module StudyView exposing (getAcademicSkill, getStudyPicture, viewStudy)
 
-import CustomTypes exposing (..)
+import CustomTypes exposing (Rank(..), Study, StudyCapacity(..))
 import GlobalMessage exposing (Msg(..))
-import Html exposing (..)
-import Html.Attributes exposing (..)
+import Html exposing (Html, div, img)
+import Html.Attributes exposing (class, src)
 import Study exposing (rankToId, subjectToId)
 
 

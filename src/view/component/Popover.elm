@@ -1,8 +1,8 @@
-module Popover exposing (..)
+module Popover exposing (viewPopover, viewPopoverClickable, viewPopoverMultiline)
 
 import GlobalMessage exposing (Msg(..))
-import Html exposing (..)
-import Html.Attributes exposing (..)
+import Html exposing (Html, br, div, p, text)
+import Html.Attributes exposing (class)
 
 
 viewPopover : String -> String -> Html Msg

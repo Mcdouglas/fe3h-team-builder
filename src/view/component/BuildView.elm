@@ -1,66 +1,66 @@
-module BuildView exposing (..)
+module BuildView exposing (controlPanel, viewBuild)
 
-import Character exposing (..)
-import CharacterView exposing (..)
-import CustomTypes exposing (..)
-import Dict exposing (..)
+import Character exposing (getCharacterById)
+import CharacterView exposing (sectionCharacter)
+import CustomTypes exposing (Build)
+import Dict exposing (Dict(..))
 import GlobalMessage exposing (BuildPanel(..), Msg(..))
-import GlobalModel exposing (..)
-import Html exposing (..)
-import Html.Attributes exposing (..)
-import Html.Events exposing (..)
-import Job exposing (..)
-import JobSkill exposing (..)
-import JobView exposing (..)
-import ModelHandler exposing (..)
-import SkillView exposing (..)
+import GlobalModel exposing (Model)
+import Html exposing (Html, div, img)
+import Html.Attributes exposing (class, src)
+import Html.Events exposing (onClick)
+import Job exposing (getJobById)
+import JobSkill exposing (getJobSkillsByJob)
+import JobView exposing (buttonJob, viewJobSkill)
+import ModelHandler exposing (getSkillByType)
+import SkillView exposing (skillButton)
 
 
-viewBuild : Model -> ( Int, Build ) -> Html Msg
-viewBuild model ( idx, build ) =
+viewBuild : ( Int, Build ) -> Html Msg
+viewBuild ( idx, build ) =
     let
         maybeCharacter =
             getCharacterById build.idCharacter
     in
     div [ class "item-a" ]
-        [ sectionCharacter model idx maybeCharacter
-        , sectionPassiveSkills model ( idx, build )
-        , sectionActiveSkills model ( idx, build )
-        , sectionJob model ( idx, build )
+        [ sectionCharacter idx maybeCharacter
+        , sectionPassiveSkills ( idx, build )
+        , sectionActiveSkills ( idx, build )
+        , sectionJob ( idx, build )
         , buttonBuildInfo build
         ]
 
 
-sectionPassiveSkills : Model -> ( Int, Build ) -> Html Msg
-sectionPassiveSkills model ( buildIdx, build ) =
+sectionPassiveSkills : ( Int, Build ) -> Html Msg
+sectionPassiveSkills ( buildIdx, build ) =
     let
         listPassiveSkill =
             build.listPassiveSkill
                 |> List.map (\( idx, skillId, skillType ) -> ( idx, skillId, getSkillByType skillId skillType ))
                 |> List.indexedMap Tuple.pair
-                |> List.map (\( id, ( idx, idSkill, maybeSkill ) ) -> ( ( buildIdx, id ), maybeSkill, False ))
+                |> List.map (\( id, ( _, _, maybeSkill ) ) -> ( ( buildIdx, id ), maybeSkill, False ))
                 |> List.take 5
     in
     div [ class "item-a2" ]
-        (List.map (\e -> skillButton model e) listPassiveSkill)
+        (List.map (\e -> skillButton e) listPassiveSkill)
 
 
-sectionActiveSkills : Model -> ( Int, Build ) -> Html Msg
-sectionActiveSkills model ( buildIdx, build ) =
+sectionActiveSkills : ( Int, Build ) -> Html Msg
+sectionActiveSkills ( buildIdx, build ) =
     let
         listActiveSkill =
             build.listActiveSkill
                 |> List.map (\( idx, skillId, skillType ) -> ( idx, skillId, getSkillByType skillId skillType ))
                 |> List.indexedMap Tuple.pair
-                |> List.map (\( id, ( idx, idSkill, maybeSkill ) ) -> ( ( buildIdx, id ), maybeSkill, True ))
+                |> List.map (\( id, ( _, _, maybeSkill ) ) -> ( ( buildIdx, id ), maybeSkill, True ))
                 |> List.take 3
     in
     div [ class "item-a3" ]
-        (List.map (\e -> skillButton model e) listActiveSkill)
+        (List.map (\e -> skillButton e) listActiveSkill)
 
 
-sectionJob : Model -> ( Int, Build ) -> Html Msg
-sectionJob model ( buildIdx, build ) =
+sectionJob : ( Int, Build ) -> Html Msg
+sectionJob ( buildIdx, build ) =
     let
         job =
             getJobById build.jobId
@@ -69,7 +69,7 @@ sectionJob model ( buildIdx, build ) =
             job |> Maybe.map (\e -> getJobSkillsByJob e.id) |> Maybe.withDefault []
     in
     div [ class "item-a4" ]
-        [ buttonJob model buildIdx job
+        [ buttonJob buildIdx job
         , div [ class "item-a4b" ] (listJobSkill |> List.map (\e -> viewJobSkill e))
         ]
 

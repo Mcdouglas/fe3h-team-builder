@@ -1,21 +1,21 @@
-module JobModal exposing (..)
+module JobModal exposing (modalJobPicker)
 
 import Character exposing (getCharacterById)
-import CustomTypes exposing (..)
-import Dict exposing (Dict)
-import ElmUtils exposing (..)
+import CustomTypes exposing (Job)
+import Dict exposing (Dict(..))
+import ElmUtils exposing (appendMaybeText)
 import GlobalMessage exposing (JobModal(..), Msg(..))
-import GlobalModel exposing (..)
-import Html exposing (..)
-import Html.Attributes exposing (..)
-import Html.Events exposing (..)
+import GlobalModel exposing (Model)
+import Html exposing (Html, div, p, text)
+import Html.Attributes exposing (class, hidden, style)
+import Html.Events exposing (onClick, stopPropagationOn)
 import Job exposing (filterJobsAvailable, getJobsByCategory)
 import JobCategory exposing (initJobCategories)
 import JobSkill exposing (getJobSkillsByJob)
 import JobView exposing (getJobTile)
 import Json.Decode as Json
 import MasterySkill exposing (getMasterySkillsForJob)
-import Maybe.Extra exposing (..)
+import Maybe.Extra exposing (values)
 import ModelUtils exposing (jobCategoryIdToString, jobSkillToSkill, jobToDescription, masterySkillToSkill)
 import NoDataView exposing (viewNoData)
 import SkillView exposing (viewSkill)
@@ -49,18 +49,18 @@ viewJobsGrid model =
                     viewJobRow model categoryId
 
                 Nothing ->
-                    viewJobCategoryRow model
+                    viewJobCategoryRow
     in
     div [ class "jobs-grid" ] rowDiv
 
 
-viewJobCategoryRow : Model -> List (Html Msg)
-viewJobCategoryRow model =
-    [ div [ class "jobs-row" ] (List.map (\jc -> viewJobCategoryTile model jc.id) initJobCategories) ]
+viewJobCategoryRow : List (Html Msg)
+viewJobCategoryRow =
+    [ div [ class "jobs-row" ] (List.map (\jc -> viewJobCategoryTile jc.id) initJobCategories) ]
 
 
-viewJobCategoryTile : Model -> Int -> Html Msg
-viewJobCategoryTile model id =
+viewJobCategoryTile : Int -> Html Msg
+viewJobCategoryTile id =
     let
         customCss =
             (case id of
@@ -115,7 +115,7 @@ viewJobTile : Model -> ( Int, Job ) -> Job -> Html Msg
 viewJobTile model ( buildIdx, _ ) job =
     let
         lockedCss =
-            if model.team |> Dict.filter (\k v -> k == buildIdx) |> Dict.map (\k v -> v.jobId) |> Dict.values |> List.member job.id then
+            if model.team |> Dict.filter (\k _ -> k == buildIdx) |> Dict.map (\_ v -> v.jobId) |> Dict.values |> List.member job.id then
                 "locked-picture"
 
             else

@@ -1,17 +1,14 @@
-module JobView exposing (..)
+module JobView exposing (buttonJob, getJobTile, oldGetJobTile, viewJob, viewJobSkill)
 
-import CustomTypes exposing (..)
+import CustomTypes exposing (Job, JobSkill)
 import ElmUtils exposing (appendMaybe)
 import GlobalMessage exposing (JobModal(..), Msg(..))
-import GlobalModel exposing (..)
-import Html exposing (..)
-import Html.Attributes exposing (..)
-import Html.Events exposing (..)
-import Job exposing (..)
-import JobCategory exposing (getJobCategoryById)
-import JobSkill exposing (..)
+import Html exposing (Attribute, Html, div, img, p, text)
+import Html.Attributes exposing (class, src, style)
+import Html.Events exposing (onClick)
+import Job exposing (getJobByDefault)
 import ModelUtils exposing (jobToDescription)
-import Popover exposing (..)
+import Popover exposing (viewPopover, viewPopoverMultiline)
 
 
 viewJob : Job -> Html Msg
@@ -69,8 +66,8 @@ oldGetJobTile customCss id =
         []
 
 
-buttonJob : Model -> Int -> Maybe Job -> Html Msg
-buttonJob model buildIdx maybeJob =
+buttonJob : Int -> Maybe Job -> Html Msg
+buttonJob buildIdx maybeJob =
     let
         jobOrDefault =
             maybeJob |> Maybe.withDefault getJobByDefault
@@ -126,12 +123,11 @@ viewJobSkill : JobSkill -> Html Msg
 viewJobSkill skill =
     let
         getSkillPicture =
-            case skill.combatArt of
-                True ->
-                    getSkillJobActivePicture
+            if skill.combatArt then
+                getSkillJobActivePicture
 
-                False ->
-                    getSkillJobPassivePicture
+            else
+                getSkillJobPassivePicture
     in
     div []
         [ getSkillPicture skill.pictureId

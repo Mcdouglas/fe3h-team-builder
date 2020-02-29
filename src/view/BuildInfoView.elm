@@ -1,23 +1,22 @@
-module BuildInfoView exposing (..)
+module BuildInfoView exposing (sectionBuildInfo)
 
 import Character exposing (getCharacterByDefault, getCharacterById)
-import CustomTypes exposing (..)
-import Dict exposing (..)
+import CustomTypes exposing (Build, Character, SkillType(..))
+import Dict exposing (Dict(..))
 import GlobalMessage exposing (Msg(..))
-import GlobalModel exposing (..)
-import Html exposing (..)
-import Html.Attributes exposing (..)
+import Html exposing (Html, div, p)
+import Html.Attributes exposing (class, hidden, id)
 import Job exposing (getJobById)
 import JobView exposing (viewJob)
-import MasterySkill exposing (..)
+import MasterySkill exposing (getMasterySkill)
 import NoDataView exposing (viewNoData)
-import StandardSkill exposing (..)
-import Study exposing (..)
-import StudyView exposing (..)
+import StandardSkill exposing (getStandardSkill)
+import Study exposing (getAcademicSkills, getStudyById, stringToSubject, subjectToId)
+import StudyView exposing (getAcademicSkill, getStudyPicture, viewStudy)
 
 
-sectionBuildInfo : Model -> ( Int, Build ) -> Html Msg
-sectionBuildInfo model ( idx, build ) =
+sectionBuildInfo : Build -> Html Msg
+sectionBuildInfo build =
     let
         character =
             getCharacterById build.idCharacter
@@ -28,29 +27,29 @@ sectionBuildInfo model ( idx, build ) =
         , hidden build.hiddenInfo
         , id ("info-" ++ String.fromInt build.idCharacter)
         ]
-        [ sectionCharacter model character
-        , sectionPassiveSkill model build
-        , sectionActiveSkill model build
-        , sectionJob model build
+        [ sectionCharacter character
+        , sectionPassiveSkill build
+        , sectionActiveSkill build
+        , sectionJob build
         ]
 
 
-sectionCharacter : Model -> Character -> Html Msg
-sectionCharacter model character =
+sectionCharacter : Character -> Html Msg
+sectionCharacter character =
     let
         academicSkills =
             getAcademicSkills character.id
     in
     div [ class "character-section" ]
         [ div [ class "study-table" ]
-            [ div [ class "study-table-row study-table-header" ] (Dict.toList academicSkills |> List.map (\( k, v ) -> k |> stringToSubject |> subjectToId) |> List.sort |> List.map getStudyPicture)
+            [ div [ class "study-table-row study-table-header" ] (Dict.toList academicSkills |> List.map (\( k, _ ) -> k |> stringToSubject |> subjectToId) |> List.sort |> List.map getStudyPicture)
             , div [ class "study-table-row" ] (Dict.values academicSkills |> List.map getAcademicSkill)
             ]
         ]
 
 
-sectionPassiveSkill : Model -> Build -> Html Msg
-sectionPassiveSkill model build =
+sectionPassiveSkill : Build -> Html Msg
+sectionPassiveSkill build =
     let
         skillIdToView skillId skillType =
             if skillType == CustomTypes.MasteryType then
@@ -75,8 +74,8 @@ sectionPassiveSkill model build =
     div [ class "passive-skill-section" ] (build.listPassiveSkill |> List.map (\( _, skillId, skillType ) -> div [ class "skill-info" ] (skillIdToView skillId skillType)))
 
 
-sectionActiveSkill : Model -> Build -> Html Msg
-sectionActiveSkill model build =
+sectionActiveSkill : Build -> Html Msg
+sectionActiveSkill build =
     let
         skillIdToView skillId skillType =
             if skillType == CustomTypes.MasteryType then
@@ -101,6 +100,6 @@ sectionActiveSkill model build =
     div [ class "active-skill-section" ] (build.listActiveSkill |> List.map (\( _, skillId, skillType ) -> div [ class "skill-info" ] (skillIdToView skillId skillType)))
 
 
-sectionJob : Model -> Build -> Html Msg
-sectionJob model build =
+sectionJob : Build -> Html Msg
+sectionJob build =
     div [ class "job-section" ] (getJobById build.jobId |> Maybe.map (\j -> j.studyIdList) |> Maybe.withDefault [] |> List.map getStudyById |> List.map (\s -> Maybe.map viewStudy s |> Maybe.withDefault viewNoData))

@@ -1,16 +1,15 @@
-module SkillView exposing (..)
+module SkillView exposing (skillButton, viewSkill)
 
-import CustomTypes exposing (..)
+import CustomTypes exposing (Skill)
 import GlobalMessage exposing (Msg(..), SkillModal(..))
-import GlobalModel exposing (..)
-import Html exposing (..)
-import Html.Attributes exposing (..)
+import Html exposing (Attribute, Html, div, p, text)
+import Html.Attributes exposing (class, style)
 import Html.Events exposing (onClick)
-import Popover exposing (..)
+import Popover exposing (viewPopover, viewPopoverClickable)
 
 
-skillButton : Model -> ( ( Int, Int ), Maybe Skill, Bool ) -> Html Msg
-skillButton model ( positions, maybeSkill, isCombatArt ) =
+skillButton : ( ( Int, Int ), Maybe Skill, Bool ) -> Html Msg
+skillButton ( positions, maybeSkill, isCombatArt ) =
     let
         onClickEvent =
             onClick (SModalMsg (OpenSkillModal ( positions, maybeSkill, isCombatArt )))
@@ -33,12 +32,11 @@ viewSkill : Skill -> Html Msg
 viewSkill skill =
     let
         cssClass =
-            case skill.combatArt of
-                True ->
-                    "art-picture"
+            if skill.combatArt then
+                "art-picture"
 
-                False ->
-                    "skill-picture"
+            else
+                "skill-picture"
     in
     div []
         [ div
@@ -55,12 +53,11 @@ getSkillTile : Int -> Bool -> Attribute Msg -> Html Msg
 getSkillTile pictureId isCombatArt onClickEvent =
     let
         cssClass =
-            case isCombatArt of
-                True ->
-                    "art-picture"
+            if isCombatArt then
+                "art-picture"
 
-                False ->
-                    "skill-picture"
+            else
+                "skill-picture"
     in
     div
         [ class ("button-clickable qs " ++ cssClass)

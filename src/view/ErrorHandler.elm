@@ -1,9 +1,7 @@
-module ErrorHandler exposing (..)
+module ErrorHandler exposing (viewError)
 
 import GlobalMessage exposing (Msg(..))
-import GlobalModel exposing (Model)
-import Html exposing (..)
-import TeamBuilder exposing (..)
+import Html exposing (Html, div, h3, text)
 
 
 viewError : String -> Html Msg

@@ -1,26 +1,25 @@
-module CharacterView exposing (..)
+module CharacterView exposing (getCrestPicture, getSkillCharacterPicture, sectionCharacter)
 
 import CharacterSkill exposing (getCharacterSkillById)
 import Crest exposing (getCrest)
-import CustomTypes exposing (..)
+import CustomTypes exposing (Character)
 import GlobalMessage exposing (CharacterModal(..), Msg(..))
-import GlobalModel exposing (..)
-import Html exposing (..)
-import Html.Attributes exposing (..)
-import Html.Events exposing (..)
-import Popover exposing (..)
+import Html exposing (Attribute, Html, div, img, p, text)
+import Html.Attributes exposing (class, src, style)
+import Html.Events exposing (onClick)
+import Popover exposing (viewPopover)
 
 
-sectionCharacter : Model -> Int -> Maybe Character -> Html Msg
-sectionCharacter model idx maybeCharacter =
+sectionCharacter : Int -> Maybe Character -> Html Msg
+sectionCharacter idx maybeCharacter =
     case maybeCharacter of
         Just character ->
             div
                 [ class "item-a1" ]
                 [ buttonCharacter idx character
                 , div [ class "item-a1b" ]
-                    [ viewCharacterSkillTile model character.characterSkillId
-                    , viewCrestTile model character.crestId
+                    [ viewCharacterSkillTile character.characterSkillId
+                    , viewCrestTile character.crestId
                     ]
                 ]
 
@@ -54,8 +53,8 @@ getCharacterPicture pictureId onClickEvent =
         []
 
 
-viewCharacterSkillTile : Model -> Int -> Html Msg
-viewCharacterSkillTile model id =
+viewCharacterSkillTile : Int -> Html Msg
+viewCharacterSkillTile id =
     let
         characterSkill =
             getCharacterSkillById id
@@ -63,7 +62,7 @@ viewCharacterSkillTile model id =
     case characterSkill of
         Just value ->
             div []
-                [ getSkillCharacterPicture model value.pictureId
+                [ getSkillCharacterPicture value.pictureId
                 , p [] [ text value.name ]
                 , viewPopover value.name value.description
                 ]
@@ -72,8 +71,8 @@ viewCharacterSkillTile model id =
             p [] [ text "Character not found" ]
 
 
-getSkillCharacterPicture : Model -> Int -> Html Msg
-getSkillCharacterPicture model pictureId =
+getSkillCharacterPicture : Int -> Html Msg
+getSkillCharacterPicture pictureId =
     div
         [ class "cskill-picture qs"
         , style "content" ("url(\"resources/img/skills/" ++ String.fromInt pictureId ++ ".png\")")
@@ -81,8 +80,8 @@ getSkillCharacterPicture model pictureId =
         []
 
 
-viewCrestTile : Model -> Int -> Html Msg
-viewCrestTile model crestId =
+viewCrestTile : Int -> Html Msg
+viewCrestTile crestId =
     let
         maybeCrest =
             getCrest crestId

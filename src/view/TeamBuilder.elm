@@ -1,19 +1,17 @@
-module TeamBuilder exposing (..)
+module TeamBuilder exposing (viewBuilder)
 
-import Browser.Navigation as Nav
-import BuildInfoView exposing (..)
-import BuildView exposing (..)
+import BuildInfoView exposing (sectionBuildInfo)
+import BuildView exposing (controlPanel, viewBuild)
 import CharacterModal exposing (modalCharacterPicker)
-import CustomTypes exposing (..)
-import Dict exposing (Dict)
+import CustomTypes exposing (Build)
+import Dict exposing (Dict(..))
 import GlobalMessage exposing (BuildPanel(..), Msg(..))
-import GlobalModel exposing (..)
-import Html exposing (..)
-import Html.Attributes exposing (..)
+import GlobalModel exposing (Model)
+import Html exposing (Html, div, h3, text)
+import Html.Attributes exposing (class)
 import Html.Events exposing (onClick)
 import JobModal exposing (modalJobPicker)
 import SkillModal exposing (modalSkillPicker)
-import Url exposing (..)
 
 
 viewBuilder : Model -> Html Msg
@@ -50,7 +48,7 @@ viewTeam model =
 viewRow : Model -> ( Int, Build ) -> Html Msg
 viewRow model ( idx, build ) =
     div [ class "c-container" ]
-        [ viewBuild model ( idx, build )
-        , sectionBuildInfo model ( idx, build )
+        [ viewBuild ( idx, build )
+        , sectionBuildInfo build
         , controlPanel model idx
         ]

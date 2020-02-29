@@ -1,17 +1,17 @@
-module SkillModal exposing (..)
+module SkillModal exposing (modalSkillPicker)
 
 import CustomTypes exposing (Job, Skill, SortType(..))
-import Dict exposing (Dict)
-import ElmUtils exposing (..)
+import Dict exposing (Dict(..))
+import ElmUtils exposing (boolToInt)
 import GlobalMessage exposing (Msg(..), SkillModal(..))
-import GlobalModel exposing (..)
-import Html exposing (..)
-import Html.Attributes exposing (..)
-import Html.Events exposing (..)
+import GlobalModel exposing (Model)
+import Html exposing (Html, div, img, input, option, p, select, text)
+import Html.Attributes exposing (class, hidden, placeholder, src, style, value)
+import Html.Events exposing (onClick, onInput, onMouseOver, stopPropagationOn)
 import Job exposing (getJobById)
 import JobView exposing (viewJob)
 import Json.Decode as Json
-import Maybe.Extra exposing (..)
+import Maybe.Extra exposing (values)
 import ModelHandler exposing (getActiveSkillByDefault, getPassiveSkillByDefault, getSkillList)
 import ModelUtils exposing (listSortType, skillTypeToString, sortTypeToKeyValue)
 import NoDataView exposing (viewNoData)
@@ -22,7 +22,7 @@ import StudyView exposing (viewStudy)
 modalSkillPicker : Model -> Html Msg
 modalSkillPicker model =
     let
-        ( ( buildPosition, skillPosition ), maybeSkill, isCombatArt ) =
+        ( ( _, _ ), _, isCombatArt ) =
             model.view.skillPicker
 
         modalCss =
@@ -52,7 +52,7 @@ viewModalContent model =
     div
         [ class "modal-table" ]
         [ viewSearchFilter model
-        , viewSortFilter model
+        , viewSortFilter
         , viewSkillGrid model
         ]
 
@@ -74,8 +74,8 @@ viewSearchFilter model =
         ]
 
 
-viewSortFilter : Model -> Html Msg
-viewSortFilter model =
+viewSortFilter : Html Msg
+viewSortFilter =
     div [ class "filter sort-filter" ]
         [ p [] [ text "Sort by :" ]
         , select [ onInput (\e -> SModalMsg (ChangeSortType e)) ] (listSortType |> List.map (\e -> sortTypeToKeyValue e) |> List.map (\( v, t ) -> option [ value v ] [ text t ]))
@@ -122,7 +122,7 @@ listSortBy model list =
 viewSkillTile : Model -> Skill -> Html Msg
 viewSkillTile model skill =
     let
-        ( ( buildIdx, skillIdx ), maybeSkill, isCombatArt ) =
+        ( ( buildIdx, skillIdx ), _, isCombatArt ) =
             model.view.skillPicker
 
         lockedCss =
@@ -138,7 +138,7 @@ viewSkillTile model skill =
                                 build.listPassiveSkill
                         )
                     |> Maybe.withDefault []
-                    |> List.filter (\( idx, skillId, skillType ) -> skill.id == skillId && skill.skillType == skillType)
+                    |> List.filter (\( _, skillId, skillType ) -> skill.id == skillId && skill.skillType == skillType)
                     |> List.length
                 )
                     > 0
@@ -166,16 +166,15 @@ viewSkillTile model skill =
 viewSideBar : Model -> Html Msg
 viewSideBar model =
     let
-        ( ( idx, skillId ), maybeSkill, isCombatArt ) =
+        ( ( _, _ ), maybeSkill, isCombatArt ) =
             model.view.skillPicker
 
         getSkillByDefault =
-            case isCombatArt of
-                True ->
-                    getActiveSkillByDefault
+            if isCombatArt then
+                getActiveSkillByDefault
 
-                False ->
-                    getPassiveSkillByDefault
+            else
+                getPassiveSkillByDefault
     in
     case maybeSkill of
         Just skill ->
@@ -195,20 +194,18 @@ viewSkillDetail : Skill -> Html Msg
 viewSkillDetail skill =
     let
         cssClass =
-            case skill.combatArt of
-                True ->
-                    "combat-art"
+            if skill.combatArt then
+                "combat-art"
 
-                False ->
-                    ""
+            else
+                ""
 
         viewDescription =
-            case skill.combatArt of
-                True ->
-                    viewActiveSkillDescription
+            if skill.combatArt then
+                viewActiveSkillDescription
 
-                False ->
-                    viewPassiveSkillDescription
+            else
+                viewPassiveSkillDescription
     in
     div [ class ("skill-detail " ++ cssClass) ]
         [ div [ class "skill-title" ]
@@ -283,7 +280,7 @@ viewJobToMaster skill =
                 |> Maybe.Extra.values
     in
     if (maybeJobs |> List.length) > 0 then
-        div [ class "skill-description job-description" ] ([ p [] [ text "Class to master" ] ] ++ List.map (\j -> viewJob j) maybeJobs)
+        div [ class "skill-description job-description" ] (p [] [ text "Class to master" ] :: List.map (\j -> viewJob j) maybeJobs)
 
     else
         div [ class "skill-description job-description" ] [ p [] [ text "Class to master" ], viewNoData ]
@@ -299,7 +296,7 @@ viewJobsDescription skill =
                 |> List.concat
     in
     if List.length jobToMasterList > 0 then
-        div [ class "skill-description list-study" ] ([ p [] [ text "Class's certif." ] ] ++ jobToMasterList)
+        div [ class "skill-description list-study" ] (p [] [ text "Class's certif." ] :: jobToMasterList)
 
     else
         div [ class "skill-description list-study" ] [ p [] [ text "Class's certif." ], viewNoData ]
