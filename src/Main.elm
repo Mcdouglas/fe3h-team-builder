@@ -37,7 +37,7 @@ init _ url key =
             ( -1, getJobByDefault )
 
         viewModel =
-            ViewModel False False False False initCharacterPicker initSkillPicker initJobPicker False SortByType "" Nothing
+            ViewModel False False False False initCharacterPicker initSkillPicker initJobPicker False SortByName "" Nothing
 
         errorMessage =
             Nothing
