@@ -1,6 +1,6 @@
-module Character exposing (..)
+module Character exposing (getCharacterByDefault, getCharacterById, initCharacters)
 
-import CustomTypes exposing (..)
+import CustomTypes exposing (Character, CrestHolder(..), GenderUnionType(..))
 
 
 getCharacterById : Int -> Maybe Character

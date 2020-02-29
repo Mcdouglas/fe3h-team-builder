@@ -1,6 +1,6 @@
-module StandardSkill exposing (..)
+module StandardSkill exposing (getStandardSkill, initStandardSkills)
 
-import CustomTypes exposing (..)
+import CustomTypes exposing (StandardSkill)
 
 
 getStandardSkill : Int -> Maybe StandardSkill

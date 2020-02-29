@@ -1,6 +1,6 @@
-module CharacterSkill exposing (..)
+module CharacterSkill exposing (getCharacterSkillById, initCharacterSkills)
 
-import CustomTypes exposing (..)
+import CustomTypes exposing (CharacterSkill)
 
 
 getCharacterSkillById : Int -> Maybe CharacterSkill

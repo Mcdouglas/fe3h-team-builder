@@ -1,6 +1,6 @@
-module MasterySkill exposing (..)
+module MasterySkill exposing (getMasterySkill, getMasterySkillsForJob, initMasterySkills)
 
-import CustomTypes exposing (..)
+import CustomTypes exposing (MasterySkill)
 
 
 getMasterySkill : Int -> Maybe MasterySkill

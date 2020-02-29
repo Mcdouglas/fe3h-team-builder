@@ -1,6 +1,6 @@
-module Study exposing (getStudyById, rankToId, initStudies, subjectToId, getAcademicSkills, stringToSubject)
+module Study exposing (getAcademicSkills, getStudyById, initStudies, rankToId, stringToSubject, subjectToId)
 
-import CustomTypes exposing (Study, Rank(..), Subject(..), StudyCapacity(..))
+import CustomTypes exposing (Rank(..), Study, StudyCapacity(..), Subject(..))
 import Dict exposing (Dict)
 
 

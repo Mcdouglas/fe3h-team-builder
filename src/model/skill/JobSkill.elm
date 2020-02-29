@@ -1,6 +1,6 @@
-module JobSkill exposing (..)
+module JobSkill exposing (getJobSkillById, getJobSkillsByJob, initJobSkills)
 
-import CustomTypes exposing (..)
+import CustomTypes exposing (JobSkill)
 
 
 getJobSkillById : Int -> Maybe JobSkill

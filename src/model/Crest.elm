@@ -1,6 +1,6 @@
-module Crest exposing (..)
+module Crest exposing (getCrest, initCrests)
 
-import CustomTypes exposing (..)
+import CustomTypes exposing (Crest)
 
 
 getCrest : Int -> Maybe Crest

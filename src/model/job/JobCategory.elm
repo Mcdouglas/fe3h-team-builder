@@ -1,6 +1,6 @@
-module JobCategory exposing (..)
+module JobCategory exposing (getJobCategoryById, initJobCategories)
 
-import CustomTypes exposing (..)
+import CustomTypes exposing (CategoryUnionType(..), JobCategory)
 
 
 getJobCategoryById : Int -> Maybe JobCategory

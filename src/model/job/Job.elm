@@ -1,8 +1,7 @@
-module Job exposing (..)
+module Job exposing (filterJobsAvailable, getJobByDefault, getJobById, getJobsByCategory, getJobsByJobSkill, initJobs)
 
-import CustomTypes exposing (..)
-import Dict exposing (..)
-import JobCategory exposing (getJobCategoryById)
+import CustomTypes exposing (Character, GenderUnionType(..), Job, JobSkill, MagicUsage(..), Proficiency, Subject(..))
+import Dict exposing (Dict(..))
 
 
 getJobById : Int -> Maybe Job
