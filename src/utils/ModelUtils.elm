@@ -1,7 +1,6 @@
-module ModelUtils exposing (..)
+module ModelUtils exposing (characterSkillToSkill, jobCategoryIdToString, jobSkillToSkill, jobToDescription, listSortType, masterySkillToSkill, skillTypeToString, sortTypeToKeyValue, standardSkillToSkill, stringToSortType)
 
-import CustomTypes exposing (..)
-import Dict exposing (Dict)
+import CustomTypes exposing (CharacterSkill, GenderUnionType(..), Job, JobDescription, JobSkill, MagicUsage(..), MasterySkill, Skill, SkillType(..), SortType(..), StandardSkill)
 import JobCategory exposing (getJobCategoryById)
 
 

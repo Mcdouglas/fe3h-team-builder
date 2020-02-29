@@ -1,11 +1,9 @@
-module UrlDecoder exposing (..)
+module UrlDecoder exposing (decodeUrlInTeam, encodeTeamInUrl)
 
-import CustomTypes exposing (..)
-import Dict exposing (..)
-import GlobalModel exposing (..)
-import Hex exposing (..)
-import Maybe.Extra exposing (..)
-import Url exposing (..)
+import CustomTypes exposing (Build, SkillType(..))
+import Dict exposing (Dict(..))
+import GlobalModel exposing (Model)
+import Hex exposing (fromString)
 
 
 decodeUrlInTeam : String -> Dict Int Build

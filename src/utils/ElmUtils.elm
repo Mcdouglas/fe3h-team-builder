@@ -1,8 +1,6 @@
-module ElmUtils exposing (..)
+module ElmUtils exposing (appendMaybe, appendMaybeText, boolToInt)
 
-import Dict exposing (..)
 import GlobalMessage exposing (Msg(..))
-import Html exposing (..)
 
 
 appendMaybeText : Maybe String -> Maybe String -> Maybe String
@@ -18,7 +16,7 @@ appendMaybeText maybeText maybeOldText =
 
         Nothing ->
             case maybeText of
-                Just text ->
+                Just _ ->
                     maybeText
 
                 Nothing ->
