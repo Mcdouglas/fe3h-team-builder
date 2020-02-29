@@ -1,7 +1,7 @@
-module Study exposing (..)
+module Study exposing (getStudyById, rankToId, initStudies, subjectToId, getAcademicSkills, stringToSubject)
 
-import CustomTypes exposing (..)
-import Dict exposing (..)
+import CustomTypes exposing (Study, Rank(..), Subject(..), StudyCapacity(..))
+import Dict exposing (Dict)
 
 
 getStudyById : Int -> Maybe Study
