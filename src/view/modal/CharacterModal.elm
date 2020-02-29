@@ -73,7 +73,7 @@ viewCharacterPicker model buildIdx character =
                     "avatar-tile"
 
         lockedCss =
-            if model.team |> Dict.map (\k v -> v.idCharacter) |> Dict.member character.id then
+            if model.team |> Dict.map (\k v -> v.idCharacter) |> Dict.values |> List.member character.id then
                 "locked-picture"
 
             else

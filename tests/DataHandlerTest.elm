@@ -24,7 +24,7 @@ dataBuilderTest =
             (\_ ->
                 datas
                     |> (\m -> List.length m.jobCategories)
-                    |> Expect.equal 6
+                    |> Expect.equal 5
             )
         , test "Expect model contains 47 jobs"
             (\_ ->

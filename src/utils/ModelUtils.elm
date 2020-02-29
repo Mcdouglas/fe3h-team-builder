@@ -1,6 +1,7 @@
 module ModelUtils exposing (..)
 
 import CustomTypes exposing (..)
+import Dict exposing (Dict)
 import JobCategory exposing (getJobCategoryById)
 
 

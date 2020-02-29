@@ -11,6 +11,7 @@ import Dict exposing (..)
 import ErrorHandler exposing (..)
 import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (..)
+import Job exposing (..)
 import JobEventListener exposing (handle)
 import SkillEventListener exposing (..)
 import TeamBuilder exposing (..)
@@ -34,10 +35,10 @@ init flags url key =
             ( ( -1, -1 ), Nothing, False )
 
         initJobPicker =
-            ( -1, Nothing )
+            ( -1, getJobByDefault )
 
         viewModel =
-            ViewModel False False False False initCharacterPicker initSkillPicker initJobPicker False SortByType ""
+            ViewModel False False False False initCharacterPicker initSkillPicker initJobPicker False SortByType "" Nothing
 
         errorMessage =
             Nothing

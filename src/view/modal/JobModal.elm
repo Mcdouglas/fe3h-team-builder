@@ -9,7 +9,8 @@ import GlobalModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import Job exposing (getJobByDefault, getJobsAvailableForCharacter)
+import Job exposing (filterJobsAvailable, getJobsByCategory)
+import JobCategory exposing (initJobCategories)
 import JobSkill exposing (getJobSkillsByJob)
 import JobView exposing (getJobTile)
 import Json.Decode as Json
@@ -33,49 +34,84 @@ modalJobPicker model =
             [ class "modal-content"
             , stopPropagationOn "click" (Json.succeed ( NoOp, True ))
             ]
-            [ viewJobGrid model
-            , viewSideBar model
+            [ viewSideBar model
+            , viewJobsGrid model
             ]
         ]
 
 
-viewJobGrid : Model -> Html Msg
-viewJobGrid model =
+viewJobsGrid : Model -> Html Msg
+viewJobsGrid model =
     let
-        ( buildIdx, maybeJob ) =
+        rowDiv =
+            case model.view.categorySelected of
+                Just categoryId ->
+                    viewJobRow model categoryId
+
+                Nothing ->
+                    viewJobCategoryRow model
+    in
+    div [ class "jobs-grid" ] rowDiv
+
+
+viewJobCategoryRow : Model -> List (Html Msg)
+viewJobCategoryRow model =
+    [ div [ class "jobs-row" ] (List.map (\jc -> viewJobCategoryTile model jc.id) initJobCategories) ]
+
+
+viewJobCategoryTile : Model -> Int -> Html Msg
+viewJobCategoryTile model id =
+    let
+        customCss =
+            (case id of
+                1 ->
+                    "beginner"
+
+                2 ->
+                    "intermediate"
+
+                3 ->
+                    "advanced"
+
+                4 ->
+                    "master"
+
+                _ ->
+                    "unique"
+            )
+                ++ "-category"
+    in
+    div
+        [ class "category-tile"
+        , onClick (JModalMsg (UpdateCategory id))
+        ]
+        [ div [ class ("category-picture " ++ customCss) ] [] ]
+
+
+viewJobRow : Model -> Int -> List (Html Msg)
+viewJobRow model categoryId =
+    let
+        ( buildIdx, job ) =
             model.view.jobPicker
+
+        jobsCategorized id =
+            getJobsByCategory id |> List.foldr (::) []
 
         listJob =
             model.team
                 |> Dict.get buildIdx
-                |> Maybe.andThen (\build -> getCharacterById build.idCharacter)
-                |> Maybe.map (\character -> getJobsAvailableForCharacter character)
-                |> Maybe.withDefault model.data.jobs
-                |> List.map (\j -> ( j.jobCategoryId, j ))
-                |> List.foldl (\( i, j ) dict -> Dict.update i (\m -> Just (m |> Maybe.withDefault [] |> (::) j)) dict) Dict.empty
-                |> Dict.map (\k v -> viewJobRow model ( buildIdx, maybeJob ) v)
-                |> Dict.values
+                |> Maybe.map (\b -> b.idCharacter)
+                |> Maybe.andThen (\id -> getCharacterById id)
+                |> Maybe.andThen (\c -> Just (filterJobsAvailable c (jobsCategorized categoryId)))
+                |> Maybe.withDefault []
     in
-    div [ class "jobs-grid" ] listJob
+    [ div [ class "return-button button", onClick (JModalMsg DeleteCategory) ] []
+    , div [ class "jobs-row" ] (listJob |> List.map (\e -> viewJobTile model ( buildIdx, job ) e))
+    , div [ class "valid-button button", onClick (JModalMsg (UpdateBuild ( buildIdx, job ))) ] []
+    ]
 
 
-viewJobRow : Model -> ( Int, Maybe Job ) -> List Job -> Html Msg
-viewJobRow model shift listJob =
-    let
-        customCss =
-            if List.length listJob >= 8 then
-                "jobs-two-columns"
-
-            else
-                ""
-    in
-    div
-        [ class ("jobs-column " ++ customCss)
-        ]
-        (listJob |> List.map (\e -> viewJobTile model shift e))
-
-
-viewJobTile : Model -> ( Int, Maybe Job ) -> Job -> Html Msg
+viewJobTile : Model -> ( Int, Job ) -> Job -> Html Msg
 viewJobTile model ( buildIdx, _ ) job =
     let
         lockedCss =
@@ -84,11 +120,17 @@ viewJobTile model ( buildIdx, _ ) job =
 
             else
                 ""
+
+        clickedCss =
+            if (model.view.jobPicker |> Tuple.second) == job then
+                "clicked-picture"
+
+            else
+                ""
     in
     div
-        [ class ("job-tile " ++ lockedCss)
-        , onMouseOver (JModalMsg (UpdateJobPicker ( buildIdx, Just job )))
-        , onClick (JModalMsg (UpdateBuild ( buildIdx, job )))
+        [ class ("job-tile " ++ lockedCss ++ " " ++ clickedCss)
+        , onClick (JModalMsg (UpdateJobPicker ( buildIdx, job )))
         ]
         [ getJobTile lockedCss job ]
 
@@ -107,7 +149,6 @@ viewJobDetail model =
         currentJob =
             model.view.jobPicker
                 |> Tuple.second
-                |> Maybe.withDefault getJobByDefault
 
         category =
             jobCategoryIdToString currentJob.jobCategoryId
@@ -125,7 +166,7 @@ viewJobDetail model =
         noteText =
             appendMaybeText description.note Nothing |> appendMaybeText description.magicUsage
     in
-    div []
+    div [ class "job-menu" ]
         [ viewTitleDetail currentJob
         , div [ class "job-description" ] [ p [] [ text "Category" ], p [] [ text category ] ]
         , viewJobSkills currentJob
@@ -165,7 +206,7 @@ viewCertificationRequirement job =
             else
                 [ div [ class "no-data" ] [] ]
     in
-    div [ class "job-description list-study" ] ([ p [] [ text "Certificats req." ] ] ++ studyListDiv)
+    div [ class "job-description" ] [ p [] [ text "Certificats req." ], div [ class "list-study" ] studyListDiv ]
 
 
 viewJobSkills : Job -> Html Msg
@@ -182,7 +223,7 @@ viewJobSkills job =
             else
                 [ div [ class "no-data" ] [] ]
     in
-    div [ class "job-description list-jobskill" ] ([ p [] [ text "Job skills" ] ] ++ skillListDiv)
+    div [ class "job-description" ] [ p [] [ text "Job skills" ], div [ class "list-jobskill" ] skillListDiv ]
 
 
 viewSkillMastery : Job -> Html Msg
@@ -199,7 +240,7 @@ viewSkillMastery job =
             else
                 [ div [ class "no-data" ] [] ]
     in
-    div [ class "job-description list-jobskill" ] ([ p [] [ text "Skill learned" ] ] ++ skillListDiv)
+    div [ class "job-description" ] [ p [] [ text "Skill learned" ], div [ class "list-jobskill" ] skillListDiv ]
 
 
 buttonCloseModal : Html Msg
