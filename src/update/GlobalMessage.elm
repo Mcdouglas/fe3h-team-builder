@@ -26,10 +26,12 @@ type CharacterModal
 
 
 type JobModal
-    = OpenJobModal ( Int, Maybe Job )
+    = OpenJobModal ( Int, Job )
     | CloseJobModal
-    | UpdateJobPicker ( Int, Maybe Job )
+    | UpdateJobPicker ( Int, Job )
     | UpdateBuild ( Int, Job )
+    | UpdateCategory Int
+    | DeleteCategory
 
 
 type SkillModal

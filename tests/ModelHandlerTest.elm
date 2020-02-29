@@ -40,12 +40,12 @@ modelHandlerTest =
             getJobById 40
 
         -- jobCategories
-        intermerdiate =
-            getJobCategoryById 2
+        unique =
+            getJobCategoryById 0
                 |> Maybe.withDefault wrongJobCategory
 
-        unique =
-            getJobCategoryById 5
+        intermerdiate =
+            getJobCategoryById 2
                 |> Maybe.withDefault wrongJobCategory
 
         -- jobSkills
@@ -72,7 +72,7 @@ modelHandlerTest =
                             , gender = Nothing
                             , magicUsage = Just CanUseSomeMagic
                             , note = Nothing
-                            , customExperience = Nothing
+                            , customExperience = Just 20
                             , onlyCharacters = []
                             , canFly = False
                             }
@@ -121,7 +121,7 @@ modelHandlerTest =
                             { id = 40
                             , idPicture = 40
                             , name = "Enlightened One"
-                            , jobCategoryId = 5
+                            , jobCategoryId = 0
                             , proficiencyList = [ Proficiency Sword 3, Proficiency Brawling 2, Proficiency Faith 3, Proficiency Authority 3 ]
                             , studyIdList = []
                             , gender = Nothing
@@ -148,7 +148,7 @@ modelHandlerTest =
                 (\_ ->
                     unique
                         |> Expect.equal
-                            { id = 5
+                            { id = 0
                             , category = Unique
                             , experience = Nothing
                             , level = Nothing
