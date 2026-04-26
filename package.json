@@ -4,10 +4,16 @@
   "description": "A tool made for organize and optimize the team in fire emblem three houses",
   "main": "index.html",
   "scripts": {
-    "build": "node-sass-chokidar resources/sass/ -o resources/css && elm make src/Main.elm --output=bundle.js",
-    "watch": "node-sass-chokidar resources/sass/ -o resources/css && elm-live src/Main.elm -o  -- --output=bundle.js",
+    "build": "sass resources/sass:resources/css && elm make src/Main.elm --output=bundle.js",
+    "watch": "sass resources/sass:resources/css && elm-live src/Main.elm -o  -- --output=bundle.js",
     "test": "elm-test",
     "try": "elm-repl"
+  },
+  "devDependencies": {
+    "elm": "^0.19.1-6",
+    "elm-live": "^4.0.2",
+    "elm-test": "^0.19.1-revision2",
+    "sass": "^1.77.6"
   },
   "keywords": [
     "fe3h",
