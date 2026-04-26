@@ -76,6 +76,9 @@ viewJobCategoryTile id =
                 4 ->
                     "master"
 
+                5 ->
+                    "special"
+
                 _ ->
                     "unique"
             )
