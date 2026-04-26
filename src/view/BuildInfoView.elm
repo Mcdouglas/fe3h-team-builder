@@ -42,8 +42,8 @@ sectionCharacter character =
     in
     div [ class "character-section" ]
         [ div [ class "study-table" ]
-            [ div [ class "study-table-row study-table-header" ] (Dict.toList academicSkills |> List.map (\( k, _ ) -> k |> stringToSubject |> subjectToId) |> List.sort |> List.map getStudyPicture)
-            , div [ class "study-table-row" ] (Dict.values academicSkills |> List.map getAcademicSkill)
+            [ div [ class "study-table-row study-table-header" ] (Dict.toList academicSkills |> List.sortBy (\( k, _ ) -> k |> stringToSubject |> subjectToId) |> List.map (\( k, _ ) -> getStudyPicture (k |> stringToSubject |> subjectToId)))
+            , div [ class "study-table-row" ] (Dict.toList academicSkills |> List.sortBy (\( k, _ ) -> k |> stringToSubject |> subjectToId) |> List.map (\( _, v ) -> getAcademicSkill v))
             ]
         ]
 
