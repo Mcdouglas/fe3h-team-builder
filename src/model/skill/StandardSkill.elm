@@ -139,7 +139,7 @@ initStandardSkills =
     , StandardSkill 6 186 "Haze Slice" 5 True [ 2, 21, 26 ] False "" (Just 5) (Just 2) Nothing (Just 30) Nothing (Just ( 1, 1 ))
     , StandardSkill 7 186 "Hexblade" 5 True [ 8, 28 ] False "Deals magic-based damage." (Just 3) (Just 7) (Just 10) Nothing Nothing (Just ( 1, 1 ))
     , StandardSkill 8 186 "Sunder" 5 True [ 4, 10, 12 ] False "" (Just 3) (Just 4) Nothing Nothing (Just 15) (Just ( 1, 1 ))
-    , StandardSkill 9 186 "Soulblade" 5 True [ 23 ] False "Deals magic-based damage, Might increases based on user's Resistance." (Just 4) (Just 2) (Just 10) Nothing Nothing (Just ( 1, 1 ))
+    , StandardSkill 9 186 "Soulblade" 5 True [ 22, 23 ] False "Deals magic-based damage, Might increases based on user's Resistance." (Just 4) (Just 2) (Just 10) Nothing Nothing (Just ( 1, 1 ))
     , StandardSkill 12 186 "Hexblade" 8 True [ 2, 17 ] False "Deals magic-based damage." (Just 3) (Just 7) (Just 10) Nothing Nothing (Just ( 1, 1 ))
     , StandardSkill 13 186 "Windsweep" 8 True [ 0, 1, 10 ] False "Prevents enemy counterattack." (Just 5) (Just 3) (Just 20) Nothing (Just 10) (Just ( 1, 1 ))
     , StandardSkill 14 186 "Finess Blade" 8 True [ 9, 12, 18, 30 ] False "Might increases based on user's Dexterity." (Just 4) (Just 2) Nothing (Just 10) Nothing (Just ( 1, 1 ))
@@ -147,11 +147,11 @@ initStandardSkills =
     -- Lance --
     , StandardSkill 19 187 "Tempest Lance" 14 True [] False "" (Just 5) (Just 8) (Just 10) Nothing Nothing (Just ( 1, 1 ))
     , StandardSkill 21 187 "Knightkneeler" 16 True [] False "Effective against Cavalry enemies." (Just 4) (Just 5) (Just 15) Nothing Nothing (Just ( 1, 1 ))
-    , StandardSkill 23 187 "Shatter Slash" 17 True [ 4, 24, 31 ] False "After combat, inflicts Def -5 on foe for 1 turn." (Just 3) (Just 4) (Just 10) Nothing Nothing (Just ( 1, 1 ))
+    , StandardSkill 23 187 "Shatter Slash" 17 True [ 4, 13, 24, 31 ] False "After combat, inflicts Def -5 on foe for 1 turn." (Just 3) (Just 4) (Just 10) Nothing Nothing (Just ( 1, 1 ))
     , StandardSkill 24 187 "Vengeance" 17 True [ 7, 11, 34 ] False "Damage increases in relation to the user’s missing HP." (Just 4) (Just 2) Nothing Nothing (Just 10) (Just ( 1, 1 ))
     , StandardSkill 25 187 "Monster Piercer" 17 True [ 10, 14, 25, 26 ] False "Effective against Monsters." (Just 4) (Just 7) Nothing Nothing Nothing (Just ( 1, 1 ))
     , StandardSkill 26 187 "Hit and Run" 17 True [ 17, 27, 33 ] False "After combat, user moves 1 space backwards." (Just 4) (Just 4) (Just 10) (Just 20) Nothing (Just ( 1, 1 ))
-    , StandardSkill 27 187 "Frozen Lance" 17 True [ 19 ] False "Deals magic-based damage. Might increases based on user’s Dexterity." (Just 4) (Just 3) (Just 5) Nothing Nothing (Just ( 1, 1 ))
+    , StandardSkill 27 187 "Frozen Lance" 17 True [ 3, 19, 23 ] False "Deals magic-based damage. Might increases based on user’s Dexterity." (Just 4) (Just 3) (Just 5) Nothing Nothing (Just ( 1, 1 ))
     , StandardSkill 30 187 "Frozen Lance" 20 True [ 17, 27 ] False "Deals magic-based damage. Might increases based on user’s Dexterity." (Just 4) (Just 3) (Just 5) Nothing Nothing (Just ( 1, 1 ))
     , StandardSkill 31 187 "Swift Strikes" 20 True [ 4, 14, 26 ] False "Triggers 2 consecutive hits." (Just 4) (Just 2) Nothing Nothing Nothing (Just ( 1, 1 ))
     , StandardSkill 32 187 "Glowing Ember" 20 True [ 10, 31 ] False "Might increases based on user’s Defense." (Just 4) (Just 2) Nothing (Just 10) Nothing (Just ( 1, 1 ))
@@ -166,7 +166,7 @@ initStandardSkills =
     , StandardSkill 45 188 "Lightning Axe" 29 True [ 16 ] False "Deals magic-based damage. Might increases based on user’s Resistance." (Just 3) (Just 4) Nothing Nothing Nothing (Just ( 1, 1 ))
     , StandardSkill 46 188 "Spike" 29 True [ 14, 24, 31, 32 ] False "" (Just 5) (Just 5) (Just 15) Nothing (Just 10) (Just ( 1, 1 ))
     , StandardSkill 49 188 "Lightning Axe" 32 True [ 2, 14 ] False "Deals magic-based damage. Might increases based on user’s Resistance." (Just 3) (Just 4) Nothing Nothing Nothing (Just ( 1, 1 ))
-    , StandardSkill 50 188 "Diamond Axe" 32 True [ 9, 24, 26 ] False "" (Just 7) (Just 14) (Just -20) Nothing Nothing (Just ( 1, 1 ))
+    , StandardSkill 50 188 "Diamond Axe" 32 True [ 9, 18, 24, 26 ] False "" (Just 7) (Just 14) (Just -20) Nothing Nothing (Just ( 1, 1 ))
     , StandardSkill 51 188 "Armored Strike" 32 True [ 4, 11, 34 ] False "Might increases based on user’s Defense." (Just 3) (Just 4) Nothing Nothing Nothing (Just ( 1, 1 ))
     , StandardSkill 52 188 "Exhaustive Strike" 32 True [ 6, 32, 38 ] False "Depletes all of the weapon’s remaining durability and adds 30% of that value to Might." (Just 1) (Just 3) (Just 10) Nothing Nothing (Just ( 1, 1 ))
 
@@ -174,7 +174,7 @@ initStandardSkills =
     , StandardSkill 57 189 "Curved Shot" 38 True [] False "" (Just 3) (Just 1) (Just 30) Nothing Nothing (Just ( 2, 3 ))
     , StandardSkill 60 189 "Heavy Draw" 40 True [ 3, 12, 33 ] False "" (Just 5) (Just 8) (Just 10) Nothing Nothing (Just ( 2, 2 ))
     , StandardSkill 61 189 "Deadeye" 40 True [ 7, 13, 35 ] False "" (Just 5) (Just 6) Nothing Nothing Nothing (Just ( 3, 5 ))
-    , StandardSkill 62 189 "Warning Shot" 40 True [ 9 ] False "After combat, inflicts Str -5 on foe for 1 turn." (Just 3) (Just 4) (Just 10) Nothing Nothing (Just ( 2, 3 ))
+    , StandardSkill 62 189 "Warning Shot" 40 True [ 9, 15 ] False "After combat, inflicts Str -5 on foe for 1 turn." (Just 3) (Just 4) (Just 10) Nothing Nothing (Just ( 2, 3 ))
     , StandardSkill 63 189 "Monster Blast" 40 True [ 18, 33 ] False "Effective against Monsters." (Just 4) (Just 5) Nothing Nothing (Just 10) (Just ( 2, 2 ))
     , StandardSkill 64 189 "Break Shot" 40 True [ 21, 25 ] False "After combat, inflicts Def -5 on foe for 1 turn." (Just 3) (Just 4) (Just 5) Nothing Nothing (Just ( 2, 3 ))
     , StandardSkill 65 189 "Schisms Shot" 40 True [ 29 ] False "After combat, inflicts Res -5 on foe for 1 turn." (Just 3) (Just 4) (Just 15) Nothing Nothing (Just ( 2, 3 ))
@@ -198,4 +198,15 @@ initStandardSkills =
     , StandardSkill 90 190 "Bombard" 56 True [ 30 ] False "Triggers 2 consecutive hits." (Just 3) (Just 3) Nothing Nothing (Just 10) (Just ( 1, 1 ))
     , StandardSkill 91 190 "Mystic Blow" 56 True [ 0, 1, 12, 37 ] False "Deals magic-based damage." (Just 3) (Just 10) (Just 10) Nothing Nothing (Just ( 1, 1 ))
     , StandardSkill 92 190 "Mighty Blow" 56 True [ 6, 11, 32 ] False "" (Just 3) (Just 10) (Just -5) Nothing (Just 20) (Just ( 1, 1 ))
+
+    -- Budding Talents
+    , StandardSkill 200 52 "Black Magic Crit +10" 60 False [ 2, 12, 36 ] False "Grants Crit +10 when using Black Magic." Nothing Nothing Nothing Nothing Nothing Nothing
+    , StandardSkill 201 88 "Seal Speed" 96 False [ 4, 24 ] False "If unit damages foe during combat, foe suffers Spd -6 for 1 turn after combat." Nothing Nothing Nothing Nothing Nothing Nothing
+    , StandardSkill 202 129 "Pass" 108 False [ 7, 40 ] False "Unit can pass through foes." Nothing Nothing Nothing Nothing Nothing Nothing
+    , StandardSkill 203 130 "White Magic Avoid +20" 72 False [ 0, 1, 8 ] False "Grants Avo +20 when equipped with White Magic." Nothing Nothing Nothing Nothing Nothing Nothing
+    , StandardSkill 204 88 "Seal Movement" 108 False [ 10 ] False "If unit damages foe during combat, foe suffers Mv -1 for 1 turn after combat." Nothing Nothing Nothing Nothing Nothing Nothing
+    , StandardSkill 205 130 "Black Magic Avoid +20" 60 False [ 14 ] False "Grants Avo +20 when equipped with Black Magic." Nothing Nothing Nothing Nothing Nothing Nothing
+    , StandardSkill 206 88 "Seal Strength" 60 False [ 21 ] False "If unit damages foe during combat, foe suffers Str -6 for 1 turn after combat." Nothing Nothing Nothing Nothing Nothing Nothing
+    , StandardSkill 207 89 "Seal Magic" 60 False [ 27 ] False "If unit damages foe during combat, foe suffers Mag -6 for 1 turn after combat." Nothing Nothing Nothing Nothing Nothing Nothing
+    , StandardSkill 208 110 "Darting Blow" 120 False [ 39 ] False "If unit initiates combat, grants AS +6 during combat." Nothing Nothing Nothing Nothing Nothing Nothing
     ]
