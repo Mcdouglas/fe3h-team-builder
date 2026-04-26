@@ -29,4 +29,9 @@ initCrests =
     , Crest 15 16 "Macuil" "Occasionally raises Mt during magic attacks."
     , Crest 16 9 "Maurice" "Sometimes raises Mt when using a weapon."
     , Crest 17 2 "Seiros" "Occasionally raises Mt when using combat arts."
+    , Crest 18 18 "Aubin" "Occasionally prevents enemy counterattacks when using a weapon."
+    , Crest 19 19 "Chevalier" "Sometimes restores HP equal to 30% of damage dealt when using combat arts."
+    , Crest 20 20 "Noa" "Occasionally does not consume a use for attack magic."
+    , Crest 21 21 "Timandant" "Occasionally does not consume a use for recovery magic."
+    , Crest 22 22 "Ernest" "Occasionally prevents enemy counterattacks when using a weapon."
     ]

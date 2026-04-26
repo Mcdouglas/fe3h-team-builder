@@ -372,6 +372,12 @@ initAcademicSkillsList =
         |> Dict.insert 32 (defaultAcademicSkills |> setupAcademicSkills Strength [ Sword, Brawling ] |> setupAcademicSkills Weakness [ Reason ])
         |> Dict.insert 33 (defaultAcademicSkills |> setupAcademicSkills Strength [ Lance, Bow ] |> setupAcademicSkills Weakness [ Faith ])
         |> Dict.insert 34 (defaultAcademicSkills |> setupAcademicSkills Strength [ Lance, Axe, Bow, Riding, Flying ] |> setupAcademicSkills Weakness [ Reason, Faith ])
+        |> Dict.insert 35 (defaultAcademicSkills |> setupAcademicSkills Strength [ Sword, Reason, Faith, Authority ] |> setupAcademicSkills BuddingTalent [ Bow ] |> setupAcademicSkills Weakness [ Lance, Axe, Riding, Flying ])
+        |> Dict.insert 36 (defaultAcademicSkills |> setupAcademicSkills Strength [ Sword, Axe, Brawling, Faith ] |> setupAcademicSkills BuddingTalent [ Reason ] |> setupAcademicSkills Weakness [ Lance, Bow, Flying ])
+        |> Dict.insert 37 (defaultAcademicSkills |> setupAcademicSkills Strength [ Sword, Reason, Flying ] |> setupAcademicSkills BuddingTalent [ Brawling ] |> setupAcademicSkills Weakness [ Axe, HeavyArmor ])
+        |> Dict.insert 38 (defaultAcademicSkills |> setupAcademicSkills Strength [ Reason, Riding, Flying ] |> setupAcademicSkills BuddingTalent [ Axe ] |> setupAcademicSkills Weakness [ Brawling, Authority, HeavyArmor ])
+        |> Dict.insert 39 (defaultAcademicSkills |> setupAcademicSkills Strength [ Sword, Lance, Brawling, Riding ] |> setupAcademicSkills BuddingTalent [ Flying ] |> setupAcademicSkills Weakness [ Faith, Authority ])
+        |> Dict.insert 40 (defaultAcademicSkills |> setupAcademicSkills Strength [ Sword, Axe, Bow, Faith ] |> setupAcademicSkills BuddingTalent [ Riding ] |> setupAcademicSkills Weakness [ Reason, Authority ])
 
 
 setupAcademicSkills : StudyCapacity -> List Subject -> Dict String StudyCapacity -> Dict String StudyCapacity

@@ -50,4 +50,10 @@ initCharacterSkills =
     , CharacterSkill 35 153 "Veteran Knight" "Unit takes 2 less damage while in formation with a battalion."
     , CharacterSkill 36 132 "Survival Instinct" "If unit initiates combat and defeats foe, grants Str/Mag/Dex/Spd +4 for one turn."
     , CharacterSkill 37 161 "Aptitude" "Makes each stat 20% more likely to increase on level up."
+    , CharacterSkill 38 132 "Honorable Spirit" "If unit is not adjacent to an ally, grants Attack +3 when in combat with a foe 1 space away."
+    , CharacterSkill 39 124 "King of Grappling" "Grants Strength/Defense +6 when HP is ≤ 50%."
+    , CharacterSkill 40 138 "Circadian Beat" "Grants Strength/Magic +3 when indoors, and Defense/Resistance +3 when outdoors."
+    , CharacterSkill 41 120 "Monstrous Appeal" "Makes all attacks effective against monsters and makes it easier for monsters to target unit."
+    , CharacterSkill 42 165 "Murderous Intent" "If unit initiates combat, grants Hit +20 during combat."
+    , CharacterSkill 43 149 "Business Prosperity" "Grants Luck +5."
     ]

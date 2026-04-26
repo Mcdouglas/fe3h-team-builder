@@ -62,4 +62,12 @@ initCharacters =
     , Character 32 "Alois" Male 32 NonOwner 0 (Just 3)
     , Character 33 "Shamir" Female 36 NonOwner 0 (Just 3)
     , Character 34 "Cyril" Male 37 NonOwner 0 (Just 3)
+
+    -- DLC & Ashen Wolves
+    , Character 35 "Yuri" Male 38 Major 18 (Just 4)
+    , Character 36 "Balthus" Male 39 Major 19 (Just 4)
+    , Character 37 "Constance" Female 40 Major 20 (Just 4)
+    , Character 38 "Hapi" Female 41 Major 21 (Just 4)
+    , Character 39 "Jeritza" Male 42 Minor 10 (Just 4)
+    , Character 40 "Anna" Female 43 Major 22 (Just 4)
     ]
