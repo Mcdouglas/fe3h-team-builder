@@ -5,6 +5,8 @@ import CustomTypes exposing (Character, Job, Skill)
 import Url exposing (Url)
 
 
+import File exposing (File)
+
 type Msg
     = InitialModel
     | CModalMsg CharacterModal
@@ -16,6 +18,10 @@ type Msg
     | LinkClicked UrlRequest
     | UrlChanged Url
     | RewriteUrl
+    | SaveTeam
+    | LoadTeamRequest
+    | FileSelected File
+    | TeamFileRead String
 
 
 type CharacterModal

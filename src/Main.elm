@@ -16,6 +16,10 @@ import SkillEventListener exposing (handle)
 import TeamBuilder exposing (viewBuilder)
 import Url exposing (Url)
 import UrlDecoder exposing (decodeUrlInTeam, encodeTeamInUrl)
+import File exposing (File)
+import File.Download
+import File.Select
+import Task
 
 
 init : () -> Url -> Nav.Key -> ( Model, Cmd Msg )
@@ -94,6 +98,26 @@ update msg model =
 
         RewriteUrl ->
             ( model, Nav.replaceUrl model.key (encodeTeamInUrl model) )
+
+        SaveTeam ->
+            let
+                teamJson =
+                    "{\"team\": \"" ++ encodeTeamInUrl model ++ "\"}"
+            in
+            ( model, File.Download.string "fe3h_team.json" "application/json" teamJson )
+
+        LoadTeamRequest ->
+            ( model, File.Select.file [ "application/json" ] FileSelected )
+
+        FileSelected file ->
+            ( model, Task.perform TeamFileRead (File.toString file) )
+
+        TeamFileRead content ->
+            let
+                url = 
+                    String.replace "{\"team\": \"" "" content |> String.replace "\"}" ""
+            in
+            update RewriteUrl { model | team = decodeUrlInTeam url }
 
         _ ->
             ( model, Cmd.none )
