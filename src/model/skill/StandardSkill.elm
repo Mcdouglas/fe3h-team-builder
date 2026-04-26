@@ -200,13 +200,13 @@ initStandardSkills =
     , StandardSkill 92 190 "Mighty Blow" 56 True [ 6, 11, 32 ] False "" (Just 3) (Just 10) (Just -5) Nothing (Just 20) (Just ( 1, 1 ))
 
     -- Budding Talents
-    , StandardSkill 200 52 "Black Magic Crit +10" 60 False [ 2, 12, 36 ] False "Grants Crit +10 when using Black Magic." Nothing Nothing Nothing Nothing Nothing Nothing
-    , StandardSkill 201 88 "Seal Speed" 96 False [ 4, 24 ] False "If unit damages foe during combat, foe suffers Spd -6 for 1 turn after combat." Nothing Nothing Nothing Nothing Nothing Nothing
-    , StandardSkill 202 129 "Pass" 108 False [ 7, 40 ] False "Unit can pass through foes." Nothing Nothing Nothing Nothing Nothing Nothing
-    , StandardSkill 203 130 "White Magic Avoid +20" 72 False [ 0, 1, 8 ] False "Grants Avo +20 when equipped with White Magic." Nothing Nothing Nothing Nothing Nothing Nothing
-    , StandardSkill 204 88 "Seal Movement" 108 False [ 10 ] False "If unit damages foe during combat, foe suffers Mv -1 for 1 turn after combat." Nothing Nothing Nothing Nothing Nothing Nothing
-    , StandardSkill 205 130 "Black Magic Avoid +20" 60 False [ 14 ] False "Grants Avo +20 when equipped with Black Magic." Nothing Nothing Nothing Nothing Nothing Nothing
-    , StandardSkill 206 88 "Seal Strength" 60 False [ 21 ] False "If unit damages foe during combat, foe suffers Str -6 for 1 turn after combat." Nothing Nothing Nothing Nothing Nothing Nothing
-    , StandardSkill 207 89 "Seal Magic" 60 False [ 27 ] False "If unit damages foe during combat, foe suffers Mag -6 for 1 turn after combat." Nothing Nothing Nothing Nothing Nothing Nothing
-    , StandardSkill 208 110 "Darting Blow" 120 False [ 39 ] False "If unit initiates combat, grants AS +6 during combat." Nothing Nothing Nothing Nothing Nothing Nothing
+    , StandardSkill 200 200 "Black Magic Crit +10" 60 False [ 2, 12, 36 ] False "Grants Crit +10 when using Black Magic." Nothing Nothing Nothing Nothing Nothing Nothing
+    , StandardSkill 201 201 "Seal Speed" 96 False [ 4, 24 ] False "If unit damages foe during combat, foe suffers Spd -6 for 1 turn after combat." Nothing Nothing Nothing Nothing Nothing Nothing
+    , StandardSkill 202 202 "Pass" 108 False [ 7, 40 ] False "Unit can pass through foes." Nothing Nothing Nothing Nothing Nothing Nothing
+    , StandardSkill 203 203 "White Magic Avoid +20" 72 False [ 0, 1, 8 ] False "Grants Avo +20 when equipped with White Magic." Nothing Nothing Nothing Nothing Nothing Nothing
+    , StandardSkill 204 204 "Seal Movement" 108 False [ 10 ] False "If unit damages foe during combat, foe suffers Mv -1 for 1 turn after combat." Nothing Nothing Nothing Nothing Nothing Nothing
+    , StandardSkill 205 205 "Black Magic Avoid +20" 60 False [ 14 ] False "Grants Avo +20 when equipped with Black Magic." Nothing Nothing Nothing Nothing Nothing Nothing
+    , StandardSkill 206 206 "Seal Strength" 60 False [ 21 ] False "If unit damages foe during combat, foe suffers Str -6 for 1 turn after combat." Nothing Nothing Nothing Nothing Nothing Nothing
+    , StandardSkill 207 207 "Seal Magic" 60 False [ 27 ] False "If unit damages foe during combat, foe suffers Mag -6 for 1 turn after combat." Nothing Nothing Nothing Nothing Nothing Nothing
+    , StandardSkill 208 208 "Darting Blow" 120 False [ 39 ] False "If unit initiates combat, grants AS +6 during combat." Nothing Nothing Nothing Nothing Nothing Nothing
     ]
