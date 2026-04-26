@@ -7,17 +7,19 @@ import CustomTypes exposing (Build)
 import Dict exposing (Dict(..))
 import GlobalMessage exposing (BuildPanel(..), Msg(..))
 import GlobalModel exposing (Model)
-import Html exposing (Html, div, h3, text)
-import Html.Attributes exposing (class)
+import Html exposing (Html, button, div, h3, text)
+import Html.Attributes exposing (class, style)
 import Html.Events exposing (onClick)
 import JobModal exposing (modalJobPicker)
 import SkillModal exposing (modalSkillPicker)
 
-
 viewBuilder : Model -> Html Msg
 viewBuilder model =
     div []
-        [ h3 [ class "text-light" ] [ text "Fire Emblem Three Houses - Team Builder!" ]
+        [ div [ style "display" "flex", style "justify-content" "space-between", style "align-items" "center" ] 
+            [ h3 [ class "text-light" ] [ text "Fire Emblem Three Houses - Team Builder!" ]
+            , viewSaveLoad
+            ]
         , viewTeam model
         , modalCharacterPicker model
         , modalSkillPicker model
@@ -25,11 +27,19 @@ viewBuilder model =
         ]
 
 
+viewSaveLoad : Html Msg
+viewSaveLoad =
+    div [ style "margin-bottom" "1rem" ]
+        [ button [ class "btn btn-primary", style "margin-right" "0.5rem", onClick SaveTeam ] [ text "Sauvegarder" ]
+        , button [ class "btn btn-secondary", onClick LoadTeamRequest ] [ text "Charger" ]
+        ]
+
+
 viewTeam : Model -> Html Msg
 viewTeam model =
     let
         addBuildButton =
-            if Dict.size model.team < 12 then
+            if Dict.size model.team < 15 then
                 div [ class "add-build", onClick (BuildMsg AddBuild) ] []
 
             else
