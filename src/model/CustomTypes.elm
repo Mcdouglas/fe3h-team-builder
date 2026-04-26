@@ -37,6 +37,7 @@ type CategoryUnionType
     | Advanced
     | Master
     | Unique
+    | Special
 
 
 type GenderUnionType

@@ -32,6 +32,9 @@ categoryDecoder category =
         "Unique" ->
             Json.Decode.succeed (Unique category)
 
+        "Special" ->
+            Json.Decode.succeed (Special category)
+
         _ ->
             Json.Decode.succeed (Starting category)
 

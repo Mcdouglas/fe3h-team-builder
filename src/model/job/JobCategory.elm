@@ -17,4 +17,5 @@ initJobCategories =
     , JobCategory 2 Intermediate (Just 100) (Just 10)
     , JobCategory 3 Advanced (Just 150) (Just 20)
     , JobCategory 4 Master (Just 200) (Just 30)
+    , JobCategory 5 Special (Just 150) (Just 20)
     ]

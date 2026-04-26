@@ -119,6 +119,15 @@
                 height: 100%;
               }
 
+              & > div.special-category {
+                background: url(../img/categories/5.png);
+                background-size: 100%;
+                background-repeat: no-repeat;
+                background-position-x: 50%;
+                background-position-y: 50%;
+                height: 100%;
+              }
+
               &:hover {
                 box-shadow: 0 0 1em black;
                 transition: all 0.6s ease;

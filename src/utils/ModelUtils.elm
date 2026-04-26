@@ -71,6 +71,9 @@ jobCategoryIdToString id =
         4 ->
             "Master"
 
+        5 ->
+            "DLC Classes"
+
         _ ->
             "Unique"
 
