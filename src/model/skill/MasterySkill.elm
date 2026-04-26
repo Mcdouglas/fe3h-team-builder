@@ -75,4 +75,13 @@ initMasterySkills =
     , MasterySkill 51 186 "Astra" [ 18 ] True "5 consecutive hits at 30% Mt." (Just 9) Nothing (Just -10) Nothing Nothing (Just ( 1, 1 ))
     , MasterySkill 52 191 "Triangle Attack" [ 10 ] True "Can only be triggered when 3 allied Flying units (including the user) are adjacent to the same enemy. Only user needs to know Triangle Attack." (Just 3) (Just 8) (Just 30) (Just 40) Nothing (Just ( 1, 1 ))
     , MasterySkill 53 188 "War Master's Strike" [ 32 ] True "Effective against all foes." (Just 5) (Just 3) (Just 30) Nothing Nothing (Just ( 1, 1 ))
+
+    -- DLC Mastery Skills
+    , MasterySkill 54 110 "Duelist's Blow" [ 47 ] False "If unit initiates combat, grants Avo +20 during combat." Nothing Nothing Nothing Nothing Nothing Nothing
+    , MasterySkill 55 110 "Brawl Avo +20" [ 48 ] False "Grants Avo +20 when brawling." Nothing Nothing Nothing Nothing Nothing Nothing
+    , MasterySkill 56 109 "Transmute" [ 49 ] False "If unit is hit by a magic attack during enemy phase, grants +3 to all stats until next player phase ends." Nothing Nothing Nothing Nothing Nothing Nothing
+    , MasterySkill 57 170 "Uncanny Blow" [ 50 ] False "If unit initiates combat, grants Hit +30 during combat." Nothing Nothing Nothing Nothing Nothing Nothing
+    , MasterySkill 58 158 "Counterattack" [ 51 ] False "Allows unit to counterattack regardless of distance to attacker." Nothing Nothing Nothing Nothing Nothing Nothing
+    , MasterySkill 59 191 "Foul Play" [ 47 ] True "User swaps places with an ally within 5 spaces." Nothing Nothing Nothing Nothing Nothing (Just ( 1, 5 ))
+    , MasterySkill 60 190 "Pneuma Gale" [ 48 ] True "Deals magic-based damage." (Just 4) (Just 5) (Just 10) Nothing (Just 10) (Just ( 1, 2 ))
     ]

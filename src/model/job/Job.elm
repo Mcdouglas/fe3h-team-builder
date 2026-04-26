@@ -93,4 +93,11 @@ initJobs =
     , Job 36 37 "Gremory" 4 [ Proficiency Reason 3, Proficiency Faith 3 ] [ 68, 80 ] (Just Female) (Just CanUseMagic) Nothing Nothing [] False
     , Job 37 36 "Dark Knight" 4 [ Proficiency Lance 3, Proficiency Reason 3, Proficiency Riding 3 ] [ 16, 67, 117 ] Nothing (Just CanUseMagic) Nothing Nothing [] False
     , Job 38 38 "Holy Knight" 4 [ Proficiency Lance 3, Proficiency Faith 3, Proficiency Riding 3 ] [ 16, 79, 117 ] Nothing (Just CanUseMagic) Nothing Nothing [] False
+
+    -- DLC Classes
+    , Job 47 47 "Trickster" 3 [ Proficiency Sword 2, Proficiency Faith 2 ] [ 6, 78 ] Nothing (Just CanUseSomeMagic) Nothing Nothing [] False
+    , Job 48 48 "War Monk/Cleric" 3 [ Proficiency Brawling 2, Proficiency Faith 2 ] [ 55, 77 ] Nothing (Just CanUseSomeMagic) Nothing Nothing [] False
+    , Job 49 49 "Dark Flier" 3 [ Proficiency Reason 2, Proficiency Flying 2 ] [ 67, 124 ] (Just Female) (Just CanUseMagic) Nothing Nothing [] True
+    , Job 50 50 "Valkyrie" 3 [ Proficiency Reason 2, Proficiency Riding 2 ] [ 66, 114 ] (Just Female) (Just CanUseMagic) Nothing Nothing [] False
+    , Job 51 51 "Death Knight" 0 [ Proficiency Lance 3, Proficiency Reason 2, Proficiency Riding 2 ] [] (Just Male) (Just CanUseMagic) (Just "Jeritza only") (Just 150) [ 39 ] False
     ]

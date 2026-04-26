@@ -168,12 +168,12 @@ initStandardSkills =
     , StandardSkill 49 188 "Lightning Axe" 32 True [ 2, 14 ] False "Deals magic-based damage. Might increases based on user’s Resistance." (Just 3) (Just 4) Nothing Nothing Nothing (Just ( 1, 1 ))
     , StandardSkill 50 188 "Diamond Axe" 32 True [ 9, 24, 26 ] False "" (Just 7) (Just 14) (Just -20) Nothing Nothing (Just ( 1, 1 ))
     , StandardSkill 51 188 "Armored Strike" 32 True [ 4, 11, 34 ] False "Might increases based on user’s Defense." (Just 3) (Just 4) Nothing Nothing Nothing (Just ( 1, 1 ))
-    , StandardSkill 52 188 "Exhaustive Strike" 32 True [ 6, 32 ] False "Depletes all of the weapon’s remaining durability and adds 30% of that value to Might." (Just 1) (Just 3) (Just 10) Nothing Nothing (Just ( 1, 1 ))
+    , StandardSkill 52 188 "Exhaustive Strike" 32 True [ 6, 32, 38 ] False "Depletes all of the weapon’s remaining durability and adds 30% of that value to Might." (Just 1) (Just 3) (Just 10) Nothing Nothing (Just ( 1, 1 ))
 
     -- Bow --
     , StandardSkill 57 189 "Curved Shot" 38 True [] False "" (Just 3) (Just 1) (Just 30) Nothing Nothing (Just ( 2, 3 ))
     , StandardSkill 60 189 "Heavy Draw" 40 True [ 3, 12, 33 ] False "" (Just 5) (Just 8) (Just 10) Nothing Nothing (Just ( 2, 2 ))
-    , StandardSkill 61 189 "Deadeye" 40 True [ 7, 13 ] False "" (Just 5) (Just 6) Nothing Nothing Nothing (Just ( 3, 5 ))
+    , StandardSkill 61 189 "Deadeye" 40 True [ 7, 13, 35 ] False "" (Just 5) (Just 6) Nothing Nothing Nothing (Just ( 3, 5 ))
     , StandardSkill 62 189 "Warning Shot" 40 True [ 9 ] False "After combat, inflicts Str -5 on foe for 1 turn." (Just 3) (Just 4) (Just 10) Nothing Nothing (Just ( 2, 3 ))
     , StandardSkill 63 189 "Monster Blast" 40 True [ 18, 33 ] False "Effective against Monsters." (Just 4) (Just 5) Nothing Nothing (Just 10) (Just ( 2, 2 ))
     , StandardSkill 64 189 "Break Shot" 40 True [ 21, 25 ] False "After combat, inflicts Def -5 on foe for 1 turn." (Just 3) (Just 4) (Just 5) Nothing Nothing (Just ( 2, 3 ))
@@ -196,6 +196,6 @@ initStandardSkills =
     , StandardSkill 87 190 "Healing Focus" 54 True [] False "Restores 50% of the user's HP." Nothing Nothing Nothing Nothing Nothing (Just ( 1, 1 ))
     , StandardSkill 89 190 "Draining Blow" 56 True [ 20 ] False "Restores HP equal to 50% of the damage inflicted to the enemy." (Just 3) (Just 4) (Just 20) Nothing Nothing (Just ( 1, 1 ))
     , StandardSkill 90 190 "Bombard" 56 True [ 30 ] False "Triggers 2 consecutive hits." (Just 3) (Just 3) Nothing Nothing (Just 10) (Just ( 1, 1 ))
-    , StandardSkill 91 190 "Mystic Blow" 56 True [ 0, 1, 12 ] False "Deals magic-based damage." (Just 3) (Just 10) (Just 10) Nothing Nothing (Just ( 1, 1 ))
+    , StandardSkill 91 190 "Mystic Blow" 56 True [ 0, 1, 12, 37 ] False "Deals magic-based damage." (Just 3) (Just 10) (Just 10) Nothing Nothing (Just ( 1, 1 ))
     , StandardSkill 92 190 "Mighty Blow" 56 True [ 6, 11, 32 ] False "" (Just 3) (Just 10) (Just -5) Nothing (Just 20) (Just ( 1, 1 ))
     ]
