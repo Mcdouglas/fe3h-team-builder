@@ -1,0 +1,5 @@
+*.elm linguist-detectable=true
+*.js linguist-detectable=false
+*.html linguist-detectable=false
+*.json linguist-detectable=false
+*.yml linguist-detectable=false

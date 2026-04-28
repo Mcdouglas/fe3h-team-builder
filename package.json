@@ -1,0 +1,43 @@
+{
+  "name": "fe3h-team-builder",
+  "version": "0.0.1",
+  "description": "A tool made for organize and optimize the team in fire emblem three houses",
+  "main": "index.html",
+  "scripts": {
+    "build": "sass resources/sass:resources/css && elm make src/Main.elm --output=bundle.js",
+    "dev": "npm run build && serve .",
+    "watch": "sass resources/sass:resources/css && elm-live src/Main.elm -o  -- --output=bundle.js",
+    "test": "elm-test",
+    "try": "elm-repl"
+  },
+  "devDependencies": {
+    "elm": "^0.19.1-6",
+    "elm-test": "^0.19.1-revision2",
+    "sass": "^1.77.6",
+    "serve": "^14.2.6"
+  },
+  "keywords": [
+    "fe3h",
+    "team",
+    "builder",
+    "fire",
+    "emblem",
+    "fireemblem",
+    "three",
+    "houses",
+    "feth",
+    "class",
+    "skill",
+    "perk",
+    "optimize",
+    "optimization",
+    "build",
+    "organize",
+    "elm",
+    "elm-live",
+    "elm-test",
+    "elm-format"
+  ],
+  "author": "mcdouglas",
+  "license": "MIT"
+}
