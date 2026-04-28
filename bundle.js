@@ -9276,10 +9276,10 @@ var $author$project$SkillEventListener$updateSearchSkillFilter = F2(
 					{skillSearch: value})
 			});
 	});
-var $author$project$CustomTypes$SortByType = {$: 'SortByType'};
+var $author$project$CustomTypes$SortByCertification = {$: 'SortByCertification'};
 var $author$project$ModelUtils$stringToSortType = function (value) {
-	if (value === 'SortByType') {
-		return $author$project$CustomTypes$SortByType;
+	if (value === 'SortByCertification') {
+		return $author$project$CustomTypes$SortByCertification;
 	} else {
 		return $author$project$CustomTypes$SortByName;
 	}
@@ -12101,7 +12101,7 @@ var $author$project$ModelUtils$skillTypeToString = function (skillType) {
 var $author$project$SkillModal$listSortBy = F2(
 	function (model, list) {
 		var _v0 = model.view.skillListSortBy;
-		if (_v0.$ === 'SortByType') {
+		if (_v0.$ === 'SortByCertification') {
 			return A2(
 				$elm$core$List$sortBy,
 				function (e) {
@@ -12252,12 +12252,12 @@ var $author$project$GlobalMessage$ChangeSortType = function (a) {
 	return {$: 'ChangeSortType', a: a};
 };
 var $author$project$ModelUtils$listSortType = _List_fromArray(
-	[$author$project$CustomTypes$SortByType, $author$project$CustomTypes$SortByName]);
+	[$author$project$CustomTypes$SortByCertification, $author$project$CustomTypes$SortByName]);
 var $elm$html$Html$option = _VirtualDom_node('option');
 var $elm$html$Html$select = _VirtualDom_node('select');
 var $author$project$ModelUtils$sortTypeToKeyValue = function (sortType) {
-	if (sortType.$ === 'SortByType') {
-		return _Utils_Tuple2('SortByType', 'Type');
+	if (sortType.$ === 'SortByCertification') {
+		return _Utils_Tuple2('SortByCertification', 'Certification');
 	} else {
 		return _Utils_Tuple2('SortByName', 'Name');
 	}
