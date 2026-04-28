@@ -5,7 +5,7 @@
   "main": "index.html",
   "scripts": {
     "build": "sass resources/sass:resources/css && elm make src/Main.elm --output=dist/bundle.js && cp -r resources dist/ && cp index.html dist/",
-    "dev": "sass resources/sass:resources/css && npm run build && serve .",
+    "dev": "npm run build && serve .",
     "test": "elm-test",
     "try": "elm-repl"
   },
