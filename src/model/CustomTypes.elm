@@ -226,5 +226,5 @@ type alias CharacterSkill =
 
 
 type SortType
-    = SortByType
+    = SortByCertification
     | SortByName

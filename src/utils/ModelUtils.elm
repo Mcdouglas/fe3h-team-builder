@@ -119,7 +119,7 @@ skillTypeToString skillType =
 
 listSortType : List SortType
 listSortType =
-    [ SortByType
+    [ SortByCertification
     , SortByName
     ]
 
@@ -127,8 +127,8 @@ listSortType =
 sortTypeToKeyValue : SortType -> ( String, String )
 sortTypeToKeyValue sortType =
     case sortType of
-        SortByType ->
-            ( "SortByType", "Type" )
+        SortByCertification ->
+            ( "SortByCertification", "Certification" )
 
         SortByName ->
             ( "SortByName", "Name" )
@@ -137,8 +137,8 @@ sortTypeToKeyValue sortType =
 stringToSortType : String -> SortType
 stringToSortType value =
     case value of
-        "SortByType" ->
-            SortByType
+        "SortByCertification" ->
+            SortByCertification
 
         _ ->
             SortByName

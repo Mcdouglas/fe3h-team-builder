@@ -112,7 +112,7 @@ searchTermInList term list =
 listSortBy : Model -> List Skill -> List Skill
 listSortBy model list =
     case model.view.skillListSortBy of
-        SortByType ->
+        SortByCertification ->
             list |> List.sortBy (\e -> skillTypeToString e.skillType) |> List.sortBy (\e -> boolToInt e.learnByJob)
 
         SortByName ->
