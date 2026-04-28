@@ -5,15 +5,16 @@
   "main": "index.html",
   "scripts": {
     "build": "sass resources/sass:resources/css && elm make src/Main.elm --output=bundle.js",
+    "dev": "npm run build && serve .",
     "watch": "sass resources/sass:resources/css && elm-live src/Main.elm -o  -- --output=bundle.js",
     "test": "elm-test",
     "try": "elm-repl"
   },
   "devDependencies": {
     "elm": "^0.19.1-6",
-    "elm-live": "^4.0.2",
     "elm-test": "^0.19.1-revision2",
-    "sass": "^1.77.6"
+    "sass": "^1.77.6",
+    "serve": "^14.2.6"
   },
   "keywords": [
     "fe3h",
@@ -38,6 +39,5 @@
     "elm-format"
   ],
   "author": "mcdouglas",
-  "license": "MIT",
-  "dependencies": {}
+  "license": "MIT"
 }
